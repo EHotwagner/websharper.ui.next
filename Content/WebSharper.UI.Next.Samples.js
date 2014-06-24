@@ -11661,7 +11661,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
 
 (function()
 {
- var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,IntrinsicFunctionProxy,Collections,ResizeArray,ResizeArrayProxy,UI,Next,IVar,Arrays,Concurrency,alert,Operators,Option,RDom,Reactive,View1,Ver,Attrs,Abbrev,Array,Seq,List,Var,Unchecked,T,MapModule,ReactiveCollection,ReactiveCollection1,document,Dictionary,Var1,Observation,View,FSharpMap;
+ var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,IntrinsicFunctionProxy,Array,Seq,UI,Next,Abbrev,Fresh,Unchecked,Slot,Concurrency,Attr,Attrs,View1,Array1,View,Diff,BagDiff1,Arrays,HashSetProxy,HashSet,Collections,ResizeArray,ResizeArrayProxy,Doc,Docs,DocUtil,List,Var,T,Operators,document,Enumerator,Dictionary,Model1,Var1,Snap1,Snap,Async,Dict;
  Runtime.Define(Global,{
   IntelliFactory:{
    WebSharper:{
@@ -11707,332 +11707,433 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          return loop(0,IntrinsicFunctionProxy.GetLength(a));
         }
        },
+       Dict:{
+        ToKeyArray:function(d)
+        {
+         var arr;
+         arr=Array(d.count);
+         Seq.iteri(function(i)
+         {
+          return function(kv)
+          {
+           arr[i]=kv.K;
+          };
+         },d);
+         return arr;
+        },
+        ToValueArray:function(d)
+        {
+         var arr;
+         arr=Array(d.count);
+         Seq.iteri(function(i)
+         {
+          return function(kv)
+          {
+           arr[i]=kv.V;
+          };
+         },d);
+         return arr;
+        }
+       },
+       Fresh:{
+        Id:function()
+        {
+         var _;
+         _=Fresh.counter()+1;
+         Fresh.counter=function()
+         {
+          return _;
+         };
+         return"uid"+Global.String(Fresh.counter());
+        },
+        counter:Runtime.Field(function()
+        {
+         return 0;
+        })
+       },
+       HashSet:{
+        ToArray:function(set)
+        {
+         var arr;
+         arr=Array(set.get_Count());
+         set.CopyTo(arr);
+         return arr;
+        }
+       },
+       Slot:Runtime.Class({
+        Equals:function(o)
+        {
+         return Unchecked.Equals(this.key.call(null,this.value),this.key.call(null,o.get_Value()));
+        },
+        GetHashCode:function()
+        {
+         return Unchecked.Hash(this.key.call(null,this.value));
+        },
+        get_Value:function()
+        {
+         return this.value;
+        }
+       },{
+        Create:function(key,value)
+        {
+         return Slot.New(key,value);
+        },
+        New:function(key,value)
+        {
+         var r;
+         r=Runtime.New(this,{});
+         r.key=key;
+         r.value=value;
+         return r;
+        }
+       }),
        U:function()
        {
         return;
        }
       },
-      IVar:{
-       Create:function()
+      Async:{
+       Schedule:function(f)
        {
-        return{
-         State:{
-          $:0,
-          $0:ResizeArrayProxy.New2()
-         },
-         Root:{}
-        };
+        return Concurrency.Start(Concurrency.Delay(function()
+        {
+         return Concurrency.Return(f(null));
+        }));
        },
-       First:function(a,b)
+       StartTo:function(comp,k)
        {
-        var r,fired,k;
-        r=IVar.Create();
-        fired={
-         contents:false
-        };
-        k=function(x)
+        var c3;
+        c3=function()
         {
-         return function()
-         {
-          if(!fired.contents)
-           {
-            fired.contents=true;
-            return IVar.Put(r,x);
-           }
-          else
-           {
-            return null;
-           }
-         }();
         };
-        IVar.When(a,k);
-        IVar.When(b,k);
-        return r;
-       },
-       FirstOfArray:function(vars)
-       {
-        var r,fired,k;
-        r=IVar.Create();
-        fired={
-         contents:false
-        };
-        k=function(x)
+        return Concurrency.StartWithContinuations(comp,k,function()
         {
-         return function()
-         {
-          if(!fired.contents)
-           {
-            fired.contents=true;
-            return IVar.Put(r,x);
-           }
-          else
-           {
-            return null;
-           }
-         }();
-        };
-        Arrays.iter(function(v)
-        {
-         return IVar.When(v,k);
-        },vars);
-        return r;
-       },
-       Get:function(v)
-       {
-        var callback;
-        callback=Runtime.Tupled(function(tupledArg)
-        {
-         return IVar.When(v,tupledArg[0]);
         });
-        return Concurrency.FromContinuations(function(ok)
-        {
-         return function(no)
-         {
-          return callback([ok,no,function()
-          {
-          }]);
-         };
-        });
-       },
-       Put:function(_var,value)
-       {
-        var root,waiting;
-        root=_var.Root;
-        waiting=function()
-        {
-         var matchValue,waiting1;
-         matchValue=_var.State;
-         if(matchValue.$==1)
-          {
-           return{
-            $:0
-           };
-          }
-         else
-          {
-           waiting1=matchValue.$0;
-           _var.State={
-            $:1,
-            $0:value
-           };
-           return{
-            $:1,
-            $0:waiting1
-           };
-          }
-        }();
-        if(waiting.$==1)
-         {
-          return Arrays.iter(function(p)
-          {
-           return Concurrency.Start(Concurrency.Delay(function()
-           {
-            return Concurrency.Return(p(value));
-           }));
-          },waiting.$0.ToArray());
-         }
-        else
-         {
-          alert("IVar.Put: already set");
-          return Operators.FailWith("IVar.Put: already set");
-         }
-       },
-       When:function(v,k)
-       {
-        return Option.iter(k,function()
-        {
-         var matchValue;
-         matchValue=v.State;
-         if(matchValue.$==1)
-          {
-           return{
-            $:1,
-            $0:matchValue.$0
-           };
-          }
-         else
-          {
-           matchValue.$0.Add(k);
-           return{
-            $:0
-           };
-          }
-        }());
        }
       },
-      RDom:{
+      Attr:Runtime.Class({},{
        Append:function(_arg2,_arg1)
        {
-        var aV,bV;
-        aV=_arg2.$1;
-        bV=_arg1.$1;
-        return{
+        var vA,vB;
+        vA=_arg2.$1;
+        vB=_arg1.$1;
+        return Runtime.New(Attr,{
          $:0,
-         $0:RDom.appendSkel(_arg2.$0,_arg1.$0),
+         $0:Attrs.append(_arg2.$0,_arg1.$0),
          $1:View1.Map2(function()
          {
           return function()
           {
-           return Ver.New();
+           return null;
           };
-         },aV,bV)
+         },vA,vB)
+        });
+       },
+       Concat:function(xs)
+       {
+        return Array1.MapReduce(function(x)
+        {
+         return x;
+        },Attr.get_Empty(),function(arg00)
+        {
+         return function(arg10)
+         {
+          return Attr.Append(arg00,arg10);
+         };
+        },Seq.toArray(xs));
+       },
+       Create:function(name,value)
+       {
+        return Attr.View(name,View.Const(value));
+       },
+       View:function(name,view)
+       {
+        var sk;
+        sk={
+         AttrName:name,
+         AttrDirty:true,
+         AttrValue:""
+        };
+        return Runtime.New(Attr,{
+         $:0,
+         $0:{
+          $:1,
+          $0:sk
+         },
+         $1:View1.Map(function(v)
+         {
+          sk.AttrDirty=true;
+          sk.AttrValue=v;
+          return null;
+         },view)
+        });
+       },
+       get_Empty:function()
+       {
+        return Runtime.New(Attr,{
+         $:0,
+         $0:{
+          $:0
+         },
+         $1:View.Const(null)
+        });
+       }
+      }),
+      Attrs:{
+       append:function(a,b)
+       {
+        var matchValue;
+        matchValue=[a,b];
+        return matchValue[0].$==0?matchValue[1]:matchValue[1].$==0?matchValue[0]:{
+         $:2,
+         $0:a,
+         $1:b
         };
        },
-       Attrs:{
-        Append:function(_arg2,_arg1)
-        {
-         var vA,vB;
-         vA=_arg2.$1;
-         vB=_arg1.$1;
-         return{
-          $:0,
-          $0:Attrs.append(_arg2.$0,_arg1.$0),
-          $1:View1.Map2(function()
-          {
-           return function()
+       needsUpdate:function(skel)
+       {
+        var b;
+        if(skel.$==1)
+         {
+          return skel.$0.AttrDirty;
+         }
+        else
+         {
+          if(skel.$==2)
            {
-            return Ver.New();
-           };
-          },vA,vB)
-         };
-        },
-        Concat:function(xs)
-        {
-         return Array.MapReduce(function(x)
-         {
-          return x;
-         },Attrs.Empty(),function(_arg00_)
-         {
-          return function(_arg10_)
-          {
-           return Attrs.Append(_arg00_,_arg10_);
-          };
-         },Seq.toArray(xs));
-        },
-        Create:function(name,value)
-        {
-         return Attrs.View(name,View1.Const(value));
-        },
-        Empty:Runtime.Field(function()
-        {
-         return{
-          $:0,
-          $0:{
-           $:0
-          },
-          $1:View1.Const(Ver.New())
-         };
-        }),
-        View:function(name,view)
-        {
-         var sk;
-         sk={
-          AttrName:name,
-          AttrDirty:true,
-          AttrValue:View1.Now(view)
-         };
-         return{
-          $:0,
-          $0:{
-           $:1,
-           $0:sk
-          },
-          $1:View1.Map(function(v)
-          {
-           sk.AttrDirty=true;
-           sk.AttrValue=v;
-           return Ver.New();
-          },view)
-         };
-        },
-        append:function(a,b)
-        {
-         var matchValue;
-         matchValue=[a,b];
-         return matchValue[0].$==0?matchValue[1]:matchValue[1].$==0?matchValue[0]:{
-          $:2,
-          $0:a,
-          $1:b
-         };
-        },
-        needsUpdate:function(skel)
-        {
-         var b;
-         if(skel.$==1)
-          {
-           return skel.$0.AttrDirty;
-          }
-         else
-          {
-           if(skel.$==2)
-            {
-             b=skel.$1;
-             return Attrs.needsUpdate(skel.$0)?true:Attrs.needsUpdate(b);
-            }
-           else
-            {
-             return false;
-            }
-          }
-        },
-        update:function(par,skel)
-        {
-         var loop;
-         loop=function(skel1)
-         {
-          var x,b;
-          if(skel1.$==1)
-           {
-            x=skel1.$0;
-            if(x.AttrDirty)
-             {
-              x.AttrDirty=false;
-              return par.setAttribute(x.AttrName,x.AttrValue);
-             }
-            else
-             {
-              return null;
-             }
+            b=skel.$1;
+            return Attrs.needsUpdate(skel.$0)?true:Attrs.needsUpdate(b);
            }
           else
            {
-            if(skel1.$==2)
-             {
-              b=skel1.$1;
-              loop(skel1.$0);
-              return loop(b);
-             }
-            else
-             {
-              return null;
-             }
+            return false;
            }
-         };
-         return loop(skel);
-        }
+         }
        },
-       Button:function(caption,action)
+       update:function(par,skel)
+       {
+        var loop;
+        loop=function(skel1)
+        {
+         var x,b;
+         if(skel1.$==1)
+          {
+           x=skel1.$0;
+           if(x.AttrDirty)
+            {
+             x.AttrDirty=false;
+             return par.setAttribute(x.AttrName,x.AttrValue);
+            }
+           else
+            {
+             return null;
+            }
+          }
+         else
+          {
+           if(skel1.$==2)
+            {
+             b=skel1.$1;
+             loop(skel1.$0);
+             return loop(b);
+            }
+           else
+            {
+             return null;
+            }
+          }
+        };
+        return loop(skel);
+       }
+      },
+      Diff:{
+       BagDiff:function(s1,s2)
+       {
+        return Runtime.New(BagDiff1,{
+         DAdded:Diff.bagDiff(s2,s1),
+         DRemoved:Diff.bagDiff(s1,s2)
+        });
+       },
+       BagDiff1:Runtime.Class({
+        get_Added:function()
+        {
+         return this.DAdded;
+        },
+        get_Removed:function()
+        {
+         return this.DRemoved;
+        }
+       }),
+       BagDiffBy:function(key,s1,s2)
+       {
+        return Runtime.New(BagDiff1,{
+         DAdded:Diff.bagDiffBy(key,s2,s1),
+         DRemoved:Diff.bagDiffBy(key,s1,s2)
+        });
+       },
+       LongestCommonSubsequence:function(xs,ys)
+       {
+        var xs1,ys1,xL,yL,cache,solveM;
+        xs1=Seq.toArray(xs);
+        ys1=Seq.toArray(ys);
+        xL=IntrinsicFunctionProxy.GetLength(xs1);
+        yL=IntrinsicFunctionProxy.GetLength(ys1);
+        cache=Arrays.create(xL*yL,Diff.dummy());
+        solveM=function(xi,yi)
+        {
+         var i,v,v1;
+         if(xi>=xL?true:yi>=yL)
+          {
+           return Diff.nil();
+          }
+         else
+          {
+           i=xi*yL+yi;
+           v=cache[i];
+           if(!Diff.isDummy(v))
+            {
+             return v;
+            }
+           else
+            {
+             v1=Unchecked.Equals(xs1[xi],ys1[yi])?Diff.cons(xs1[xi],solveM(xi+1,yi+1)):Diff.maxByLen(solveM(xi+1,yi),solveM(xi,yi+1));
+             cache[i]=v1;
+             return v1;
+            }
+          }
+        };
+        return Diff.toSeq(solveM(0,0));
+       },
+       bagDiff:function(xs,ys)
+       {
+        var s;
+        s=HashSetProxy.New(xs);
+        s.ExceptWith(ys);
+        return HashSet.ToArray(s);
+       },
+       bagDiffBy:function(key,xs,ys)
+       {
+        var up,hs;
+        up=function(xs1)
+        {
+         return Seq.map(function(arg10)
+         {
+          return Slot.Create(key,arg10);
+         },xs1);
+        };
+        hs=HashSetProxy.New(up(xs));
+        hs.ExceptWith(up(ys));
+        return Arrays.map(function(a)
+        {
+         return a.get_Value();
+        },HashSet.ToArray(hs));
+       },
+       cons:function(x,xs)
+       {
+        return{
+         $:1,
+         $0:Diff.len(xs)+1,
+         $1:x,
+         $2:xs
+        };
+       },
+       dummy:function()
+       {
+        return{
+         $:1,
+         $0:-1,
+         $1:Abbrev.U(),
+         $2:{
+          $:0
+         }
+        };
+       },
+       isDummy:function(xs)
+       {
+        return Diff.len(xs)===-1;
+       },
+       len:function(xs)
+       {
+        return xs.$==1?xs.$0:0;
+       },
+       maxByLen:function(xs,ys)
+       {
+        return Diff.len(xs)>Diff.len(ys)?xs:ys;
+       },
+       nil:function()
+       {
+        return{
+         $:0
+        };
+       },
+       toArray:function(xs)
+       {
+        var out,visit;
+        out=ResizeArrayProxy.New2();
+        visit=function(xs1)
+        {
+         var xs2;
+         if(xs1.$==1)
+          {
+           xs2=xs1.$2;
+           out.Add(xs1.$1);
+           return visit(xs2);
+          }
+         else
+          {
+           return null;
+          }
+        };
+        visit(xs);
+        return out.ToArray();
+       },
+       toSeq:function(xs)
+       {
+        return Diff.toArray(xs);
+       }
+      },
+      Doc:Runtime.Class({},{
+       Append:function(_arg3,_arg2)
+       {
+        var aV,bV;
+        aV=_arg3.$1;
+        bV=_arg2.$1;
+        return Runtime.New(Doc,{
+         $:0,
+         $0:Docs.appendSkel(_arg3.$0,_arg2.$0),
+         $1:View1.Map2(function()
+         {
+          return function()
+          {
+           return null;
+          };
+         },aV,bV)
+        });
+       },
+       Button:function(caption,attrs,action)
        {
         var el;
-        el=RDom.createElement("input");
-        el.addEventListener("click",function()
+        el=DocUtil.createElement("button");
+        el.addEventListener("click",function(ev)
         {
+         ev.preventDefault();
          return action(null);
         },false);
-        return RDom.element(el,Attrs.Concat(List.ofArray([Attrs.Create("type","button"),Attrs.Create("value",caption)])),RDom.Empty());
+        return Docs.element(el,Attr.Concat(attrs),Doc.TextNode(caption));
        },
        CheckBox:function(show,items,chk)
        {
-        var rvi,checkElements,_;
-        rvi=View1.Create(chk);
-        checkElements=RDom.Concat(List.mapi(function(i)
+        var rvi,uid;
+        rvi=View1.FromVar(chk);
+        uid=Fresh.Id();
+        return Doc.Concat(List.mapi(function(i)
         {
          return function(o)
          {
           var t,attrs,el,chkElem;
-          t=RDom.TextNode(show(o));
-          attrs=List.ofArray([Attrs.Create("type","checkbox"),Attrs.Create("name",Global.String(RDom.groupCount())),Attrs.Create("value",Global.String(i))]);
-          el=RDom.createElement("input");
+          t=Doc.TextNode(show(o));
+          attrs=List.ofArray([Attr.Create("type","checkbox"),Attr.Create("name",uid),Attr.Create("value",Global.String(i))]);
+          el=DocUtil.createElement("input");
           el.addEventListener("click",function()
           {
            var chkd,t1;
@@ -12046,36 +12147,47 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
             },obs)));
            });
           },false);
-          chkElem=RDom.element(el,Attrs.Concat(attrs),RDom.Empty());
-          return RDom.Element("div",Runtime.New(T,{
+          chkElem=Docs.element(el,Attr.Concat(attrs),Doc.get_Empty());
+          return Doc.Element("div",Runtime.New(T,{
            $:0
           }),List.ofArray([chkElem,t]));
          };
         },items));
-        _=RDom.groupCount()+1;
-        RDom.groupCount=function()
-        {
-         return _;
-        };
-        return checkElements;
        },
        Concat:function(xs)
        {
-        return Arrays.fold(function(_arg00_)
+        return Array1.MapReduce(function(x)
         {
-         return function(_arg10_)
+         return x;
+        },Doc.get_Empty(),function(arg00)
+        {
+         return function(arg10)
          {
-          return RDom.Append(_arg00_,_arg10_);
+          return Doc.Append(arg00,arg10);
          };
-        },RDom.Empty(),Seq.toArray(xs));
+        },Seq.toArray(xs));
        },
        Element:function(name,attr,children)
        {
-        return RDom.element(RDom.createElement(name),Attrs.Concat(attr),RDom.Concat(children));
+        return Docs.element(DocUtil.createElement(name),Attr.Concat(attr),Doc.Concat(children));
+       },
+       EmbedBag:function(render,view)
+       {
+        return Doc.EmbedView(View1.Map(function(arg00)
+        {
+         return Doc.Concat(arg00);
+        },View1.ConvertBag(render,view)));
+       },
+       EmbedBagBy:function(key,render,view)
+       {
+        return Doc.EmbedView(View1.Map(function(arg00)
+        {
+         return Doc.Concat(arg00);
+        },View1.ConvertBagBy(key,render,view)));
        },
        EmbedView:function(v)
        {
-        var sk,_arg00_;
+        var sk,arg00;
         sk={
          BeforeSkel:{
           $:0
@@ -12086,11 +12198,11 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          IsDirty:true,
          VarNeedsVisit:true
         };
-        _arg00_=function(_arg1)
+        arg00=function(_arg3)
         {
          var y;
-         y=_arg1.$1;
-         sk.CurrentSkel=_arg1.$0;
+         y=_arg3.$1;
+         sk.CurrentSkel=_arg3.$0;
          sk.IsDirty=true;
          return View1.Map(function(ver)
          {
@@ -12098,93 +12210,52 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
           return ver;
          },y);
         };
-        return{
+        return Runtime.New(Doc,{
          $:0,
          $0:{
           $:4,
           $0:sk
          },
-         $1:View1.Bind(_arg00_,v)
-        };
+         $1:View1.Bind(arg00,v)
+        });
        },
-       Empty:Runtime.Field(function()
-       {
-        return{
-         $:0,
-         $0:{
-          $:0
-         },
-         $1:View1.Const(Ver.New())
-        };
-       }),
-       ForEach:function(input,render)
-       {
-        var mRender;
-        mRender=RDom.memo(render);
-        return RDom.EmbedView(View1.Map(function(x)
-        {
-         return RDom.Concat(List.map(mRender,x));
-        },input));
-       },
-       Input:function(_var)
+       Input:function(attr,_var)
        {
         var el;
-        el=RDom.createElement("input");
-        View1.Sink(function(v)
+        el=DocUtil.createElement("input");
+        View.Sink(function(v)
         {
          el.value=v;
-        },View1.Create(_var));
+        },View1.FromVar(_var));
         el.addEventListener("input",function()
         {
          return Var.Set(_var,el.value);
         },false);
-        return RDom.element(el,Attrs.Empty(),RDom.Empty());
-       },
-       RenderCollection:function(coll,render)
-       {
-        return RDom.EmbedView(View1.Map(function(map)
-        {
-         return RDom.Concat(List.rev(MapModule.Fold(function(s)
-         {
-          return function()
-          {
-           return function(v)
-           {
-            return Runtime.New(T,{
-             $:1,
-             $0:(render(coll))(v),
-             $1:s
-            });
-           };
-          };
-         },Runtime.New(T,{
-          $:0
-         }),map)));
-        },ReactiveCollection1.ViewCollection(coll)));
+        return Docs.element(el,Attr.Concat(attr),Doc.get_Empty());
        },
        Run:function(parent,_arg1)
        {
         var ver,skel;
         ver=_arg1.$1;
         skel=_arg1.$0;
-        RDom.appendChildren(parent,skel);
-        return View1.Sink(function()
+        Docs.appendChildren(parent,skel);
+        return View.Sink(function()
         {
-         return RDom.update(parent,skel);
+         return Docs.update(parent,skel);
         },ver);
        },
        RunById:function(id,tr)
        {
         var matchValue;
-        matchValue=RDom.doc().getElementById(id);
-        return Unchecked.Equals(matchValue,null)?Operators.FailWith("invalid id: "+id):RDom.Run(matchValue,tr);
+        matchValue=DocUtil.doc().getElementById(id);
+        return Unchecked.Equals(matchValue,null)?Operators.FailWith("invalid id: "+id):Doc.Run(matchValue,tr);
        },
-       Select:function(show,options,current)
+       Select:function(attrs,show,options,current)
        {
         var el,view,optionElements;
-        el=RDom.createElement("select");
-        view=View1.Create(current);
-        View1.Sink(function(item)
+        el=DocUtil.createElement("select");
+        view=View1.FromVar(current);
+        View.Sink(function(item)
         {
          el.selectedIndex=Seq.findIndex(function(y)
          {
@@ -12195,50 +12266,71 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         {
          return Var.Set(current,options.get_Item(el.selectedIndex));
         },false);
-        optionElements=RDom.Concat(List.mapi(function(i)
+        optionElements=Doc.Concat(List.mapi(function(i)
         {
          return function(o)
          {
           var t;
-          t=RDom.TextNode(show(o));
-          return RDom.Element("option",List.ofArray([Attrs.Create("value",Global.String(i))]),List.ofArray([t]));
+          t=Doc.TextNode(show(o));
+          return Doc.Element("option",List.ofArray([Attr.Create("value",Global.String(i))]),List.ofArray([t]));
          };
         },options));
-        return RDom.element(el,Attrs.Empty(),optionElements);
+        return Docs.element(el,Attr.Concat(attrs),optionElements);
        },
        TextNode:function(t)
        {
-        return RDom.TextView(View1.Const(t));
+        return Doc.TextView(View.Const(t));
        },
        TextView:function(view)
        {
-        var v,sk;
-        v=View1.Now(view);
+        var sk;
         sk={
-         DomText:RDom.createText(v),
+         DomText:DocUtil.createText(""),
          TextDirty:true,
-         TextValue:v
+         TextValue:""
         };
-        return{
+        return Runtime.New(Doc,{
          $:0,
          $0:{
           $:3,
           $0:sk
          },
-         $1:View1.Map(function(v1)
+         $1:View1.Map(function(v)
          {
           sk.TextDirty=true;
-          sk.TextValue=v1;
-          return Ver.New();
+          sk.TextValue=v;
+          return null;
          },view)
-        };
+        });
        },
-       Ver:Runtime.Class({},{
-        New:function()
-        {
-         return Runtime.New(this,{});
-        }
+       get_Empty:function()
+       {
+        return Docs.empty();
+       }
+      }),
+      DocUtil:{
+       appendTo:function(ctx,node)
+       {
+        ctx.appendChild(node);
+       },
+       createElement:function(name)
+       {
+        return DocUtil.doc().createElement(name);
+       },
+       createText:function(s)
+       {
+        return DocUtil.doc().createTextNode(s);
+       },
+       doc:Runtime.Field(function()
+       {
+        return document;
        }),
+       insertNode:function(parent,pos,node)
+       {
+        return pos.$==1?void parent.insertBefore(node,pos.$0):void parent.appendChild(node);
+       }
+      },
+      Docs:{
        appendChildren:function(parent,skel)
        {
         var loop;
@@ -12253,7 +12345,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
           }
          else
           {
-           return skel1.$==2?RDom.appendTo(parent1,skel1.$0.DomElem):skel1.$==3?RDom.appendTo(parent1,skel1.$0.DomText):skel1.$==4?null:null;
+           return skel1.$==2?DocUtil.appendTo(parent1,skel1.$0.DomElem):skel1.$==3?DocUtil.appendTo(parent1,skel1.$0.DomText):skel1.$==4?null:null;
           }
         };
         return loop(parent,skel);
@@ -12268,45 +12360,6 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          $1:y
         };
        },
-       appendTo:function(ctx,node)
-       {
-        ctx.appendChild(node);
-       },
-       clear:function(ctx)
-       {
-        while(ctx.hasChildNodes())
-         {
-          ctx.removeChild(ctx.firstChild);
-         }
-        return;
-       },
-       clearAttrs:function(ctx)
-       {
-        while(ctx.hasAttributes())
-         {
-          ctx.removeAttributeNode(ctx.attributes.item(0));
-         }
-        return;
-       },
-       createAttr:function(name,value)
-       {
-        var a;
-        a=RDom.doc().createAttribute(name);
-        a.value=value;
-        return a;
-       },
-       createElement:function(name)
-       {
-        return RDom.doc().createElement(name);
-       },
-       createText:function(s)
-       {
-        return RDom.doc().createTextNode(s);
-       },
-       doc:Runtime.Field(function()
-       {
-        return document;
-       }),
        element:function(el,_arg2,_arg1)
        {
         var attrVer,ver,children,sk;
@@ -12319,8 +12372,8 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          DomElem:el,
          NeedsVisit:true
         };
-        RDom.appendChildren(el,children);
-        return{
+        Docs.appendChildren(el,children);
+        return Runtime.New(Doc,{
          $:0,
          $0:{
           $:2,
@@ -12331,38 +12384,21 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
           return function()
           {
            sk.NeedsVisit=true;
-           return Ver.New();
+           return null;
           };
          },attrVer,ver)
-        };
+        });
        },
-       groupCount:Runtime.Field(function()
+       empty:Runtime.Field(function()
        {
-        return 0;
+        return Runtime.New(Doc,{
+         $:0,
+         $0:{
+          $:0
+         },
+         $1:View.Const(null)
+        });
        }),
-       insertNode:function(parent,pos,node)
-       {
-        return pos.$==1?void parent.insertBefore(node,pos.$0):void parent.appendChild(node);
-       },
-       memo:function(f)
-       {
-        var d;
-        d=Dictionary.New21();
-        return function(key)
-        {
-         var v;
-         if(d.ContainsKey(key))
-          {
-           return d.get_Item(key);
-          }
-         else
-          {
-           v=f(key);
-           d.set_Item(key,v);
-           return v;
-          }
-        };
-       },
        patch:function(parent,pos,old,cur)
        {
         var rm,remove,ins;
@@ -12395,15 +12431,11 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
           }
          else
           {
-           return sk.$==2?RDom.insertNode(parent,pos,sk.$0.DomElem):sk.$==3?RDom.insertNode(parent,pos,sk.$0.DomText):sk.$==4?ins(sk.$0.CurrentSkel):null;
+           return sk.$==2?DocUtil.insertNode(parent,pos,sk.$0.DomElem):sk.$==3?DocUtil.insertNode(parent,pos,sk.$0.DomText):sk.$==4?ins(sk.$0.CurrentSkel):null;
           }
         };
         remove(old);
         return ins(cur);
-       },
-       setAttr:function(el,name,value)
-       {
-        return el.setAttribute(name,value);
        },
        update:function(par,skel)
        {
@@ -12458,7 +12490,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
                  v=skel1.$0;
                  if(v.IsDirty)
                   {
-                   RDom.patch(par1,pos,v.BeforeSkel,v.CurrentSkel);
+                   Docs.patch(par1,pos,v.BeforeSkel,v.CurrentSkel);
                    v.BeforeSkel=v.CurrentSkel;
                    v.IsDirty=false;
                   }
@@ -12534,335 +12566,516 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         return;
        }
       },
-      Reactive:{
-       Observation:{
-        AwaitObsolete:function(x)
-        {
-         return IVar.Get(x.Obsolete);
-        },
-        Create:function(v)
-        {
-         return{
-          Observed:v,
-          Obsolete:IVar.Create()
-         };
-        },
-        Mark:function(obs)
-        {
-         return IVar.Put(obs.Obsolete,null);
-        },
-        Value:function(x)
-        {
-         return x.Observed;
-        }
-       },
-       Var:{
-        Create:function(v)
-        {
-         return Var1.CreateWithDepth(v,0);
-        },
-        Depth:function(v)
-        {
-         return function()
-         {
-          return v.Depth;
-         }();
-        },
-        GetKey:function(v)
-        {
-         return function()
-         {
-          return v.Key;
-         }();
-        },
-        Observe:function(v)
-        {
-         return function()
-         {
-          return v.Observation;
-         }();
-        },
-        Set:function(_var,value)
-        {
-         var o1;
-         o1=Observation.Create(value);
-         return Observation.Mark(function()
-         {
-          var o0;
-          o0=_var.Observation;
-          _var.Observation=o1;
-          return o0;
-         }());
-        },
-        Update:function(_var,f)
-        {
-         return Observation.Mark(function()
-         {
-          var o0;
-          o0=_var.Observation;
-          _var.Observation=Observation.Create(f(o0.Observed));
-          return o0;
-         }());
-        }
-       },
-       Var1:Runtime.Class({},{
-        CreateWithDepth:function(v,d)
-        {
-         return{
-          Depth:d,
-          Observation:Observation.Create(v),
-          Root:{},
-          Key:Reactive.newVarId()
-         };
-        }
-       }),
-       View:Runtime.Class({},{
-        Depth:function(_arg1)
-        {
-         return Var.Depth(_arg1.$0);
-        }
-       }),
-       View1:{
-        Apply:function(f,x)
-        {
-         return View1.Map2(function(f1)
-         {
-          return function(x1)
-          {
-           return f1(x1);
-          };
-         },f,x);
-        },
-        Bind:function(f,x)
-        {
-         return View1.Join(View1.Map(f,x));
-        },
-        Const:function(v)
-        {
-         return View1.Create(Var.Create(v));
-        },
-        Create:function(_var)
-        {
-         return{
-          $:0,
-          $0:_var
-         };
-        },
-        Join:function(_arg1)
-        {
-         var x,rv;
-         x=_arg1.$0;
-         rv=Var.Create(View1.Now(View1.Now(_arg1)));
-         Concurrency.Start(Concurrency.Delay(function()
-         {
-          return Concurrency.While(function()
-          {
-           return true;
-          },Concurrency.Delay(function()
-          {
-           var o1,o2;
-           o1=View1.Observe(_arg1);
-           o2=View1.Observe(o1.Observed);
-           Var.Set(rv,o2.Observed);
-           return Concurrency.Bind(IVar.Get(IVar.First(o1.Obsolete,o2.Obsolete)),function()
-           {
-            return Concurrency.Return(null);
-           });
-          }));
-         }));
-         return{
-          $:0,
-          $0:rv
-         };
-        },
-        Map:function(fn,_arg1)
-        {
-         var x,rv;
-         x=_arg1.$0;
-         rv=Var1.CreateWithDepth(fn(View1.Now(_arg1)),Var.Depth(x)+1);
-         Concurrency.Start(Concurrency.Delay(function()
-         {
-          return Concurrency.While(function()
-          {
-           return true;
-          },Concurrency.Delay(function()
-          {
-           var obs;
-           obs=View1.Observe(_arg1);
-           Var.Set(rv,fn(obs.Observed));
-           return Concurrency.Bind(IVar.Get(obs.Obsolete),function()
-           {
-            return Concurrency.Return(null);
-           });
-          }));
-         }));
-         return{
-          $:0,
-          $0:rv
-         };
-        },
-        Map2:function(fn,_arg2,_arg1)
-        {
-         var x,y,rv;
-         x=_arg2.$0;
-         y=_arg1.$0;
-         rv=Var1.CreateWithDepth((fn(View1.Now(_arg2)))(View1.Now(_arg1)),Operators.Max(Var.Depth(x),Var.Depth(y))+1);
-         Concurrency.Start(Concurrency.Delay(function()
-         {
-          return Concurrency.While(function()
-          {
-           return true;
-          },Concurrency.Delay(function()
-          {
-           var o1,o2;
-           o1=View1.Observe(_arg2);
-           o2=View1.Observe(_arg1);
-           Var.Set(rv,(fn(o1.Observed))(o2.Observed));
-           return Concurrency.Bind(IVar.Get(IVar.First(o1.Obsolete,o2.Obsolete)),function()
-           {
-            return Concurrency.Return(null);
-           });
-          }));
-         }));
-         return{
-          $:0,
-          $0:rv
-         };
-        },
-        MapArray:function(f,view)
-        {
-         var rv;
-         rv=Var1.CreateWithDepth(f(Arrays.map(function(_arg00_)
-         {
-          return View1.Now(_arg00_);
-         },view)),Arrays.max(Arrays.map(function(_arg00_)
-         {
-          return View.Depth(_arg00_);
-         },view)));
-         Concurrency.Start(Concurrency.Delay(function()
-         {
-          return Concurrency.While(function()
-          {
-           return true;
-          },Concurrency.Delay(function()
-          {
-           var obs;
-           obs=Arrays.map(function(_arg00_)
-           {
-            return View1.Observe(_arg00_);
-           },view);
-           Var.Set(rv,f(Arrays.map(function(o)
-           {
-            return o.Observed;
-           },obs)));
-           return Concurrency.Bind(IVar.Get(IVar.FirstOfArray(Arrays.map(function(o)
-           {
-            return o.Obsolete;
-           },obs))),function()
-           {
-            return Concurrency.Return(null);
-           });
-          }));
-         }));
-         return{
-          $:0,
-          $0:rv
-         };
-        },
-        Now:function(x)
-        {
-         return View1.Observe(x).Observed;
-        },
-        Observe:function(_arg1)
-        {
-         return Var.Observe(_arg1.$0);
-        },
-        Sink:function(f,_arg1)
-        {
-         return Concurrency.Start(Concurrency.Delay(function()
-         {
-          return Concurrency.While(function()
-          {
-           return true;
-          },Concurrency.Delay(function()
-          {
-           var o;
-           o=View1.Observe(_arg1);
-           f(o.Observed);
-           return Concurrency.Bind(IVar.Get(o.Obsolete),function()
-           {
-            return Concurrency.Return(null);
-           });
-          }));
-         }));
-        }
-       },
-       countLock:Runtime.Field(function()
+      HashSetProxy:Runtime.Class({
+       CopyTo:function(arr)
        {
-        return{};
-       }),
-       newVarId:function()
-       {
-        Reactive.countLock();
-        return function()
-        {
-         var ret,_;
-         ret=Reactive.varCount();
-         _=ret+1;
-         Reactive.varCount=function()
+        var i,enumerator,kv;
+        i=0;
+        enumerator=Enumerator.Get(this.d);
+        while(enumerator.MoveNext())
          {
-          return _;
-         };
-         return ret;
-        }();
+          kv=enumerator.get_Current();
+          arr[i]=kv.K;
+          i=i+1;
+         }
+        return;
        },
-       varCount:Runtime.Field(function()
+       ExceptWith:function(xs)
        {
-        return 0;
-       })
-      },
-      ReactiveCollection:{
-       ReactiveCollection:{
-        AddVar:function(coll,v)
+        var enumerator;
+        enumerator=Enumerator.Get(xs);
+        while(enumerator.MoveNext())
+         {
+          this.d.Remove(enumerator.get_Current());
+         }
+        return;
+       },
+       GetEnumerator1:function()
+       {
+        return Enumerator.Get(this.seq());
+       },
+       get_Count:function()
+       {
+        return this.d.count;
+       },
+       seq:function()
+       {
+        return Seq.map(function(kv)
         {
-         return Var.Set(coll.InnerMap,Observation.Value(View1.Observe(coll.InnerMapView)).Add(coll.KeyFn.call(null,v),v));
-        },
-        CreateReactiveCollection:function(elems,keyFn)
-        {
-         var mapVar,coll;
-         mapVar=Var.Create(FSharpMap.New([]));
-         coll={
-          InnerMap:mapVar,
-          InnerMapView:View1.Create(mapVar),
-          KeyFn:keyFn
-         };
-         ReactiveCollection1.addElems(coll,elems);
-         return coll;
-        },
-        RemoveVar:function(coll,v)
-        {
-         return Var.Set(coll.InnerMap,Observation.Value(View1.Observe(coll.InnerMapView)).Remove(coll.KeyFn.call(null,v)));
-        },
-        ViewCollection:function(coll)
-        {
-         return coll.InnerMapView;
-        },
-        addElems:function(coll,_arg1)
-        {
-         var xs;
-         if(_arg1.$==1)
-          {
-           xs=_arg1.$1;
-           ReactiveCollection1.AddVar(coll,_arg1.$0);
-           return ReactiveCollection1.addElems(coll,xs);
-          }
-         else
-          {
-           return null;
-          }
-        }
+         return kv.K;
+        },this.d);
        }
-      }
+      },{
+       New:function(xs)
+       {
+        var r,enumerator;
+        r=Runtime.New(this,{});
+        r.d=Dictionary.New21();
+        enumerator=Enumerator.Get(xs);
+        while(enumerator.MoveNext())
+         {
+          r.d.set_Item(enumerator.get_Current(),0);
+         }
+        return r;
+       }
+      }),
+      Model1:Runtime.Class({
+       get_View:function()
+       {
+        return Model1.View(this);
+       }
+      },{
+       Create:function(proj,init)
+       {
+        var _var;
+        _var=Var1.Create(init);
+        return Runtime.New(Model1,{
+         $:0,
+         $0:_var,
+         $1:View1.Map(proj,_var.get_View())
+        });
+       },
+       Update:function(update,_arg1)
+       {
+        return Var.Update(_arg1.$0,function(x)
+        {
+         update(x);
+         return x;
+        });
+       },
+       View:function(_arg2)
+       {
+        return _arg2.$1;
+       }
+      }),
+      Snap:Runtime.Class({},{
+       CreateSet:function(v)
+       {
+        var sn;
+        sn=Snap1.Create();
+        Snap1.Set(sn,v);
+        return sn;
+       },
+       Link:function(a,b)
+       {
+        return Snap.WhenObsolete(a,function()
+        {
+         return Snap1.MarkObsolete(b);
+        });
+       },
+       Map:function(fn,sn)
+       {
+        var res;
+        res=Snap1.Create();
+        Snap1.WhenSet(sn,function(v)
+        {
+         return Snap1.Set(res,fn(v));
+        });
+        Snap.Link(sn,res);
+        return res;
+       },
+       WhenObsolete:function(sn,k)
+       {
+        var matchValue;
+        matchValue=sn.State;
+        return matchValue.$==1?matchValue.$1.Add(k):matchValue.$==0?k(null):matchValue.$1.Add(k);
+       }
+      }),
+      Snap1:Runtime.Class({},{
+       Create:function()
+       {
+        return{
+         State:{
+          $:2,
+          $0:ResizeArrayProxy.New2(),
+          $1:ResizeArrayProxy.New2()
+         }
+        };
+       },
+       IsObsolete:function(snap)
+       {
+        return snap.State.$==0?true:false;
+       },
+       MarkObsolete:function(sn)
+       {
+        var matchValue,ks,ks1;
+        matchValue=sn.State;
+        if(matchValue.$==1)
+         {
+          ks=matchValue.$1;
+          sn.State={
+           $:0
+          };
+          return Arrays.iter(function(k)
+          {
+           return k(null);
+          },ks.ToArray());
+         }
+        else
+         {
+          if(matchValue.$==2)
+           {
+            ks1=matchValue.$1;
+            sn.State={
+             $:0
+            };
+            return Arrays.iter(function(k)
+            {
+             return k(null);
+            },ks1.ToArray());
+           }
+          else
+           {
+            return null;
+           }
+         }
+       },
+       Set:function(sn,v)
+       {
+        var matchValue,k1;
+        matchValue=sn.State;
+        if(matchValue.$==2)
+         {
+          k1=matchValue.$0;
+          sn.State={
+           $:1,
+           $0:v,
+           $1:matchValue.$1
+          };
+          return Arrays.iter(function(k)
+          {
+           return k(v);
+          },k1.ToArray());
+         }
+        else
+         {
+          return null;
+         }
+       },
+       WhenSet:function(sn,k)
+       {
+        var matchValue;
+        matchValue=sn.State;
+        return matchValue.$==2?matchValue.$0.Add(k):matchValue.$==1?k(matchValue.$0):null;
+       }
+      }),
+      Var:Runtime.Class({},{
+       Observe:function(_var)
+       {
+        return _var.Snap;
+       },
+       Set:function(_var,value)
+       {
+        Snap1.MarkObsolete(_var.Snap);
+        _var.Current=value;
+        _var.Snap=Snap.CreateSet(value);
+        return;
+       },
+       Update:function(_var,fn)
+       {
+        return Var.Set(_var,fn(Var1.Get(_var)));
+       }
+      }),
+      Var1:Runtime.Class({
+       get_View:function()
+       {
+        return View1.FromVar(this);
+       }
+      },{
+       Create:function(v)
+       {
+        return Runtime.New(Var1,{
+         Current:v,
+         Snap:Snap.CreateSet(v)
+        });
+       },
+       Get:function(_var)
+       {
+        return _var.Current;
+       }
+      }),
+      View:Runtime.Class({},{
+       Apply:function(fn,view)
+       {
+        return View1.Map2(function(f)
+        {
+         return function(x)
+         {
+          return f(x);
+         };
+        },fn,view);
+       },
+       Const:function(x)
+       {
+        var o;
+        o=Snap.CreateSet(x);
+        return{
+         $:0,
+         $0:function()
+         {
+          return o;
+         }
+        };
+       },
+       Sink:function(act,_arg6)
+       {
+        var observe,loop;
+        observe=_arg6.$0;
+        loop=function()
+        {
+         var sn;
+         sn=observe(null);
+         Snap1.WhenSet(sn,act);
+         return Snap.WhenObsolete(sn,function()
+         {
+          return Async.Schedule(loop);
+         });
+        };
+        return loop(null);
+       }
+      }),
+      View1:Runtime.Class({},{
+       Bind:function(fn,view)
+       {
+        return View1.Join(View1.Map(fn,view));
+       },
+       ConvertBag:function(fn,view)
+       {
+        var values,prev,conv;
+        values=Dictionary.New21();
+        prev={
+         contents:[]
+        };
+        conv=function(x)
+        {
+         var y;
+         y=fn(x);
+         values.set_Item(x,y);
+         return y;
+        };
+        return View1.Map(function(xs)
+        {
+         var cur,diff,enumerator;
+         cur=Seq.toArray(xs);
+         diff=Diff.BagDiff(prev.contents,cur);
+         prev.contents=cur;
+         enumerator=Enumerator.Get(diff.get_Removed());
+         while(enumerator.MoveNext())
+          {
+           values.Remove(enumerator.get_Current());
+          }
+         return Dict.ToValueArray(values).concat(Seq.toArray(Seq.map(conv,diff.get_Added())));
+        },view);
+       },
+       ConvertBagBy:function(key,fn,view)
+       {
+        var values,prev,conv;
+        values=Dictionary.New21();
+        prev={
+         contents:[]
+        };
+        conv=function(x)
+        {
+         var y;
+         y=fn(x);
+         values.set_Item(key(x),y);
+         return y;
+        };
+        return View1.Map(function(xs)
+        {
+         var cur,diff,enumerator;
+         cur=Seq.toArray(xs);
+         diff=Diff.BagDiffBy(key,prev.contents,cur);
+         prev.contents=cur;
+         enumerator=Enumerator.Get(diff.get_Removed());
+         while(enumerator.MoveNext())
+          {
+           values.Remove(key(enumerator.get_Current()));
+          }
+         return Dict.ToValueArray(values).concat(Seq.toArray(Seq.map(conv,diff.get_Added())));
+        },view);
+       },
+       CreateLazy:function(observe)
+       {
+        var cur;
+        cur={
+         contents:{
+          $:0
+         }
+        };
+        return{
+         $:0,
+         $0:function()
+         {
+          var matchValue,sn,sn1;
+          matchValue=cur.contents;
+          if(matchValue.$==1)
+           {
+            if(!Snap1.IsObsolete(matchValue.$0))
+             {
+              return matchValue.$0;
+             }
+            else
+             {
+              sn=observe(null);
+              cur.contents={
+               $:1,
+               $0:sn
+              };
+              return sn;
+             }
+           }
+          else
+           {
+            sn1=observe(null);
+            cur.contents={
+             $:1,
+             $0:sn1
+            };
+            return sn1;
+           }
+         }
+        };
+       },
+       FromVar:function(_var)
+       {
+        return{
+         $:0,
+         $0:function()
+         {
+          return Var.Observe(_var);
+         }
+        };
+       },
+       Join:function(_arg5)
+       {
+        var observe;
+        observe=_arg5.$0;
+        return View1.CreateLazy(function()
+        {
+         var o,res;
+         o=observe(null);
+         res=Snap1.Create();
+         Snap.Link(o,res);
+         Snap1.WhenSet(o,function(_arg1)
+         {
+          var v;
+          v=_arg1.$0.call(null,null);
+          Snap.Link(v,res);
+          return Snap1.WhenSet(v,function(arg10)
+          {
+           return Snap1.Set(res,arg10);
+          });
+         });
+         return res;
+        });
+       },
+       Map:function(fn,_arg1)
+       {
+        var observe;
+        observe=_arg1.$0;
+        return View1.CreateLazy(function()
+        {
+         return Snap.Map(fn,observe(null));
+        });
+       },
+       Map2:function(fn,_arg4,_arg3)
+       {
+        var o1,o2;
+        o1=_arg4.$0;
+        o2=_arg3.$0;
+        return View1.CreateLazy(function()
+        {
+         var s1,s2,res,v1,v2,cont;
+         s1=o1(null);
+         s2=o2(null);
+         res=Snap1.Create();
+         v1={
+          contents:{
+           $:0
+          }
+         };
+         v2={
+          contents:{
+           $:0
+          }
+         };
+         cont=function()
+         {
+          var matchValue,y;
+          if(!Snap1.IsObsolete(res))
+           {
+            matchValue=[v1.contents,v2.contents];
+            if(matchValue[0].$==1)
+             {
+              if(matchValue[1].$==1)
+               {
+                y=matchValue[1].$0;
+                return Snap1.Set(res,(fn(matchValue[0].$0))(y));
+               }
+              else
+               {
+                return null;
+               }
+             }
+            else
+             {
+              return null;
+             }
+           }
+          else
+           {
+            return null;
+           }
+         };
+         Snap1.WhenSet(s1,function(v)
+         {
+          v1.contents={
+           $:1,
+           $0:v
+          };
+          return cont(null);
+         });
+         Snap1.WhenSet(s2,function(v)
+         {
+          v2.contents={
+           $:1,
+           $0:v
+          };
+          return cont(null);
+         });
+         Snap.Link(s1,res);
+         Snap.Link(s2,res);
+         return res;
+        });
+       },
+       MapAsync:function(fn,_arg2)
+       {
+        var observe;
+        observe=_arg2.$0;
+        return View1.CreateLazy(function()
+        {
+         var sn,res;
+         sn=observe(null);
+         res=Snap1.Create();
+         Snap1.WhenSet(sn,function(v)
+         {
+          return Async.StartTo(fn(v),function(arg10)
+          {
+           return Snap1.Set(res,arg10);
+          });
+         });
+         Snap.Link(sn,res);
+         return res;
+        });
+       },
+       get_Do:function()
+       {
+        return{
+         $:0
+        };
+       }
+      })
      }
     }
    }
@@ -12872,104 +13085,285 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
  {
   WebSharper=Runtime.Safe(Global.IntelliFactory.WebSharper);
   IntrinsicFunctionProxy=Runtime.Safe(WebSharper.IntrinsicFunctionProxy);
+  Array=Runtime.Safe(Global.Array);
+  Seq=Runtime.Safe(WebSharper.Seq);
+  UI=Runtime.Safe(WebSharper.UI);
+  Next=Runtime.Safe(UI.Next);
+  Abbrev=Runtime.Safe(Next.Abbrev);
+  Fresh=Runtime.Safe(Abbrev.Fresh);
+  Unchecked=Runtime.Safe(WebSharper.Unchecked);
+  Slot=Runtime.Safe(Abbrev.Slot);
+  Concurrency=Runtime.Safe(WebSharper.Concurrency);
+  Attr=Runtime.Safe(Next.Attr);
+  Attrs=Runtime.Safe(Next.Attrs);
+  View1=Runtime.Safe(Next.View1);
+  Array1=Runtime.Safe(Abbrev.Array);
+  View=Runtime.Safe(Next.View);
+  Diff=Runtime.Safe(Next.Diff);
+  BagDiff1=Runtime.Safe(Diff.BagDiff1);
+  Arrays=Runtime.Safe(WebSharper.Arrays);
+  HashSetProxy=Runtime.Safe(Next.HashSetProxy);
+  HashSet=Runtime.Safe(Abbrev.HashSet);
   Collections=Runtime.Safe(WebSharper.Collections);
   ResizeArray=Runtime.Safe(Collections.ResizeArray);
   ResizeArrayProxy=Runtime.Safe(ResizeArray.ResizeArrayProxy);
-  UI=Runtime.Safe(WebSharper.UI);
-  Next=Runtime.Safe(UI.Next);
-  IVar=Runtime.Safe(Next.IVar);
-  Arrays=Runtime.Safe(WebSharper.Arrays);
-  Concurrency=Runtime.Safe(WebSharper.Concurrency);
-  alert=Runtime.Safe(Global.alert);
-  Operators=Runtime.Safe(WebSharper.Operators);
-  Option=Runtime.Safe(WebSharper.Option);
-  RDom=Runtime.Safe(Next.RDom);
-  Reactive=Runtime.Safe(Next.Reactive);
-  View1=Runtime.Safe(Reactive.View1);
-  Ver=Runtime.Safe(RDom.Ver);
-  Attrs=Runtime.Safe(RDom.Attrs);
-  Abbrev=Runtime.Safe(Next.Abbrev);
-  Array=Runtime.Safe(Abbrev.Array);
-  Seq=Runtime.Safe(WebSharper.Seq);
+  Doc=Runtime.Safe(Next.Doc);
+  Docs=Runtime.Safe(Next.Docs);
+  DocUtil=Runtime.Safe(Next.DocUtil);
   List=Runtime.Safe(WebSharper.List);
-  Var=Runtime.Safe(Reactive.Var);
-  Unchecked=Runtime.Safe(WebSharper.Unchecked);
+  Var=Runtime.Safe(Next.Var);
   T=Runtime.Safe(List.T);
-  MapModule=Runtime.Safe(Collections.MapModule);
-  ReactiveCollection=Runtime.Safe(Next.ReactiveCollection);
-  ReactiveCollection1=Runtime.Safe(ReactiveCollection.ReactiveCollection);
+  Operators=Runtime.Safe(WebSharper.Operators);
   document=Runtime.Safe(Global.document);
+  Enumerator=Runtime.Safe(WebSharper.Enumerator);
   Dictionary=Runtime.Safe(Collections.Dictionary);
-  Var1=Runtime.Safe(Reactive.Var1);
-  Observation=Runtime.Safe(Reactive.Observation);
-  View=Runtime.Safe(Reactive.View);
-  return FSharpMap=Runtime.Safe(Collections.FSharpMap);
+  Model1=Runtime.Safe(Next.Model1);
+  Var1=Runtime.Safe(Next.Var1);
+  Snap1=Runtime.Safe(Next.Snap1);
+  Snap=Runtime.Safe(Next.Snap);
+  Async=Runtime.Safe(Next.Async);
+  return Dict=Runtime.Safe(Abbrev.Dict);
  });
  Runtime.OnLoad(function()
  {
-  Reactive.varCount();
-  Reactive.countLock();
-  RDom.groupCount();
-  RDom.doc();
-  RDom.Empty();
-  Attrs.Empty();
+  Docs.empty();
+  DocUtil.doc();
+  Fresh.counter();
   return;
  });
 }());
 
 (function()
 {
- var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,UI,Next,Reactive,Var,List,T,RDom,WebSharper1,UI1,Next1,Tests,CheckBoxTest,CheckBoxTest1,View1,Seq,Samples,Set,SimpleTextBox,SimpleTextBox1,TodoList,TodoList1,PhoneExample,PhoneExample1,MouseChase,MouseChase1,Client,Attrs,document,Phones,Orders,Operators,Builder,Sample,Html,PageletExtensions,Default,Operators1,Unchecked,jQuery,EventsPervasives,ReactiveCollection,ReactiveCollection1;
+ var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,UI,Next,Doc,Calculator,Var1,Samples,List,Var,T,View1,View,CheckBoxTest,Seq,Person,Set,SimpleTextBox,TodoList,PhoneExample,MouseChase,Client,document,Attr,Phone,Operators,Order,Utils,Builder,Sample,Html,PageletExtensions,Default,Operators1,Unchecked,jQuery,EventsPervasives,Util,Model1,Collections,ResizeArray,ResizeArrayProxy,Arrays,Util1,TodoItem;
  Runtime.Define(Global,{
-  WebSharper:{
-   UI:{
-    Next:{
-     Tests:{
-      CheckBoxTest:{
-       CheckBoxTest:{
-        Main:function(parent)
+  IntelliFactory:{
+   WebSharper:{
+    UI:{
+     Next:{
+      Calculator:{
+       Main:function(parent)
+       {
+        return Doc.Run(parent,Calculator.calcView(Var1.Create(Calculator.initCalc())));
+       },
+       Sample:Runtime.Field(function()
+       {
+        return Samples.Build().Id("Calculator").FileName("Calculator.fs").Keywords(List.ofArray(["calculator"])).Render(function(parent)
         {
-         var selPeople;
-         selPeople=Var.Create(Runtime.New(T,{
-          $:0
-         }));
-         return RDom.Run(parent,RDom.Concat(List.ofArray([RDom.CheckBox(function(p)
-         {
-          return p.Name;
-         },CheckBoxTest1.people(),selPeople),RDom.TextView(View1.Map(function(xs)
-         {
-          return Seq.fold(function(acc)
-          {
-           return function(p)
-           {
-            return acc+p.Name+", ";
-           };
-          },"",xs);
-         },View1.Create(selPeople)))])));
-        },
-        Sample:Runtime.Field(function()
+         return Calculator.Main(parent);
+        }).Create();
+       }),
+       cBtn:function(rvCalc)
+       {
+        var arg20;
+        arg20=function()
         {
-         return Samples.Build().Id("Check Boxes").FileName("CheckBoxTest.fs").Keywords(List.ofArray(["todo"])).Render(function(parent)
-         {
-          return CheckBoxTest1.Main(parent);
-         }).Create();
-        }),
-        mkPerson:function(n,a)
+         return Var.Set(rvCalc,Calculator.initCalc());
+        };
+        return Doc.Button("C",Runtime.New(T,{
+         $:0
+        }),arg20);
+       },
+       calcBtn:function(i,rvCalc)
+       {
+        var arg20;
+        arg20=function()
+        {
+         return Calculator.pushInt(i,rvCalc);
+        };
+        return Doc.Button(Global.String(i),Runtime.New(T,{
+         $:0
+        }),arg20);
+       },
+       calcView:function(rvCalc)
+       {
+        var rviCalc,btn,obtn,cbtn,eqbtn;
+        rviCalc=View1.FromVar(rvCalc);
+        btn=function(i)
+        {
+         return Calculator.calcBtn(i,rvCalc);
+        };
+        obtn=function(o)
+        {
+         return Calculator.opBtn(o,rvCalc);
+        };
+        cbtn=Calculator.cBtn(rvCalc);
+        eqbtn=Calculator.eqBtn(rvCalc);
+        return(Calculator.div())(List.ofArray([Doc.TextView(Calculator.displayCalc(rvCalc)),(Calculator.div())(List.ofArray([btn(1),btn(2),btn(3),obtn({
+         $:0
+        })])),(Calculator.div())(List.ofArray([btn(4),btn(5),btn(6),obtn({
+         $:1
+        })])),(Calculator.div())(List.ofArray([btn(7),btn(8),btn(9),obtn({
+         $:2
+        })])),(Calculator.div())(List.ofArray([btn(0),cbtn,eqbtn,obtn({
+         $:3
+        })]))]));
+       },
+       calculate:function(rvCalc)
+       {
+        return Var.Update(rvCalc,function(c)
         {
          return{
+          Memory:0,
+          Operand:((Calculator.opFn(c.Operation))(c.Memory))(c.Operand),
+          Operation:{
+           $:0
+          }
+         };
+        });
+       },
+       displayCalc:function(rvCalc)
+       {
+        return View1.Map(function(c)
+        {
+         return Global.String(c.Operand);
+        },View1.FromVar(rvCalc));
+       },
+       div:Runtime.Field(function()
+       {
+        return function(xs)
+        {
+         return Calculator.el("div",xs);
+        };
+       }),
+       el:function(name,xs)
+       {
+        return Doc.Element(name,Runtime.New(T,{
+         $:0
+        }),xs);
+       },
+       eqBtn:function(rvCalc)
+       {
+        var arg20;
+        arg20=function()
+        {
+         return Calculator.calculate(rvCalc);
+        };
+        return Doc.Button("=",Runtime.New(T,{
+         $:0
+        }),arg20);
+       },
+       initCalc:Runtime.Field(function()
+       {
+        return{
+         Memory:0,
+         Operand:0,
+         Operation:{
+          $:0
+         }
+        };
+       }),
+       opBtn:function(o,rvCalc)
+       {
+        var arg20;
+        arg20=function()
+        {
+         return Calculator.shiftToMem(o,rvCalc);
+        };
+        return Doc.Button(Calculator.showOp(o),Runtime.New(T,{
+         $:0
+        }),arg20);
+       },
+       opFn:function(op)
+       {
+        return op.$==1?function(x)
+        {
+         return function(y)
+         {
+          return x-y;
+         };
+        }:op.$==2?function(x)
+        {
+         return function(y)
+         {
+          return x*y;
+         };
+        }:op.$==3?function(x)
+        {
+         return function(y)
+         {
+          return x/y>>0;
+         };
+        }:function(x)
+        {
+         return function(y)
+         {
+          return x+y;
+         };
+        };
+       },
+       op_LessMultiplyGreater:function(arg00,arg10)
+       {
+        return View.Apply(arg00,arg10);
+       },
+       pushInt:function(x,rvCalc)
+       {
+        return Var.Update(rvCalc,function(c)
+        {
+         return{
+          Memory:c.Memory,
+          Operand:c.Operand*10+x,
+          Operation:c.Operation
+         };
+        });
+       },
+       shiftToMem:function(op,rvCalc)
+       {
+        return Var.Update(rvCalc,function(c)
+        {
+         return{
+          Memory:c.Operand,
+          Operand:0,
+          Operation:op
+         };
+        });
+       },
+       showOp:function(op)
+       {
+        return op.$==1?"-":op.$==2?"*":op.$==3?"/":"+";
+       }
+      },
+      CheckBoxTest:{
+       Main:function(parent)
+       {
+        var selPeople;
+        selPeople=Var1.Create(Runtime.New(T,{
+         $:0
+        }));
+        return Doc.Run(parent,Doc.Concat(List.ofArray([Doc.CheckBox(function(p)
+        {
+         return p.Name;
+        },CheckBoxTest.People(),selPeople),Doc.TextView(View1.Map(function(xs)
+        {
+         return Seq.fold(function(acc)
+         {
+          return function(p)
+          {
+           return acc+p.Name+", ";
+          };
+         },"",xs);
+        },View1.FromVar(selPeople)))])));
+       },
+       People:Runtime.Field(function()
+       {
+        return List.ofArray([Person.Create("Simon",22),Person.Create("Peter",18),Person.Create("Clare",50),Person.Create("Andy",51)]);
+       }),
+       Person:Runtime.Class({},{
+        Create:function(n,a)
+        {
+         return Runtime.New(Person,{
           Name:n,
           Age:a
-         };
-        },
-        people:Runtime.Field(function()
-        {
-         return List.ofArray([CheckBoxTest1.mkPerson("Simon",22),CheckBoxTest1.mkPerson("Peter",18),CheckBoxTest1.mkPerson("Clare",50),CheckBoxTest1.mkPerson("Andy",51)]);
-        }),
-        showPerson:function(p)
-        {
-         return"Name: "+p.Name+", age: "+Global.String(p.Age);
+         });
         }
-       }
+       }),
+       Sample:Runtime.Field(function()
+       {
+        return Samples.Build().Id("Check Boxes").FileName("CheckBoxTest.fs").Keywords(List.ofArray(["todo"])).Render(function(parent)
+        {
+         return CheckBoxTest.Main(parent);
+        }).Create();
+       })
       },
       Client:{
        All:Runtime.Field(function()
@@ -12979,7 +13373,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         {
          return Set.Singleton(x);
         };
-        return Set.Create(List.ofArray([op_BangPlus(SimpleTextBox1.Sample()),op_BangPlus(TodoList1.Sample()),op_BangPlus(PhoneExample1.Sample()),op_BangPlus(CheckBoxTest1.Sample()),op_BangPlus(MouseChase1.Sample())]));
+        return Set.Create(List.ofArray([op_BangPlus(SimpleTextBox.Sample()),op_BangPlus(TodoList.Sample()),op_BangPlus(PhoneExample.Sample()),op_BangPlus(CheckBoxTest.Sample()),op_BangPlus(MouseChase.Sample()),op_BangPlus(Calculator.Sample())]));
        }),
        Main:Runtime.Field(function()
        {
@@ -12987,154 +13381,158 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        })
       },
       MouseChase:{
-       MouseChase:{
-        Main:function(parent)
+       Main:function(parent)
+       {
+        var rvX,rvY,widthAttr,heightAttr,arg10,xAttr,arg101,yAttr,arg00,arg102,arg20,rviStyle,styleAttr,div;
+        rvX=Var1.Create(0);
+        rvY=Var1.Create(0);
+        document.addEventListener("mousemove",function(evt)
         {
-         var rvX,rviX,rvY,rviY,widthAttr,heightAttr,xAttr,yAttr,rviStyle,styleAttr,div,mouseDiv;
-         rvX=Var.Create(0);
-         rviX=View1.Create(rvX);
-         rvY=Var.Create(0);
-         rviY=View1.Create(rvY);
-         widthAttr=Attrs.Create("width","200");
-         heightAttr=Attrs.Create("height","100");
-         xAttr=Attrs.View("x",View1.Map(function(value)
+         var py;
+         py=evt.pageY;
+         Var.Set(rvX,evt.pageX);
+         return Var.Set(rvY,py);
+        },false);
+        widthAttr=Attr.Create("width","200");
+        heightAttr=Attr.Create("height","100");
+        arg10=View1.Map(function(value)
+        {
+         return Global.String(value);
+        },rvX.get_View());
+        xAttr=Attr.View("x",arg10);
+        arg101=View1.Map(function(value)
+        {
+         return Global.String(value);
+        },rvY.get_View());
+        yAttr=Attr.View("y",arg101);
+        arg00=function(x)
+        {
+         return function(y)
          {
-          return Global.String(value);
-         },rviX));
-         yAttr=Attrs.View("y",View1.Map(function(value)
-         {
-          return Global.String(value);
-         },rviY));
-         rviStyle=View1.Map2(function(x)
-         {
-          return function(y)
-          {
-           return"background-color: #b0c4de; position:absolute; left:"+Global.String(x)+"px; top:"+Global.String(y)+"px;";
-          };
-         },rviX,rviY);
-         styleAttr=Attrs.View("style",rviStyle);
-         div=function(xs)
-         {
-          return RDom.Element("div",Runtime.New(T,{
-           $:0
-          }),List.ofArray([xs]));
+          return"background-color: #b0c4de; position:absolute; left:"+Global.String(x)+"px; top:"+Global.String(y)+"px;";
          };
-         mouseDiv=RDom.Element("div",List.ofArray([styleAttr]),List.ofArray([div(RDom.TextView(View1.Map(function(x)
-         {
-          return"X: "+Global.String(x);
-         },rviX))),div(RDom.TextView(View1.Map(function(y)
-         {
-          return"Y: "+Global.String(y);
-         },rviY)))]));
-         document.addEventListener("mousemove",function(evt)
-         {
-          var py;
-          py=evt.pageY;
-          Var.Set(rvX,evt.pageX);
-          return Var.Set(rvY,py);
-         },false);
-         return RDom.Run(parent,mouseDiv);
-        },
-        Sample:Runtime.Field(function()
+        };
+        arg102=rvX.get_View();
+        arg20=rvY.get_View();
+        rviStyle=View1.Map2(arg00,arg102,arg20);
+        styleAttr=Attr.View("style",rviStyle);
+        div=function(xs)
         {
-         return Samples.Build().Id("MouseChase").FileName("MouseChase.fs").Keywords(List.ofArray(["todo"])).Render(function(parent)
-         {
-          return MouseChase1.Main(parent);
-         }).Create();
-        })
-       }
+         return Doc.Element("div",Runtime.New(T,{
+          $:0
+         }),List.ofArray([xs]));
+        };
+        return Doc.Run(parent,Doc.Element("div",List.ofArray([styleAttr]),List.ofArray([div(Doc.TextView(View1.Map(function(x)
+        {
+         return"X: "+Global.String(x);
+        },rvX.get_View()))),div(Doc.TextView(View1.Map(function(y)
+        {
+         return"Y: "+Global.String(y);
+        },rvY.get_View())))])));
+       },
+       Sample:Runtime.Field(function()
+       {
+        return Samples.Build().Id("MouseChase").FileName("MouseChase.fs").Keywords(List.ofArray(["todo"])).Render(function(parent)
+        {
+         return MouseChase.Main(parent);
+        }).Create();
+       })
       },
       PhoneExample:{
-       Orders:{
-        show:function(order)
+       Main:function(parent)
+       {
+        var defPhone;
+        defPhone=function(name,snip,age)
+        {
+         return Runtime.New(Phone,{
+          Name:name,
+          Snippet:snip,
+          Age:age
+         });
+        };
+        return Doc.Run(parent,PhoneExample.PhonesWidget(List.ofArray([defPhone("Nexus S","Fast just got faster with Nexus S.",1),defPhone("Motorola XOOM","The Next, Next generation tablet",2),defPhone("Motorola XOOM with Wi-Fi","The Next, Next generation tablet",3),defPhone("Samsung Galaxy","The Ultimate Phone",4)])));
+       },
+       Order:Runtime.Class({},{
+        Show:function(order)
         {
          return order.$==1?"Newest":"Alphabetical";
         }
-       },
-       PhoneExample:{
-        Main:function(parent)
-        {
-         var defPhone;
-         defPhone=function(name,snip,age)
-         {
-          return{
-           Name:name,
-           Snippet:snip,
-           Age:age
-          };
-         };
-         return RDom.Run(parent,PhoneExample1.phonesWidget(List.ofArray([defPhone("Nexus S","Fast just got faster with Nexus S.",1),defPhone("Motorola XOOM\u2122 with Wi-Fi","The Next, Next generation tablet",2),defPhone("Motorola XOOM\u2122 with Wi-Fi","The Next, Next generation tablet",3)])));
-        },
-        Sample:Runtime.Field(function()
-        {
-         return Samples.Build().Id("List Filtering and Sorting").FileName("PhoneExample.fs").Keywords(List.ofArray(["todo"])).Render(function(parent)
-         {
-          return PhoneExample1.Main(parent);
-         }).Create();
-        }),
-        el:function(name,xs)
-        {
-         return RDom.Element(name,Runtime.New(T,{
-          $:0
-         }),xs);
-        },
-        op_LessMultiplyGreater:function(f,x)
-        {
-         return View1.Apply(f,x);
-        },
-        phonesWidget:function(phones)
-        {
-         var allPhones,query,order,visiblePhones,showPhone;
-         allPhones=Var.Create(phones);
-         query=Var.Create("");
-         order=Var.Create({
-          $:1
-         });
-         visiblePhones=PhoneExample1.op_LessMultiplyGreater(PhoneExample1.op_LessMultiplyGreater(PhoneExample1.op_LessMultiplyGreater(View1.Const(function(all)
-         {
-          return function(query1)
-          {
-           return function(order1)
-           {
-            return List.sortWith(function(p1)
-            {
-             return function(p2)
-             {
-              return Phones.compare(order1,p1,p2);
-             };
-            },List.filter(function(ph)
-            {
-             return Phones.matchesQuery(query1,ph);
-            },all));
-           };
-          };
-         }),View1.Const(phones)),View1.Create(query)),View1.Create(order));
-         showPhone=function(ph)
-         {
-          return PhoneExample1.el("li",List.ofArray([PhoneExample1.el("span",List.ofArray([PhoneExample1.t(ph.Name)])),PhoneExample1.el("p",List.ofArray([PhoneExample1.t(ph.Snippet)]))]));
-         };
-         return RDom.Concat(List.ofArray([PhoneExample1.t("Search: "),RDom.Input(query),PhoneExample1.t("Sort by: "),RDom.Select(function(order1)
-         {
-          return Orders.show(order1);
-         },List.ofArray([{
-          $:0
-         },{
-          $:1
-         }]),order),PhoneExample1.el("ul",List.ofArray([RDom.ForEach(visiblePhones,showPhone)]))]));
-        },
-        t:function(x)
-        {
-         return RDom.TextNode(x);
-        }
-       },
-       Phones:{
-        compare:function(order,p1,p2)
+       }),
+       Phone:Runtime.Class({},{
+        Compare:function(order,p1,p2)
         {
          return order.$==1?Operators.Compare(p1.Age,p2.Age):Operators.Compare(p1.Name,p2.Name);
         },
-        matchesQuery:function(q,ph)
+        MatchesQuery:function(q,ph)
         {
          return ph.Name.indexOf(q)!=-1?true:ph.Snippet.indexOf(q)!=-1;
+        }
+       }),
+       PhonesWidget:function(phones)
+       {
+        var allPhones,query,order,arg00,arg101,arg201,visiblePhones,showPhone,showPhones;
+        allPhones=Var1.Create(phones);
+        query=Var1.Create("");
+        order=Var1.Create(Runtime.New(Order,{
+         $:1
+        }));
+        arg00=function(query1)
+        {
+         return function(order1)
+         {
+          return List.sortWith(function(arg10)
+          {
+           return function(arg20)
+           {
+            return Phone.Compare(order1,arg10,arg20);
+           };
+          },List.filter(function(arg10)
+          {
+           return Phone.MatchesQuery(query1,arg10);
+          },phones));
+         };
+        };
+        arg101=View1.FromVar(query);
+        arg201=View1.FromVar(order);
+        visiblePhones=View1.Map2(arg00,arg101,arg201);
+        showPhone=function(ph)
+        {
+         return Utils.el("li",List.ofArray([Utils.el("span",List.ofArray([Utils.t(ph.Name)])),Utils.el("p",List.ofArray([Utils.t(ph.Snippet)]))]));
+        };
+        showPhones=function(phones1)
+        {
+         return Doc.Concat(List.map(showPhone,phones1));
+        };
+        return Utils.divc("row",List.ofArray([Utils.divc("col-sm-6",List.ofArray([Utils.t("Search: "),Doc.Input(List.ofArray([Attr.Create("class","form-control")]),query),Utils.t("Sort by: "),Doc.Select(List.ofArray([Attr.Create("class","form-control")]),function(arg001)
+        {
+         return Order.Show(arg001);
+        },List.ofArray([Runtime.New(Order,{
+         $:1
+        }),Runtime.New(Order,{
+         $:0
+        })]),order)])),Utils.divc("col-sm-6",List.ofArray([Utils.el("ul",List.ofArray([Doc.EmbedView(View1.Map(showPhones,visiblePhones))]))]))]));
+       },
+       Sample:Runtime.Field(function()
+       {
+        return Samples.Build().Id("List Filtering and Sorting").FileName("PhoneExample.fs").Keywords(List.ofArray(["todo"])).Render(function(parent)
+        {
+         return PhoneExample.Main(parent);
+        }).Create();
+       }),
+       Utils:{
+        divc:function(c,rest)
+        {
+         return Doc.Element("div",List.ofArray([Attr.Create("class",c)]),rest);
+        },
+        el:function(name,xs)
+        {
+         return Doc.Element(name,Runtime.New(T,{
+          $:0
+         }),xs);
+        },
+        t:function(x)
+        {
+         return Doc.TextNode(x);
         }
        }
       },
@@ -13230,7 +13628,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          Samples.Clear(sMain);
          Samples.Clear(sSide);
          this.Render.call(null,sMain);
-         url="http://github.com/intellifactory/websharper.ui.next/blob/master/WebSharper.UI.Next.Samples/"+this.FileName;
+         url="http://github.com/intellifactory/websharper.ui.next/blob/master/src/"+this.FileName;
          x=Default.Div(Runtime.New(T,{
           $:0
          }));
@@ -13323,103 +13721,187 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        }
       },
       SimpleTextBox:{
-       SimpleTextBox:{
-        Main:function(parent)
+       Main:function(parent)
+       {
+        var rvText,arg00,inputField,label,divc;
+        rvText=Var1.Create("");
+        arg00=List.ofArray([Attr.Create("class","form-control")]);
+        inputField=Doc.Input(arg00,rvText);
+        label=Doc.TextView(rvText.get_View());
+        divc=function(cl)
         {
-         var rvText,rviText,inputField,label;
-         rvText=Var.Create("");
-         rviText=View1.Create(rvText);
-         inputField=RDom.Input(rvText);
-         label=RDom.TextView(rviText);
-         return RDom.Run(parent,RDom.Element("div",List.ofArray([Attrs.Create("class","panel-default")]),List.ofArray([RDom.Element("div",List.ofArray([Attrs.Create("class","panel-body")]),List.ofArray([SimpleTextBox1.el("div",List.ofArray([inputField])),SimpleTextBox1.el("div",List.ofArray([label]))]))])));
-        },
-        Sample:Runtime.Field(function()
-        {
-         return Samples.Build().Id("Simple Text Box").FileName("SimpleTextBox.fs").Keywords(List.ofArray(["text"])).Render(function(parent)
+         var attr;
+         attr=List.ofArray([Util.op_EqualsGreater("class",cl)]);
+         return function(xs)
          {
-          return SimpleTextBox1.Main(parent);
-         }).Create();
-        }),
+          return Util.elem("div",attr,xs);
+         };
+        };
+        return Doc.Run(parent,(divc("panel-default"))(List.ofArray([(divc("panel-body"))(List.ofArray([Util.el("div",List.ofArray([inputField])),Util.el("div",List.ofArray([label]))]))])));
+       },
+       Sample:Runtime.Field(function()
+       {
+        return Samples.Build().Id("Simple Text Box").FileName("SimpleTextBox.fs").Keywords(List.ofArray(["text"])).Render(function(parent)
+        {
+         return SimpleTextBox.Main(parent);
+        }).Create();
+       }),
+       Util:{
         el:function(name,xs)
         {
-         return RDom.Element(name,List.ofArray([Attrs.Empty()]),xs);
+         return Doc.Element(name,Runtime.New(T,{
+          $:0
+         }),xs);
+        },
+        elem:function(name,attr,xs)
+        {
+         return Doc.Element(name,attr,xs);
+        },
+        op_EqualsGreater:function(k,v)
+        {
+         return Attr.Create(k,v);
         }
        }
       },
       TodoList:{
-       TodoList:{
-        Main:function(parent)
+       Add:function(m,item)
+       {
+        return Model1.Update(function(all)
         {
-         return RDom.Run(parent,TodoList1.todoExample());
-        },
-        Sample:Runtime.Field(function()
+         return all.Add(item);
+        },m.Items);
+       },
+       Create:function()
+       {
+        return{
+         Items:Model1.Create(function(arr)
+         {
+          return arr.ToArray();
+         },ResizeArrayProxy.New2())
+        };
+       },
+       Key:function(item)
+       {
+        return item.TodoKey;
+       },
+       Main:function(parent)
+       {
+        return Doc.Run(parent,TodoList.TodoExample());
+       },
+       Remove:function(m,item)
+       {
+        return Model1.Update(function(all)
         {
-         return Samples.Build().Id("To-do List").FileName("TodoList.fs").Keywords(List.ofArray(["todo"])).Render(function(parent)
+         return Arrays.iter(function(i)
          {
-          return TodoList1.Main(parent);
-         }).Create();
-        }),
-        mkTodo:function(s)
+          return all.RemoveAt(i);
+         },Seq.toArray(Seq.filter(function(i)
+         {
+          return all.get_Item(i).TodoKey===item.TodoKey;
+         },Operators.range(0,all.get_Count()-1))));
+        },m.Items);
+       },
+       RenderItem:function(m,todo)
+       {
+        return Util1.el("tr",List.ofArray([Util1.el("td",List.ofArray([Doc.EmbedView(View1.Map(function(isDone)
         {
-         return{
-          TodoText:s,
-          Done:false
-         };
-        },
-        renderItemVar:function(coll,todoVar)
+         return isDone?Util1.el("del",List.ofArray([Util1.t(todo.TodoText)])):Util1.t(todo.TodoText);
+        },View1.FromVar(todo.Done)))])),Util1.el("td",List.ofArray([Util1.button("Done",function()
         {
-         return TodoList.el("tr",List.ofArray([TodoList.el("td",List.ofArray([RDom.EmbedView(View1.Map(function(todo)
-         {
-          return todo.Done?TodoList.el("del",List.ofArray([RDom.TextNode(todo.TodoText)])):RDom.TextNode(todo.TodoText);
-         },View1.Create(todoVar)))])),TodoList.el("td",List.ofArray([RDom.Button("Done",function()
-         {
-          return Var.Update(todoVar,function(todo)
-          {
-           return{
-            TodoText:todo.TodoText,
-            Done:true
-           };
-          });
-         })])),TodoList.el("td",List.ofArray([RDom.Button("Remove",function()
-         {
-          return ReactiveCollection1.RemoveVar(coll,todoVar);
-         })]))]));
-        },
-        todoExample:Runtime.Field(function()
+         return Var.Set(todo.Done,true);
+        })])),Util1.el("td",List.ofArray([Util1.button("Remove",function()
         {
-         var rc;
-         rc=ReactiveCollection1.CreateReactiveCollection(Runtime.New(T,{
-          $:0
-         }),function(_arg00_)
-         {
-          return Var.GetKey(_arg00_);
-         });
-         return RDom.Element("table",List.ofArray([Attrs.Create("class","table table-hover")]),List.ofArray([TodoList.el("tbody",List.ofArray([TodoList1.todoList(rc),TodoList1.todoForm(rc)]))]));
-        }),
-        todoForm:function(coll)
+         return TodoList.Remove(m,todo);
+        })]))]));
+       },
+       Sample:Runtime.Field(function()
+       {
+        return Samples.Build().Id("To-do List").FileName("TodoList.fs").Keywords(List.ofArray(["todo"])).Render(function(parent)
         {
-         var rvInput,rviInput;
-         rvInput=Var.Create("");
-         rviInput=View1.Create(rvInput);
-         return TodoList.el("div",List.ofArray([TodoList.el("div",List.ofArray([RDom.TextNode("New entry: ")])),TodoList.el("div",List.ofArray([RDom.Input(rvInput)])),TodoList.el("div",List.ofArray([RDom.Button("Submit",function()
-         {
-          return ReactiveCollection1.AddVar(coll,Var.Create(TodoList1.mkTodo(View1.Now(rviInput))));
-         })]))]));
-        },
-        todoList:function(coll)
+         return TodoList.Main(parent);
+        }).Create();
+       }),
+       TodoExample:function()
+       {
+        var m;
+        m=TodoList.Create();
+        return Util1.elem("table",List.ofArray([Util1.op_EqualsGreater("class","table table-hover")]),List.ofArray([Util1.el("tbody",List.ofArray([TodoList.TodoList(m),TodoList.TodoForm(m)]))]));
+       },
+       TodoForm:function(m)
+       {
+        var rvInput;
+        rvInput=Var1.Create("");
+        View1.FromVar(rvInput);
+        return Util1.el("form",List.ofArray([Util1.divc("form-group",List.ofArray([Util1.el("label",List.ofArray([Util1.t("New entry: ")])),Util1.input(rvInput)])),Util1.button("Submit",function()
         {
-         return RDom.RenderCollection(coll,function(coll1)
-         {
-          return function(todoVar)
-          {
-           return TodoList1.renderItemVar(coll1,todoVar);
-          };
+         return TodoList.Add(m,TodoItem.Create(Var1.Get(rvInput)));
+        })]));
+       },
+       TodoItem:Runtime.Class({},{
+        Create:function(s)
+        {
+         var TodoKey;
+         TodoKey=(Util1.fresh())(null);
+         return Runtime.New(TodoItem,{
+          Done:Var1.Create(false),
+          TodoKey:TodoKey,
+          TodoText:s
          });
         }
-       },
-       el:function(name,xs)
+       }),
+       TodoList:function(m)
        {
-        return RDom.Element(name,List.ofArray([Attrs.Empty()]),xs);
+        return Doc.EmbedBagBy(function(item)
+        {
+         return TodoList.Key(item);
+        },function(todo)
+        {
+         return TodoList.RenderItem(m,todo);
+        },m.Items.get_View());
+       },
+       Util:{
+        button:function(name,handler)
+        {
+         return Doc.Button(name,List.ofArray([Util1.op_EqualsGreater("class","btn btn-default")]),handler);
+        },
+        divc:function(cl,rest)
+        {
+         return Util1.elem("div",List.ofArray([Util1.op_EqualsGreater("class",cl)]),rest);
+        },
+        el:function(name,xs)
+        {
+         return Doc.Element(name,Runtime.New(T,{
+          $:0
+         }),xs);
+        },
+        elem:function(name,attr,xs)
+        {
+         return Doc.Element(name,attr,xs);
+        },
+        fresh:Runtime.Field(function()
+        {
+         var c;
+         c={
+          contents:0
+         };
+         return function()
+         {
+          Operators.Increment(c);
+          return c.contents;
+         };
+        }),
+        input:function(x)
+        {
+         return Doc.Input(List.ofArray([Util1.op_EqualsGreater("class","form-control")]),x);
+        },
+        op_EqualsGreater:function(k,v)
+        {
+         return Attr.Create(k,v);
+        },
+        t:function(x)
+        {
+         return Doc.TextNode(x);
+        }
        }
       }
      }
@@ -13432,35 +13914,30 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   WebSharper=Runtime.Safe(Global.IntelliFactory.WebSharper);
   UI=Runtime.Safe(WebSharper.UI);
   Next=Runtime.Safe(UI.Next);
-  Reactive=Runtime.Safe(Next.Reactive);
-  Var=Runtime.Safe(Reactive.Var);
+  Doc=Runtime.Safe(Next.Doc);
+  Calculator=Runtime.Safe(Next.Calculator);
+  Var1=Runtime.Safe(Next.Var1);
+  Samples=Runtime.Safe(Next.Samples);
   List=Runtime.Safe(WebSharper.List);
+  Var=Runtime.Safe(Next.Var);
   T=Runtime.Safe(List.T);
-  RDom=Runtime.Safe(Next.RDom);
-  WebSharper1=Runtime.Safe(Global.WebSharper);
-  UI1=Runtime.Safe(WebSharper1.UI);
-  Next1=Runtime.Safe(UI1.Next);
-  Tests=Runtime.Safe(Next1.Tests);
-  CheckBoxTest=Runtime.Safe(Tests.CheckBoxTest);
-  CheckBoxTest1=Runtime.Safe(CheckBoxTest.CheckBoxTest);
-  View1=Runtime.Safe(Reactive.View1);
+  View1=Runtime.Safe(Next.View1);
+  View=Runtime.Safe(Next.View);
+  CheckBoxTest=Runtime.Safe(Next.CheckBoxTest);
   Seq=Runtime.Safe(WebSharper.Seq);
-  Samples=Runtime.Safe(Tests.Samples);
+  Person=Runtime.Safe(CheckBoxTest.Person);
   Set=Runtime.Safe(Samples.Set);
-  SimpleTextBox=Runtime.Safe(Tests.SimpleTextBox);
-  SimpleTextBox1=Runtime.Safe(SimpleTextBox.SimpleTextBox);
-  TodoList=Runtime.Safe(Tests.TodoList);
-  TodoList1=Runtime.Safe(TodoList.TodoList);
-  PhoneExample=Runtime.Safe(Tests.PhoneExample);
-  PhoneExample1=Runtime.Safe(PhoneExample.PhoneExample);
-  MouseChase=Runtime.Safe(Tests.MouseChase);
-  MouseChase1=Runtime.Safe(MouseChase.MouseChase);
-  Client=Runtime.Safe(Tests.Client);
-  Attrs=Runtime.Safe(RDom.Attrs);
+  SimpleTextBox=Runtime.Safe(Next.SimpleTextBox);
+  TodoList=Runtime.Safe(Next.TodoList);
+  PhoneExample=Runtime.Safe(Next.PhoneExample);
+  MouseChase=Runtime.Safe(Next.MouseChase);
+  Client=Runtime.Safe(Next.Client);
   document=Runtime.Safe(Global.document);
-  Phones=Runtime.Safe(PhoneExample.Phones);
-  Orders=Runtime.Safe(PhoneExample.Orders);
+  Attr=Runtime.Safe(Next.Attr);
+  Phone=Runtime.Safe(PhoneExample.Phone);
   Operators=Runtime.Safe(WebSharper.Operators);
+  Order=Runtime.Safe(PhoneExample.Order);
+  Utils=Runtime.Safe(PhoneExample.Utils);
   Builder=Runtime.Safe(Samples.Builder);
   Sample=Runtime.Safe(Samples.Sample);
   Html=Runtime.Safe(WebSharper.Html);
@@ -13470,20 +13947,29 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   Unchecked=Runtime.Safe(WebSharper.Unchecked);
   jQuery=Runtime.Safe(Global.jQuery);
   EventsPervasives=Runtime.Safe(Html.EventsPervasives);
-  ReactiveCollection=Runtime.Safe(Next.ReactiveCollection);
-  return ReactiveCollection1=Runtime.Safe(ReactiveCollection.ReactiveCollection);
+  Util=Runtime.Safe(SimpleTextBox.Util);
+  Model1=Runtime.Safe(Next.Model1);
+  Collections=Runtime.Safe(WebSharper.Collections);
+  ResizeArray=Runtime.Safe(Collections.ResizeArray);
+  ResizeArrayProxy=Runtime.Safe(ResizeArray.ResizeArrayProxy);
+  Arrays=Runtime.Safe(WebSharper.Arrays);
+  Util1=Runtime.Safe(TodoList.Util);
+  return TodoItem=Runtime.Safe(TodoList.TodoItem);
  });
  Runtime.OnLoad(function()
  {
-  TodoList1.todoExample();
-  TodoList1.Sample();
-  SimpleTextBox1.Sample();
-  PhoneExample1.Sample();
-  MouseChase1.Sample();
+  Util1.fresh();
+  TodoList.Sample();
+  SimpleTextBox.Sample();
+  PhoneExample.Sample();
+  MouseChase.Sample();
   Client.Main();
   Client.All();
-  CheckBoxTest1.people();
-  CheckBoxTest1.Sample();
+  CheckBoxTest.Sample();
+  CheckBoxTest.People();
+  Calculator.initCalc();
+  Calculator.div();
+  Calculator.Sample();
   return;
  });
 }());
