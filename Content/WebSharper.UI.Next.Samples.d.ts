@@ -1953,7 +1953,7 @@ declare module IntelliFactory {
                     AddFirst(value: _T1): __ABBREV.__LinkedList.NodeProxy<_T1>;
                     AddLast(value: _T1): __ABBREV.__LinkedList.NodeProxy<_T1>;
                     Clear(): void;
-                    Contains<_M1>(value: _M1): boolean;
+                    Contains(value: _T1): boolean;
                     Find(value: _T1): __ABBREV.__LinkedList.NodeProxy<_T1>;
                     FindLast(value: _T1): __ABBREV.__LinkedList.NodeProxy<_T1>;
                     GetEnumerator(): __ABBREV.__LinkedList.EnumeratorProxy<_T1>;
@@ -3134,14 +3134,17 @@ declare module IntelliFactory {
                     var Create : {
                         <_M1>(v: _M1): __ABBREV.__Next.Var1<_M1>;
                     };
+                }
+                module Var {
                     var Get : {
                         <_M1>(_var: __ABBREV.__Next.Var1<_M1>): _M1;
                     };
                     var Set : {
                         <_M1>(_var: __ABBREV.__Next.Var1<_M1>, value: _M1): void;
                     };
-                }
-                module Var {
+                    var SetFinal : {
+                        <_M1>(_var: __ABBREV.__Next.Var1<_M1>, value: _M1): void;
+                    };
                     var Update : {
                         <_M1>(_var: __ABBREV.__Next.Var1<_M1>, fn: {
                             (x: _M1): _M1;
@@ -3165,6 +3168,18 @@ declare module IntelliFactory {
                             (x: _M1): _M2;
                         }, _arg1: __ABBREV.__Next.View1<_M1>): __ABBREV.__Next.View1<_M2>;
                     };
+                    var Map2 : {
+                        <_M1, _M2, _M3>(fn: {
+                            (x: _M1): {
+                                (x: _M2): _M3;
+                            };
+                        }, _arg3: __ABBREV.__Next.View1<_M1>, _arg2: __ABBREV.__Next.View1<_M2>): __ABBREV.__Next.View1<_M3>;
+                    };
+                    var MapAsync : {
+                        <_M1, _M2>(fn: {
+                            (x: _M1): any;
+                        }, _arg4: __ABBREV.__Next.View1<_M1>): __ABBREV.__Next.View1<_M2>;
+                    };
                     var ConvertBag : {
                         <_M1, _M2>(fn: {
                             (x: _M1): _M2;
@@ -3177,18 +3192,6 @@ declare module IntelliFactory {
                             (x: _M1): _M2;
                         }, view: __ABBREV.__Next.View1<__ABBREV.__WebSharper.seq<_M1>>): __ABBREV.__Next.View1<__ABBREV.__WebSharper.seq<_M2>>;
                     };
-                    var MapAsync : {
-                        <_M1, _M2>(fn: {
-                            (x: _M1): any;
-                        }, _arg2: __ABBREV.__Next.View1<_M1>): __ABBREV.__Next.View1<_M2>;
-                    };
-                    var Map2 : {
-                        <_M1, _M2, _M3>(fn: {
-                            (x: _M1): {
-                                (x: _M2): _M3;
-                            };
-                        }, _arg4: __ABBREV.__Next.View1<_M1>, _arg3: __ABBREV.__Next.View1<_M2>): __ABBREV.__Next.View1<_M3>;
-                    };
                     var Join : {
                         <_M1>(_arg5: __ABBREV.__Next.View1<__ABBREV.__Next.View1<_M1>>): __ABBREV.__Next.View1<_M1>;
                     };
@@ -3197,6 +3200,11 @@ declare module IntelliFactory {
                             (x: _M1): __ABBREV.__Next.View1<_M2>;
                         }, view: __ABBREV.__Next.View1<_M1>): __ABBREV.__Next.View1<_M2>;
                     };
+                    var get_Do : {
+                        (): __ABBREV.__Next.ViewBuilder;
+                    };
+                }
+                module View {
                     var Const : {
                         <_M1>(x: _M1): __ABBREV.__Next.View1<_M1>;
                     };
@@ -3205,11 +3213,6 @@ declare module IntelliFactory {
                             (x: _M1): void;
                         }, _arg6: __ABBREV.__Next.View1<_M1>): void;
                     };
-                    var get_Do : {
-                        (): __ABBREV.__Next.ViewBuilder;
-                    };
-                }
-                module View {
                     var Apply : {
                         <_M1, _M2>(fn: __ABBREV.__Next.View1<{
                             (x: _M1): _M2;
@@ -3222,18 +3225,28 @@ declare module IntelliFactory {
                             (x: _M1): _M2;
                         }, init: _M1): __ABBREV.__Next.Model1<_M2, _M1>;
                     };
+                }
+                module Model {
                     var Update : {
                         <_M1, _M2>(update: {
                             (x: _M1): void;
                         }, _arg1: __ABBREV.__Next.Model1<_M2, _M1>): void;
                     };
-                }
-                module Model {
                     var View : {
                         <_M1, _M2>(_arg2: __ABBREV.__Next.Model1<_M1, _M2>): __ABBREV.__Next.View1<_M1>;
                     };
                 }
+                module EventHandler {
+                    var CreateHandler : {
+                        (name: string, callback: {
+                            (x: __ABBREV.__Dom.Event): void;
+                        }): __ABBREV.__Next.EventHandler;
+                    };
+                }
                 module Attr {
+                    var ViewInternal : {
+                        (name: string, view: __ABBREV.__Next.View1<string>, attrTy: __ABBREV.__Next.AttrTy): __ABBREV.__Next.Attr;
+                    };
                     var View : {
                         (name: string, view: __ABBREV.__Next.View1<string>): __ABBREV.__Next.Attr;
                     };
@@ -3245,6 +3258,23 @@ declare module IntelliFactory {
                     };
                     var Concat : {
                         (xs: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>): __ABBREV.__Next.Attr;
+                    };
+                    var Custom : {
+                        <_M1>(f: {
+                            (x: _M1): void;
+                        }, view: __ABBREV.__Next.View1<_M1>): __ABBREV.__Next.Attr;
+                    };
+                    var CreateStyle : {
+                        (name: string, value: string): __ABBREV.__Next.Attr;
+                    };
+                    var CreateClass : {
+                        (name: string): __ABBREV.__Next.Attr;
+                    };
+                    var ViewStyle : {
+                        (name: string, view: __ABBREV.__Next.View1<string>): __ABBREV.__Next.Attr;
+                    };
+                    var ViewClass : {
+                        (view: __ABBREV.__Next.View1<string>): __ABBREV.__Next.Attr;
                     };
                     var get_Empty : {
                         (): __ABBREV.__Next.Attr;
@@ -3269,6 +3299,9 @@ declare module IntelliFactory {
                     var Element : {
                         (name: string, attr: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, children: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                     };
+                    var ElementWithEvents : {
+                        (name: string, attr: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, eventHandlers: __ABBREV.__WebSharper.seq<__ABBREV.__Next.EventHandler>, children: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
                     var TextView : {
                         (view: __ABBREV.__Next.View1<string>): __ABBREV.__Next.Doc;
                     };
@@ -3287,7 +3320,16 @@ declare module IntelliFactory {
                             (x: _M1): __ABBREV.__Next.Doc;
                         }, view: __ABBREV.__Next.View1<__ABBREV.__WebSharper.seq<_M1>>): __ABBREV.__Next.Doc;
                     };
+                    var InputInternal : {
+                        (attr: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, _var: __ABBREV.__Next.Var1<string>, inputTy: __ABBREV.__Next.InputControlType): __ABBREV.__Next.Doc;
+                    };
                     var Input : {
+                        (attr: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, _var: __ABBREV.__Next.Var1<string>): __ABBREV.__Next.Doc;
+                    };
+                    var PasswordBox : {
+                        (attr: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, _var: __ABBREV.__Next.Var1<string>): __ABBREV.__Next.Doc;
+                    };
+                    var InputArea : {
                         (attr: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, _var: __ABBREV.__Next.Var1<string>): __ABBREV.__Next.Doc;
                     };
                     var Select : {
@@ -3309,27 +3351,37 @@ declare module IntelliFactory {
                         (): __ABBREV.__Next.Doc;
                     };
                 }
-                module Notation {
-                    var incr : {
-                        <_M1>(cell: _M1): void;
+                module Flow {
+                    interface FlowBuilder {
+                        Bind<_M1, _M2>(comp: any, func: {
+                            (x: _M1): any;
+                        }): any;
+                        Return<_M1>(value: _M1): any;
+                        ReturnFrom<_M1>(wrappedVal: any): any;
+                    }
+                    var Bind : {
+                        <_M1, _M2>(m: any, k: {
+                            (x: _M1): any;
+                        }): any;
                     };
-                    var decr : {
-                        <_M1>(cell: _M1): void;
+                    var Return : {
+                        <_M1>(x: _M1): any;
                     };
-                    var op_BarGreaterGreater : {
-                        <_M1, _M2>(source: __ABBREV.__Next.View1<_M1>, mapping: {
-                            (x: _M1): _M2;
-                        }): __ABBREV.__Next.View1<_M2>;
+                    var Embed : {
+                        <_M1>(fl: any): __ABBREV.__Next.Doc;
                     };
-                    var op_GreaterGreaterEquals : {
-                        <_M1, _M2>(source: __ABBREV.__Next.View1<_M1>, body: {
-                            (x: _M1): __ABBREV.__Next.View1<_M2>;
-                        }): __ABBREV.__Next.View1<_M2>;
+                    var Define : {
+                        <_M1>(f: {
+                            (x: {
+                                (x: _M1): void;
+                            }): __ABBREV.__Next.Doc;
+                        }): any;
                     };
-                    var op_LessMultiplyGreater : {
-                        <_M1, _M2>(sourceFunc: __ABBREV.__Next.View1<{
-                            (x: _M1): _M2;
-                        }>, sourceParam: __ABBREV.__Next.View1<_M1>): __ABBREV.__Next.View1<_M2>;
+                    var Static : {
+                        <_M1>(doc: __ABBREV.__Next.Doc): any;
+                    };
+                    var Do : {
+                        (): __ABBREV.__Flow.FlowBuilder;
                     };
                 }
                 interface HashSetProxy<_T1> {
@@ -3343,6 +3395,7 @@ declare module IntelliFactory {
                     get_View(): __ABBREV.__Next.View1<_T1>;
                     get_Value(): _T1;
                     set_Value(value: _T1): void;
+                    Const: boolean;
                     Current: _T1;
                     Snap: any;
                 }
@@ -3359,9 +3412,24 @@ declare module IntelliFactory {
                 }
                 interface Model {
                 }
+                interface EventHandler {
+                    Name: string;
+                    Callback: {
+                        (x: __ABBREV.__Dom.Event): void;
+                    };
+                }
                 interface Attr {
                 }
                 interface Doc {
+                }
+                interface Flow1<_T1> {
+                    Render: {
+                        (x: __ABBREV.__Next.Var1<__ABBREV.__Next.Doc>): {
+                            (x: {
+                                (x: _T1): void;
+                            }): void;
+                        };
+                    };
                 }
             }
         }
@@ -3373,6 +3441,7 @@ declare module __ABBREV {
     export import __WebSharper = IntelliFactory.WebSharper;
     export import __Dom = IntelliFactory.WebSharper.Dom;
     export import __List = IntelliFactory.WebSharper.List;
+    export import __Flow = IntelliFactory.WebSharper.UI.Next.Flow;
 }
 
 declare module IntelliFactory {
@@ -3381,70 +3450,80 @@ declare module IntelliFactory {
             module Next {
                 module Client {
                     var All : {
-                        (): __ABBREV.__Samples.Set;
+                        (): __ABBREV.__List.T<any>;
                     };
                     var Main : {
-                        (): __ABBREV.__JQuery.JQuery;
-                    };
-                }
-                module Samples {
-                    module Set {
-                        var Create : {
-                            (ss: __ABBREV.__WebSharper.seq<__ABBREV.__Samples.Set>): __ABBREV.__Samples.Set;
-                        };
-                        var Singleton : {
-                            (s: __ABBREV.__Samples.Sample): __ABBREV.__Samples.Set;
-                        };
-                    }
-                    interface Set {
-                        Show(): __ABBREV.__JQuery.JQuery;
-                    }
-                    interface Sample {
-                        Show(): void;
-                        FileName: string;
-                        Id: string;
-                        Keywords: __ABBREV.__List.T<string>;
-                        Render: {
-                            (x: __ABBREV.__Dom.Element): void;
-                        };
-                        Title: string;
-                    }
-                    interface Builder {
-                        Create(): __ABBREV.__Samples.Sample;
-                        FileName(x: string): __ABBREV.__Samples.Builder;
-                        Id(x: string): __ABBREV.__Samples.Builder;
-                        Keywords(x: __ABBREV.__List.T<string>): __ABBREV.__Samples.Builder;
-                        Render(x: {
-                            (x: __ABBREV.__Dom.Element): void;
-                        }): __ABBREV.__Samples.Builder;
-                        Title(x: string): __ABBREV.__Samples.Builder;
-                        BFileName: __ABBREV.__WebSharper.OptionProxy<string>;
-                        BId: __ABBREV.__WebSharper.OptionProxy<string>;
-                        BKeywords: __ABBREV.__List.T<string>;
-                        BRender: __ABBREV.__WebSharper.OptionProxy<{
-                            (x: __ABBREV.__Dom.Element): void;
-                        }>;
-                        BTitle: __ABBREV.__WebSharper.OptionProxy<string>;
-                    }
-                    var op_PlusPlus : {
-                        <_M1>(a: __ABBREV.__WebSharper.OptionProxy<_M1>, b: __ABBREV.__WebSharper.OptionProxy<_M1>): __ABBREV.__WebSharper.OptionProxy<_M1>;
-                    };
-                    var req : {
-                        <_M1>(name: string, f: __ABBREV.__WebSharper.OptionProxy<_M1>): _M1;
-                    };
-                    var Build : {
-                        (): __ABBREV.__Samples.Builder;
-                    };
-                    var Clear : {
-                        (el: __ABBREV.__Dom.Element): void;
+                        (): void;
                     };
                 }
                 module SimpleTextBox {
                     var Main : {
-                        (parent: __ABBREV.__Dom.Element): void;
+                        (): __ABBREV.__Next.Doc;
+                    };
+                    var description : {
+                        (): __ABBREV.__Next.Doc;
                     };
                     var Sample : {
-                        (): __ABBREV.__Samples.Sample;
+                        (): any;
+                    };
+                }
+                module ContactFlow {
+                    interface ContactType {
+                    }
+                    interface ContactDetails {
+                    }
+                    interface Person {
+                        Name: string;
+                        Address: string;
+                    }
+                    var el : {
+                        (name: string): {
+                            (x: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                    };
+                    var elA : {
+                        (arg00: string, arg10: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, arg20: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var cls : {
+                        (arg00: string): __ABBREV.__Next.Attr;
+                    };
+                    var at : {
+                        (arg00: string, arg10: string): __ABBREV.__Next.Attr;
+                    };
+                    var inputRow : {
+                        (rv: __ABBREV.__Next.Var1<string>, id: string, lblText: string): __ABBREV.__Next.Doc;
+                    };
+                    var contactFlowlet : {
+                        (contactTy: __ABBREV.__ContactFlow.ContactType): any;
+                    };
+                    var finalPage : {
+                        (person: any, details: __ABBREV.__ContactFlow.ContactDetails): __ABBREV.__Next.Doc;
+                    };
+                    var personFlowlet : {
+                        (): any;
+                    };
+                    var contactTypeFlowlet : {
+                        (): any;
+                    };
+                    var exampleFlow : {
+                        (): __ABBREV.__Next.Doc;
+                    };
+                    var description : {
+                        (): __ABBREV.__Next.Doc;
+                    };
+                    var Sample : {
+                        (): any;
+                    };
+                }
+                module InputTransform {
+                    var Main : {
+                        (): __ABBREV.__Next.Doc;
+                    };
+                    var description : {
+                        (): __ABBREV.__Next.Doc;
+                    };
+                    var Sample : {
+                        (): any;
                     };
                 }
                 module Calculator {
@@ -3500,9 +3579,6 @@ declare module IntelliFactory {
                     var calcView : {
                         (rvCalc: __ABBREV.__Next.Var1<any>): __ABBREV.__Next.Doc;
                     };
-                    var Main : {
-                        (parent: __ABBREV.__Dom.Element): void;
-                    };
                     var initCalc : {
                         (): any;
                     };
@@ -3511,16 +3587,30 @@ declare module IntelliFactory {
                             (x: __ABBREV.__List.T<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
                     };
+                    var Main : {
+                        (): __ABBREV.__Next.Doc;
+                    };
+                    var description : {
+                        (): __ABBREV.__Next.Doc;
+                    };
                     var Sample : {
-                        (): __ABBREV.__Samples.Sample;
+                        (): any;
                     };
                 }
                 module MouseChase {
+                    var el : {
+                        (name: string): {
+                            (x: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                    };
                     var Main : {
-                        (parent: __ABBREV.__Dom.Element): void;
+                        (): __ABBREV.__Next.Doc;
+                    };
+                    var description : {
+                        (): __ABBREV.__Next.Doc;
                     };
                     var Sample : {
-                        (): __ABBREV.__Samples.Sample;
+                        (): any;
                     };
                 }
                 module TodoList {
@@ -3562,10 +3652,13 @@ declare module IntelliFactory {
                         (): __ABBREV.__Next.Doc;
                     };
                     var Main : {
-                        (parent: __ABBREV.__Dom.Element): void;
+                        (): __ABBREV.__Next.Doc;
+                    };
+                    var description : {
+                        (): __ABBREV.__Next.Doc;
                     };
                     var Sample : {
-                        (): __ABBREV.__Samples.Sample;
+                        (): any;
                     };
                 }
                 module PhoneExample {
@@ -3592,11 +3685,17 @@ declare module IntelliFactory {
                     var PhonesWidget : {
                         (phones: __ABBREV.__List.T<__ABBREV.__PhoneExample.Phone>): __ABBREV.__Next.Doc;
                     };
+                    var link : {
+                        (txt: string, href: string): __ABBREV.__Next.Doc;
+                    };
                     var Main : {
-                        (parent: __ABBREV.__Dom.Element): void;
+                        (): __ABBREV.__Next.Doc;
+                    };
+                    var description : {
+                        (): __ABBREV.__Next.Doc;
                     };
                     var Sample : {
-                        (): __ABBREV.__Samples.Sample;
+                        (): any;
                     };
                 }
                 module CheckBoxTest {
@@ -3609,14 +3708,93 @@ declare module IntelliFactory {
                         Name: string;
                         Age: number;
                     }
-                    var Main : {
-                        (parent: __ABBREV.__Dom.Element): void;
+                    var el : {
+                        (name: string): {
+                            (x: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
                     };
                     var People : {
                         (): __ABBREV.__List.T<__ABBREV.__CheckBoxTest.Person>;
                     };
+                    var Main : {
+                        (): __ABBREV.__Next.Doc;
+                    };
+                    var description : {
+                        (): __ABBREV.__Next.Doc;
+                    };
                     var Sample : {
-                        (): __ABBREV.__Samples.Sample;
+                        (): any;
+                    };
+                }
+                module Samples {
+                    interface Sample {
+                        FileName: string;
+                        Id: string;
+                        Keywords: __ABBREV.__List.T<string>;
+                        Render: __ABBREV.__Next.Doc;
+                        RenderDescription: __ABBREV.__Next.Doc;
+                        Title: string;
+                    }
+                    interface Builder {
+                        Create(): any;
+                        FileName(x: string): __ABBREV.__Samples.Builder;
+                        Id(x: string): __ABBREV.__Samples.Builder;
+                        Keywords(x: __ABBREV.__List.T<string>): __ABBREV.__Samples.Builder;
+                        Render(x: __ABBREV.__Next.Doc): __ABBREV.__Samples.Builder;
+                        RenderDescription(x: __ABBREV.__Next.Doc): __ABBREV.__Samples.Builder;
+                        Title(x: string): __ABBREV.__Samples.Builder;
+                        BFileName: __ABBREV.__WebSharper.OptionProxy<string>;
+                        BId: __ABBREV.__WebSharper.OptionProxy<string>;
+                        BKeywords: __ABBREV.__List.T<string>;
+                        BRender: __ABBREV.__WebSharper.OptionProxy<__ABBREV.__Next.Doc>;
+                        BRenderDescription: __ABBREV.__WebSharper.OptionProxy<__ABBREV.__Next.Doc>;
+                        BTitle: __ABBREV.__WebSharper.OptionProxy<string>;
+                    }
+                    interface SampleModel {
+                        ActiveSample: __ABBREV.__WebSharper.OptionProxy<any>;
+                        Samples: __ABBREV.__List.T<any>;
+                    }
+                    var op_PlusPlus : {
+                        <_M1>(a: __ABBREV.__WebSharper.OptionProxy<_M1>, b: __ABBREV.__WebSharper.OptionProxy<_M1>): __ABBREV.__WebSharper.OptionProxy<_M1>;
+                    };
+                    var req : {
+                        <_M1>(name: string, f: __ABBREV.__WebSharper.OptionProxy<_M1>): _M1;
+                    };
+                    var Build : {
+                        (): __ABBREV.__Samples.Builder;
+                    };
+                    var Clear : {
+                        (el: __ABBREV.__Dom.Element): void;
+                    };
+                    var createModelRv : {
+                        (samples: __ABBREV.__List.T<any>): __ABBREV.__Next.Var1<any>;
+                    };
+                    var el : {
+                        (arg00: string, arg10: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, arg20: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var at : {
+                        (arg00: string, arg10: string): __ABBREV.__Next.Attr;
+                    };
+                    var txt : {
+                        (arg00: string): __ABBREV.__Next.Doc;
+                    };
+                    var getActive : {
+                        (rvModel: __ABBREV.__Next.Var1<any>): __ABBREV.__WebSharper.OptionProxy<any>;
+                    };
+                    var renderLink : {
+                        (rvModel: __ABBREV.__Next.Var1<any>, sample: any): __ABBREV.__Next.Doc;
+                    };
+                    var navBar : {
+                        (rvModel: __ABBREV.__Next.Var1<any>): __ABBREV.__Next.Doc;
+                    };
+                    var mainContent : {
+                        (rvModel: __ABBREV.__Next.Var1<any>): __ABBREV.__Next.Doc;
+                    };
+                    var sideContent : {
+                        (rvModel: __ABBREV.__Next.Var1<any>): __ABBREV.__Next.Doc;
+                    };
+                    var Show : {
+                        (samples: __ABBREV.__List.T<any>): void;
                     };
                 }
             }
@@ -3625,16 +3803,16 @@ declare module IntelliFactory {
 }
 declare module __ABBREV {
     
-    export import __Samples = IntelliFactory.WebSharper.UI.Next.Samples;
-    export import __JQuery = IntelliFactory.WebSharper.JQuery;
-    export import __WebSharper = IntelliFactory.WebSharper;
     export import __List = IntelliFactory.WebSharper.List;
-    export import __Dom = IntelliFactory.WebSharper.Dom;
-    export import __Calculator = IntelliFactory.WebSharper.UI.Next.Calculator;
     export import __Next = IntelliFactory.WebSharper.UI.Next;
+    export import __WebSharper = IntelliFactory.WebSharper;
+    export import __ContactFlow = IntelliFactory.WebSharper.UI.Next.ContactFlow;
+    export import __Calculator = IntelliFactory.WebSharper.UI.Next.Calculator;
     export import __TodoList = IntelliFactory.WebSharper.UI.Next.TodoList;
     export import __ResizeArray = IntelliFactory.WebSharper.Collections.ResizeArray;
     export import __PhoneExample = IntelliFactory.WebSharper.UI.Next.PhoneExample;
     export import __CheckBoxTest = IntelliFactory.WebSharper.UI.Next.CheckBoxTest;
+    export import __Samples = IntelliFactory.WebSharper.UI.Next.Samples;
+    export import __Dom = IntelliFactory.WebSharper.Dom;
 }
 
