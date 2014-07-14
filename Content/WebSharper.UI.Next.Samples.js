@@ -13545,7 +13545,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
 
 (function()
 {
- var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,UI,Next,Calculator,Var1,Samples,List,Var,Doc,T,View1,View,CheckBoxTest,Seq,Person,SimpleTextBox,InputTransform,TodoList,PhoneExample,MouseChase,ContactFlow,Client,Attr,Flow,Util,String,Strings,IntrinsicFunctionProxy,document,Phone,Operators,Order,Utils,Builder,EventHandler,Option,Util1,Model,Model1,Collections,ResizeArray,ResizeArrayProxy,Arrays,Util2,TodoItem;
+ var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,UI,Next,Calculator,Var1,Samples,List,Var,Doc,T,View1,View,CheckBoxTest,Seq,Person,SimpleTextBox,InputTransform,TodoList,PhoneExample,MouseChase,ContactFlow,MiniSiteletTest,Client,Attr,Flow,Util,String,Strings,IntrinsicFunctionProxy,Unchecked,EventHandler,document,Phone,Operators,Order,Utils,Builder,Option,Util1,Model,Model1,Collections,ResizeArray,ResizeArrayProxy,Arrays,Util2,TodoItem;
  Runtime.Define(Global,{
   IntelliFactory:{
    WebSharper:{
@@ -13791,7 +13791,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
       Client:{
        All:Runtime.Field(function()
        {
-        return List.ofArray([SimpleTextBox.Sample(),InputTransform.Sample(),TodoList.Sample(),PhoneExample.Sample(),CheckBoxTest.Sample(),MouseChase.Sample(),Calculator.Sample(),ContactFlow.Sample()]);
+        return List.ofArray([SimpleTextBox.Sample(),InputTransform.Sample(),TodoList.Sample(),PhoneExample.Sample(),CheckBoxTest.Sample(),MouseChase.Sample(),Calculator.Sample(),ContactFlow.Sample(),MiniSiteletTest.Sample()]);
        }),
        Main:Runtime.Field(function()
        {
@@ -13927,38 +13927,38 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
       InputTransform:{
        Main:Runtime.Field(function()
        {
-        var _rvText_31_3,_inputField_39_3,_view_63_1,_viewCaps_64_2,_viewReverse_65_2,_viewWordCount_66_2,_viewWordCountStr_67_2,_viewWordOddEven_68_2,_views_70_1,_tableRow_79_2;
+        var _rvText_31_3,_inputField_39_3,_view_63_1,_viewCaps_65_2,_viewReverse_68_2,_viewWordCount_71_2,_viewWordCountStr_74_2,_viewWordOddEven_77_2,_views_80_1,_tableRow_89_2;
         _rvText_31_3=Var1.Create("");
         _inputField_39_3=Util.elA("div",List.ofArray([Util.cls("panel"),Util.cls("panel-default")]),List.ofArray([Util.elA("div",List.ofArray([Util.cls("panel-heading")]),List.ofArray([Util.elA("h3",List.ofArray([Util.cls("panel-title")]),List.ofArray([Doc.TextNode("Input")]))])),Util.elA("div",List.ofArray([Util.cls("panel-body")]),List.ofArray([Util.elA("form-horizontal",List.ofArray([Util.op_EqualsGreater("role","form")]),List.ofArray([Util.elA("div",List.ofArray([Util.cls("form-group")]),List.ofArray([Util.elA("label",List.ofArray([Util.cls("col-sm-2"),Util.cls("control-label"),Util.op_EqualsGreater("for","inputBox")]),List.ofArray([Doc.TextNode("Write something: ")])),Util.elA("div",List.ofArray([Util.cls("col-sm-10")]),List.ofArray([Doc.Input(List.ofArray([Util.op_EqualsGreater("class","form-control"),Util.op_EqualsGreater("id","inputBox")]),_rvText_31_3)]))]))]))]))]));
         _view_63_1=View1.FromVar(_rvText_31_3);
-        _viewCaps_64_2=View1.Map(function(s)
+        _viewCaps_65_2=View1.Map(function(s)
         {
          return s.toUpperCase();
         },_view_63_1);
-        _viewReverse_65_2=View1.Map(function(s)
+        _viewReverse_68_2=View1.Map(function(s)
         {
          return String.fromCharCode.apply(undefined,Strings.ToCharArray(s).slice().reverse());
         },_view_63_1);
-        _viewWordCount_66_2=View1.Map(function(s)
+        _viewWordCount_71_2=View1.Map(function(s)
         {
          return IntrinsicFunctionProxy.GetLength(Strings.SplitChars(s,[32],1));
         },_view_63_1);
-        _viewWordCountStr_67_2=View1.Map(function(value)
+        _viewWordCountStr_74_2=View1.Map(function(value)
         {
          return Global.String(value);
-        },_viewWordCount_66_2);
-        _viewWordOddEven_68_2=View1.Map(function(i)
+        },_viewWordCount_71_2);
+        _viewWordOddEven_77_2=View1.Map(function(i)
         {
          return i%2===0?"Even":"Odd";
-        },_viewWordCount_66_2);
-        _views_70_1=List.ofArray([["Entered Text",_view_63_1],["Capitalised",_viewCaps_64_2],["Reversed",_viewReverse_65_2],["Word Count",_viewWordCountStr_67_2],["Is the word count odd or even?",_viewWordOddEven_68_2]]);
-        _tableRow_79_2=Runtime.Tupled(function(tupledArg)
+        },_viewWordCount_71_2);
+        _views_80_1=List.ofArray([["Entered Text",_view_63_1],["Capitalised",_viewCaps_65_2],["Reversed",_viewReverse_68_2],["Word Count",_viewWordCountStr_74_2],["Is the word count odd or even?",_viewWordOddEven_77_2]]);
+        _tableRow_89_2=Runtime.Tupled(function(tupledArg)
         {
          var view;
          view=tupledArg[1];
          return Util.el("tr",List.ofArray([Util.el("td",List.ofArray([Doc.TextNode(tupledArg[0])])),Util.el("td",List.ofArray([Doc.TextView(view)]))]));
         });
-        return Util.el("div",List.ofArray([_inputField_39_3,Util.elA("div",List.ofArray([Util.cls("panel"),Util.cls("panel-default")]),List.ofArray([Util.elA("div",List.ofArray([Util.cls("panel-heading")]),List.ofArray([Util.elA("h3",List.ofArray([Util.cls("panel-title")]),List.ofArray([Doc.TextNode("Output")]))])),Util.elA("div",List.ofArray([Util.cls("panel-body")]),List.ofArray([Util.elA("table",List.ofArray([Util.cls("table")]),List.ofArray([Util.el("tbody",List.ofArray([Doc.Concat(List.map(_tableRow_79_2,_views_70_1))]))]))]))]))]));
+        return Util.el("div",List.ofArray([_inputField_39_3,Util.elA("div",List.ofArray([Util.cls("panel"),Util.cls("panel-default")]),List.ofArray([Util.elA("div",List.ofArray([Util.cls("panel-heading")]),List.ofArray([Util.elA("h3",List.ofArray([Util.cls("panel-title")]),List.ofArray([Doc.TextNode("Output")]))])),Util.elA("div",List.ofArray([Util.cls("panel-body")]),List.ofArray([Util.elA("table",List.ofArray([Util.cls("table")]),List.ofArray([Util.el("tbody",List.ofArray([Doc.Concat(List.map(_tableRow_89_2,_views_80_1))]))]))]))]))]));
        }),
        Sample:Runtime.Field(function()
        {
@@ -13988,6 +13988,163 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        {
         return Util.el("div",List.ofArray([Doc.TextNode("Transforming the data provided by a single data source.")]));
        })
+      },
+      MiniSiteletTest:{
+       GlobalGo:function(_var,act)
+       {
+        return Var.Set(_var,act);
+       },
+       Main:function()
+       {
+        var m;
+        m=Var1.Create({
+         $:0
+        });
+        return MiniSiteletTest.Pack(m,function(go)
+        {
+         var ctx;
+         ctx={
+          Go:go
+         };
+         return function(_arg1)
+         {
+          var d;
+          if(_arg1.$==1)
+           {
+            d=_arg1.$0;
+            return Doc.Append(MiniSiteletTest.NavBar(m),MiniSiteletTest.Page2(ctx,d));
+           }
+          else
+           {
+            return _arg1.$==2?Doc.Append(MiniSiteletTest.NavBar(m),MiniSiteletTest.Page3(ctx)):Doc.Append(MiniSiteletTest.NavBar(m),MiniSiteletTest.Page1(ctx));
+           }
+         };
+        });
+       },
+       NavBar:function(_var)
+       {
+        var x;
+        x=View1.FromVar(_var);
+        return Doc.EmbedView(View1.Map(function(active)
+        {
+         var renderLink;
+         renderLink=function(action)
+         {
+          return MiniSiteletTest.elA("li",List.ofArray([Unchecked.Equals(action,active)?MiniSiteletTest.cls("active"):Attr.get_Empty()]),List.ofArray([Doc.ElementWithEvents("a",List.ofArray([Attr.Create("href","#")]),List.ofArray([EventHandler.CreateHandler("click",function()
+          {
+           return MiniSiteletTest.GlobalGo(_var,action);
+          })]),List.ofArray([Doc.TextNode(MiniSiteletTest.showAct(action))]))]));
+         };
+         return MiniSiteletTest.elA("nav",List.ofArray([MiniSiteletTest.cls("navbar"),MiniSiteletTest.cls("navbar-default"),Attr.Create("role","navigation")]),List.ofArray([MiniSiteletTest.elA("ul",List.ofArray([MiniSiteletTest.cls("nav"),MiniSiteletTest.cls("navbar-nav")]),List.ofArray([Doc.Concat(List.map(renderLink,MiniSiteletTest.pages()))]))]));
+        },x));
+       },
+       Pack:function(model,main)
+       {
+        var arg10;
+        arg10=View1.FromVar(model);
+        return Doc.EmbedView(View1.Map(main(function(arg101)
+        {
+         return Var.Set(model,arg101);
+        }),arg10));
+       },
+       Page1:function(ctx)
+       {
+        var clo1,arg20,arg201;
+        clo1=MiniSiteletTest.el("div");
+        arg20=function()
+        {
+         return ctx.Go.call(null,{
+          $:1,
+          $0:0
+         });
+        };
+        arg201=function()
+        {
+         return ctx.Go.call(null,{
+          $:1,
+          $0:1
+         });
+        };
+        return Doc.Concat(List.ofArray([clo1(List.ofArray([(MiniSiteletTest.el("h1"))(List.ofArray([Doc.TextNode("Page 1")])),(MiniSiteletTest.el("p"))(List.ofArray([Doc.TextNode("Some exciting content from page 1!")])),Doc.Button("Go to P2/0",List.ofArray([MiniSiteletTest.cls("btn"),MiniSiteletTest.cls("btn-default")]),arg20),Doc.Button("Go to P2/1",List.ofArray([MiniSiteletTest.cls("btn"),MiniSiteletTest.cls("btn-default")]),arg201)]))]));
+       },
+       Page2:function(ctx,v)
+       {
+        var clo1,arg20,arg201;
+        clo1=MiniSiteletTest.el("div");
+        arg20=function()
+        {
+         return ctx.Go.call(null,{
+          $:0
+         });
+        };
+        arg201=function()
+        {
+         return ctx.Go.call(null,{
+          $:2
+         });
+        };
+        return Doc.Concat(List.ofArray([clo1(List.ofArray([(MiniSiteletTest.el("h1"))(List.ofArray([Doc.TextNode("Page 2")])),(MiniSiteletTest.el("p"))(List.ofArray([Doc.TextNode("Some exciting content from page 2 ("+Global.String(v)+") !")])),Doc.Button("Go to P1",List.ofArray([MiniSiteletTest.cls("btn"),MiniSiteletTest.cls("btn-default")]),arg20),Doc.Button("Go to P3",List.ofArray([MiniSiteletTest.cls("btn"),MiniSiteletTest.cls("btn-default")]),arg201)]))]));
+       },
+       Page3:function(ctx)
+       {
+        var arg20;
+        arg20=function()
+        {
+         return ctx.Go.call(null,{
+          $:0
+         });
+        };
+        return Doc.Concat(List.ofArray([(MiniSiteletTest.el("div"))(List.ofArray([(MiniSiteletTest.el("h1"))(List.ofArray([Doc.TextNode("Page 3")])),(MiniSiteletTest.el("p"))(List.ofArray([Doc.TextNode("Some exciting content from page 3!")])),Doc.Button("Go to P1",Runtime.New(T,{
+         $:0
+        }),arg20)]))]));
+       },
+       Sample:Runtime.Field(function()
+       {
+        return Samples.Build().Id("MiniSitelet Example").FileName("MiniSiteletTest.fs").Keywords(List.ofArray(["text"])).Render(MiniSiteletTest.Main()).RenderDescription(MiniSiteletTest.description()).Create();
+       }),
+       cls:function(arg00)
+       {
+        return Attr.CreateClass(arg00);
+       },
+       description:Runtime.Field(function()
+       {
+        return Doc.Element("div",Runtime.New(T,{
+         $:0
+        }),List.ofArray([Doc.TextNode("A small sitelet example")]));
+       }),
+       el:function(name)
+       {
+        var arg10;
+        arg10=Runtime.New(T,{
+         $:0
+        });
+        return function(arg20)
+        {
+         return Doc.Element(name,arg10,arg20);
+        };
+       },
+       elA:function(arg00,arg10,arg20)
+       {
+        return Doc.Element(arg00,arg10,arg20);
+       },
+       pages:Runtime.Field(function()
+       {
+        return List.ofArray([{
+         $:0
+        },{
+         $:1,
+         $0:0
+        },{
+         $:1,
+         $0:1
+        },{
+         $:2
+        }]);
+       }),
+       showAct:function(_arg1)
+       {
+        return _arg1.$==1?"Page 2 ("+Global.String(_arg1.$0)+")":_arg1.$==2?"Page 3":"Page 1";
+       }
       },
       MouseChase:{
        Main:Runtime.Field(function()
@@ -14572,6 +14729,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   PhoneExample=Runtime.Safe(Next.PhoneExample);
   MouseChase=Runtime.Safe(Next.MouseChase);
   ContactFlow=Runtime.Safe(Next.ContactFlow);
+  MiniSiteletTest=Runtime.Safe(Next.MiniSiteletTest);
   Client=Runtime.Safe(Next.Client);
   Attr=Runtime.Safe(Next.Attr);
   Flow=Runtime.Safe(Next.Flow);
@@ -14579,13 +14737,14 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   String=Runtime.Safe(Global.String);
   Strings=Runtime.Safe(WebSharper.Strings);
   IntrinsicFunctionProxy=Runtime.Safe(WebSharper.IntrinsicFunctionProxy);
+  Unchecked=Runtime.Safe(WebSharper.Unchecked);
+  EventHandler=Runtime.Safe(Next.EventHandler);
   document=Runtime.Safe(Global.document);
   Phone=Runtime.Safe(PhoneExample.Phone);
   Operators=Runtime.Safe(WebSharper.Operators);
   Order=Runtime.Safe(PhoneExample.Order);
   Utils=Runtime.Safe(PhoneExample.Utils);
   Builder=Runtime.Safe(Samples.Builder);
-  EventHandler=Runtime.Safe(Next.EventHandler);
   Option=Runtime.Safe(WebSharper.Option);
   Util1=Runtime.Safe(SimpleTextBox.Util);
   Model=Runtime.Safe(Next.Model);
@@ -14612,6 +14771,9 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   MouseChase.description();
   MouseChase.Sample();
   MouseChase.Main();
+  MiniSiteletTest.pages();
+  MiniSiteletTest.description();
+  MiniSiteletTest.Sample();
   InputTransform.description();
   InputTransform.Sample();
   InputTransform.Main();

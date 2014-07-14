@@ -3456,6 +3456,65 @@ declare module IntelliFactory {
                         (): void;
                     };
                 }
+                module MiniSiteletTest {
+                    interface Action {
+                    }
+                    interface Context {
+                        Go: {
+                            (x: __ABBREV.__MiniSiteletTest.Action): void;
+                        };
+                    }
+                    var el : {
+                        (name: string): {
+                            (x: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                    };
+                    var elA : {
+                        (arg00: string, arg10: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, arg20: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var cls : {
+                        (arg00: string): __ABBREV.__Next.Attr;
+                    };
+                    var GlobalGo : {
+                        (_var: __ABBREV.__Next.Var1<__ABBREV.__MiniSiteletTest.Action>, act: __ABBREV.__MiniSiteletTest.Action): void;
+                    };
+                    var showAct : {
+                        (_arg1: __ABBREV.__MiniSiteletTest.Action): string;
+                    };
+                    var NavBar : {
+                        (_var: __ABBREV.__Next.Var1<__ABBREV.__MiniSiteletTest.Action>): __ABBREV.__Next.Doc;
+                    };
+                    var Page1 : {
+                        (ctx: any): __ABBREV.__Next.Doc;
+                    };
+                    var Page2 : {
+                        (ctx: any, v: number): __ABBREV.__Next.Doc;
+                    };
+                    var Page3 : {
+                        (ctx: any): __ABBREV.__Next.Doc;
+                    };
+                    var Pack : {
+                        <_M1>(model: __ABBREV.__Next.Var1<_M1>, main: {
+                            (x: {
+                                (x: _M1): void;
+                            }): {
+                                (x: _M1): __ABBREV.__Next.Doc;
+                            };
+                        }): __ABBREV.__Next.Doc;
+                    };
+                    var Main : {
+                        (): __ABBREV.__Next.Doc;
+                    };
+                    var pages : {
+                        (): __ABBREV.__List.T<__ABBREV.__MiniSiteletTest.Action>;
+                    };
+                    var description : {
+                        (): __ABBREV.__Next.Doc;
+                    };
+                    var Sample : {
+                        (): any;
+                    };
+                }
                 module SimpleTextBox {
                     var Main : {
                         (): __ABBREV.__Next.Doc;
@@ -3804,8 +3863,9 @@ declare module IntelliFactory {
 declare module __ABBREV {
     
     export import __List = IntelliFactory.WebSharper.List;
-    export import __Next = IntelliFactory.WebSharper.UI.Next;
+    export import __MiniSiteletTest = IntelliFactory.WebSharper.UI.Next.MiniSiteletTest;
     export import __WebSharper = IntelliFactory.WebSharper;
+    export import __Next = IntelliFactory.WebSharper.UI.Next;
     export import __ContactFlow = IntelliFactory.WebSharper.UI.Next.ContactFlow;
     export import __Calculator = IntelliFactory.WebSharper.UI.Next.Calculator;
     export import __TodoList = IntelliFactory.WebSharper.UI.Next.TodoList;
