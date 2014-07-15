@@ -3299,6 +3299,9 @@ declare module IntelliFactory {
                     var Element : {
                         (name: string, attr: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, children: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                     };
+                    var Static : {
+                        (elem: __ABBREV.__Dom.Element): __ABBREV.__Next.Doc;
+                    };
                     var ElementWithEvents : {
                         (name: string, attr: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, eventHandlers: __ABBREV.__WebSharper.seq<__ABBREV.__Next.EventHandler>, children: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                     };
@@ -3351,6 +3354,17 @@ declare module IntelliFactory {
                         (): __ABBREV.__Next.Doc;
                     };
                 }
+                module MiniSitelet {
+                    var Create : {
+                        <_M1>(model: __ABBREV.__Next.Var1<_M1>, main: {
+                            (x: {
+                                (x: _M1): void;
+                            }): {
+                                (x: _M1): __ABBREV.__Next.Doc;
+                            };
+                        }): __ABBREV.__Next.Doc;
+                    };
+                }
                 module Flow {
                     interface FlowBuilder {
                         Bind<_M1, _M2>(comp: any, func: {
@@ -3359,6 +3373,11 @@ declare module IntelliFactory {
                         Return<_M1>(value: _M1): any;
                         ReturnFrom<_M1>(wrappedVal: any): any;
                     }
+                    var Map : {
+                        <_M1, _M2>(f: {
+                            (x: _M1): _M2;
+                        }, x: any): any;
+                    };
                     var Bind : {
                         <_M1, _M2>(m: any, k: {
                             (x: _M1): any;
@@ -3456,22 +3475,128 @@ declare module IntelliFactory {
                         (): void;
                     };
                 }
-                module MiniSiteletTest {
+                module MessageBoard {
+                    interface ViewModel<_T1> {
+                        Projection: {
+                            (x: _T1): number;
+                        };
+                        Items: __ABBREV.__Next.Model1<__ABBREV.__WebSharper.seq<_T1>, __ABBREV.__ResizeArray.ResizeArrayProxy<_T1>>;
+                    }
+                    interface User {
+                        Name: string;
+                        Password: string;
+                    }
+                    interface Post {
+                        PostId: number;
+                        PostAuthorName: string;
+                        Content: string;
+                    }
+                    interface Thread {
+                        ThreadId: number;
+                        Title: string;
+                        ThreadAuthorName: string;
+                        Posts: any;
+                    }
                     interface Action {
+                    }
+                    interface LoginResult {
+                    }
+                    interface State {
+                        LoggedIn: __ABBREV.__Next.Var1<__ABBREV.__WebSharper.OptionProxy<any>>;
+                        Threads: any;
+                        Go: {
+                            (x: __ABBREV.__MessageBoard.Action): void;
+                        };
+                    }
+                    var showAction : {
+                        (_arg1: __ABBREV.__MessageBoard.Action): string;
+                    };
+                    var Create : {
+                        <_M1>(proj: {
+                            (x: _M1): number;
+                        }): any;
+                    };
+                    var Add : {
+                        <_M1>(m: any, item: _M1): void;
+                    };
+                    var Remove : {
+                        <_M1>(m: any, item: _M1): void;
+                    };
+                    var createThread : {
+                        (author: string, title: string): any;
+                    };
+                    var createPost : {
+                        (user: any, content: string): any;
+                    };
+                    var getUser : {
+                        <_M1>(st: __ABBREV.__Next.Var1<__ABBREV.__WebSharper.OptionProxy<_M1>>): _M1;
+                    };
+                    var loggedInLabel : {
+                        (st: any): __ABBREV.__Next.Doc;
+                    };
+                    var GlobalGo : {
+                        <_M1>(arg00: __ABBREV.__Next.Var1<_M1>, arg10: _M1): void;
+                    };
+                    var loggedIn : {
+                        (st: any): boolean;
+                    };
+                    var NavBar : {
+                        (_var: __ABBREV.__Next.Var1<__ABBREV.__MessageBoard.Action>, st: any): __ABBREV.__Next.Doc;
+                    };
+                    var LoginPage : {
+                        (st: any): __ABBREV.__Next.Doc;
+                    };
+                    var NewThreadPage : {
+                        (st: any): __ABBREV.__Next.Doc;
+                    };
+                    var ThreadListPage : {
+                        (st: any): __ABBREV.__Next.Doc;
+                    };
+                    var ShowThreadPage : {
+                        (st: any, thread: any): __ABBREV.__Next.Doc;
+                    };
+                    var DoLogOut : {
+                        (st: any): void;
+                    };
+                    var Main : {
+                        (): __ABBREV.__Next.Doc;
+                    };
+                    var freshTid : {
+                        (): {
+                            (): number;
+                        };
+                    };
+                    var freshPid : {
+                        (): {
+                            (): number;
+                        };
+                    };
+                    var initialThreads : {
+                        (): any;
+                    };
+                    var description : {
+                        (): __ABBREV.__Next.Doc;
+                    };
+                    var Sample : {
+                        (): any;
+                    };
+                }
+                module MiniSiteletTest {
+                    interface Page {
                     }
                     interface Context {
                         Go: {
-                            (x: __ABBREV.__MiniSiteletTest.Action): void;
+                            (x: __ABBREV.__MiniSiteletTest.Page): void;
                         };
                     }
                     var GlobalGo : {
-                        (_var: __ABBREV.__Next.Var1<__ABBREV.__MiniSiteletTest.Action>, act: __ABBREV.__MiniSiteletTest.Action): void;
+                        (_var: __ABBREV.__Next.Var1<__ABBREV.__MiniSiteletTest.Page>, act: __ABBREV.__MiniSiteletTest.Page): void;
                     };
                     var showAct : {
-                        (_arg1: __ABBREV.__MiniSiteletTest.Action): string;
+                        (_arg1: __ABBREV.__MiniSiteletTest.Page): string;
                     };
                     var NavBar : {
-                        (_var: __ABBREV.__Next.Var1<__ABBREV.__MiniSiteletTest.Action>): __ABBREV.__Next.Doc;
+                        (_var: __ABBREV.__Next.Var1<__ABBREV.__MiniSiteletTest.Page>): __ABBREV.__Next.Doc;
                     };
                     var Page1 : {
                         (ctx: any): __ABBREV.__Next.Doc;
@@ -3482,20 +3607,11 @@ declare module IntelliFactory {
                     var Page3 : {
                         (ctx: any): __ABBREV.__Next.Doc;
                     };
-                    var Pack : {
-                        <_M1>(model: __ABBREV.__Next.Var1<_M1>, main: {
-                            (x: {
-                                (x: _M1): void;
-                            }): {
-                                (x: _M1): __ABBREV.__Next.Doc;
-                            };
-                        }): __ABBREV.__Next.Doc;
-                    };
                     var Main : {
                         (): __ABBREV.__Next.Doc;
                     };
                     var pages : {
-                        (): __ABBREV.__List.T<__ABBREV.__MiniSiteletTest.Action>;
+                        (): __ABBREV.__List.T<__ABBREV.__MiniSiteletTest.Page>;
                     };
                     var description : {
                         (): __ABBREV.__Next.Doc;
@@ -3819,9 +3935,6 @@ declare module IntelliFactory {
                     var op_EqualsEqualsGreater : {
                         (k: string, v: string): __ABBREV.__Next.Attr;
                     };
-                    var div : {
-                        (xs: __ABBREV.__Next.Doc): __ABBREV.__Next.Doc;
-                    };
                     var divc : {
                         (c: string): {
                             (x: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
@@ -3829,6 +3942,11 @@ declare module IntelliFactory {
                     };
                     var txt : {
                         (arg00: string): __ABBREV.__Next.Doc;
+                    };
+                    var div : {
+                        (): {
+                            (x: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
                     };
                 }
             }
@@ -3838,13 +3956,14 @@ declare module IntelliFactory {
 declare module __ABBREV {
     
     export import __List = IntelliFactory.WebSharper.List;
-    export import __MiniSiteletTest = IntelliFactory.WebSharper.UI.Next.MiniSiteletTest;
     export import __Next = IntelliFactory.WebSharper.UI.Next;
+    export import __WebSharper = IntelliFactory.WebSharper;
+    export import __ResizeArray = IntelliFactory.WebSharper.Collections.ResizeArray;
+    export import __MessageBoard = IntelliFactory.WebSharper.UI.Next.MessageBoard;
+    export import __MiniSiteletTest = IntelliFactory.WebSharper.UI.Next.MiniSiteletTest;
     export import __ContactFlow = IntelliFactory.WebSharper.UI.Next.ContactFlow;
     export import __Calculator = IntelliFactory.WebSharper.UI.Next.Calculator;
     export import __TodoList = IntelliFactory.WebSharper.UI.Next.TodoList;
-    export import __WebSharper = IntelliFactory.WebSharper;
-    export import __ResizeArray = IntelliFactory.WebSharper.Collections.ResizeArray;
     export import __PhoneExample = IntelliFactory.WebSharper.UI.Next.PhoneExample;
     export import __CheckBoxTest = IntelliFactory.WebSharper.UI.Next.CheckBoxTest;
     export import __Samples = IntelliFactory.WebSharper.UI.Next.Samples;
