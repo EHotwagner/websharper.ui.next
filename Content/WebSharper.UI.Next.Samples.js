@@ -13572,7 +13572,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
 
 (function()
 {
- var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,UI,Next,Calculator,Var1,Samples,List,Var,Doc,T,View1,Utilities,CheckBoxTest,Seq,Person,SimpleTextBox,InputTransform,TodoList,PhoneExample,MouseChase,ContactFlow,MiniSiteletTest,MessageBoard,Client,Flow,String,Strings,IntrinsicFunctionProxy,Model,Model1,Collections,ResizeArray,ResizeArrayProxy,MiniSitelet,Attr,EventHandler,Arrays,Operators,Unchecked,document,Phone,Order,Builder,window,Error,Option,Util,TodoItem;
+ var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,UI,Next,Calculator,Var1,Samples,List,Var,Doc,T,View1,Utilities,CheckBoxTest,Seq,Person,SimpleTextBox,InputTransform,TodoList,PhoneExample,MouseChase,ContactFlow,MiniSiteletTest,MessageBoard,Client,Flow,String,Strings,IntrinsicFunctionProxy,Attr,Auth,Fresh,ViewModel,Operators,MiniSitelet,EventHandler,Model,Model1,Collections,ResizeArray,ResizeArrayProxy,Arrays,Unchecked,document,Phone,Order,Builder,window,Error,Option,Util,TodoItem;
  Runtime.Define(Global,{
   IntelliFactory:{
    WebSharper:{
@@ -13955,234 +13955,296 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        })
       },
       MessageBoard:{
-       Add:function(m,item)
-       {
-        return Model.Update(function(all)
+       Auth:{
+        CheckLogin:function(name,pass)
         {
-         return all.Add(item);
-        },m.Items);
-       },
-       Create:function(proj)
-       {
-        return{
-         Projection:proj,
-         Items:Model1.Create(function(arr)
-         {
-          return arr.ToArray();
-         },ResizeArrayProxy.New2())
-        };
-       },
-       DoLogOut:function(st)
-       {
-        return Var.Set(st.LoggedIn,{
-         $:0
-        });
-       },
-       GlobalGo:function(arg00,arg10)
-       {
-        return Var.Set(arg00,arg10);
-       },
-       LoginPage:function(st)
-       {
-        var rvUser,rvPass,rvMsg,inputRow,clo1,arg101;
-        rvUser=Var1.Create("");
-        rvPass=Var1.Create("");
-        rvMsg=Var1.Create("");
-        inputRow=function(rv,id,lblText,isPass)
-        {
-         var control;
-         control=isPass?function(arg00)
-         {
-          return function(arg10)
-          {
-           return Doc.PasswordBox(arg00,arg10);
-          };
-         }:function(arg00)
-         {
-          return function(arg10)
-          {
-           return Doc.Input(arg00,arg10);
-          };
-         };
-         return Utilities.elA("div",List.ofArray([Utilities.cls("form-group")]),List.ofArray([Utilities.elA("label",List.ofArray([Utilities.op_EqualsEqualsGreater("for",id),Utilities.cls("col-sm-2"),Utilities.cls("control-label")]),List.ofArray([Doc.TextNode(lblText)])),Utilities.elA("div",List.ofArray([Utilities.cls("col-sm-2")]),List.ofArray([(control(List.ofArray([Utilities.cls("form-control"),Utilities.op_EqualsEqualsGreater("id",id),Utilities.op_EqualsEqualsGreater("placeholder",lblText)])))(rv)]))]));
-        };
-        clo1=Utilities.el("div");
-        arg101=List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-primary")]);
-        return clo1(List.ofArray([(Utilities.el("div"))(List.ofArray([Utilities.elA("p",List.ofArray([Utilities.cls("bg-danger")]),List.ofArray([Doc.TextView(View1.FromVar(rvMsg))]))])),Utilities.elA("form",List.ofArray([Utilities.cls("form-horizontal"),Utilities.op_EqualsEqualsGreater("role","form")]),List.ofArray([inputRow(rvUser,"user","Username",false),inputRow(rvPass,"pass","Password",true),Utilities.elA("div",List.ofArray([Utilities.cls("form-group")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("col-sm-offset-2"),Utilities.cls("col-sm-10")]),List.ofArray([Doc.Button("Log In",arg101,function()
-        {
-         var name,pass,matchValue,loginRes,user;
-         name=Var.Get(rvUser);
-         pass=Var.Get(rvPass);
+         var matchValue;
          matchValue=[name,pass];
-         loginRes=matchValue[0]==="TestUser"?matchValue[1]==="TestPass"?{
-          $:0,
+         return matchValue[0]==="TestUser"?matchValue[1]==="TestPass"?{
+          $:1,
           $0:{
            Name:name,
            Password:pass
           }
          }:{
-          $:2
+          $:0
          }:{
-          $:1
+          $:0
          };
-         if(loginRes.$==1)
-          {
-           return Var.Set(rvMsg,"No such user.");
-          }
-         else
-          {
-           if(loginRes.$==2)
-            {
-             return Var.Set(rvMsg,"Invalid password.");
-            }
-           else
-            {
-             user=loginRes.$0;
-             Var.Set(rvMsg,"");
-             Var.Set(st.LoggedIn,{
-              $:1,
-              $0:user
-             });
-             return st.Go.call(null,{
-              $:1
-             });
-            }
-          }
-        })]))]))]))]));
-       },
-       Main:function()
-       {
-        var actVar,loggedInVar,threadModel;
-        actVar=Var1.Create({
-         $:0
-        });
-        loggedInVar=Var1.Create({
-         $:0
-        });
-        threadModel=MessageBoard.initialThreads();
-        return MiniSitelet.Create(actVar,function(go)
+        },
+        Create:function()
         {
-         var st,arg00,withNavbar;
-         st={
-          LoggedIn:loggedInVar,
-          Threads:threadModel,
-          Go:go
-         };
-         arg00=MessageBoard.NavBar(actVar,st);
-         withNavbar=function(arg10)
+         var loggedIn,hidden,hide,show,x,loginForm,login,logout;
+         loggedIn=Var1.Create({
+          $:0
+         });
+         hidden=Var1.Create(true);
+         hide=function()
          {
-          return Doc.Append(arg00,arg10);
+          return hidden.set_Value(true);
          };
-         return function(_arg1)
+         show=function()
          {
-          if(_arg1.$==3)
+          return hidden.set_Value(false);
+         };
+         x=hidden.get_View();
+         loginForm=Utilities.elA("div",List.ofArray([Attr.ViewStyle("display",View1.Map(function(yes)
+         {
+          return yes?"none":"block";
+         },x))]),List.ofArray([Auth.LoginForm(function(user)
+         {
+          loggedIn.set_Value({
+           $:1,
+           $0:user
+          });
+          return hide(null);
+         })]));
+         login=function()
+         {
+          return show(null);
+         };
+         logout=function()
+         {
+          loggedIn.set_Value({
+           $:0
+          });
+          return hide(null);
+         };
+         return{
+          LoggedIn:loggedIn.get_View(),
+          LoginForm:loginForm,
+          StatusWidget:Auth.StatusWidget(login,logout,loggedIn.get_View()),
+          HideForm:hide,
+          ShowForm:show
+         };
+        },
+        LoginForm:function(onLogin)
+        {
+         var rvUser,rvPass,clo1,arg10,x,y,message,inputRow,clo11,arg20;
+         rvUser=Var1.Create("");
+         rvPass=Var1.Create("");
+         clo1=Utilities.el("div");
+         x=rvUser.get_View();
+         y=rvPass.get_View();
+         arg10=List.ofArray([Utilities.elA("p",List.ofArray([Utilities.cls("bg-danger")]),List.ofArray([Doc.EmbedView(View1.Map2(function(u)
+         {
+          return function(p)
+          {
+           var matchValue;
+           matchValue=[u,p];
+           return matchValue[0]===""?matchValue[1]===""?Doc.get_Empty():Auth.CheckLogin(matchValue[0],matchValue[1]).$==0?Doc.TextNode("Invalid credentials"):Doc.get_Empty():Auth.CheckLogin(matchValue[0],matchValue[1]).$==0?Doc.TextNode("Invalid credentials"):Doc.get_Empty();
+          };
+         },x,y))]))]);
+         message=clo1(arg10);
+         inputRow=function(rv,id,lblText,isPass)
+         {
+          var control;
+          control=isPass?function(arg00)
+          {
+           return function(arg101)
            {
-            return withNavbar(MessageBoard.NewThreadPage(st));
+            return Doc.PasswordBox(arg00,arg101);
+           };
+          }:function(arg00)
+          {
+           return function(arg101)
+           {
+            return Doc.Input(arg00,arg101);
+           };
+          };
+          return Utilities.elA("div",List.ofArray([Utilities.cls("form-group")]),List.ofArray([Utilities.elA("label",List.ofArray([Utilities.op_EqualsEqualsGreater("for",id),Utilities.cls("col-sm-2"),Utilities.cls("control-label")]),List.ofArray([Doc.TextNode(lblText)])),Utilities.elA("div",List.ofArray([Utilities.cls("col-sm-2")]),List.ofArray([(control(List.ofArray([Utilities.cls("form-control"),Utilities.op_EqualsEqualsGreater("id",id),Utilities.op_EqualsEqualsGreater("placeholder",lblText)])))(rv)]))]));
+         };
+         clo11=Utilities.el("div");
+         arg20=function()
+         {
+          var matchValue,user;
+          matchValue=Auth.CheckLogin(rvUser.get_Value(),rvPass.get_Value());
+          if(matchValue.$==0)
+           {
+            return null;
            }
           else
            {
-            if(_arg1.$==1)
-             {
-              return withNavbar(MessageBoard.ThreadListPage(st));
-             }
-            else
-             {
-              if(_arg1.$==4)
-               {
-                MessageBoard.DoLogOut(st);
-                return withNavbar(MessageBoard.LoginPage(st));
-               }
-              else
-               {
-                return _arg1.$==2?withNavbar(MessageBoard.ShowThreadPage(st,_arg1.$0)):withNavbar(MessageBoard.LoginPage(st));
-               }
-             }
+            user=matchValue.$0;
+            Var.Set(rvUser,"");
+            Var.Set(rvPass,"");
+            return onLogin(user);
            }
+         };
+         return clo11(List.ofArray([message,Utilities.elA("form",List.ofArray([Utilities.cls("form-horizontal"),Utilities.op_EqualsEqualsGreater("role","form")]),List.ofArray([inputRow(rvUser,"user","Username",false),inputRow(rvPass,"pass","Password",true),Utilities.elA("div",List.ofArray([Utilities.cls("form-group")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("col-sm-offset-2"),Utilities.cls("col-sm-10")]),List.ofArray([Doc.Button("Log In",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-primary")]),arg20)]))]))]))]));
+        },
+        StatusWidget:function(login,logout,view)
+        {
+         return Doc.EmbedView(View1.Map(function(_arg1)
+         {
+          return _arg1.$==0?Doc.Concat(List.ofArray([Doc.TextNode("You are not logged in."),Doc.Button("Login",Runtime.New(T,{
+           $:0
+          }),login)])):Doc.Concat(List.ofArray([Doc.TextNode("Welcome, "+_arg1.$0.Name+"!"),Doc.Button("Logout",Runtime.New(T,{
+           $:0
+          }),logout)]));
+         },view));
+        }
+       },
+       CreatePost:function(user,content)
+       {
+        return{
+         PostId:(Fresh.Int())(null),
+         PostAuthorName:user.Name,
+         Content:content
+        };
+       },
+       CreateThread:function(author,title)
+       {
+        return{
+         ThreadId:(Fresh.Int())(null),
+         Title:title,
+         ThreadAuthorName:author,
+         Posts:ViewModel.Create(function(p)
+         {
+          return p.PostId;
+         })
+        };
+       },
+       Fresh:{
+        Int:Runtime.Field(function()
+        {
+         var _tid_14_1;
+         _tid_14_1={
+          contents:0
+         };
+         return function()
+         {
+          Operators.Increment(_tid_14_1);
+          return _tid_14_1.contents;
+         };
+        })
+       },
+       InitialThreads:function()
+       {
+        var thread,threadModel;
+        thread=MessageBoard.CreateThread("SimonJF","Hello, World! This is a topic.");
+        threadModel=ViewModel.Create(function(t)
+        {
+         return t.ThreadId;
+        });
+        ViewModel.Add(threadModel,thread);
+        return threadModel;
+       },
+       Main:function()
+       {
+        var actVar,auth,threadModel;
+        actVar=Var1.Create({
+         $:2
+        });
+        auth=Auth.Create();
+        threadModel=MessageBoard.InitialThreads();
+        return MiniSitelet.Create(actVar,function(go)
+        {
+         var st,navbar;
+         st={
+          Auth:auth,
+          Threads:threadModel,
+          Go:go
+         };
+         navbar=MessageBoard.NavBar(auth,actVar,st);
+         return function(x)
+         {
+          auth.HideForm.call(null,null);
+          return Doc.Concat(List.ofArray([navbar,auth.LoginForm,x.$==2?MessageBoard.ThreadListPage(st):x.$==1?MessageBoard.ShowThreadPage(st,x.$0):MessageBoard.NewThreadPage(st)]));
          };
         });
        },
-       NavBar:function(_var,st)
+       NavBar:function(auth,_var,st)
        {
-        var x;
-        x=View1.FromVar(_var);
-        return Doc.EmbedView(View1.Map(function(active)
+        var actions,renderLink;
+        actions=List.ofArray([{
+         $:2
+        },{
+         $:0
+        }]);
+        renderLink=function(action)
         {
-         var loggedInActions,notLoggedInActions,actions,renderLink;
-         loggedInActions=List.ofArray([{
-          $:1
-         },{
-          $:3
-         },{
-          $:4
-         }]);
-         notLoggedInActions=List.ofArray([{
-          $:0
-         }]);
-         actions=MessageBoard.loggedIn(st)?loggedInActions:notLoggedInActions;
-         renderLink=function(action)
+         var x;
+         x=View1.FromVar(_var);
+         return Doc.EmbedView(View1.Map(function(active)
          {
-          return Utilities.elA("li",List.ofArray([MessageBoard.showAction(action)===MessageBoard.showAction(active)?Utilities.cls("active"):Attr.get_Empty()]),List.ofArray([Doc.ElementWithEvents("a",List.ofArray([Utilities.op_EqualsEqualsGreater("href","#")]),List.ofArray([EventHandler.CreateHandler("click",function()
+          return Utilities.elA("li",List.ofArray([MessageBoard.ShowAction(action)===MessageBoard.ShowAction(active)?Utilities.cls("active"):Attr.get_Empty()]),List.ofArray([Doc.ElementWithEvents("a",List.ofArray([Utilities.op_EqualsEqualsGreater("href","#")]),List.ofArray([EventHandler.CreateHandler("click",function()
           {
-           return MessageBoard.GlobalGo(_var,action);
-          })]),List.ofArray([Utilities.txt(MessageBoard.showAction(action))]))]));
-         };
-         return Utilities.elA("nav",List.ofArray([Utilities.cls("navbar"),Utilities.cls("navbar-default"),Attr.Create("role","navigation")]),List.ofArray([Utilities.elA("div",Runtime.New(T,{
-          $:0
-         }),List.ofArray([Utilities.elA("ul",List.ofArray([Utilities.cls("nav"),Utilities.cls("navbar-nav"),Utilities.cls("navbar-right")]),List.ofArray([(Utilities.el("li"))(List.ofArray([MessageBoard.loggedInLabel(st)]))])),Utilities.elA("ul",List.ofArray([Utilities.cls("nav"),Utilities.cls("navbar-nav")]),List.ofArray([Doc.Concat(List.map(renderLink,actions))]))]))]));
-        },x));
+           return st.Go.call(null,action);
+          })]),List.ofArray([Utilities.txt(MessageBoard.ShowAction(action))]))]));
+         },x));
+        };
+        return Utilities.elA("nav",List.ofArray([Utilities.cls("navbar"),Utilities.cls("navbar-default"),Attr.Create("role","navigation")]),List.ofArray([Utilities.elA("div",Runtime.New(T,{
+         $:0
+        }),List.ofArray([Utilities.elA("ul",List.ofArray([Utilities.cls("nav"),Utilities.cls("navbar-nav"),Utilities.cls("navbar-right")]),List.ofArray([(Utilities.el("li"))(List.ofArray([auth.StatusWidget]))])),Utilities.elA("ul",List.ofArray([Utilities.cls("nav"),Utilities.cls("navbar-nav")]),List.ofArray([Doc.Concat(List.map(renderLink,actions))]))]))]));
        },
        NewThreadPage:function(st)
        {
-        var user,rvTitle,rvPost,arg20;
-        user=MessageBoard.getUser(st.LoggedIn);
-        rvTitle=Var1.Create("");
-        rvPost=Var1.Create("");
-        arg20=function()
+        var x;
+        x=st.Auth.LoggedIn;
+        return Doc.EmbedView(View1.Map(function(_arg1)
         {
-         var newThread;
-         newThread=MessageBoard.createThread(user.Name,Var.Get(rvTitle));
-         MessageBoard.Add(newThread.Posts,MessageBoard.createPost(user,Var.Get(rvPost)));
-         MessageBoard.Add(st.Threads,newThread);
-         return st.Go.call(null,{
-          $:2,
-          $0:newThread
-         });
-        };
-        return Utilities.elA("div",List.ofArray([Utilities.cls("panel"),Utilities.cls("panel-default")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("panel-heading")]),List.ofArray([Utilities.elA("h3",List.ofArray([Utilities.cls("panel-title")]),List.ofArray([Doc.TextNode("New Thread")]))])),Utilities.elA("div",List.ofArray([Utilities.cls("panel-body")]),List.ofArray([Utilities.elA("form",List.ofArray([Utilities.cls("form-horizontal"),Utilities.op_EqualsEqualsGreater("role","form")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("form-group")]),List.ofArray([Utilities.elA("label",List.ofArray([Utilities.op_EqualsEqualsGreater("for","threadTitle"),Utilities.cls("col-sm-2 control-label")]),List.ofArray([Doc.TextNode("Title")])),Utilities.elA("div",List.ofArray([Utilities.cls("col-sm-10")]),List.ofArray([Doc.Input(List.ofArray([Utilities.op_EqualsEqualsGreater("id","threadTitle")]),rvTitle)]))])),Utilities.elA("div",List.ofArray([Utilities.cls("form-group")]),List.ofArray([Utilities.elA("label",List.ofArray([Utilities.op_EqualsEqualsGreater("for","postContent"),Utilities.cls("col-sm-2 control-label")]),List.ofArray([Doc.TextNode("Content")])),Utilities.elA("div",List.ofArray([Utilities.cls("col-sm-10")]),List.ofArray([Doc.InputArea(List.ofArray([Utilities.op_EqualsEqualsGreater("id","postContent"),Utilities.op_EqualsEqualsGreater("rows","5")]),rvPost)]))])),Utilities.elA("div",List.ofArray([Utilities.cls("form-group")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("col-sm-offset-2"),Utilities.cls("col-sm-10")]),List.ofArray([Doc.Button("Submit",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-primary")]),arg20)]))]))]))]))]));
-       },
-       Remove:function(m,item)
-       {
-        return Model.Update(function(all)
-        {
-         return Arrays.iter(function(i)
-         {
-          return all.RemoveAt(i);
-         },Seq.toArray(Seq.filter(function(i)
-         {
-          return m.Projection.call(null,all.get_Item(i))===m.Projection.call(null,item);
-         },Operators.range(0,all.get_Count()-1))));
-        },m.Items);
+         var user,rvTitle,rvPost,add;
+         if(_arg1.$==0)
+          {
+           st.Auth.ShowForm.call(null,null);
+           return Doc.get_Empty();
+          }
+         else
+          {
+           user=_arg1.$0;
+           rvTitle=Var1.Create("");
+           rvPost=Var1.Create("");
+           add=function()
+           {
+            var newThread;
+            newThread=MessageBoard.CreateThread(user.Name,Var.Get(rvTitle));
+            ViewModel.Add(newThread.Posts,MessageBoard.CreatePost(user,Var.Get(rvPost)));
+            ViewModel.Add(st.Threads,newThread);
+            return st.Go.call(null,{
+             $:1,
+             $0:newThread
+            });
+           };
+           return Utilities.elA("div",List.ofArray([Utilities.cls("panel"),Utilities.cls("panel-default")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("panel-heading")]),List.ofArray([Utilities.elA("h3",List.ofArray([Utilities.cls("panel-title")]),List.ofArray([Doc.TextNode("New Thread")]))])),Utilities.elA("div",List.ofArray([Utilities.cls("panel-body")]),List.ofArray([Utilities.elA("form",List.ofArray([Utilities.cls("form-horizontal"),Utilities.op_EqualsEqualsGreater("role","form")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("form-group")]),List.ofArray([Utilities.elA("label",List.ofArray([Utilities.op_EqualsEqualsGreater("for","threadTitle"),Utilities.cls("col-sm-2 control-label")]),List.ofArray([Doc.TextNode("Title")])),Utilities.elA("div",List.ofArray([Utilities.cls("col-sm-10")]),List.ofArray([Doc.Input(List.ofArray([Utilities.op_EqualsEqualsGreater("id","threadTitle")]),rvTitle)]))])),Utilities.elA("div",List.ofArray([Utilities.cls("form-group")]),List.ofArray([Utilities.elA("label",List.ofArray([Utilities.op_EqualsEqualsGreater("for","postContent"),Utilities.cls("col-sm-2 control-label")]),List.ofArray([Doc.TextNode("Content")])),Utilities.elA("div",List.ofArray([Utilities.cls("col-sm-10")]),List.ofArray([Doc.InputArea(List.ofArray([Utilities.op_EqualsEqualsGreater("id","postContent"),Utilities.op_EqualsEqualsGreater("rows","5")]),rvPost)]))])),Utilities.elA("div",List.ofArray([Utilities.cls("form-group")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("col-sm-offset-2"),Utilities.cls("col-sm-10")]),List.ofArray([Doc.Button("Submit",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-primary")]),add)]))]))]))]))]));
+          }
+        },x));
        },
        Sample:Runtime.Field(function()
        {
         return Samples.Build().Id("Message Board").FileName("MessageBoard.fs").Keywords(List.ofArray(["text"])).Render(MessageBoard.Main()).RenderDescription(MessageBoard.description()).Create();
        }),
+       ShowAction:function(act)
+       {
+        return act.$==1?"Thread "+act.$0.Title:act.$==2?"Show All Threads":"Create New Thread";
+       },
        ShowThreadPage:function(st,thread)
        {
-        var user,rvPost,newPostForm,arg20,clo1,m;
-        user=MessageBoard.getUser(st.LoggedIn);
-        rvPost=Var1.Create("");
-        arg20=function()
-        {
-         return MessageBoard.Add(thread.Posts,MessageBoard.createPost(user,rvPost.get_Value()));
-        };
-        newPostForm=Utilities.elA("div",List.ofArray([Utilities.cls("panel"),Utilities.cls("panel-default")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("panel-heading")]),List.ofArray([Utilities.elA("h3",List.ofArray([Utilities.cls("panel-title")]),List.ofArray([Doc.TextNode("New Post")]))])),Utilities.elA("div",List.ofArray([Utilities.cls("panel-body")]),List.ofArray([Utilities.elA("form",List.ofArray([Utilities.cls("form-horizontal"),Utilities.op_EqualsEqualsGreater("role","form")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("form-group")]),List.ofArray([Utilities.elA("label",List.ofArray([Utilities.op_EqualsEqualsGreater("for","postContent"),Utilities.cls("col-sm-2 control-label")]),List.ofArray([Doc.TextNode("Content")])),Utilities.elA("div",List.ofArray([Utilities.cls("col-sm-10")]),List.ofArray([Doc.InputArea(List.ofArray([Utilities.op_EqualsEqualsGreater("id","postContent"),Utilities.op_EqualsEqualsGreater("rows","5")]),rvPost)]))])),Utilities.elA("div",List.ofArray([Utilities.cls("form-group")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("col-sm-offset-2"),Utilities.cls("col-sm-10")]),List.ofArray([Doc.Button("Submit",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-primary")]),arg20)]))]))]))]))]));
+        var clo1,m,x;
         clo1=Utilities.el("div");
         m=thread.Posts;
+        x=st.Auth.LoggedIn;
         return clo1(List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("panel"),Utilities.cls("panel-default")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("panel-heading")]),List.ofArray([Utilities.elA("h3",List.ofArray([Utilities.cls("panel-title")]),List.ofArray([Doc.TextNode("Posts in thread \""+thread.Title+"\"")]))])),Utilities.elA("div",List.ofArray([Utilities.cls("panel-body")]),List.ofArray([Utilities.elA("table",List.ofArray([Utilities.cls("table"),Utilities.cls("table-hover")]),List.ofArray([Doc.EmbedBagBy(m.Projection,function(post)
         {
          return(Utilities.el("tr"))(List.ofArray([(Utilities.el("td"))(List.ofArray([Doc.TextNode(post.PostAuthorName)])),(Utilities.el("td"))(List.ofArray([Doc.TextNode(post.Content)]))]));
-        },m.Items.get_View())]))]))])),newPostForm]));
+        },m.Items.get_View())]))]))])),Doc.EmbedView(View1.Map(function(_arg1)
+        {
+         var user,rvPost,add;
+         if(_arg1.$==1)
+          {
+           user=_arg1.$0;
+           rvPost=Var1.Create("");
+           add=function()
+           {
+            return ViewModel.Add(thread.Posts,MessageBoard.CreatePost(user,rvPost.get_Value()));
+           };
+           return Utilities.elA("div",List.ofArray([Utilities.cls("panel"),Utilities.cls("panel-default")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("panel-heading")]),List.ofArray([Utilities.elA("h3",List.ofArray([Utilities.cls("panel-title")]),List.ofArray([Doc.TextNode("New Post")]))])),Utilities.elA("div",List.ofArray([Utilities.cls("panel-body")]),List.ofArray([Utilities.elA("form",List.ofArray([Utilities.cls("form-horizontal"),Utilities.op_EqualsEqualsGreater("role","form")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("form-group")]),List.ofArray([Utilities.elA("label",List.ofArray([Utilities.op_EqualsEqualsGreater("for","postContent"),Utilities.cls("col-sm-2 control-label")]),List.ofArray([Doc.TextNode("Content")])),Utilities.elA("div",List.ofArray([Utilities.cls("col-sm-10")]),List.ofArray([Doc.InputArea(List.ofArray([Utilities.op_EqualsEqualsGreater("id","postContent"),Utilities.op_EqualsEqualsGreater("rows","5")]),rvPost)]))])),Utilities.elA("div",List.ofArray([Utilities.cls("form-group")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("col-sm-offset-2"),Utilities.cls("col-sm-10")]),List.ofArray([Doc.Button("Submit",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-primary")]),add)]))]))]))]))]));
+          }
+         else
+          {
+           return Doc.get_Empty();
+          }
+        },x))]));
        },
        ThreadListPage:function(st)
        {
@@ -14196,91 +14258,48 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          return clo1(List.ofArray([(Utilities.el("td"))(List.ofArray([Doc.TextNode(thread.ThreadAuthorName)])),(Utilities.el("td"))(List.ofArray([Doc.ElementWithEvents("a",List.ofArray([Attr.Create("href","#")]),List.ofArray([EventHandler.CreateHandler("click",function()
          {
           return st.Go.call(null,{
-           $:2,
+           $:1,
            $0:thread
           });
          })]),List.ofArray([Doc.TextNode(thread.Title)]))]))]));
         },threads.Items.get_View())]));
        },
-       createPost:function(user,content)
-       {
-        return{
-         PostId:(MessageBoard.freshPid())(null),
-         PostAuthorName:user.Name,
-         Content:content
-        };
-       },
-       createThread:function(author,title)
-       {
-        return{
-         ThreadId:(MessageBoard.freshTid())(null),
-         Title:title,
-         ThreadAuthorName:author,
-         Posts:MessageBoard.Create(function(p)
+       ViewModel:{
+        Add:function(m,item)
+        {
+         return Model.Update(function(all)
          {
-          return p.PostId;
-         })
-        };
+          return all.Add(item);
+         },m.Items);
+        },
+        Create:function(proj)
+        {
+         return{
+          Projection:proj,
+          Items:Model1.Create(function(arr)
+          {
+           return arr.ToArray();
+          },ResizeArrayProxy.New2())
+         };
+        },
+        Remove:function(m,item)
+        {
+         return Model.Update(function(all)
+         {
+          return Arrays.iter(function(i)
+          {
+           return all.RemoveAt(i);
+          },Seq.toArray(Seq.filter(function(i)
+          {
+           return m.Projection.call(null,all.get_Item(i))===m.Projection.call(null,item);
+          },Operators.range(0,all.get_Count()-1))));
+         },m.Items);
+        }
        },
        description:Runtime.Field(function()
        {
         return(Utilities.el("div"))(List.ofArray([Doc.TextNode("A message board application built using MiniSitelets.")]));
-       }),
-       freshPid:Runtime.Field(function()
-       {
-        var _pid_17_1;
-        _pid_17_1={
-         contents:0
-        };
-        return function()
-        {
-         Operators.Increment(_pid_17_1);
-         return _pid_17_1.contents;
-        };
-       }),
-       freshTid:Runtime.Field(function()
-       {
-        var _tid_11_1;
-        _tid_11_1={
-         contents:0
-        };
-        return function()
-        {
-         Operators.Increment(_tid_11_1);
-         return _tid_11_1.contents;
-        };
-       }),
-       getUser:function(st)
-       {
-        var usrVar;
-        usrVar=Var.Get(st);
-        return usrVar.$==0?Operators.FailWith("Not logged in"):usrVar.$0;
-       },
-       initialThreads:Runtime.Field(function()
-       {
-        var _thread_110_1,_threadModel_111_2;
-        _thread_110_1=MessageBoard.createThread("SimonJF","Hello, World! This is a topic.");
-        _threadModel_111_2=MessageBoard.Create(function(t)
-        {
-         return t.ThreadId;
-        });
-        MessageBoard.Add(_threadModel_111_2,_thread_110_1);
-        return _threadModel_111_2;
-       }),
-       loggedIn:function(st)
-       {
-        return Var.Get(st.LoggedIn).$==1;
-       },
-       loggedInLabel:function(st)
-       {
-        var usrOpt;
-        usrOpt=Var.Get(st.LoggedIn);
-        return Utilities.txt(usrOpt.$==0?"You are not logged in.":"Welcome, "+usrOpt.$0.Name+"!");
-       },
-       showAction:function(_arg1)
-       {
-        return _arg1.$==1?"Show All Threads":_arg1.$==2?"Thread "+_arg1.$0.Title:_arg1.$==3?"Create New Thread":_arg1.$==4?"Log Out":"Log In (credentials: TestUser / TestPass)";
-       }
+       })
       },
       MiniSiteletTest:{
        GlobalGo:function(_var,act)
@@ -14965,16 +14984,19 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   String=Runtime.Safe(Global.String);
   Strings=Runtime.Safe(WebSharper.Strings);
   IntrinsicFunctionProxy=Runtime.Safe(WebSharper.IntrinsicFunctionProxy);
+  Attr=Runtime.Safe(Next.Attr);
+  Auth=Runtime.Safe(MessageBoard.Auth);
+  Fresh=Runtime.Safe(MessageBoard.Fresh);
+  ViewModel=Runtime.Safe(MessageBoard.ViewModel);
+  Operators=Runtime.Safe(WebSharper.Operators);
+  MiniSitelet=Runtime.Safe(Next.MiniSitelet);
+  EventHandler=Runtime.Safe(Next.EventHandler);
   Model=Runtime.Safe(Next.Model);
   Model1=Runtime.Safe(Next.Model1);
   Collections=Runtime.Safe(WebSharper.Collections);
   ResizeArray=Runtime.Safe(Collections.ResizeArray);
   ResizeArrayProxy=Runtime.Safe(ResizeArray.ResizeArrayProxy);
-  MiniSitelet=Runtime.Safe(Next.MiniSitelet);
-  Attr=Runtime.Safe(Next.Attr);
-  EventHandler=Runtime.Safe(Next.EventHandler);
   Arrays=Runtime.Safe(WebSharper.Arrays);
-  Operators=Runtime.Safe(WebSharper.Operators);
   Unchecked=Runtime.Safe(WebSharper.Unchecked);
   document=Runtime.Safe(Global.document);
   Phone=Runtime.Safe(PhoneExample.Phone);
@@ -15005,11 +15027,9 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   MiniSiteletTest.pages();
   MiniSiteletTest.description();
   MiniSiteletTest.Sample();
-  MessageBoard.initialThreads();
-  MessageBoard.freshTid();
-  MessageBoard.freshPid();
   MessageBoard.description();
   MessageBoard.Sample();
+  Fresh.Int();
   InputTransform.description();
   InputTransform.Sample();
   InputTransform.Main();

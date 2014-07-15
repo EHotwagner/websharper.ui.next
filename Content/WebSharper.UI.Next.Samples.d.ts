@@ -3476,7 +3476,58 @@ declare module IntelliFactory {
                     };
                 }
                 module MessageBoard {
-                    interface ViewModel<_T1> {
+                    module Auth {
+                        interface Component {
+                            LoggedIn: __ABBREV.__Next.View1<__ABBREV.__WebSharper.OptionProxy<any>>;
+                            LoginForm: __ABBREV.__Next.Doc;
+                            StatusWidget: __ABBREV.__Next.Doc;
+                            HideForm: {
+                                (): void;
+                            };
+                            ShowForm: {
+                                (): void;
+                            };
+                        }
+                        var CheckLogin : {
+                            (name: string, pass: string): __ABBREV.__WebSharper.OptionProxy<any>;
+                        };
+                        var LoginForm : {
+                            (onLogin: {
+                                (x: any): void;
+                            }): __ABBREV.__Next.Doc;
+                        };
+                        var StatusWidget : {
+                            (login: {
+                                (): void;
+                            }, logout: {
+                                (): void;
+                            }, view: __ABBREV.__Next.View1<__ABBREV.__WebSharper.OptionProxy<any>>): __ABBREV.__Next.Doc;
+                        };
+                        var Create : {
+                            (): any;
+                        };
+                    }
+                    module ViewModel {
+                        var Add : {
+                            <_M1>(m: any, item: _M1): void;
+                        };
+                        var Create : {
+                            <_M1>(proj: {
+                                (x: _M1): number;
+                            }): any;
+                        };
+                        var Remove : {
+                            <_M1>(m: any, item: _M1): void;
+                        };
+                    }
+                    module Fresh {
+                        var Int : {
+                            (): {
+                                (): number;
+                            };
+                        };
+                    }
+                    interface ViewModel1<_T1> {
                         Projection: {
                             (x: _T1): number;
                         };
@@ -3499,52 +3550,27 @@ declare module IntelliFactory {
                     }
                     interface Action {
                     }
-                    interface LoginResult {
-                    }
                     interface State {
-                        LoggedIn: __ABBREV.__Next.Var1<__ABBREV.__WebSharper.OptionProxy<any>>;
+                        Auth: any;
                         Threads: any;
                         Go: {
                             (x: __ABBREV.__MessageBoard.Action): void;
                         };
                     }
-                    var showAction : {
-                        (_arg1: __ABBREV.__MessageBoard.Action): string;
+                    var ShowAction : {
+                        (act: __ABBREV.__MessageBoard.Action): string;
                     };
-                    var Create : {
-                        <_M1>(proj: {
-                            (x: _M1): number;
-                        }): any;
-                    };
-                    var Add : {
-                        <_M1>(m: any, item: _M1): void;
-                    };
-                    var Remove : {
-                        <_M1>(m: any, item: _M1): void;
-                    };
-                    var createThread : {
+                    var CreateThread : {
                         (author: string, title: string): any;
                     };
-                    var createPost : {
+                    var InitialThreads : {
+                        (): any;
+                    };
+                    var CreatePost : {
                         (user: any, content: string): any;
                     };
-                    var getUser : {
-                        <_M1>(st: __ABBREV.__Next.Var1<__ABBREV.__WebSharper.OptionProxy<_M1>>): _M1;
-                    };
-                    var loggedInLabel : {
-                        (st: any): __ABBREV.__Next.Doc;
-                    };
-                    var GlobalGo : {
-                        <_M1>(arg00: __ABBREV.__Next.Var1<_M1>, arg10: _M1): void;
-                    };
-                    var loggedIn : {
-                        (st: any): boolean;
-                    };
                     var NavBar : {
-                        (_var: __ABBREV.__Next.Var1<__ABBREV.__MessageBoard.Action>, st: any): __ABBREV.__Next.Doc;
-                    };
-                    var LoginPage : {
-                        (st: any): __ABBREV.__Next.Doc;
+                        (auth: any, _var: __ABBREV.__Next.Var1<__ABBREV.__MessageBoard.Action>, st: any): __ABBREV.__Next.Doc;
                     };
                     var NewThreadPage : {
                         (st: any): __ABBREV.__Next.Doc;
@@ -3555,24 +3581,8 @@ declare module IntelliFactory {
                     var ShowThreadPage : {
                         (st: any, thread: any): __ABBREV.__Next.Doc;
                     };
-                    var DoLogOut : {
-                        (st: any): void;
-                    };
                     var Main : {
                         (): __ABBREV.__Next.Doc;
-                    };
-                    var freshTid : {
-                        (): {
-                            (): number;
-                        };
-                    };
-                    var freshPid : {
-                        (): {
-                            (): number;
-                        };
-                    };
-                    var initialThreads : {
-                        (): any;
                     };
                     var description : {
                         (): __ABBREV.__Next.Doc;
