@@ -14071,7 +14071,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
             return onLogin(user);
            }
          };
-         return clo11(List.ofArray([message,Utilities.elA("form",List.ofArray([Utilities.cls("form-horizontal"),Utilities.op_EqualsEqualsGreater("role","form")]),List.ofArray([inputRow(rvUser,"user","Username",false),inputRow(rvPass,"pass","Password",true),Utilities.elA("div",List.ofArray([Utilities.cls("form-group")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("col-sm-offset-2"),Utilities.cls("col-sm-10")]),List.ofArray([Doc.Button("Log In",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-primary")]),arg20)]))]))]))]));
+         return clo11(List.ofArray([(Utilities.el("div"))(List.ofArray([Utilities.txt("Hint: TestUser/TestPass")])),message,Utilities.elA("form",List.ofArray([Utilities.cls("form-horizontal"),Utilities.op_EqualsEqualsGreater("role","form")]),List.ofArray([inputRow(rvUser,"user","Username",false),inputRow(rvPass,"pass","Password",true),Utilities.elA("div",List.ofArray([Utilities.cls("form-group")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("col-sm-offset-2"),Utilities.cls("col-sm-10")]),List.ofArray([Doc.Button("Log In",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-primary")]),arg20)]))]))]))]));
         },
         StatusWidget:function(login,logout,view)
         {
