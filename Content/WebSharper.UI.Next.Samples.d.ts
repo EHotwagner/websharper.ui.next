@@ -3464,17 +3464,6 @@ declare module IntelliFactory {
                             (x: __ABBREV.__MiniSiteletTest.Action): void;
                         };
                     }
-                    var el : {
-                        (name: string): {
-                            (x: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                        };
-                    };
-                    var elA : {
-                        (arg00: string, arg10: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, arg20: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var cls : {
-                        (arg00: string): __ABBREV.__Next.Attr;
-                    };
                     var GlobalGo : {
                         (_var: __ABBREV.__Next.Var1<__ABBREV.__MiniSiteletTest.Action>, act: __ABBREV.__MiniSiteletTest.Action): void;
                     };
@@ -3535,20 +3524,6 @@ declare module IntelliFactory {
                         Name: string;
                         Address: string;
                     }
-                    var el : {
-                        (name: string): {
-                            (x: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                        };
-                    };
-                    var elA : {
-                        (arg00: string, arg10: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, arg20: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var cls : {
-                        (arg00: string): __ABBREV.__Next.Attr;
-                    };
-                    var at : {
-                        (arg00: string, arg10: string): __ABBREV.__Next.Attr;
-                    };
                     var inputRow : {
                         (rv: __ABBREV.__Next.Var1<string>, id: string, lblText: string): __ABBREV.__Next.Doc;
                     };
@@ -3612,14 +3587,6 @@ declare module IntelliFactory {
                     var calculate : {
                         (rvCalc: __ABBREV.__Next.Var1<any>): void;
                     };
-                    var op_LessMultiplyGreater : {
-                        <_M1, _M2>(arg00: __ABBREV.__Next.View1<{
-                            (x: _M1): _M2;
-                        }>, arg10: __ABBREV.__Next.View1<_M1>): __ABBREV.__Next.View1<_M2>;
-                    };
-                    var el : {
-                        (name: string, xs: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
                     var displayCalc : {
                         (rvCalc: __ABBREV.__Next.Var1<any>): __ABBREV.__Next.View1<string>;
                     };
@@ -3657,11 +3624,6 @@ declare module IntelliFactory {
                     };
                 }
                 module MouseChase {
-                    var el : {
-                        (name: string): {
-                            (x: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                        };
-                    };
                     var Main : {
                         (): __ABBREV.__Next.Doc;
                     };
@@ -3767,11 +3729,6 @@ declare module IntelliFactory {
                         Name: string;
                         Age: number;
                     }
-                    var el : {
-                        (name: string): {
-                            (x: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                        };
-                    };
                     var People : {
                         (): __ABBREV.__List.T<__ABBREV.__CheckBoxTest.Person>;
                     };
@@ -3822,20 +3779,8 @@ declare module IntelliFactory {
                     var Build : {
                         (): __ABBREV.__Samples.Builder;
                     };
-                    var Clear : {
-                        (el: __ABBREV.__Dom.Element): void;
-                    };
                     var createModelRv : {
-                        (samples: __ABBREV.__List.T<any>): __ABBREV.__Next.Var1<any>;
-                    };
-                    var el : {
-                        (arg00: string, arg10: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, arg20: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var at : {
-                        (arg00: string, arg10: string): __ABBREV.__Next.Attr;
-                    };
-                    var txt : {
-                        (arg00: string): __ABBREV.__Next.Doc;
+                        (samples: __ABBREV.__List.T<any>, initExample: __ABBREV.__WebSharper.OptionProxy<any>): __ABBREV.__Next.Var1<any>;
                     };
                     var getActive : {
                         (rvModel: __ABBREV.__Next.Var1<any>): __ABBREV.__WebSharper.OptionProxy<any>;
@@ -3852,8 +3797,38 @@ declare module IntelliFactory {
                     var sideContent : {
                         (rvModel: __ABBREV.__Next.Var1<any>): __ABBREV.__Next.Doc;
                     };
+                    var initExample : {
+                        (filename: string, _arg1: __ABBREV.__List.T<any>): __ABBREV.__WebSharper.OptionProxy<any>;
+                    };
                     var Show : {
                         (samples: __ABBREV.__List.T<any>): void;
+                    };
+                }
+                module Utilities {
+                    var el : {
+                        (name: string): {
+                            (x: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                    };
+                    var elA : {
+                        (arg00: string, arg10: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, arg20: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var cls : {
+                        (arg00: string): __ABBREV.__Next.Attr;
+                    };
+                    var op_EqualsEqualsGreater : {
+                        (k: string, v: string): __ABBREV.__Next.Attr;
+                    };
+                    var div : {
+                        (xs: __ABBREV.__Next.Doc): __ABBREV.__Next.Doc;
+                    };
+                    var divc : {
+                        (c: string): {
+                            (x: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                    };
+                    var txt : {
+                        (arg00: string): __ABBREV.__Next.Doc;
                     };
                 }
             }
@@ -3864,15 +3839,14 @@ declare module __ABBREV {
     
     export import __List = IntelliFactory.WebSharper.List;
     export import __MiniSiteletTest = IntelliFactory.WebSharper.UI.Next.MiniSiteletTest;
-    export import __WebSharper = IntelliFactory.WebSharper;
     export import __Next = IntelliFactory.WebSharper.UI.Next;
     export import __ContactFlow = IntelliFactory.WebSharper.UI.Next.ContactFlow;
     export import __Calculator = IntelliFactory.WebSharper.UI.Next.Calculator;
     export import __TodoList = IntelliFactory.WebSharper.UI.Next.TodoList;
+    export import __WebSharper = IntelliFactory.WebSharper;
     export import __ResizeArray = IntelliFactory.WebSharper.Collections.ResizeArray;
     export import __PhoneExample = IntelliFactory.WebSharper.UI.Next.PhoneExample;
     export import __CheckBoxTest = IntelliFactory.WebSharper.UI.Next.CheckBoxTest;
     export import __Samples = IntelliFactory.WebSharper.UI.Next.Samples;
-    export import __Dom = IntelliFactory.WebSharper.Dom;
 }
 
