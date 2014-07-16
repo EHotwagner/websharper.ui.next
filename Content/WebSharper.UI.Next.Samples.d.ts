@@ -3134,11 +3134,11 @@ declare module IntelliFactory {
                     var Create : {
                         <_M1>(v: _M1): __ABBREV.__Next.Var1<_M1>;
                     };
-                }
-                module Var {
                     var Get : {
                         <_M1>(_var: __ABBREV.__Next.Var1<_M1>): _M1;
                     };
+                }
+                module Var {
                     var Set : {
                         <_M1>(_var: __ABBREV.__Next.Var1<_M1>, value: _M1): void;
                     };
@@ -3200,14 +3200,14 @@ declare module IntelliFactory {
                             (x: _M1): __ABBREV.__Next.View1<_M2>;
                         }, view: __ABBREV.__Next.View1<_M1>): __ABBREV.__Next.View1<_M2>;
                     };
+                    var Const : {
+                        <_M1>(x: _M1): __ABBREV.__Next.View1<_M1>;
+                    };
                     var get_Do : {
                         (): __ABBREV.__Next.ViewBuilder;
                     };
                 }
                 module View {
-                    var Const : {
-                        <_M1>(x: _M1): __ABBREV.__Next.View1<_M1>;
-                    };
                     var Sink : {
                         <_M1>(act: {
                             (x: _M1): void;
@@ -3225,13 +3225,13 @@ declare module IntelliFactory {
                             (x: _M1): _M2;
                         }, init: _M1): __ABBREV.__Next.Model1<_M2, _M1>;
                     };
-                }
-                module Model {
                     var Update : {
                         <_M1, _M2>(update: {
                             (x: _M1): void;
                         }, _arg1: __ABBREV.__Next.Model1<_M2, _M1>): void;
                     };
+                }
+                module Model {
                     var View : {
                         <_M1, _M2>(_arg2: __ABBREV.__Next.Model1<_M1, _M2>): __ABBREV.__Next.View1<_M1>;
                     };
@@ -3345,7 +3345,17 @@ declare module IntelliFactory {
                             (x: _M1): string;
                         }, items: __ABBREV.__List.T<_M1>, chk: __ABBREV.__Next.Var1<__ABBREV.__List.T<_M1>>): __ABBREV.__Next.Doc;
                     };
+                    var clickableComponent : {
+                        (name: string, caption: string, attrs: __ABBREV.__Next.Attr, action: {
+                            (): void;
+                        }): __ABBREV.__Next.Doc;
+                    };
                     var Button : {
+                        (caption: string, attrs: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, action: {
+                            (): void;
+                        }): __ABBREV.__Next.Doc;
+                    };
+                    var Link : {
                         (caption: string, attrs: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, action: {
                             (): void;
                         }): __ABBREV.__Next.Doc;
@@ -3488,9 +3498,6 @@ declare module IntelliFactory {
                                 (): void;
                             };
                         }
-                        var CheckLogin : {
-                            (name: string, pass: string): __ABBREV.__WebSharper.OptionProxy<any>;
-                        };
                         var LoginForm : {
                             (onLogin: {
                                 (x: any): void;
@@ -3507,52 +3514,11 @@ declare module IntelliFactory {
                             (): any;
                         };
                     }
-                    module ViewModel {
-                        var Add : {
-                            <_M1>(m: any, item: _M1): void;
-                        };
-                        var Create : {
-                            <_M1>(proj: {
-                                (x: _M1): number;
-                            }): any;
-                        };
-                        var Remove : {
-                            <_M1>(m: any, item: _M1): void;
-                        };
-                    }
-                    module Fresh {
-                        var Int : {
-                            (): {
-                                (): number;
-                            };
-                        };
-                    }
-                    interface ViewModel1<_T1> {
-                        Projection: {
-                            (x: _T1): number;
-                        };
-                        Items: __ABBREV.__Next.Model1<__ABBREV.__WebSharper.seq<_T1>, __ABBREV.__ResizeArray.ResizeArrayProxy<_T1>>;
-                    }
-                    interface User {
-                        Name: string;
-                        Password: string;
-                    }
-                    interface Post {
-                        PostId: number;
-                        PostAuthorName: string;
-                        Content: string;
-                    }
-                    interface Thread {
-                        ThreadId: number;
-                        Title: string;
-                        ThreadAuthorName: string;
-                        Posts: any;
-                    }
                     interface Action {
                     }
                     interface State {
                         Auth: any;
-                        Threads: any;
+                        Threads: __ABBREV.__Next.Var1<__ABBREV.__List.T<any>>;
                         Go: {
                             (x: __ABBREV.__MessageBoard.Action): void;
                         };
@@ -3568,6 +3534,9 @@ declare module IntelliFactory {
                     };
                     var CreatePost : {
                         (user: any, content: string): any;
+                    };
+                    var AddPost : {
+                        (thread: any, post: any): void;
                     };
                     var NavBar : {
                         (auth: any, _var: __ABBREV.__Next.Var1<__ABBREV.__MessageBoard.Action>, st: any): __ABBREV.__Next.Doc;
@@ -3590,6 +3559,78 @@ declare module IntelliFactory {
                     var Sample : {
                         (): any;
                     };
+                }
+                module Server {
+                    var CheckCredentials : {
+                        (name: string, pass: string): __ABBREV.__WebSharper.OptionProxy<any>;
+                    };
+                    var CheckLogin : {
+                        (user: string, pass: string): any;
+                    };
+                    var GetThreads : {
+                        (): any;
+                    };
+                    var GetPosts : {
+                        (thread: any): any;
+                    };
+                    var AddThread : {
+                        (thread: any): any;
+                    };
+                    var AddPost : {
+                        (thread: any, post: any): any;
+                    };
+                    var DELAY : {
+                        (): number;
+                    };
+                    var threads : {
+                        (): __ABBREV.__List.T<any>;
+                    };
+                    var posts : {
+                        (): __ABBREV.__Collections.FSharpMap<number, __ABBREV.__List.T<any>>;
+                    };
+                }
+                module Common {
+                    module ViewModel1 {
+                        var Add : {
+                            <_M1>(m: any, item: _M1): void;
+                        };
+                        var Create : {
+                            <_M1>(proj: {
+                                (x: _M1): number;
+                            }): any;
+                        };
+                        var Remove : {
+                            <_M1>(m: any, item: _M1): void;
+                        };
+                    }
+                    module Fresh {
+                        var Int : {
+                            (): {
+                                (): number;
+                            };
+                        };
+                    }
+                    interface ViewModel<_T1> {
+                        Projection: {
+                            (x: _T1): number;
+                        };
+                        Items: __ABBREV.__Next.Model1<__ABBREV.__WebSharper.seq<_T1>, __ABBREV.__ResizeArray.ResizeArrayProxy<_T1>>;
+                    }
+                    interface User {
+                        Name: string;
+                        Password: string;
+                    }
+                    interface Post {
+                        PostId: number;
+                        PostAuthorName: string;
+                        Content: string;
+                    }
+                    interface Thread {
+                        ThreadId: number;
+                        Title: string;
+                        ThreadAuthorName: string;
+                        Posts: __ABBREV.__Next.Var1<__ABBREV.__List.T<any>>;
+                    }
                 }
                 module MiniSiteletTest {
                     interface Page {
@@ -3942,6 +3983,9 @@ declare module IntelliFactory {
                     var cls : {
                         (arg00: string): __ABBREV.__Next.Attr;
                     };
+                    var sty : {
+                        (arg00: string, arg10: string): __ABBREV.__Next.Attr;
+                    };
                     var op_EqualsEqualsGreater : {
                         (k: string, v: string): __ABBREV.__Next.Attr;
                     };
@@ -3952,6 +3996,18 @@ declare module IntelliFactory {
                     };
                     var txt : {
                         (arg00: string): __ABBREV.__Next.Doc;
+                    };
+                    var btn : {
+                        (caption: string): {
+                            (x: {
+                                (): void;
+                            }): __ABBREV.__Next.Doc;
+                        };
+                    };
+                    var link : {
+                        (arg00: string, arg10: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, arg20: {
+                            (): void;
+                        }): __ABBREV.__Next.Doc;
                     };
                     var div : {
                         (): {
@@ -3968,8 +4024,9 @@ declare module __ABBREV {
     export import __List = IntelliFactory.WebSharper.List;
     export import __Next = IntelliFactory.WebSharper.UI.Next;
     export import __WebSharper = IntelliFactory.WebSharper;
-    export import __ResizeArray = IntelliFactory.WebSharper.Collections.ResizeArray;
     export import __MessageBoard = IntelliFactory.WebSharper.UI.Next.MessageBoard;
+    export import __Collections = IntelliFactory.WebSharper.Collections;
+    export import __ResizeArray = IntelliFactory.WebSharper.Collections.ResizeArray;
     export import __MiniSiteletTest = IntelliFactory.WebSharper.UI.Next.MiniSiteletTest;
     export import __ContactFlow = IntelliFactory.WebSharper.UI.Next.ContactFlow;
     export import __Calculator = IntelliFactory.WebSharper.UI.Next.Calculator;

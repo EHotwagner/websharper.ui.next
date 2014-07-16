@@ -11677,7 +11677,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
 
 (function()
 {
- var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,IntrinsicFunctionProxy,Concurrency,Array,Seq,UI,Next,Abbrev,Fresh,Arrays,Unchecked,Slot,Attr,Attrs,View1,Array1,View,jQuery,Diff,BagDiff1,HashSetProxy,HashSet,Collections,ResizeArray,ResizeArrayProxy,Doc,Docs,DomUtility,List,Var,T,Enumerator,Operators,document,EventHandler,Flow,FlowBuilder,Var1,Dictionary,Model,Model1,Snap,Async,JQueue,Dict;
+ var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,IntrinsicFunctionProxy,Concurrency,Array,Seq,UI,Next,Abbrev,Fresh,Arrays,Unchecked,Slot,Attr,Attrs,View1,Array1,jQuery,Diff,BagDiff1,HashSetProxy,HashSet,Collections,ResizeArray,ResizeArrayProxy,Doc,Docs,List,DomUtility,Var,T,Enumerator,View,Operators,document,EventHandler,Flow,FlowBuilder,Var1,Dictionary,Model,Model1,Snap,Async,JQueue,Dict;
  Runtime.Define(Global,{
   IntelliFactory:{
    WebSharper:{
@@ -11871,17 +11871,17 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        Create:function(name,value)
        {
-        return Attr.View(name,View.Const(value));
+        return Attr.View(name,View1.Const(value));
        },
        CreateClass:function(name)
        {
-        return Attr.ViewInternal("",View.Const(name),{
+        return Attr.ViewInternal("",View1.Const(name),{
          $:2
         });
        },
        CreateStyle:function(name,value)
        {
-        return Attr.ViewInternal(name,View.Const(value),{
+        return Attr.ViewInternal(name,View1.Const(value),{
          $:1
         });
        },
@@ -11949,7 +11949,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          $0:{
           $:0
          },
-         $1:View.Const(null)
+         $1:View1.Const(null)
         });
        }
       }),
@@ -12194,14 +12194,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        Button:function(caption,attrs,action)
        {
-        var el;
-        el=DomUtility.CreateElement("button");
-        el.addEventListener("click",function(ev)
-        {
-         ev.preventDefault();
-         return action(null);
-        },false);
-        return Docs.element(el,Attr.Concat(attrs),Doc.TextNode(caption));
+        return Doc.clickableComponent("button",caption,Attr.Concat(attrs),action);
        },
        CheckBox:function(show,items,chk)
        {
@@ -12341,6 +12334,12 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         },false);
         return Docs.element(el,Attr.Append(_attr_,valAttr),Doc.get_Empty());
        },
+       Link:function(caption,attrs,action)
+       {
+        var arg10;
+        arg10=Attr.Concat(attrs);
+        return Doc.clickableComponent("a",caption,Attr.Append(Attr.Create("href","#"),arg10),action);
+       },
        PasswordBox:function(attr,_var)
        {
         return Doc.InputInternal(attr,_var,{
@@ -12397,7 +12396,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        TextNode:function(t)
        {
-        return Doc.TextView(View.Const(t));
+        return Doc.TextView(View1.Const(t));
        },
        TextView:function(view)
        {
@@ -12420,6 +12419,17 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
           return null;
          },view)
         });
+       },
+       clickableComponent:function(name,caption,attrs,action)
+       {
+        var el;
+        el=DomUtility.CreateElement(name);
+        el.addEventListener("click",function(ev)
+        {
+         ev.preventDefault();
+         return action(null);
+        },false);
+        return Docs.element(el,attrs,Doc.TextNode(caption));
        },
        get_Empty:function()
        {
@@ -12494,7 +12504,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          $0:{
           $:0
          },
-         $1:View.Const(null)
+         $1:View1.Const(null)
         });
        }),
        patch:function(parent,pos,old,cur)
@@ -12909,14 +12919,6 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        }
       },
       Model:Runtime.Class({},{
-       Update:function(update,_arg1)
-       {
-        return Var.Update(_arg1.$0,function(x)
-        {
-         update(x);
-         return x;
-        });
-       },
        View:function(_arg2)
        {
         return _arg2.$1;
@@ -12936,6 +12938,14 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          $:0,
          $0:_var,
          $1:View1.Map(proj,_var.get_View())
+        });
+       },
+       Update:function(update,_arg1)
+       {
+        return Var.Update(_arg1.$0,function(x)
+        {
+         update(x);
+         return x;
         });
        }
       }),
@@ -13245,10 +13255,6 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        }
       },
       Var:Runtime.Class({},{
-       Get:function(_var)
-       {
-        return _var.Current;
-       },
        Observe:function(_var)
        {
         return _var.Snap;
@@ -13283,13 +13289,13 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        Update:function(_var,fn)
        {
-        return Var.Set(_var,fn(Var.Get(_var)));
+        return Var.Set(_var,fn(Var1.Get(_var)));
        }
       }),
       Var1:Runtime.Class({
        get_Value:function()
        {
-        return Var.Get(this);
+        return Var1.Get(this);
        },
        get_View:function()
        {
@@ -13307,6 +13313,10 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          Current:v,
          Snap:Snap.CreateWithValue(v)
         });
+       },
+       Get:function(_var)
+       {
+        return _var.Current;
        }
       }),
       View:Runtime.Class({},{
@@ -13319,18 +13329,6 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
           return f(x);
          };
         },fn,view);
-       },
-       Const:function(x)
-       {
-        var o;
-        o=Snap.CreateForever(x);
-        return{
-         $:0,
-         $0:function()
-         {
-          return o;
-         }
-        };
        },
        Sink:function(act,_arg6)
        {
@@ -13350,6 +13348,18 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        Bind:function(fn,view)
        {
         return View1.Join(View1.Map(fn,view));
+       },
+       Const:function(x)
+       {
+        var o;
+        o=Snap.CreateForever(x);
+        return{
+         $:0,
+         $0:function()
+         {
+          return o;
+         }
+        };
        },
        ConvertBag:function(fn,view)
        {
@@ -13529,7 +13539,6 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   Attrs=Runtime.Safe(Next.Attrs);
   View1=Runtime.Safe(Next.View1);
   Array1=Runtime.Safe(Abbrev.Array);
-  View=Runtime.Safe(Next.View);
   jQuery=Runtime.Safe(Global.jQuery);
   Diff=Runtime.Safe(Next.Diff);
   BagDiff1=Runtime.Safe(Diff.BagDiff1);
@@ -13540,11 +13549,12 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   ResizeArrayProxy=Runtime.Safe(ResizeArray.ResizeArrayProxy);
   Doc=Runtime.Safe(Next.Doc);
   Docs=Runtime.Safe(Next.Docs);
-  DomUtility=Runtime.Safe(Next.DomUtility);
   List=Runtime.Safe(WebSharper.List);
+  DomUtility=Runtime.Safe(Next.DomUtility);
   Var=Runtime.Safe(Next.Var);
   T=Runtime.Safe(List.T);
   Enumerator=Runtime.Safe(WebSharper.Enumerator);
+  View=Runtime.Safe(Next.View);
   Operators=Runtime.Safe(WebSharper.Operators);
   document=Runtime.Safe(Global.document);
   EventHandler=Runtime.Safe(Next.EventHandler);
@@ -13572,7 +13582,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
 
 (function()
 {
- var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,UI,Next,Calculator,Var1,Samples,List,Var,Doc,T,View1,Utilities,CheckBoxTest,Seq,Person,SimpleTextBox,InputTransform,TodoList,PhoneExample,MouseChase,ContactFlow,MiniSiteletTest,MessageBoard,Client,Flow,String,Strings,IntrinsicFunctionProxy,Attr,Auth,Fresh,ViewModel,Operators,MiniSitelet,EventHandler,Model,Model1,Collections,ResizeArray,ResizeArrayProxy,Arrays,Unchecked,document,Phone,Order,Builder,window,Error,Option,Util,TodoItem;
+ var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,UI,Next,Calculator,Var1,Samples,List,Var,Doc,T,View1,Utilities,CheckBoxTest,Seq,Person,SimpleTextBox,InputTransform,TodoList,PhoneExample,MouseChase,ContactFlow,MiniSiteletTest,MessageBoard,Client,Operators,Model1,Collections,ResizeArray,ResizeArrayProxy,Arrays,Flow,String,Strings,IntrinsicFunctionProxy,Attr,Auth,Concurrency,Server,Common,Fresh,ViewModel1,MiniSitelet,Unchecked,EventHandler,document,Phone,Order,Builder,window,Error,Option,MapModule,FSharpMap,Util,TodoItem;
  Runtime.Define(Global,{
   IntelliFactory:{
    WebSharper:{
@@ -13806,6 +13816,54 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         return Samples.Show(Client.All());
        })
       },
+      Common:{
+       Fresh:{
+        Int:Runtime.Field(function()
+        {
+         var _tid_13_1;
+         _tid_13_1={
+          contents:0
+         };
+         return function()
+         {
+          Operators.Increment(_tid_13_1);
+          return _tid_13_1.contents;
+         };
+        })
+       },
+       ViewModel1:{
+        Add:function(m,item)
+        {
+         return Model1.Update(function(all)
+         {
+          return all.Add(item);
+         },m.Items);
+        },
+        Create:function(proj)
+        {
+         return{
+          Projection:proj,
+          Items:Model1.Create(function(arr)
+          {
+           return arr.ToArray();
+          },ResizeArrayProxy.New2())
+         };
+        },
+        Remove:function(m,item)
+        {
+         return Model1.Update(function(all)
+         {
+          return Arrays.iter(function(i)
+          {
+           return all.RemoveAt(i);
+          },Seq.toArray(Seq.filter(function(i)
+          {
+           return m.Projection.call(null,all.get_Item(i))===m.Projection.call(null,item);
+          },Operators.range(0,all.get_Count()-1))));
+         },m.Items);
+        }
+       }
+      },
       ContactFlow:{
        Sample:Runtime.Field(function()
        {
@@ -13835,7 +13893,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          rvContact=Var1.Create("");
          arg20=function()
          {
-          return cont(constr(Var.Get(rvContact)));
+          return cont(constr(Var1.Get(rvContact)));
          };
          return Utilities.elA("form",List.ofArray([Utilities.cls("form-horizontal"),Utilities.op_EqualsEqualsGreater("role","form")]),List.ofArray([ContactFlow.inputRow(rvContact,"contact",label),Utilities.elA("div",List.ofArray([Utilities.cls("form-group")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("col-sm-offset-2"),Utilities.cls("col-sm-10")]),List.ofArray([Doc.Button("Finish",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-default")]),arg20)]))]))]));
         });
@@ -13899,8 +13957,8 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          arg20=function()
          {
           return cont({
-           Name:Var.Get(rvName),
-           Address:Var.Get(rvAddress)
+           Name:Var1.Get(rvName),
+           Address:Var1.Get(rvAddress)
           });
          };
          return Utilities.elA("form",List.ofArray([Utilities.cls("form-horizontal"),Utilities.op_EqualsEqualsGreater("role","form")]),List.ofArray([ContactFlow.inputRow(rvName,"lblName","Name"),ContactFlow.inputRow(rvAddress,"lblAddr","Address"),Utilities.elA("div",List.ofArray([Utilities.cls("form-group")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("col-sm-offset-2"),Utilities.cls("col-sm-10")]),List.ofArray([Doc.Button("Next",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-default")]),arg20)]))]))]));
@@ -13955,23 +14013,14 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        })
       },
       MessageBoard:{
-       Auth:{
-        CheckLogin:function(name,pass)
+       AddPost:function(thread,post)
+       {
+        return Var.Update(thread.Posts,function(xs)
         {
-         var matchValue;
-         matchValue=[name,pass];
-         return matchValue[0]==="TestUser"?matchValue[1]==="TestPass"?{
-          $:1,
-          $0:{
-           Name:name,
-           Password:pass
-          }
-         }:{
-          $:0
-         }:{
-          $:0
-         };
-        },
+         return List.append(xs,List.ofArray([post]));
+        });
+       },
+       Auth:{
         Create:function()
         {
          var loggedIn,hidden,hide,show,x,loginForm,login,logout;
@@ -14020,21 +14069,15 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         },
         LoginForm:function(onLogin)
         {
-         var rvUser,rvPass,clo1,arg10,x,y,message,inputRow,clo11,arg20;
+         var rvUser,rvPass,rvMsg,clo1,arg10,message,inputRow,clo11,arg102;
          rvUser=Var1.Create("");
          rvPass=Var1.Create("");
+         rvMsg=Var1.Create("");
          clo1=Utilities.el("div");
-         x=rvUser.get_View();
-         y=rvPass.get_View();
-         arg10=List.ofArray([Utilities.elA("p",List.ofArray([Utilities.cls("bg-danger")]),List.ofArray([Doc.EmbedView(View1.Map2(function(u)
+         arg10=List.ofArray([Utilities.elA("p",List.ofArray([Utilities.cls("bg-danger")]),List.ofArray([Doc.EmbedView(View1.Map(function(msg)
          {
-          return function(p)
-          {
-           var matchValue;
-           matchValue=[u,p];
-           return matchValue[0]===""?matchValue[1]===""?Doc.get_Empty():Auth.CheckLogin(matchValue[0],matchValue[1]).$==0?Doc.TextNode("Invalid credentials"):Doc.get_Empty():Auth.CheckLogin(matchValue[0],matchValue[1]).$==0?Doc.TextNode("Invalid credentials"):Doc.get_Empty();
-          };
-         },x,y))]))]);
+          return Doc.TextNode(msg);
+         },View1.FromVar(rvMsg)))]))]);
          message=clo1(arg10);
          inputRow=function(rv,id,lblText,isPass)
          {
@@ -14055,33 +14098,57 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
           return Utilities.elA("div",List.ofArray([Utilities.cls("form-group")]),List.ofArray([Utilities.elA("label",List.ofArray([Utilities.op_EqualsEqualsGreater("for",id),Utilities.cls("col-sm-2"),Utilities.cls("control-label")]),List.ofArray([Doc.TextNode(lblText)])),Utilities.elA("div",List.ofArray([Utilities.cls("col-sm-2")]),List.ofArray([(control(List.ofArray([Utilities.cls("form-control"),Utilities.op_EqualsEqualsGreater("id",id),Utilities.op_EqualsEqualsGreater("placeholder",lblText)])))(rv)]))]));
          };
          clo11=Utilities.el("div");
-         arg20=function()
+         arg102=List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-primary")]);
+         return clo11(List.ofArray([(Utilities.el("div"))(List.ofArray([Utilities.txt("Hint: TestUser/TestPass")])),message,Utilities.elA("form",List.ofArray([Utilities.cls("form-horizontal"),Utilities.op_EqualsEqualsGreater("role","form")]),List.ofArray([inputRow(rvUser,"user","Username",false),inputRow(rvPass,"pass","Password",true),Utilities.elA("div",List.ofArray([Utilities.cls("form-group")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("col-sm-offset-2"),Utilities.cls("col-sm-10")]),List.ofArray([Doc.Button("Log In",arg102,function()
          {
-          var matchValue,user;
-          matchValue=Auth.CheckLogin(rvUser.get_Value(),rvPass.get_Value());
-          if(matchValue.$==0)
+          return Concurrency.Start(Concurrency.Delay(function()
+          {
+           return Concurrency.Bind(Server.CheckLogin(rvUser.get_Value(),rvPass.get_Value()),function(arg103)
            {
-            return null;
-           }
-          else
-           {
-            user=matchValue.$0;
-            Var.Set(rvUser,"");
-            Var.Set(rvPass,"");
-            return onLogin(user);
-           }
-         };
-         return clo11(List.ofArray([(Utilities.el("div"))(List.ofArray([Utilities.txt("Hint: TestUser/TestPass")])),message,Utilities.elA("form",List.ofArray([Utilities.cls("form-horizontal"),Utilities.op_EqualsEqualsGreater("role","form")]),List.ofArray([inputRow(rvUser,"user","Username",false),inputRow(rvPass,"pass","Password",true),Utilities.elA("div",List.ofArray([Utilities.cls("form-group")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("col-sm-offset-2"),Utilities.cls("col-sm-10")]),List.ofArray([Doc.Button("Log In",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-primary")]),arg20)]))]))]))]));
+            var user;
+            if(arg103.$==0)
+             {
+              Var.Set(rvMsg,"Invalid credentials.");
+              return Concurrency.Return(null);
+             }
+            else
+             {
+              user=arg103.$0;
+              Var.Set(rvUser,"");
+              Var.Set(rvPass,"");
+              onLogin(user);
+              return Concurrency.Return(null);
+             }
+           });
+          }));
+         })]))]))]))]));
         },
         StatusWidget:function(login,logout,view)
         {
          return Doc.EmbedView(View1.Map(function(_arg1)
          {
-          return _arg1.$==0?Doc.Concat(List.ofArray([Doc.TextNode("You are not logged in."),Doc.Button("Login",Runtime.New(T,{
-           $:0
-          }),login)])):Doc.Concat(List.ofArray([Doc.TextNode("Welcome, "+_arg1.$0.Name+"!"),Doc.Button("Logout",Runtime.New(T,{
-           $:0
-          }),logout)]));
+          var t;
+          if(_arg1.$==0)
+           {
+            return Doc.Concat(List.ofArray([(Utilities.el("li"))(List.ofArray([Utilities.link("You are not logged in.",Runtime.New(T,{
+             $:0
+            }),function()
+            {
+            })])),(Utilities.el("li"))(List.ofArray([Utilities.link("Login",Runtime.New(T,{
+             $:0
+            }),login)]))]));
+           }
+          else
+           {
+            t="Welcome, "+_arg1.$0.Name+"!";
+            return Doc.Concat(List.ofArray([(Utilities.el("li"))(List.ofArray([Utilities.link(t,Runtime.New(T,{
+             $:0
+            }),function()
+            {
+            })])),(Utilities.el("li"))(List.ofArray([Utilities.link("Logout",Runtime.New(T,{
+             $:0
+            }),logout)]))]));
+           }
          },view));
         }
        },
@@ -14099,51 +14166,37 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          ThreadId:(Fresh.Int())(null),
          Title:title,
          ThreadAuthorName:author,
-         Posts:ViewModel.Create(function(p)
-         {
-          return p.PostId;
-         })
+         Posts:Var1.Create(Runtime.New(T,{
+          $:0
+         }))
         };
-       },
-       Fresh:{
-        Int:Runtime.Field(function()
-        {
-         var _tid_14_1;
-         _tid_14_1={
-          contents:0
-         };
-         return function()
-         {
-          Operators.Increment(_tid_14_1);
-          return _tid_14_1.contents;
-         };
-        })
        },
        InitialThreads:function()
        {
         var thread,threadModel;
         thread=MessageBoard.CreateThread("SimonJF","Hello, World! This is a topic.");
-        threadModel=ViewModel.Create(function(t)
+        threadModel=ViewModel1.Create(function(t)
         {
          return t.ThreadId;
         });
-        ViewModel.Add(threadModel,thread);
+        ViewModel1.Add(threadModel,thread);
         return threadModel;
        },
        Main:function()
        {
-        var actVar,auth,threadModel;
+        var actVar,auth;
         actVar=Var1.Create({
          $:2
         });
         auth=Auth.Create();
-        threadModel=MessageBoard.InitialThreads();
         return MiniSitelet.Create(actVar,function(go)
         {
          var st,navbar;
          st={
           Auth:auth,
-          Threads:threadModel,
+          Threads:Var1.Create(Runtime.New(T,{
+           $:0
+          })),
           Go:go
          };
          navbar=MessageBoard.NavBar(auth,actVar,st);
@@ -14164,49 +14217,56 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         }]);
         renderLink=function(action)
         {
-         var x;
-         x=View1.FromVar(_var);
          return Doc.EmbedView(View1.Map(function(active)
          {
-          return Utilities.elA("li",List.ofArray([MessageBoard.ShowAction(action)===MessageBoard.ShowAction(active)?Utilities.cls("active"):Attr.get_Empty()]),List.ofArray([Doc.ElementWithEvents("a",List.ofArray([Utilities.op_EqualsEqualsGreater("href","#")]),List.ofArray([EventHandler.CreateHandler("click",function()
+          return Utilities.elA("li",List.ofArray([MessageBoard.ShowAction(action)===MessageBoard.ShowAction(active)?Utilities.cls("active"):Attr.get_Empty()]),List.ofArray([Utilities.link(MessageBoard.ShowAction(action),Runtime.New(T,{
+           $:0
+          }),function()
           {
            return st.Go.call(null,action);
-          })]),List.ofArray([Utilities.txt(MessageBoard.ShowAction(action))]))]));
-         },x));
+          })]));
+         },View1.FromVar(_var)));
         };
-        return Utilities.elA("nav",List.ofArray([Utilities.cls("navbar"),Utilities.cls("navbar-default"),Attr.Create("role","navigation")]),List.ofArray([Utilities.elA("div",Runtime.New(T,{
-         $:0
-        }),List.ofArray([Utilities.elA("ul",List.ofArray([Utilities.cls("nav"),Utilities.cls("navbar-nav"),Utilities.cls("navbar-right")]),List.ofArray([(Utilities.el("li"))(List.ofArray([auth.StatusWidget]))])),Utilities.elA("ul",List.ofArray([Utilities.cls("nav"),Utilities.cls("navbar-nav")]),List.ofArray([Doc.Concat(List.map(renderLink,actions))]))]))]));
+        return Utilities.elA("nav",List.ofArray([Utilities.cls("navbar"),Utilities.cls("navbar-default"),Attr.Create("role","navigation")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("container-fluid")]),List.ofArray([Utilities.elA("ul",List.ofArray([Utilities.cls("nav"),Utilities.cls("navbar-nav")]),List.ofArray([Doc.Concat(List.map(renderLink,actions))])),Utilities.elA("ul",List.ofArray([Utilities.cls("nav"),Utilities.cls("navbar-nav"),Utilities.cls("navbar-right")]),List.ofArray([auth.StatusWidget]))]))]));
        },
        NewThreadPage:function(st)
        {
         var x;
         x=st.Auth.LoggedIn;
-        return Doc.EmbedView(View1.Map(function(_arg1)
+        return Doc.EmbedView(View1.Map(function(_arg3)
         {
          var user,rvTitle,rvPost,add;
-         if(_arg1.$==0)
+         if(_arg3.$==0)
           {
            st.Auth.ShowForm.call(null,null);
            return Doc.get_Empty();
           }
          else
           {
-           user=_arg1.$0;
+           user=_arg3.$0;
            rvTitle=Var1.Create("");
            rvPost=Var1.Create("");
            add=function()
            {
-            var newThread;
-            newThread=MessageBoard.CreateThread(user.Name,Var.Get(rvTitle));
-            ViewModel.Add(newThread.Posts,MessageBoard.CreatePost(user,Var.Get(rvPost)));
-            ViewModel.Add(st.Threads,newThread);
+            var newThread,post;
+            newThread=MessageBoard.CreateThread(user.Name,Var1.Get(rvTitle));
+            post=MessageBoard.CreatePost(user,Var1.Get(rvPost));
+            Concurrency.Start(Concurrency.Delay(function()
+            {
+             return Concurrency.Bind(Server.AddThread(newThread),function()
+             {
+              return Concurrency.Bind(Server.AddPost(newThread,post),function()
+              {
+               return Concurrency.Return(null);
+              });
+             });
+            }));
             return st.Go.call(null,{
              $:1,
              $0:newThread
             });
            };
-           return Utilities.elA("div",List.ofArray([Utilities.cls("panel"),Utilities.cls("panel-default")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("panel-heading")]),List.ofArray([Utilities.elA("h3",List.ofArray([Utilities.cls("panel-title")]),List.ofArray([Doc.TextNode("New Thread")]))])),Utilities.elA("div",List.ofArray([Utilities.cls("panel-body")]),List.ofArray([Utilities.elA("form",List.ofArray([Utilities.cls("form-horizontal"),Utilities.op_EqualsEqualsGreater("role","form")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("form-group")]),List.ofArray([Utilities.elA("label",List.ofArray([Utilities.op_EqualsEqualsGreater("for","threadTitle"),Utilities.cls("col-sm-2 control-label")]),List.ofArray([Doc.TextNode("Title")])),Utilities.elA("div",List.ofArray([Utilities.cls("col-sm-10")]),List.ofArray([Doc.Input(List.ofArray([Utilities.op_EqualsEqualsGreater("id","threadTitle")]),rvTitle)]))])),Utilities.elA("div",List.ofArray([Utilities.cls("form-group")]),List.ofArray([Utilities.elA("label",List.ofArray([Utilities.op_EqualsEqualsGreater("for","postContent"),Utilities.cls("col-sm-2 control-label")]),List.ofArray([Doc.TextNode("Content")])),Utilities.elA("div",List.ofArray([Utilities.cls("col-sm-10")]),List.ofArray([Doc.InputArea(List.ofArray([Utilities.op_EqualsEqualsGreater("id","postContent"),Utilities.op_EqualsEqualsGreater("rows","5")]),rvPost)]))])),Utilities.elA("div",List.ofArray([Utilities.cls("form-group")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("col-sm-offset-2"),Utilities.cls("col-sm-10")]),List.ofArray([Doc.Button("Submit",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-primary")]),add)]))]))]))]))]));
+           return Utilities.elA("div",List.ofArray([Utilities.cls("panel"),Utilities.cls("panel-default")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("panel-heading")]),List.ofArray([Utilities.elA("h3",List.ofArray([Utilities.cls("panel-title")]),List.ofArray([Doc.TextNode("New Thread")]))])),Utilities.elA("div",List.ofArray([Utilities.cls("panel-body")]),List.ofArray([Utilities.elA("form",List.ofArray([Utilities.cls("form-horizontal"),Utilities.op_EqualsEqualsGreater("role","form")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("form-group")]),List.ofArray([Utilities.elA("label",List.ofArray([Utilities.op_EqualsEqualsGreater("for","threadTitle"),Utilities.cls("col-sm-2 control-label")]),List.ofArray([Doc.TextNode("Title")])),Utilities.elA("div",List.ofArray([Utilities.cls("col-sm-10")]),List.ofArray([Doc.Input(List.ofArray([Utilities.op_EqualsEqualsGreater("id","threadTitle"),Utilities.sty("width","100%"),Utilities.cls("form-control")]),rvTitle)]))])),Utilities.elA("div",List.ofArray([Utilities.cls("form-group")]),List.ofArray([Utilities.elA("label",List.ofArray([Utilities.op_EqualsEqualsGreater("for","postContent"),Utilities.cls("col-sm-2 control-label")]),List.ofArray([Doc.TextNode("Content")])),Utilities.elA("div",List.ofArray([Utilities.cls("col-sm-10")]),List.ofArray([Doc.InputArea(List.ofArray([Utilities.op_EqualsEqualsGreater("id","postContent"),Utilities.op_EqualsEqualsGreater("rows","5"),Utilities.cls("form-control"),Utilities.sty("width","100%")]),rvPost)]))])),Utilities.elA("div",List.ofArray([Utilities.cls("form-group")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("col-sm-offset-2"),Utilities.cls("col-sm-10")]),List.ofArray([Doc.Button("Submit",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-primary")]),add)]))]))]))]))]));
           }
         },x));
        },
@@ -14220,25 +14280,53 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        ShowThreadPage:function(st,thread)
        {
-        var clo1,m,x;
-        clo1=Utilities.el("div");
-        m=thread.Posts;
-        x=st.Auth.LoggedIn;
-        return clo1(List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("panel"),Utilities.cls("panel-default")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("panel-heading")]),List.ofArray([Utilities.elA("h3",List.ofArray([Utilities.cls("panel-title")]),List.ofArray([Doc.TextNode("Posts in thread \""+thread.Title+"\"")]))])),Utilities.elA("div",List.ofArray([Utilities.cls("panel-body")]),List.ofArray([Utilities.elA("table",List.ofArray([Utilities.cls("table"),Utilities.cls("table-hover")]),List.ofArray([Doc.EmbedBagBy(m.Projection,function(post)
+        var rvPosts,getPosts,renderPost,postList,clo1,x;
+        rvPosts=Var1.Create(Runtime.New(T,{
+         $:0
+        }));
+        getPosts=function()
+        {
+         return Concurrency.Start(Concurrency.Delay(function()
+         {
+          return Concurrency.Bind(Server.GetPosts(thread),function(arg101)
+          {
+           Var.Set(rvPosts,arg101);
+           return Concurrency.Return(null);
+          });
+         }));
+        };
+        renderPost=function(post)
         {
          return(Utilities.el("tr"))(List.ofArray([(Utilities.el("td"))(List.ofArray([Doc.TextNode(post.PostAuthorName)])),(Utilities.el("td"))(List.ofArray([Doc.TextNode(post.Content)]))]));
-        },m.Items.get_View())]))]))])),Doc.EmbedView(View1.Map(function(_arg1)
+        };
+        postList=Utilities.elA("div",List.ofArray([Utilities.cls("panel"),Utilities.cls("panel-default")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("panel-heading")]),List.ofArray([Utilities.elA("h3",List.ofArray([Utilities.cls("panel-title")]),List.ofArray([Doc.TextNode("Posts in thread \""+thread.Title+"\"")]))])),Utilities.elA("div",List.ofArray([Utilities.cls("panel-body")]),List.ofArray([Utilities.elA("table",List.ofArray([Utilities.cls("table"),Utilities.cls("table-hover")]),List.ofArray([(Utilities.el("tbody"))(List.ofArray([Doc.EmbedView(View1.Map(function(posts)
+        {
+         return Doc.Concat(List.map(renderPost,posts));
+        },View1.FromVar(rvPosts)))]))]))]))]));
+        getPosts(null);
+        clo1=Utilities.el("div");
+        x=st.Auth.LoggedIn;
+        return clo1(List.ofArray([postList,Doc.EmbedView(View1.Map(function(_arg3)
         {
          var user,rvPost,add;
-         if(_arg1.$==1)
+         if(_arg3.$==1)
           {
-           user=_arg1.$0;
+           user=_arg3.$0;
            rvPost=Var1.Create("");
            add=function()
            {
-            return ViewModel.Add(thread.Posts,MessageBoard.CreatePost(user,rvPost.get_Value()));
+            var post;
+            post=MessageBoard.CreatePost(user,rvPost.get_Value());
+            return Concurrency.Start(Concurrency.Delay(function()
+            {
+             return Concurrency.Bind(Server.AddPost(thread,post),function()
+             {
+              getPosts(null);
+              return Concurrency.Return(null);
+             });
+            }));
            };
-           return Utilities.elA("div",List.ofArray([Utilities.cls("panel"),Utilities.cls("panel-default")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("panel-heading")]),List.ofArray([Utilities.elA("h3",List.ofArray([Utilities.cls("panel-title")]),List.ofArray([Doc.TextNode("New Post")]))])),Utilities.elA("div",List.ofArray([Utilities.cls("panel-body")]),List.ofArray([Utilities.elA("form",List.ofArray([Utilities.cls("form-horizontal"),Utilities.op_EqualsEqualsGreater("role","form")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("form-group")]),List.ofArray([Utilities.elA("label",List.ofArray([Utilities.op_EqualsEqualsGreater("for","postContent"),Utilities.cls("col-sm-2 control-label")]),List.ofArray([Doc.TextNode("Content")])),Utilities.elA("div",List.ofArray([Utilities.cls("col-sm-10")]),List.ofArray([Doc.InputArea(List.ofArray([Utilities.op_EqualsEqualsGreater("id","postContent"),Utilities.op_EqualsEqualsGreater("rows","5")]),rvPost)]))])),Utilities.elA("div",List.ofArray([Utilities.cls("form-group")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("col-sm-offset-2"),Utilities.cls("col-sm-10")]),List.ofArray([Doc.Button("Submit",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-primary")]),add)]))]))]))]))]));
+           return Utilities.elA("div",List.ofArray([Utilities.cls("panel"),Utilities.cls("panel-default")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("panel-heading")]),List.ofArray([Utilities.elA("h3",List.ofArray([Utilities.cls("panel-title")]),List.ofArray([Doc.TextNode("New Post")]))])),Utilities.elA("div",List.ofArray([Utilities.cls("panel-body")]),List.ofArray([Utilities.elA("form",List.ofArray([Utilities.cls("form-horizontal"),Utilities.op_EqualsEqualsGreater("role","form")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("form-group")]),List.ofArray([Utilities.elA("label",List.ofArray([Utilities.op_EqualsEqualsGreater("for","postContent"),Utilities.cls("col-sm-2 control-label")]),List.ofArray([Doc.TextNode("Content")])),Utilities.elA("div",List.ofArray([Utilities.cls("col-sm-10")]),List.ofArray([Doc.InputArea(List.ofArray([Utilities.op_EqualsEqualsGreater("id","postContent"),Utilities.op_EqualsEqualsGreater("rows","5"),Utilities.cls("form-control"),Utilities.sty("width","100%")]),rvPost)]))])),Utilities.elA("div",List.ofArray([Utilities.cls("form-group")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("col-sm-offset-2"),Utilities.cls("col-sm-10")]),List.ofArray([Doc.Button("Submit",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-primary")]),add)]))]))]))]))]));
           }
          else
           {
@@ -14248,53 +14336,32 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        ThreadListPage:function(st)
        {
-        var threads,arg00;
-        threads=st.Threads;
-        arg00=threads.Projection;
-        return Utilities.elA("table",List.ofArray([Utilities.cls("table"),Utilities.cls("table-hover")]),List.ofArray([Doc.EmbedBagBy(arg00,function(thread)
+        var renderThread,threads;
+        renderThread=function(thread)
         {
-         var clo1;
-         clo1=Utilities.el("tr");
-         return clo1(List.ofArray([(Utilities.el("td"))(List.ofArray([Doc.TextNode(thread.ThreadAuthorName)])),(Utilities.el("td"))(List.ofArray([Doc.ElementWithEvents("a",List.ofArray([Attr.Create("href","#")]),List.ofArray([EventHandler.CreateHandler("click",function()
+         return(Utilities.el("tr"))(List.ofArray([(Utilities.el("td"))(List.ofArray([Doc.TextNode(thread.ThreadAuthorName)])),(Utilities.el("td"))(List.ofArray([Utilities.link(thread.Title,Runtime.New(T,{
+          $:0
+         }),function()
          {
           return st.Go.call(null,{
            $:1,
            $0:thread
           });
-         })]),List.ofArray([Doc.TextNode(thread.Title)]))]))]));
-        },threads.Items.get_View())]));
-       },
-       ViewModel:{
-        Add:function(m,item)
+         })]))]));
+        };
+        threads=st.Threads;
+        Concurrency.Start(Concurrency.Delay(function()
         {
-         return Model.Update(function(all)
+         return Concurrency.Bind(Server.GetThreads(),function(arg101)
          {
-          return all.Add(item);
-         },m.Items);
-        },
-        Create:function(proj)
+          Var.Set(threads,arg101);
+          return Concurrency.Return(null);
+         });
+        }));
+        return Utilities.elA("table",List.ofArray([Utilities.cls("table"),Utilities.cls("table-hover")]),List.ofArray([(Utilities.el("tbody"))(List.ofArray([Doc.EmbedView(View1.Map(function(threads1)
         {
-         return{
-          Projection:proj,
-          Items:Model1.Create(function(arr)
-          {
-           return arr.ToArray();
-          },ResizeArrayProxy.New2())
-         };
-        },
-        Remove:function(m,item)
-        {
-         return Model.Update(function(all)
-         {
-          return Arrays.iter(function(i)
-          {
-           return all.RemoveAt(i);
-          },Seq.toArray(Seq.filter(function(i)
-          {
-           return m.Projection.call(null,all.get_Item(i))===m.Projection.call(null,item);
-          },Operators.range(0,all.get_Count()-1))));
-         },m.Items);
-        }
+         return Doc.Concat(List.map(renderThread,threads1));
+        },View1.FromVar(st.Threads)))]))]));
        },
        description:Runtime.Field(function()
        {
@@ -14678,7 +14745,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        getActive:function(rvModel)
        {
-        return Var.Get(rvModel).ActiveSample;
+        return Var1.Get(rvModel).ActiveSample;
        },
        initExample:function(filename,_arg1)
        {
@@ -14760,6 +14827,121 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         },view))]));
        }
       },
+      Server:{
+       AddPost:function(thread,post)
+       {
+        return Concurrency.Delay(function()
+        {
+         var matchValue,k,v,_,k1,v1,_1;
+         matchValue=MapModule.TryFind(thread.ThreadId,Server.posts());
+         if(matchValue.$==0)
+          {
+           k=thread.ThreadId;
+           v=List.ofArray([post]);
+           _=Server.posts().Add(k,v);
+           Server.posts=function()
+           {
+            return _;
+           };
+           return Concurrency.Return(null);
+          }
+         else
+          {
+           k1=thread.ThreadId;
+           v1=List.append(matchValue.$0,List.ofArray([post]));
+           _1=Server.posts().Add(k1,v1);
+           Server.posts=function()
+           {
+            return _1;
+           };
+           return Concurrency.Return(null);
+          }
+        });
+       },
+       AddThread:function(thread)
+       {
+        return Concurrency.Delay(function()
+        {
+         var _,k,v,_1;
+         _=List.append(Server.threads(),List.ofArray([thread]));
+         Server.threads=function()
+         {
+          return _;
+         };
+         k=thread.ThreadId;
+         v=Runtime.New(T,{
+          $:0
+         });
+         _1=Server.posts().Add(k,v);
+         Server.posts=function()
+         {
+          return _1;
+         };
+         return Concurrency.Return(null);
+        });
+       },
+       CheckCredentials:function(name,pass)
+       {
+        var matchValue;
+        matchValue=[name,pass];
+        return matchValue[0]==="TestUser"?matchValue[1]==="TestPass"?{
+         $:1,
+         $0:{
+          Name:name,
+          Password:pass
+         }
+        }:{
+         $:0
+        }:{
+         $:0
+        };
+       },
+       CheckLogin:function(user,pass)
+       {
+        return Concurrency.Delay(function()
+        {
+         return Concurrency.Bind(Concurrency.Sleep(Server.DELAY()),function()
+         {
+          return Concurrency.Return(Server.CheckCredentials(user,pass));
+         });
+        });
+       },
+       DELAY:Runtime.Field(function()
+       {
+        return 200;
+       }),
+       GetPosts:function(thread)
+       {
+        return Concurrency.Delay(function()
+        {
+         var matchValue;
+         matchValue=MapModule.TryFind(thread.ThreadId,Server.posts());
+         return matchValue.$==0?Concurrency.Return(Runtime.New(T,{
+          $:0
+         })):Concurrency.Return(matchValue.$0);
+        });
+       },
+       GetThreads:function()
+       {
+        return Concurrency.Delay(function()
+        {
+         return Concurrency.Bind(Concurrency.Sleep(Server.DELAY()),function()
+         {
+          return Concurrency.Return(Server.threads());
+         });
+        });
+       },
+       posts:Runtime.Field(function()
+       {
+        return FSharpMap.New([]);
+       }),
+       threads:Runtime.Field(function()
+       {
+        return Runtime.New(T,{
+         $:0
+        });
+       })
+      },
       SimpleTextBox:{
        Main:Runtime.Field(function()
        {
@@ -14781,7 +14963,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
       TodoList:{
        Add:function(m,item)
        {
-        return Model.Update(function(all)
+        return Model1.Update(function(all)
         {
          return all.Add(item);
         },m.Items);
@@ -14805,7 +14987,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        }),
        Remove:function(m,item)
        {
-        return Model.Update(function(all)
+        return Model1.Update(function(all)
         {
          return Arrays.iter(function(i)
          {
@@ -14848,7 +15030,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         View1.FromVar(rvInput);
         return(Utilities.el("form"))(List.ofArray([(Utilities.divc("form-group"))(List.ofArray([(Utilities.el("label"))(List.ofArray([Utilities.txt("New entry: ")])),Util.input(rvInput)])),Util.button("Submit",function()
         {
-         return TodoList.Add(m,TodoItem.Create(Var.Get(rvInput)));
+         return TodoList.Add(m,TodoItem.Create(Var1.Get(rvInput)));
         })]));
        },
        TodoItem:Runtime.Class({},{
@@ -14901,19 +15083,28 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        })
       },
       Utilities:{
+       btn:function(caption)
+       {
+        var arg10;
+        arg10=List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-default")]);
+        return function(arg20)
+        {
+         return Doc.Button(caption,arg10,arg20);
+        };
+       },
        cls:function(arg00)
        {
         return Attr.CreateClass(arg00);
        },
        div:Runtime.Field(function()
        {
-        var _arg10_18_21;
-        _arg10_18_21=Runtime.New(T,{
+        var _arg10_20_21;
+        _arg10_20_21=Runtime.New(T,{
          $:0
         });
         return function(arg20)
         {
-         return Doc.Element("div",_arg10_18_21,arg20);
+         return Doc.Element("div",_arg10_20_21,arg20);
         };
        }),
        divc:function(c)
@@ -14940,9 +15131,17 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        {
         return Doc.Element(arg00,arg10,arg20);
        },
+       link:function(arg00,arg10,arg20)
+       {
+        return Doc.Link(arg00,arg10,arg20);
+       },
        op_EqualsEqualsGreater:function(k,v)
        {
         return Attr.Create(k,v);
+       },
+       sty:function(arg00,arg10)
+       {
+        return Attr.CreateStyle(arg00,arg10);
        },
        txt:function(arg00)
        {
@@ -14980,24 +15179,26 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   MiniSiteletTest=Runtime.Safe(Next.MiniSiteletTest);
   MessageBoard=Runtime.Safe(Next.MessageBoard);
   Client=Runtime.Safe(Next.Client);
+  Operators=Runtime.Safe(WebSharper.Operators);
+  Model1=Runtime.Safe(Next.Model1);
+  Collections=Runtime.Safe(WebSharper.Collections);
+  ResizeArray=Runtime.Safe(Collections.ResizeArray);
+  ResizeArrayProxy=Runtime.Safe(ResizeArray.ResizeArrayProxy);
+  Arrays=Runtime.Safe(WebSharper.Arrays);
   Flow=Runtime.Safe(Next.Flow);
   String=Runtime.Safe(Global.String);
   Strings=Runtime.Safe(WebSharper.Strings);
   IntrinsicFunctionProxy=Runtime.Safe(WebSharper.IntrinsicFunctionProxy);
   Attr=Runtime.Safe(Next.Attr);
   Auth=Runtime.Safe(MessageBoard.Auth);
-  Fresh=Runtime.Safe(MessageBoard.Fresh);
-  ViewModel=Runtime.Safe(MessageBoard.ViewModel);
-  Operators=Runtime.Safe(WebSharper.Operators);
+  Concurrency=Runtime.Safe(WebSharper.Concurrency);
+  Server=Runtime.Safe(Next.Server);
+  Common=Runtime.Safe(Next.Common);
+  Fresh=Runtime.Safe(Common.Fresh);
+  ViewModel1=Runtime.Safe(Common.ViewModel1);
   MiniSitelet=Runtime.Safe(Next.MiniSitelet);
-  EventHandler=Runtime.Safe(Next.EventHandler);
-  Model=Runtime.Safe(Next.Model);
-  Model1=Runtime.Safe(Next.Model1);
-  Collections=Runtime.Safe(WebSharper.Collections);
-  ResizeArray=Runtime.Safe(Collections.ResizeArray);
-  ResizeArrayProxy=Runtime.Safe(ResizeArray.ResizeArrayProxy);
-  Arrays=Runtime.Safe(WebSharper.Arrays);
   Unchecked=Runtime.Safe(WebSharper.Unchecked);
+  EventHandler=Runtime.Safe(Next.EventHandler);
   document=Runtime.Safe(Global.document);
   Phone=Runtime.Safe(PhoneExample.Phone);
   Order=Runtime.Safe(PhoneExample.Order);
@@ -15005,6 +15206,8 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   window=Runtime.Safe(Global.window);
   Error=Runtime.Safe(Global.Error);
   Option=Runtime.Safe(WebSharper.Option);
+  MapModule=Runtime.Safe(Collections.MapModule);
+  FSharpMap=Runtime.Safe(Collections.FSharpMap);
   Util=Runtime.Safe(TodoList.Util);
   return TodoItem=Runtime.Safe(TodoList.TodoItem);
  });
@@ -15018,6 +15221,9 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   SimpleTextBox.description();
   SimpleTextBox.Sample();
   SimpleTextBox.Main();
+  Server.threads();
+  Server.posts();
+  Server.DELAY();
   PhoneExample.description();
   PhoneExample.Sample();
   PhoneExample.Main();
@@ -15029,7 +15235,6 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   MiniSiteletTest.Sample();
   MessageBoard.description();
   MessageBoard.Sample();
-  Fresh.Int();
   InputTransform.description();
   InputTransform.Sample();
   InputTransform.Main();
@@ -15038,6 +15243,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   ContactFlow.description();
   ContactFlow.contactTypeFlowlet();
   ContactFlow.Sample();
+  Fresh.Int();
   Client.Main();
   Client.All();
   CheckBoxTest.description();
