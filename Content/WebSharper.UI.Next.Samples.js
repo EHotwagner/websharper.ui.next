@@ -11677,7 +11677,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
 
 (function()
 {
- var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,IntrinsicFunctionProxy,Concurrency,Array,Seq,UI,Next,Abbrev,Fresh,Arrays,Unchecked,Slot,Attr,Attrs,View1,Array1,jQuery,Diff,BagDiff1,HashSetProxy,HashSet,Collections,ResizeArray,ResizeArrayProxy,Doc,Docs,List,DomUtility,Var,T,Enumerator,View,Operators,document,EventHandler,Flow,FlowBuilder,Var1,Dictionary,Model,Model1,Snap,Async,JQueue,Dict;
+ var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,IntrinsicFunctionProxy,Concurrency,Array,Seq,UI,Next,Abbrev,Fresh,HashSetProxy,HashSet,Arrays,JQueue,Unchecked,Slot,Anim,Array1,View,Attrs,DomUtility,Attr,AnimatedAttrNode,DynamicAttrNode,Diff,BagDiff,Slot1,Collections,ResizeArray,ResizeArrayProxy,Docs,Doc,List,Var,T,Mailbox,Operators,NodeSet,DocElemNode,DomNodes,jQuery,document,Flow,FlowBuilder,Var1,Enumerator,Dictionary,window,Model1,Model,Snap,Async,Dict;
  Runtime.Define(Global,{
   IntelliFactory:{
    WebSharper:{
@@ -11781,12 +11781,33 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          };
          return"uid"+Global.String(Fresh.counter());
         },
+        Int:function()
+        {
+         var _;
+         _=Fresh.counter()+1;
+         Fresh.counter=function()
+         {
+          return _;
+         };
+         return Fresh.counter();
+        },
         counter:Runtime.Field(function()
         {
          return 0;
         })
        },
        HashSet:{
+        Except:function(excluded,included)
+        {
+         var set;
+         set=HashSetProxy.New(HashSet.ToArray(included));
+         set.ExceptWith(HashSet.ToArray(excluded));
+         return set;
+        },
+        Filter:function(ok,set)
+        {
+         return HashSetProxy.New(Arrays.filter(ok,HashSet.ToArray(set)));
+        },
         ToArray:function(set)
         {
          var arr;
@@ -11801,9 +11822,67 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          var $0=this,$this=this;
          return $q.push($x);
         },
+        Count:function(q)
+        {
+         return q.length;
+        },
+        Dequeue:function($q)
+        {
+         var $0=this,$this=this;
+         return $q.shift();
+        },
         Iter:function(f,q)
         {
-         return Arrays.iter(f,q.slice());
+         return Arrays.iter(f,JQueue.ToArray(q));
+        },
+        ToArray:function(q)
+        {
+         return q.slice();
+        }
+       },
+       Mailbox:{
+        StartProcessor:function(proc)
+        {
+         var mail,isActive,work;
+         mail=[];
+         isActive={
+          contents:false
+         };
+         work=Concurrency.Delay(function()
+         {
+          var a,b;
+          a=Concurrency.While(function()
+          {
+           return JQueue.Count(mail)>0;
+          },Concurrency.Delay(function()
+          {
+           return Concurrency.Bind(proc(JQueue.Dequeue(mail)),function()
+           {
+            return Concurrency.Return(null);
+           });
+          }));
+          b=Concurrency.Delay(function()
+          {
+           return Concurrency.Return(void(isActive.contents=false));
+          });
+          return Concurrency.Bind(a,function()
+          {
+           return b;
+          });
+         });
+         return function(msg)
+         {
+          JQueue.Add(msg,mail);
+          if(!isActive.contents)
+           {
+            isActive.contents=true;
+            return Concurrency.Start(work);
+           }
+          else
+           {
+            return null;
+           }
+         };
         }
        },
        Slot:Runtime.Class({
@@ -11820,10 +11899,6 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          return this.value;
         }
        },{
-        Create:function(key,value)
-        {
-         return Slot.New(key,value);
-        },
         New:function(key,value)
         {
          var r;
@@ -11833,128 +11908,351 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          return r;
         }
        }),
+       Slot1:Runtime.Class({},{
+        Create:function(key,value)
+        {
+         return Slot.New(key,value);
+        }
+       }),
        U:function()
        {
         return;
        }
       },
-      Attr:Runtime.Class({},{
-       Append:function(_arg2,_arg1)
+      Anim:Runtime.Class({},{
+       All:function(anim)
        {
-        var vA,vB;
-        vA=_arg2.$1;
-        vB=_arg1.$1;
-        return Runtime.New(Attr,{
-         $:0,
-         $0:Attrs.append(_arg2.$0,_arg1.$0),
-         $1:View1.Map2(function()
-         {
-          return function()
+        var q,loop;
+        q=[];
+        loop=function(anim1)
+        {
+         var b;
+         if(anim1.$==1)
           {
-           return null;
-          };
-         },vA,vB)
+           return JQueue.Add(anim1.$0,q);
+          }
+         else
+          {
+           if(anim1.$==2)
+            {
+             b=anim1.$1;
+             loop(anim1.$0);
+             return loop(b);
+            }
+           else
+            {
+             return null;
+            }
+          }
+        };
+        loop(anim);
+        return JQueue.ToArray(q);
+       },
+       Append:function(a,b)
+       {
+        var matchValue;
+        matchValue=[a,b];
+        return matchValue[0].$==0?matchValue[1]:matchValue[1].$==0?matchValue[0]:Runtime.New(Anim,{
+         $:2,
+         $0:a,
+         $1:b
+        });
+       },
+       Concat:function(par)
+       {
+        var a;
+        a=Seq.toArray(par);
+        return Array1.MapReduce(function(x)
+        {
+         return x;
+        },Runtime.New(Anim,{
+         $:0
+        }),function(arg00)
+        {
+         return function(arg10)
+         {
+          return Anim.Append(arg00,arg10);
+         };
+        },a);
+       },
+       Custom:function(anim)
+       {
+        return Runtime.New(Anim,{
+         $:1,
+         $0:anim
+        });
+       },
+       Play:function(anim)
+       {
+        var all,matchValue;
+        all=Anim.All(anim);
+        matchValue=IntrinsicFunctionProxy.GetLength(all);
+        return matchValue===0?Concurrency.Delay(function()
+        {
+         return Concurrency.Return(null);
+        }):matchValue===1?all[0]:Concurrency.Bind(Concurrency.Parallel(all),function()
+        {
+         return Concurrency.Return(null);
+        });
+       },
+       WhenDone:function(f,main)
+       {
+        var all;
+        all=Anim.Play(main);
+        return Runtime.New(Anim,{
+         $:1,
+         $0:Concurrency.Delay(function()
+         {
+          return Concurrency.Bind(all,function()
+          {
+           return Concurrency.Return(f(null));
+          });
+         })
+        });
+       },
+       get_Empty:function()
+       {
+        return Runtime.New(Anim,{
+         $:0
+        });
+       }
+      }),
+      AnimatedAttrNode:Runtime.Class({
+       GetChangeAnim:function(parent)
+       {
+        var matchValue,a=this;
+        if(this.dirty)
+         {
+          matchValue=[this.visible,this.logical];
+          if(matchValue[0].$==1)
+           {
+            if(matchValue[1].$==1)
+             {
+              return Anim.WhenDone(function()
+              {
+               return a.sync(parent);
+              },a.tr.AnimateChange(matchValue[0].$0,matchValue[1].$0,a.push.call(null,parent)));
+             }
+            else
+             {
+              a.sync(parent);
+              return Anim.get_Empty();
+             }
+           }
+          else
+           {
+            a.sync(parent);
+            return Anim.get_Empty();
+           }
+         }
+        else
+         {
+          return Anim.get_Empty();
+         }
+       },
+       GetEnterAnim:function(parent)
+       {
+        var matchValue;
+        matchValue=this.logical;
+        return matchValue.$==1?this.tr.AnimateEnter(matchValue.$0,this.push.call(null,parent)):Anim.get_Empty();
+       },
+       GetExitAnim:function(parent)
+       {
+        var matchValue;
+        matchValue=this.logical;
+        return matchValue.$==1?this.tr.AnimateExit(matchValue.$0,this.push.call(null,parent)):Anim.get_Empty();
+       },
+       Sync:function()
+       {
+        return null;
+       },
+       get_Changed:function()
+       {
+        return this.updates;
+       },
+       sync:function(p)
+       {
+        var matchValue,l;
+        if(this.dirty)
+         {
+          matchValue=this.logical;
+          if(matchValue.$==0)
+           {
+            return null;
+           }
+          else
+           {
+            l=matchValue.$0;
+            this.dirty=false;
+            (this.push.call(null,p))(l);
+            this.visible=this.logical;
+            return;
+           }
+         }
+        else
+         {
+          return null;
+         }
+       },
+       update:function(x)
+       {
+        this.logical={
+         $:1,
+         $0:x
+        };
+        this.dirty=true;
+        return;
+       }
+      },{
+       New:function(tr,view,push)
+       {
+        var r;
+        r=Runtime.New(this,{});
+        r.tr=tr;
+        r.push=push;
+        r.logical={
+         $:0
+        };
+        r.visible={
+         $:0
+        };
+        r.dirty=true;
+        r.updates=View.Map(function(x)
+        {
+         return r.update(x);
+        },view);
+        return r;
+       }
+      }),
+      Attr:Runtime.Class({},{
+       Animated:function(name,tr,view,attr)
+       {
+        return Attrs.Animated(tr,view,function(el)
+        {
+         return function(v)
+         {
+          return DomUtility.SetAttr(el,name,attr(v));
+         };
+        });
+       },
+       AnimatedStyle:function(name,tr,view,attr)
+       {
+        return Attrs.Animated(tr,view,function(el)
+        {
+         return function(v)
+         {
+          return DomUtility.SetStyle(el,name,attr(v));
+         };
+        });
+       },
+       Append:function(a,b)
+       {
+        return Attrs.Mk(a.Flags|b.Flags,Attrs.AppendTree(a.Tree,b.Tree));
+       },
+       Class:function(name)
+       {
+        return Attrs.Static(function(el)
+        {
+         return DomUtility.AddClass(el,name);
         });
        },
        Concat:function(xs)
        {
-        return Array1.MapReduce(function(x)
+        var f,re,a;
+        f=function(x)
         {
          return x;
-        },Attr.get_Empty(),function(arg00)
+        };
+        re=function(arg00)
         {
          return function(arg10)
          {
           return Attr.Append(arg00,arg10);
          };
-        },Seq.toArray(xs));
+        };
+        a=Seq.toArray(xs);
+        return Array1.MapReduce(f,Attrs.EmptyAttr(),re,a);
        },
        Create:function(name,value)
        {
-        return Attr.View(name,View1.Const(value));
-       },
-       CreateClass:function(name)
-       {
-        return Attr.ViewInternal("",View1.Const(name),{
-         $:2
+        return Attrs.Static(function(el)
+        {
+         return DomUtility.SetAttr(el,name,value);
         });
        },
-       CreateStyle:function(name,value)
+       Dynamic:function(name,view)
        {
-        return Attr.ViewInternal(name,View1.Const(value),{
-         $:1
-        });
-       },
-       Custom:function(f,view)
-       {
-        return Runtime.New(Attr,{
-         $:0,
-         $0:{
-          $:1,
-          $0:{
-           $:0
-          }
-         },
-         $1:View1.Map(f,view)
-        });
-       },
-       View:function(name,view)
-       {
-        return Attr.ViewInternal(name,view,{
-         $:0
-        });
-       },
-       ViewClass:function(view)
-       {
-        return Attr.ViewInternal("",view,{
-         $:2
-        });
-       },
-       ViewInternal:function(name,view,attrTy)
-       {
-        var sk;
-        sk={
-         AttrName:name,
-         AttrType:attrTy,
-         AttrDirty:true,
-         AttrValue:""
-        };
-        return Runtime.New(Attr,{
-         $:0,
-         $0:{
-          $:1,
-          $0:{
-           $:1,
-           $0:sk
-          }
-         },
-         $1:View1.Map(function(v)
+        return Attrs.Dynamic(view,function(el)
+        {
+         return function(v)
          {
-          sk.AttrDirty=true;
-          sk.AttrValue=v;
-          return null;
-         },view)
+          return DomUtility.SetAttr(el,name,v);
+         };
         });
        },
-       ViewStyle:function(name,view)
+       DynamicClass:function(name,view,ok)
        {
-        return Attr.ViewInternal(name,view,{
-         $:1
+        return Attrs.Dynamic(view,function(el)
+        {
+         return function(v)
+         {
+          return ok(v)?DomUtility.AddClass(el,name):DomUtility.RemoveClass(el,name);
+         };
+        });
+       },
+       DynamicCustom:function(set,view)
+       {
+        return Attrs.Dynamic(view,set);
+       },
+       DynamicStyle:function(name,view)
+       {
+        return Attrs.Dynamic(view,function(el)
+        {
+         return function(v)
+         {
+          return DomUtility.SetStyle(el,name,v);
+         };
+        });
+       },
+       Handler:function(name,callback)
+       {
+        return Attrs.Static(function(el)
+        {
+         return el.addEventListener(name,callback,false);
+        });
+       },
+       Style:function(name,value)
+       {
+        return Attrs.Static(function(el)
+        {
+         return DomUtility.SetStyle(el,name,value);
         });
        },
        get_Empty:function()
        {
-        return Runtime.New(Attr,{
-         $:0,
-         $0:{
-          $:0
-         },
-         $1:View1.Const(null)
-        });
+        return Attrs.EmptyAttr();
        }
       }),
       Attrs:{
-       append:function(a,b)
+       Animated:function(tr,view,set)
+       {
+        var node,flags;
+        node=AnimatedAttrNode.New(tr,view,set);
+        flags=4;
+        if(tr.get_CanAnimateEnter())
+         {
+          flags=flags|1;
+         }
+        if(tr.get_CanAnimateExit())
+         {
+          flags=flags|2;
+         }
+        return Attrs.Mk(flags,{
+         $:1,
+         $0:node
+        });
+       },
+       AppendTree:function(a,b)
        {
         var matchValue;
         matchValue=[a,b];
@@ -11964,79 +12262,146 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          $1:b
         };
        },
-       needsUpdate:function(skel)
+       Dynamic:function(view,set)
        {
-        var b;
-        if(skel.$==1)
-         {
-          return skel.$0.$==1?skel.$0.$0.AttrDirty:false;
-         }
-        else
-         {
-          if(skel.$==2)
-           {
-            b=skel.$1;
-            return Attrs.needsUpdate(skel.$0)?true:Attrs.needsUpdate(b);
-           }
-          else
-           {
-            return false;
-           }
-         }
+        return Attrs.Mk(0,{
+         $:1,
+         $0:DynamicAttrNode.New(view,set)
+        });
        },
-       update:function(par,skel)
+       EmptyAttr:Runtime.Field(function()
        {
-        var loop;
-        loop=function(skel1)
+        return Attrs.Mk(0,{
+         $:0
+        });
+       }),
+       GetAnim:function(dyn,f)
+       {
+        return Anim.Concat(Arrays.map(function(n)
         {
-         var x,matchValue,b;
-         if(skel1.$==1)
+         return(f(n))(dyn.DynElem);
+        },dyn.DynNodes));
+       },
+       GetChangeAnim:function(dyn)
+       {
+        return Attrs.GetAnim(dyn,function(n)
+        {
+         return function(arg00)
+         {
+          return n.GetChangeAnim(arg00);
+         };
+        });
+       },
+       GetEnterAnim:function(dyn)
+       {
+        return Attrs.GetAnim(dyn,function(n)
+        {
+         return function(arg00)
+         {
+          return n.GetEnterAnim(arg00);
+         };
+        });
+       },
+       GetExitAnim:function(dyn)
+       {
+        return Attrs.GetAnim(dyn,function(n)
+        {
+         return function(arg00)
+         {
+          return n.GetExitAnim(arg00);
+         };
+        });
+       },
+       HasChangeAnim:function(attr)
+       {
+        return(attr.DynFlags&4)!==0;
+       },
+       HasEnterAnim:function(attr)
+       {
+        return(attr.DynFlags&1)!==0;
+       },
+       HasExitAnim:function(attr)
+       {
+        return(attr.DynFlags&2)!==0;
+       },
+       Insert:function(elem,tree)
+       {
+        var nodes,loop;
+        nodes=[];
+        loop=function(node)
+        {
+         var b;
+         if(node.$==1)
           {
-           if(skel1.$0.$==1)
-            {
-             x=skel1.$0.$0;
-             if(x.AttrDirty)
-              {
-               x.AttrDirty=false;
-               matchValue=x.AttrType;
-               return matchValue.$==1?void jQuery(par).css(x.AttrName,x.AttrValue):matchValue.$==2?void jQuery(par).addClass(x.AttrValue):par.setAttribute(x.AttrName,x.AttrValue);
-              }
-             else
-              {
-               return null;
-              }
-            }
-           else
-            {
-             return null;
-            }
+           return JQueue.Add(node.$0,nodes);
           }
          else
           {
-           if(skel1.$==2)
+           if(node.$==2)
             {
-             b=skel1.$1;
-             loop(skel1.$0);
+             b=node.$1;
+             loop(node.$0);
              return loop(b);
             }
            else
             {
-             return null;
+             return node.$==3?node.$0.call(null,elem):null;
             }
           }
         };
-        return loop(skel);
+        loop(tree.Tree);
+        return{
+         DynElem:elem,
+         DynFlags:tree.Flags,
+         DynNodes:JQueue.ToArray(nodes)
+        };
+       },
+       Mk:function(flags,tree)
+       {
+        return Runtime.New(Attr,{
+         Flags:flags,
+         Tree:tree
+        });
+       },
+       Static:function(attr)
+       {
+        return Attrs.Mk(0,{
+         $:3,
+         $0:attr
+        });
+       },
+       Sync:function(elem,dyn)
+       {
+        return Arrays.iter(function(d)
+        {
+         return d.Sync(elem);
+        },dyn.DynNodes);
+       },
+       Updates:function(dyn)
+       {
+        var p,a;
+        p=function(x)
+        {
+         return function(y)
+         {
+          return View.Map2(function()
+          {
+           return function()
+           {
+            return null;
+           };
+          },x,y);
+         };
+        };
+        a=dyn.DynNodes;
+        return Array1.MapReduce(function(x)
+        {
+         return x.get_Changed();
+        },View.Const(null),p,a);
        }
       },
       Diff:{
-       BagDiff:function(s1,s2)
-       {
-        return Runtime.New(BagDiff1,{
-         DAdded:Diff.bagDiff(s2,s1),
-         DRemoved:Diff.bagDiff(s1,s2)
-        });
-       },
-       BagDiff1:Runtime.Class({
+       BagDiff:Runtime.Class({
         get_Added:function()
         {
          return this.DAdded;
@@ -12046,9 +12411,16 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          return this.DRemoved;
         }
        }),
+       BagDiff1:function(s1,s2)
+       {
+        return Runtime.New(BagDiff,{
+         DAdded:Diff.bagDiff(s2,s1),
+         DRemoved:Diff.bagDiff(s1,s2)
+        });
+       },
        BagDiffBy:function(key,s1,s2)
        {
-        return Runtime.New(BagDiff1,{
+        return Runtime.New(BagDiff,{
          DAdded:Diff.bagDiffBy(key,s2,s1),
          DRemoved:Diff.bagDiffBy(key,s1,s2)
         });
@@ -12100,7 +12472,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         {
          return Seq.map(function(arg10)
          {
-          return Slot.Create(key,arg10);
+          return Slot1.Create(key,arg10);
          },xs1);
         };
         hs=HashSetProxy.New(up(xs));
@@ -12175,31 +12547,32 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        }
       },
       Doc:Runtime.Class({},{
-       Append:function(_arg3,_arg2)
+       Append:function(a,b)
        {
-        var aV,bV;
-        aV=_arg3.$1;
-        bV=_arg2.$1;
-        return Runtime.New(Doc,{
-         $:0,
-         $0:Docs.appendSkel(_arg3.$0,_arg2.$0),
-         $1:View1.Map2(function()
+        var x;
+        x=View.Map2(function()
+        {
+         return function()
          {
-          return function()
-          {
-           return null;
-          };
-         },aV,bV)
-        });
+          return null;
+         };
+        },a.Updates,b.Updates);
+        return Docs.Mk({
+         $:0,
+         $0:a.DocNode,
+         $1:b.DocNode
+        },x);
        },
        Button:function(caption,attrs,action)
        {
-        return Doc.clickableComponent("button",caption,Attr.Concat(attrs),action);
+        var attrs1;
+        attrs1=Attr.Concat(attrs);
+        return Doc.Elem(Doc.Clickable("button",action),attrs1,Doc.TextNode(caption));
        },
        CheckBox:function(show,items,chk)
        {
         var rvi,uid;
-        rvi=View1.FromVar(chk);
+        rvi=View.FromVar(chk);
         uid=Fresh.Id();
         return Doc.Concat(List.mapi(function(i)
         {
@@ -12222,15 +12595,28 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
             },obs)));
            });
           },false);
-          chkElem=Docs.element(el,Attr.Concat(attrs),Doc.get_Empty());
+          chkElem=Doc.Elem(el,Attr.Concat(attrs),Doc.get_Empty());
           return Doc.Element("div",Runtime.New(T,{
            $:0
           }),List.ofArray([chkElem,t]));
          };
         },items));
        },
+       Clickable:function(elem,action)
+       {
+        var el;
+        el=DomUtility.CreateElement(elem);
+        el.addEventListener("click",function(ev)
+        {
+         ev.preventDefault();
+         return action(null);
+        },false);
+        return el;
+       },
        Concat:function(xs)
        {
+        var a;
+        a=Seq.toArray(xs);
         return Array1.MapReduce(function(x)
         {
          return x;
@@ -12240,71 +12626,61 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          {
           return Doc.Append(arg00,arg10);
          };
-        },Seq.toArray(xs));
+        },a);
+       },
+       Elem:function(name,attr,children)
+       {
+        var node,arg20,updates;
+        node=Docs.CreateElemNode(name,attr,children.DocNode);
+        arg20=children.Updates;
+        updates=View.Map2(function()
+        {
+         return function()
+         {
+          return null;
+         };
+        },Attrs.Updates(node.Attr),arg20);
+        return Docs.Mk({
+         $:1,
+         $0:node
+        },updates);
        },
        Element:function(name,attr,children)
        {
-        return Docs.element(DomUtility.CreateElement(name),Attr.Concat(attr),Doc.Concat(children));
-       },
-       ElementWithEvents:function(name,attr,eventHandlers,children)
-       {
-        var domElem,enumerator,eh;
-        domElem=DomUtility.CreateElement(name);
-        enumerator=Enumerator.Get(eventHandlers);
-        while(enumerator.MoveNext())
-         {
-          eh=enumerator.get_Current();
-          domElem.addEventListener(eh.Name,eh.Callback,false);
-         }
-        return Docs.element(domElem,Attr.Concat(attr),Doc.Concat(children));
+        var attr1,arg20;
+        attr1=Attr.Concat(attr);
+        arg20=Doc.Concat(children);
+        return Doc.Elem(DomUtility.CreateElement(name),attr1,arg20);
        },
        EmbedBag:function(render,view)
        {
-        return Doc.EmbedView(View1.Map(function(arg00)
+        return Doc.EmbedView(View.Map(function(arg00)
         {
          return Doc.Concat(arg00);
-        },View1.ConvertBag(render,view)));
+        },View.ConvertBag(render,view)));
        },
        EmbedBagBy:function(key,render,view)
        {
-        return Doc.EmbedView(View1.Map(function(arg00)
+        return Doc.EmbedView(View.Map(function(arg00)
         {
          return Doc.Concat(arg00);
-        },View1.ConvertBagBy(key,render,view)));
+        },View.ConvertBagBy(key,render,view)));
        },
-       EmbedView:function(v)
+       EmbedView:function(view)
        {
-        var sk,arg00;
-        sk={
-         BeforeSkel:{
-          $:0
-         },
-         CurrentSkel:{
-          $:0
-         },
-         IsDirty:true,
-         VarNeedsVisit:true
-        };
-        arg00=function(_arg3)
+        var node,x;
+        node=Docs.CreateEmbedNode();
+        x=View.Map(function()
         {
-         var y;
-         y=_arg3.$1;
-         sk.CurrentSkel=_arg3.$0;
-         sk.IsDirty=true;
-         return View1.Map(function(ver)
-         {
-          sk.VarNeedsVisit=true;
-          return ver;
-         },y);
-        };
-        return Runtime.New(Doc,{
-         $:0,
-         $0:{
-          $:4,
-          $0:sk
-         },
-         $1:View1.Bind(arg00,v)
-        });
+        },View.Bind(function(doc)
+        {
+         Docs.UpdateEmbedNode(node,doc.DocNode);
+         return doc.Updates;
+        },view));
+        return Docs.Mk({
+         $:2,
+         $0:node
+        },x);
        },
        Input:function(attr,_var)
        {
@@ -12320,25 +12696,29 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        InputInternal:function(attr,_var,inputTy)
        {
-        var patternInput,_attr_,el,valAttr;
+        var patternInput,attrN,el,valAttr;
         patternInput=inputTy.$==1?[Attr.Append(Attr.Create("type","password"),Attr.Concat(attr)),"input"]:inputTy.$==2?[Attr.Concat(attr),"textarea"]:[Attr.Concat(attr),"input"];
-        _attr_=patternInput[0];
+        attrN=patternInput[0];
         el=DomUtility.CreateElement(patternInput[1]);
-        valAttr=Attr.Custom(function(v)
+        valAttr=Attr.DynamicCustom(function(el1)
         {
-         el.value=v;
-        },View1.FromVar(_var));
+         return function(v)
+         {
+          el1.value=v;
+         };
+        },View.FromVar(_var));
         el.addEventListener("input",function()
         {
          return Var.Set(_var,el.value);
         },false);
-        return Docs.element(el,Attr.Append(_attr_,valAttr),Doc.get_Empty());
+        return Doc.Elem(el,Attr.Append(attrN,valAttr),Doc.get_Empty());
        },
        Link:function(caption,attrs,action)
        {
-        var arg10;
+        var arg10,attrs1;
         arg10=Attr.Concat(attrs);
-        return Doc.clickableComponent("a",caption,Attr.Append(Attr.Create("href","#"),arg10),action);
+        attrs1=Attr.Append(Attr.Create("href","#"),arg10);
+        return Doc.Elem(Doc.Clickable("a",action),attrs1,Doc.TextNode(caption));
        },
        PasswordBox:function(attr,_var)
        {
@@ -12346,16 +12726,17 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          $:1
         });
        },
-       Run:function(parent,_arg1)
+       Run:function(parent,doc)
        {
-        var ver,skel;
-        ver=_arg1.$1;
-        skel=_arg1.$0;
-        Docs.appendChildren(parent,skel);
-        return View.Sink(function()
+        var d,st,arg10;
+        d=doc.DocNode;
+        Docs.LinkElement(parent,d);
+        st=Docs.CreateRunState(parent,d);
+        arg10=doc.Updates;
+        return View.Sink(Mailbox.StartProcessor(function()
         {
-         return Docs.update(parent,skel);
-        },ver);
+         return Docs.PerformAnimatedUpdate(st,parent,d);
+        }),arg10);
        },
        RunById:function(id,tr)
        {
@@ -12365,19 +12746,23 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        Select:function(attrs,show,options,current)
        {
-        var el,x,selectedItemAttr,optionElements;
-        el=DomUtility.CreateElement("select");
-        x=View1.FromVar(current);
-        selectedItemAttr=Attr.Custom(function(item)
+        var setSelectedItem,el1,x,selectedItemAttr,optionElements;
+        setSelectedItem=function(el)
         {
-         el.selectedIndex=Seq.findIndex(function(y)
+         return function(item)
          {
-          return Unchecked.Equals(item,y);
-         },options);
-        },x);
-        el.addEventListener("change",function()
+          el.selectedIndex=Seq.findIndex(function(y)
+          {
+           return Unchecked.Equals(item,y);
+          },options);
+         };
+        };
+        el1=DomUtility.CreateElement("select");
+        x=View.FromVar(current);
+        selectedItemAttr=Attr.DynamicCustom(setSelectedItem,x);
+        el1.addEventListener("change",function()
         {
-         return Var.Set(current,options.get_Item(el.selectedIndex));
+         return Var.Set(current,options.get_Item(el1.selectedIndex));
         },false);
         optionElements=Doc.Concat(List.mapi(function(i)
         {
@@ -12388,293 +12773,467 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
           return Doc.Element("option",List.ofArray([Attr.Create("value",Global.String(i))]),List.ofArray([t]));
          };
         },options));
-        return Docs.element(el,Attr.Append(selectedItemAttr,Attr.Concat(attrs)),optionElements);
+        return Doc.Elem(el1,Attr.Append(selectedItemAttr,Attr.Concat(attrs)),optionElements);
        },
-       Static:function(elem)
+       Static:function(el)
        {
-        return Docs.element(elem,Attr.get_Empty(),Doc.get_Empty());
+        return Doc.Elem(el,Attr.get_Empty(),Doc.get_Empty());
        },
-       TextNode:function(t)
+       TextNode:function(v)
        {
-        return Doc.TextView(View1.Const(t));
+        return Doc.TextView(View.Const(v));
        },
-       TextView:function(view)
+       TextView:function(txt)
        {
-        var sk;
-        sk={
-         DomText:DomUtility.CreateText(""),
-         TextDirty:true,
-         TextValue:""
-        };
-        return Runtime.New(Doc,{
-         $:0,
-         $0:{
-          $:3,
-          $0:sk
-         },
-         $1:View1.Map(function(v)
-         {
-          sk.TextDirty=true;
-          sk.TextValue=v;
-          return null;
-         },view)
-        });
-       },
-       clickableComponent:function(name,caption,attrs,action)
-       {
-        var el;
-        el=DomUtility.CreateElement(name);
-        el.addEventListener("click",function(ev)
+        var node,x;
+        node=Docs.CreateTextNode();
+        x=View.Map(function(t)
         {
-         ev.preventDefault();
-         return action(null);
-        },false);
-        return Docs.element(el,attrs,Doc.TextNode(caption));
+         return Docs.UpdateTextNode(node,t);
+        },txt);
+        return Docs.Mk({
+         $:4,
+         $0:node
+        },x);
        },
        get_Empty:function()
        {
-        return Docs.empty();
+        return Docs.Mk({
+         $:3
+        },View.Const(null));
+       }
+      }),
+      DocElemNode:Runtime.Class({
+       Equals:function(o)
+       {
+        return this.ElKey===o.ElKey;
+       },
+       GetHashCode:function()
+       {
+        return this.ElKey;
        }
       }),
       Docs:{
-       appendChildren:function(parent,skel)
+       AnimateExit:function(st,cur)
        {
-        var loop;
-        loop=function(parent1,skel1)
+        return Anim.Play(Anim.Concat(Arrays.map(function(n)
         {
-         var b;
-         if(skel1.$==1)
-          {
-           b=skel1.$1;
-           loop(parent1,skel1.$0);
-           return loop(parent1,b);
-          }
-         else
-          {
-           return skel1.$==2?DomUtility.AppendTo(parent1,skel1.$0.DomElem):skel1.$==3?DomUtility.AppendTo(parent1,skel1.$0.DomText):skel1.$==4?null:null;
-          }
-        };
-        return loop(parent,skel);
+         return Attrs.GetExitAnim(n.Attr);
+        },NodeSet.ToArray(NodeSet.Except(cur,NodeSet.Filter(function(n)
+        {
+         return Attrs.HasExitAnim(n.Attr);
+        },st.PreviousNodes))))));
        },
-       appendSkel:function(x,y)
+       ComputeChangeAnim:function(cur)
        {
-        var matchValue;
-        matchValue=[x,y];
-        return matchValue[0].$==0?matchValue[1]:matchValue[1].$==0?matchValue[0]:{
-         $:1,
-         $0:x,
-         $1:y
-        };
+        return Anim.Concat(Arrays.map(function(n)
+        {
+         return Attrs.GetChangeAnim(n.Attr);
+        },Arrays.filter(function(n)
+        {
+         return Attrs.HasChangeAnim(n.Attr);
+        },NodeSet.ToArray(cur))));
        },
-       element:function(el,_arg2,_arg1)
+       ComputeEnterAnim:function(st,cur)
        {
-        var attrVer,ver,children,sk;
-        attrVer=_arg2.$1;
-        ver=_arg1.$1;
-        children=_arg1.$0;
-        sk={
-         AttrsSkel:_arg2.$0,
+        return Anim.Concat(Arrays.map(function(n)
+        {
+         return Attrs.GetEnterAnim(n.Attr);
+        },NodeSet.ToArray(NodeSet.Except(st.PreviousNodes,NodeSet.Filter(function(n)
+        {
+         return Attrs.HasEnterAnim(n.Attr);
+        },cur)))));
+       },
+       CreateElemNode:function(el,attr,children)
+       {
+        Docs.LinkElement(el,children);
+        return Runtime.New(DocElemNode,{
+         Attr:Attrs.Insert(el,attr),
          Children:children,
-         DomElem:el,
-         NeedsVisit:true
-        };
-        Docs.appendChildren(el,children);
-        return Runtime.New(Doc,{
-         $:0,
-         $0:{
-          $:2,
-          $0:sk
-         },
-         $1:View1.Map2(function()
-         {
-          return function()
-          {
-           sk.NeedsVisit=true;
-           return null;
-          };
-         },View1.Map(function()
-         {
-         },attrVer),ver)
+         El:el,
+         ElKey:Fresh.Int()
         });
        },
-       empty:Runtime.Field(function()
+       CreateEmbedNode:function()
        {
-        return Runtime.New(Doc,{
-         $:0,
-         $0:{
-          $:0
+        return{
+         Current:{
+          $:3
          },
-         $1:View1.Const(null)
-        });
-       }),
-       patch:function(parent,pos,old,cur)
-       {
-        var rm,remove,ins;
-        rm=function(el)
-        {
-         return el.parentNode===parent?void parent.removeChild(el):null;
+         Dirty:false
         };
-        remove=function(sk)
-        {
-         var y;
-         if(sk.$==1)
-          {
-           y=sk.$1;
-           remove(sk.$0);
-           return remove(y);
-          }
-         else
-          {
-           return sk.$==2?rm(sk.$0.DomElem):sk.$==3?rm(sk.$0.DomText):sk.$==4?remove(sk.$0.CurrentSkel):null;
-          }
-        };
-        ins=function(sk)
-        {
-         var y;
-         if(sk.$==1)
-          {
-           y=sk.$1;
-           ins(sk.$0);
-           return ins(y);
-          }
-         else
-          {
-           return sk.$==2?DomUtility.InsertNode(parent,pos,sk.$0.DomElem):sk.$==3?DomUtility.InsertNode(parent,pos,sk.$0.DomText):sk.$==4?ins(sk.$0.CurrentSkel):null;
-          }
-        };
-        remove(old);
-        return ins(cur);
        },
-       update:function(par,skel)
+       CreateRunState:function(parent,doc)
        {
-        var upd;
-        upd=function(par1,skel1,pos)
+        return{
+         PreviousNodes:NodeSet.get_Empty(),
+         Top:Docs.CreateElemNode(parent,Attr.get_Empty(),doc)
+        };
+       },
+       CreateTextNode:function()
+       {
+        return{
+         Text:DomUtility.CreateText(""),
+         Dirty:false,
+         Value:""
+        };
+       },
+       DoSyncElement:function(el)
+       {
+        var parent,ins,parent1;
+        parent=el.El;
+        ins=function(doc,pos)
         {
-         var e,t,v,loop,x,x1;
-         if(skel1.$==1)
+         var d;
+         if(doc.$==1)
           {
-           return upd(par1,skel1.$0,upd(par1,skel1.$1,pos));
+           return{
+            $:1,
+            $0:doc.$0.El
+           };
           }
          else
           {
-           if(skel1.$==2)
+           if(doc.$==2)
             {
-             e=skel1.$0;
-             if(Attrs.needsUpdate(e.AttrsSkel))
+             d=doc.$0;
+             if(d.Dirty)
               {
-               Attrs.update(e.DomElem,e.AttrsSkel);
-              }
-             if(e.NeedsVisit)
-              {
-               e.NeedsVisit=false;
-               upd(e.DomElem,e.Children,{
-                $:0
-               });
-              }
-             return{
-              $:1,
-              $0:e.DomElem
-             };
-            }
-           else
-            {
-             if(skel1.$==3)
-              {
-               t=skel1.$0;
-               if(t.TextDirty)
-                {
-                 t.DomText.nodeValue=t.TextValue;
-                 t.TextDirty=false;
-                }
-               return{
-                $:1,
-                $0:t.DomText
-               };
+               d.Dirty=false;
+               return Docs.InsertDoc(parent,d.Current,pos);
               }
              else
               {
-               if(skel1.$==4)
+               return ins(d.Current,pos);
+              }
+            }
+           else
+            {
+             return doc.$==3?pos:doc.$==4?{
+              $:1,
+              $0:doc.$0.Text
+             }:ins(doc.$0,ins(doc.$1,pos));
+            }
+          }
+        };
+        parent1=el.El;
+        DomNodes.Iter(function(el1)
+        {
+         return DomUtility.RemoveNode(parent1,el1);
+        },DomNodes.Except(DomNodes.DocChildren(el),DomNodes.Children(el.El)));
+        ins(el.Children,{
+         $:0
+        });
+        return;
+       },
+       DomNodes:Runtime.Class({},{
+        Children:function(elem)
+        {
+         var objectArg;
+         objectArg=elem.childNodes;
+         return Runtime.New(DomNodes,{
+          $:0,
+          $0:Arrays.init(elem.childNodes.length,function(arg00)
+          {
+           return objectArg[arg00];
+          })
+         });
+        },
+        DocChildren:function(node)
+        {
+         var q,loop;
+         q=[];
+         loop=function(doc)
+         {
+          var b;
+          if(doc.$==2)
+           {
+            return loop(doc.$0.Current);
+           }
+          else
+           {
+            if(doc.$==1)
+             {
+              return JQueue.Add(doc.$0.El,q);
+             }
+            else
+             {
+              if(doc.$==3)
+               {
+                return null;
+               }
+              else
+               {
+                if(doc.$==4)
+                 {
+                  return JQueue.Add(doc.$0.Text,q);
+                 }
+                else
+                 {
+                  b=doc.$1;
+                  loop(doc.$0);
+                  return loop(b);
+                 }
+               }
+             }
+           }
+         };
+         loop(node.Children);
+         return Runtime.New(DomNodes,{
+          $:0,
+          $0:JQueue.ToArray(q)
+         });
+        },
+        Except:function(_arg2,_arg1)
+        {
+         var excluded;
+         excluded=_arg2.$0;
+         return Runtime.New(DomNodes,{
+          $:0,
+          $0:Arrays.filter(function(n)
+          {
+           return Seq.forall(function(k)
+           {
+            return!(n===k);
+           },excluded);
+          },_arg1.$0)
+         });
+        },
+        FoldBack:function(f,_arg4,z)
+        {
+         return Arrays.foldBack(f,_arg4.$0,z);
+        },
+        Iter:function(f,_arg3)
+        {
+         return Arrays.iter(f,_arg3.$0);
+        }
+       }),
+       InsertDoc:function(parent,doc,pos)
+       {
+        var d;
+        if(doc.$==1)
+         {
+          return Docs.InsertNode(parent,doc.$0.El,pos);
+         }
+        else
+         {
+          if(doc.$==2)
+           {
+            d=doc.$0;
+            d.Dirty=false;
+            return Docs.InsertDoc(parent,d.Current,pos);
+           }
+          else
+           {
+            return doc.$==3?pos:doc.$==4?Docs.InsertNode(parent,doc.$0.Text,pos):Docs.InsertDoc(parent,doc.$0,Docs.InsertDoc(parent,doc.$1,pos));
+           }
+         }
+       },
+       InsertNode:function(parent,node,pos)
+       {
+        DomUtility.InsertAt(parent,pos,node);
+        return{
+         $:1,
+         $0:node
+        };
+       },
+       LinkElement:function(el,children)
+       {
+        Docs.InsertDoc(el,children,{
+         $:0
+        });
+       },
+       Mk:function(node,updates)
+       {
+        return Runtime.New(Doc,{
+         DocNode:node,
+         Updates:updates
+        });
+       },
+       NodeSet:Runtime.Class({},{
+        Except:function(_arg3,_arg2)
+        {
+         return Runtime.New(NodeSet,{
+          $:0,
+          $0:HashSet.Except(_arg3.$0,_arg2.$0)
+         });
+        },
+        Filter:function(f,_arg1)
+        {
+         return Runtime.New(NodeSet,{
+          $:0,
+          $0:HashSet.Filter(f,_arg1.$0)
+         });
+        },
+        FindAll:function(doc)
+        {
+         var q,loop;
+         q=[];
+         loop=function(node)
+         {
+          var b,el;
+          if(node.$==0)
+           {
+            b=node.$1;
+            loop(node.$0);
+            return loop(b);
+           }
+          else
+           {
+            if(node.$==1)
+             {
+              el=node.$0;
+              JQueue.Add(el,q);
+              return loop(el.Children);
+             }
+            else
+             {
+              return node.$==2?loop(node.$0.Current):null;
+             }
+           }
+         };
+         loop(doc);
+         return Runtime.New(NodeSet,{
+          $:0,
+          $0:HashSetProxy.New(JQueue.ToArray(q))
+         });
+        },
+        IsEmpty:function(_arg4)
+        {
+         return _arg4.$0.get_Count()===0;
+        },
+        ToArray:function(_arg5)
+        {
+         return HashSet.ToArray(_arg5.$0);
+        },
+        get_Empty:function()
+        {
+         return Runtime.New(NodeSet,{
+          $:0,
+          $0:HashSetProxy.New1()
+         });
+        }
+       }),
+       PerformAnimatedUpdate:function(st,parent,doc)
+       {
+        return Concurrency.Delay(function()
+        {
+         var cur;
+         cur=NodeSet.FindAll(doc);
+         return Concurrency.Bind(Docs.AnimateExit(st,cur),function()
+         {
+          var change;
+          change=Docs.ComputeChangeAnim(cur);
+          Docs.SyncElemNode(st.Top);
+          return Concurrency.Bind(Anim.Play(Anim.Append(Docs.ComputeEnterAnim(st,cur),change)),function()
+          {
+           return Concurrency.Return(void(st.PreviousNodes=cur));
+          });
+         });
+        });
+       },
+       Sync:function(doc)
+       {
+        var sync;
+        sync=function(doc1)
+        {
+         var el,d,b;
+         if(doc1.$==1)
+          {
+           el=doc1.$0;
+           Docs.SyncElement(el);
+           return sync(el.Children);
+          }
+         else
+          {
+           if(doc1.$==2)
+            {
+             return sync(doc1.$0.Current);
+            }
+           else
+            {
+             if(doc1.$==3)
+              {
+               return null;
+              }
+             else
+              {
+               if(doc1.$==4)
                 {
-                 v=skel1.$0;
-                 if(v.IsDirty)
+                 d=doc1.$0;
+                 if(d.Dirty)
                   {
-                   Docs.patch(par1,pos,v.BeforeSkel,v.CurrentSkel);
-                   v.BeforeSkel=v.CurrentSkel;
-                   v.IsDirty=false;
-                  }
-                 if(v.VarNeedsVisit)
-                  {
-                   v.VarNeedsVisit=false;
-                   return upd(par1,v.CurrentSkel,pos);
+                   d.Text.nodeValue=d.Value;
+                   d.Dirty=false;
+                   return;
                   }
                  else
                   {
-                   loop=[];
-                   loop[1]=v.CurrentSkel;
-                   loop[0]=1;
-                   while(loop[0])
-                    {
-                     if(loop[1].$==1)
-                      {
-                       loop[1]=loop[1].$0;
-                       loop[0]=1;
-                      }
-                     else
-                      {
-                       if(loop[1].$==2)
-                        {
-                         x=loop[1].$0;
-                         loop[0]=0;
-                         loop[1]={
-                          $:1,
-                          $0:x.DomElem
-                         };
-                        }
-                       else
-                        {
-                         if(loop[1].$==3)
-                          {
-                           x1=loop[1].$0;
-                           loop[0]=0;
-                           loop[1]={
-                            $:1,
-                            $0:x1.DomText
-                           };
-                          }
-                         else
-                          {
-                           if(loop[1].$==4)
-                            {
-                             loop[1]=loop[1].$0.CurrentSkel;
-                             loop[0]=1;
-                            }
-                           else
-                            {
-                             loop[0]=0;
-                             loop[1]=pos;
-                            }
-                          }
-                        }
-                      }
-                    }
-                   return loop[1];
+                   return null;
                   }
                 }
                else
                 {
-                 return pos;
+                 b=doc1.$1;
+                 sync(doc1.$0);
+                 return sync(b);
                 }
               }
             }
           }
         };
-        upd(par,skel,{
-         $:0
-        });
+        return sync(doc);
+       },
+       SyncElemNode:function(el)
+       {
+        Docs.SyncElement(el);
+        return Docs.Sync(el.Children);
+       },
+       SyncElement:function(el)
+       {
+        var dirty;
+        Attrs.Sync(el.El,el.Attr);
+        dirty=function(doc)
+        {
+         var b,d;
+         if(doc.$==0)
+          {
+           b=doc.$1;
+           return dirty(doc.$0)?true:dirty(b);
+          }
+         else
+          {
+           if(doc.$==2)
+            {
+             d=doc.$0;
+             return d.Dirty?true:dirty(d.Current);
+            }
+           else
+            {
+             return false;
+            }
+          }
+        };
+        return dirty(el.Children)?Docs.DoSyncElement(el):null;
+       },
+       UpdateEmbedNode:function(node,upd)
+       {
+        node.Current=upd;
+        node.Dirty=true;
+        return;
+       },
+       UpdateTextNode:function(n,t)
+       {
+        n.Value=t;
+        n.Dirty=true;
         return;
        }
       },
       DomUtility:{
+       AddClass:function(element,cl)
+       {
+        jQuery(element).addClass(cl);
+       },
        AppendTo:function(ctx,node)
        {
         ctx.appendChild(node);
@@ -12714,9 +13273,29 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        {
         return document;
        }),
-       InsertNode:function(parent,pos,node)
+       InsertAt:function(parent,pos,node)
        {
-        return pos.$==1?void parent.insertBefore(node,pos.$0):void parent.appendChild(node);
+        var _,matchValue,matchValue1;
+        if(node.parentNode===parent)
+         {
+          matchValue=node.nextSibling;
+          matchValue1=[pos,Unchecked.Equals(matchValue,null)?{
+           $:0
+          }:{
+           $:1,
+           $0:matchValue
+          }];
+          _=matchValue1[0].$==1?matchValue1[1].$==1?matchValue1[0].$0===matchValue1[1].$0:false:matchValue1[1].$==0?true:false;
+         }
+        else
+         {
+          _=false;
+         }
+        return!_?pos.$==1?void parent.insertBefore(node,pos.$0):void parent.appendChild(node):null;
+       },
+       RemoveClass:function(element,cl)
+       {
+        jQuery(element).removeClass(cl);
        },
        RemoveNode:function(parent,el)
        {
@@ -12737,21 +13316,61 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        SvgNames:Runtime.Field(function()
        {
-        var _names_43_1;
-        _names_43_1={};
-        _names_43_1.circle=true;
-        _names_43_1.line=true;
-        _names_43_1.svg=true;
-        return _names_43_1;
+        var _names_44_1;
+        _names_44_1={};
+        _names_44_1.circle=true;
+        _names_44_1.g=true;
+        _names_44_1.line=true;
+        _names_44_1.rect=true;
+        _names_44_1.svg=true;
+        return _names_44_1;
        })
       },
-      EventHandler:Runtime.Class({},{
-       CreateHandler:function(name,cb)
+      DynamicAttrNode:Runtime.Class({
+       GetChangeAnim:function()
        {
-        return Runtime.New(EventHandler,{
-         Name:name,
-         Callback:cb
-        });
+        return Anim.get_Empty();
+       },
+       GetEnterAnim:function()
+       {
+        return Anim.get_Empty();
+       },
+       GetExitAnim:function()
+       {
+        return Anim.get_Empty();
+       },
+       Sync:function(parent)
+       {
+        if(this.dirty)
+         {
+          (this.push.call(null,parent))(this.value);
+          this.dirty=false;
+          return;
+         }
+        else
+         {
+          return null;
+         }
+       },
+       get_Changed:function()
+       {
+        return this.updates;
+       }
+      },{
+       New:function(view,push)
+       {
+        var r;
+        r=Runtime.New(this,{});
+        r.push=push;
+        r.value=Abbrev.U();
+        r.dirty=true;
+        r.updates=View.Map(function(x)
+        {
+         r.value=x;
+         r.dirty=true;
+         return;
+        },view);
+        return r;
        }
       }),
       Flow:{
@@ -12855,6 +13474,10 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        }
       },
       HashSetProxy:Runtime.Class({
+       Contains:function(key)
+       {
+        return this.d.ContainsKey(key);
+       },
        CopyTo:function(arr)
        {
         var i,enumerator,kv;
@@ -12905,20 +13528,49 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
           r.d.set_Item(enumerator.get_Current(),0);
          }
         return r;
+       },
+       New1:function()
+       {
+        return Runtime.New(this,HashSetProxy.New(Seq.empty()));
        }
       }),
       MiniSitelet:{
-       Create:function(model,main)
+       Create:function(model,renderWith)
        {
         var arg10;
-        arg10=View1.FromVar(model);
-        return Doc.EmbedView(View1.Map(main(function(arg101)
+        arg10=View.FromVar(model);
+        return Doc.EmbedView(View.Map(renderWith(function(arg101)
         {
          return Var.Set(model,arg101);
         }),arg10));
+       },
+       Sync:function(v,deserialise)
+       {
+        window.onpopstate=function()
+        {
+         return Var.Set(v,deserialise(window.location.hash));
+        };
        }
       },
       Model:Runtime.Class({},{
+       Create:function(proj,init)
+       {
+        var _var;
+        _var=Var1.Create(init);
+        return Runtime.New(Model1,{
+         $:0,
+         $0:_var,
+         $1:View.Map(proj,_var.get_View())
+        });
+       },
+       Update:function(update,_arg1)
+       {
+        return Var.Update(_arg1.$0,function(x)
+        {
+         update(x);
+         return x;
+        });
+       },
        View:function(_arg2)
        {
         return _arg2.$1;
@@ -12929,26 +13581,31 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        {
         return Model.View(this);
        }
-      },{
-       Create:function(proj,init)
-       {
-        var _var;
-        _var=Var1.Create(init);
-        return Runtime.New(Model1,{
-         $:0,
-         $0:_var,
-         $1:View1.Map(proj,_var.get_View())
-        });
-       },
-       Update:function(update,_arg1)
-       {
-        return Var.Update(_arg1.$0,function(x)
-        {
-         update(x);
-         return x;
-        });
-       }
       }),
+      Router:{
+       Install:function(router)
+       {
+        var _var,updateFn;
+        _var=Var1.Create(router(window.location.hash));
+        updateFn=function()
+        {
+         return Var.Set(_var,router(window.location.hash));
+        };
+        window.onpopstate=updateFn;
+        window.onhashchange=updateFn;
+        return _var;
+       },
+       Remove:function()
+       {
+        window.onpopstate=function()
+        {
+        };
+        window.onhashchange=function()
+        {
+        };
+        return;
+       }
+      },
       Snap:{
        Bind:function(f,snap)
        {
@@ -13299,7 +13956,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        get_View:function()
        {
-        return View1.FromVar(this);
+        return View.FromVar(this);
        },
        set_Value:function(value)
        {
@@ -13322,7 +13979,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
       View:Runtime.Class({},{
        Apply:function(fn,view)
        {
-        return View1.Map2(function(f)
+        return View.Map2(function(f)
         {
          return function(x)
          {
@@ -13330,24 +13987,9 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          };
         },fn,view);
        },
-       Sink:function(act,_arg6)
-       {
-        var observe,loop;
-        observe=_arg6.$0;
-        loop=function()
-        {
-         return Snap.When(observe(null),act,function()
-         {
-          return Async.Schedule(loop);
-         });
-        };
-        return loop(null);
-       }
-      }),
-      View1:Runtime.Class({},{
        Bind:function(fn,view)
        {
-        return View1.Join(View1.Map(fn,view));
+        return View.Join(View.Map(fn,view));
        },
        Const:function(x)
        {
@@ -13375,11 +14017,11 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          values.set_Item(x,y);
          return y;
         };
-        return View1.Map(function(xs)
+        return View.Map(function(xs)
         {
          var cur,diff,enumerator;
          cur=Seq.toArray(xs);
-         diff=Diff.BagDiff(prev.contents,cur);
+         diff=Diff.BagDiff1(prev.contents,cur);
          prev.contents=cur;
          enumerator=Enumerator.Get(diff.get_Removed());
          while(enumerator.MoveNext())
@@ -13403,7 +14045,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          values.set_Item(key(x),y);
          return y;
         };
-        return View1.Map(function(xs)
+        return View.Map(function(xs)
         {
          var cur,diff,enumerator;
          cur=Seq.toArray(xs);
@@ -13415,6 +14057,38 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
            values.Remove(key(enumerator.get_Current()));
           }
          return Dict.ToValueArray(values).concat(Seq.toArray(Seq.map(conv,diff.get_Added())));
+        },view);
+       },
+       ConvertSeqBy:function(key,conv,view)
+       {
+        var state;
+        state={
+         contents:Dictionary.New21()
+        };
+        return View.Map(function(xs)
+        {
+         var prevState,newState,result;
+         prevState=state.contents;
+         newState=Dictionary.New21();
+         result=Arrays.map(function(x)
+         {
+          var k,node,n;
+          k=key(x);
+          if(prevState.ContainsKey(k))
+           {
+            n=prevState.get_Item(k);
+            Var.Set(n.NVar,x);
+            node=n;
+           }
+          else
+           {
+            node=View.CreateViewNode(conv,x);
+           }
+          newState.set_Item(k,node);
+          return node.NValue;
+         },Seq.toArray(xs));
+         state.contents=newState;
+         return result;
         },view);
        },
        CreateLazy:function(observe)
@@ -13459,6 +14133,17 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          }
         };
        },
+       CreateViewNode:function(conv,value)
+       {
+        var _var,view;
+        _var=Var1.Create(value);
+        view=View.FromVar(_var);
+        return{
+         NValue:conv(view),
+         NVar:_var,
+         NView:view
+        };
+       },
        FromVar:function(_var)
        {
         return{
@@ -13473,7 +14158,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        {
         var observe;
         observe=_arg5.$0;
-        return View1.CreateLazy(function()
+        return View.CreateLazy(function()
         {
          return Snap.Bind(function(_arg1)
          {
@@ -13485,7 +14170,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        {
         var observe;
         observe=_arg1.$0;
-        return View1.CreateLazy(function()
+        return View.CreateLazy(function()
         {
          return Snap.Map(fn,observe(null));
         });
@@ -13495,7 +14180,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         var o1,o2;
         o1=_arg3.$0;
         o2=_arg2.$0;
-        return View1.CreateLazy(function()
+        return View.CreateLazy(function()
         {
          return Snap.Map2(fn,o1(null),o2(null));
         });
@@ -13504,10 +14189,23 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        {
         var observe;
         observe=_arg4.$0;
-        return View1.CreateLazy(function()
+        return View.CreateLazy(function()
         {
          return Snap.MapAsync(fn,observe(null));
         });
+       },
+       Sink:function(act,_arg6)
+       {
+        var observe,loop;
+        observe=_arg6.$0;
+        loop=function()
+        {
+         return Snap.When(observe(null),act,function()
+         {
+          return Async.Schedule(loop);
+         });
+        };
+        return loop(null);
        },
        get_Do:function()
        {
@@ -13532,41 +14230,48 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   Next=Runtime.Safe(UI.Next);
   Abbrev=Runtime.Safe(Next.Abbrev);
   Fresh=Runtime.Safe(Abbrev.Fresh);
-  Arrays=Runtime.Safe(WebSharper.Arrays);
-  Unchecked=Runtime.Safe(WebSharper.Unchecked);
-  Slot=Runtime.Safe(Abbrev.Slot);
-  Attr=Runtime.Safe(Next.Attr);
-  Attrs=Runtime.Safe(Next.Attrs);
-  View1=Runtime.Safe(Next.View1);
-  Array1=Runtime.Safe(Abbrev.Array);
-  jQuery=Runtime.Safe(Global.jQuery);
-  Diff=Runtime.Safe(Next.Diff);
-  BagDiff1=Runtime.Safe(Diff.BagDiff1);
   HashSetProxy=Runtime.Safe(Next.HashSetProxy);
   HashSet=Runtime.Safe(Abbrev.HashSet);
+  Arrays=Runtime.Safe(WebSharper.Arrays);
+  JQueue=Runtime.Safe(Abbrev.JQueue);
+  Unchecked=Runtime.Safe(WebSharper.Unchecked);
+  Slot=Runtime.Safe(Abbrev.Slot);
+  Anim=Runtime.Safe(Next.Anim);
+  Array1=Runtime.Safe(Abbrev.Array);
+  View=Runtime.Safe(Next.View);
+  Attrs=Runtime.Safe(Next.Attrs);
+  DomUtility=Runtime.Safe(Next.DomUtility);
+  Attr=Runtime.Safe(Next.Attr);
+  AnimatedAttrNode=Runtime.Safe(Next.AnimatedAttrNode);
+  DynamicAttrNode=Runtime.Safe(Next.DynamicAttrNode);
+  Diff=Runtime.Safe(Next.Diff);
+  BagDiff=Runtime.Safe(Diff.BagDiff);
+  Slot1=Runtime.Safe(Abbrev.Slot1);
   Collections=Runtime.Safe(WebSharper.Collections);
   ResizeArray=Runtime.Safe(Collections.ResizeArray);
   ResizeArrayProxy=Runtime.Safe(ResizeArray.ResizeArrayProxy);
-  Doc=Runtime.Safe(Next.Doc);
   Docs=Runtime.Safe(Next.Docs);
+  Doc=Runtime.Safe(Next.Doc);
   List=Runtime.Safe(WebSharper.List);
-  DomUtility=Runtime.Safe(Next.DomUtility);
   Var=Runtime.Safe(Next.Var);
   T=Runtime.Safe(List.T);
-  Enumerator=Runtime.Safe(WebSharper.Enumerator);
-  View=Runtime.Safe(Next.View);
+  Mailbox=Runtime.Safe(Abbrev.Mailbox);
   Operators=Runtime.Safe(WebSharper.Operators);
+  NodeSet=Runtime.Safe(Docs.NodeSet);
+  DocElemNode=Runtime.Safe(Next.DocElemNode);
+  DomNodes=Runtime.Safe(Docs.DomNodes);
+  jQuery=Runtime.Safe(Global.jQuery);
   document=Runtime.Safe(Global.document);
-  EventHandler=Runtime.Safe(Next.EventHandler);
   Flow=Runtime.Safe(Next.Flow);
   FlowBuilder=Runtime.Safe(Flow.FlowBuilder);
   Var1=Runtime.Safe(Next.Var1);
+  Enumerator=Runtime.Safe(WebSharper.Enumerator);
   Dictionary=Runtime.Safe(Collections.Dictionary);
-  Model=Runtime.Safe(Next.Model);
+  window=Runtime.Safe(Global.window);
   Model1=Runtime.Safe(Next.Model1);
+  Model=Runtime.Safe(Next.Model);
   Snap=Runtime.Safe(Next.Snap);
   Async=Runtime.Safe(Abbrev.Async);
-  JQueue=Runtime.Safe(Abbrev.JQueue);
   return Dict=Runtime.Safe(Abbrev.Dict);
  });
  Runtime.OnLoad(function()
@@ -13574,7 +14279,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   Flow.Do();
   DomUtility.SvgNames();
   DomUtility.Doc();
-  Docs.empty();
+  Attrs.EmptyAttr();
   Fresh.counter();
   return;
  });
@@ -13582,7 +14287,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
 
 (function()
 {
- var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,UI,Next,Calculator,Var1,Samples,List,Var,Doc,T,View1,Utilities,CheckBoxTest,Seq,Person,SimpleTextBox,InputTransform,TodoList,PhoneExample,MouseChase,ContactFlow,MiniSiteletTest,MessageBoard,Client,Operators,Model1,Collections,ResizeArray,ResizeArrayProxy,Arrays,Flow,String,Strings,IntrinsicFunctionProxy,Attr,Auth,Concurrency,Server,Common,Fresh,ViewModel1,MiniSitelet,Unchecked,EventHandler,document,Phone,Order,Builder,window,Error,Option,MapModule,FSharpMap,Util,TodoItem;
+ var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,UI,Next,Calculator,Var1,Samples,List,Var,Doc,T,View,Utilities,CheckBoxTest,Seq,Person,SimpleTextBox,InputTransform,TodoList,PhoneExample,MouseChase,ContactFlow,MiniSiteletTest,MessageBoard,Client,Operators,Model,Collections,ResizeArray,ResizeArrayProxy,Arrays,Flow,String,Strings,IntrinsicFunctionProxy,Attr,Auth,Concurrency,Server,Common,Fresh,ViewModel1,MiniSitelet,Unchecked,document,Phone,Order,Builder,window,Error,Option,MapModule,FSharpMap,Util,TodoItem;
  Runtime.Define(Global,{
   IntelliFactory:{
    WebSharper:{
@@ -13622,7 +14327,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        calcView:function(rvCalc)
        {
         var rviCalc,btn,obtn,cbtn,eqbtn;
-        rviCalc=View1.FromVar(rvCalc);
+        rviCalc=View.FromVar(rvCalc);
         btn=function(i)
         {
          return Calculator.calcBtn(i,rvCalc);
@@ -13658,22 +14363,20 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        description:Runtime.Field(function()
        {
-        return(Utilities.el("div"))(List.ofArray([Doc.TextNode("A calculator application")]));
+        return Utilities.el("div",List.ofArray([Doc.TextNode("A calculator application")]));
        }),
        displayCalc:function(rvCalc)
        {
-        return View1.Map(function(c)
+        return View.Map(function(c)
         {
          return Global.String(c.Operand);
-        },View1.FromVar(rvCalc));
+        },View.FromVar(rvCalc));
        },
        div:Runtime.Field(function()
        {
-        var clo1;
-        clo1=Utilities.el("div");
-        return function(arg10)
+        return function(c)
         {
-         return clo1(arg10);
+         return Utilities.el("div",c);
         };
        }),
        eqBtn:function(rvCalc)
@@ -13773,7 +14476,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         return Doc.Concat(List.ofArray([Doc.CheckBox(function(p)
         {
          return p.Name;
-        },CheckBoxTest.People(),_selPeople_42_1),Doc.TextView(View1.Map(function(xs)
+        },CheckBoxTest.People(),_selPeople_42_1),Doc.TextView(View.Map(function(xs)
         {
          return Seq.fold(function(acc)
          {
@@ -13782,7 +14485,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
            return acc+p.Name+", ";
           };
          },"",xs);
-        },View1.FromVar(_selPeople_42_1)))]));
+        },View.FromVar(_selPeople_42_1)))]));
        }),
        People:Runtime.Field(function()
        {
@@ -13803,7 +14506,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        }),
        description:Runtime.Field(function()
        {
-        return(Utilities.el("div"))(List.ofArray([Doc.TextNode("An application which shows the selected values.")]));
+        return Utilities.el("div",List.ofArray([Doc.TextNode("An application which shows the selected values.")]));
        })
       },
       Client:{
@@ -13834,7 +14537,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        ViewModel1:{
         Add:function(m,item)
         {
-         return Model1.Update(function(all)
+         return Model.Update(function(all)
          {
           return all.Add(item);
          },m.Items);
@@ -13843,7 +14546,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         {
          return{
           Projection:proj,
-          Items:Model1.Create(function(arr)
+          Items:Model.Create(function(arr)
           {
            return arr.ToArray();
           },ResizeArrayProxy.New2())
@@ -13851,7 +14554,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         },
         Remove:function(m,item)
         {
-         return Model1.Update(function(all)
+         return Model.Update(function(all)
          {
           return Arrays.iter(function(i)
           {
@@ -13915,12 +14618,12 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
            $:1
           });
          };
-         return Utilities.elA("form",List.ofArray([Utilities.cls("form-horizontal"),Utilities.op_EqualsEqualsGreater("role","form")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("form-group")]),List.ofArray([(Utilities.el("div"))(List.ofArray([Doc.Button("E-Mail Address",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-default")]),arg20)])),(Utilities.el("div"))(List.ofArray([Doc.Button("Phone Number",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-default")]),arg201)]))]))]));
+         return Utilities.elA("form",List.ofArray([Utilities.cls("form-horizontal"),Utilities.op_EqualsEqualsGreater("role","form")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("form-group")]),List.ofArray([Utilities.el("div",List.ofArray([Doc.Button("E-Mail Address",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-default")]),arg20)])),Utilities.el("div",List.ofArray([Doc.Button("Phone Number",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-default")]),arg201)]))]))]));
         });
        }),
        description:Runtime.Field(function()
        {
-        return(Utilities.el("div"))(List.ofArray([Doc.TextNode("A WS.UI.Next flowlet implementation.")]));
+        return Utilities.el("div",List.ofArray([Doc.TextNode("A WS.UI.Next flowlet implementation.")]));
        }),
        exampleFlow:Runtime.Field(function()
        {
@@ -13941,7 +14644,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        {
         var detailsStr;
         detailsStr=details.$==1?"the phone number "+details.$0:"the e-mail address "+details.$0;
-        return(Utilities.el("div"))(List.ofArray([Doc.TextNode("You said your name was "+person.Name+", your address was "+person.Address+", "),Doc.TextNode(" and you provided "+detailsStr+".")]));
+        return Utilities.el("div",List.ofArray([Doc.TextNode("You said your name was "+person.Name+", your address was "+person.Address+", "),Doc.TextNode(" and you provided "+detailsStr+".")]));
        },
        inputRow:function(rv,id,lblText)
        {
@@ -13968,40 +14671,38 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
       InputTransform:{
        Main:Runtime.Field(function()
        {
-        var _rvText_28_3,_inputField_36_3,_view_60_1,_viewCaps_62_2,_viewReverse_65_2,_viewWordCount_68_2,_viewWordCountStr_71_2,_viewWordOddEven_74_2,_views_77_1,_tableRow_86_2,_tbl_96_1;
+        var _rvText_28_3,_inputField_36_3,_view_60_1,_viewCaps_62_2,_viewReverse_65_2,_viewWordCount_68_2,_viewWordCountStr_71_2,_viewWordOddEven_74_2,_views_77_1,_tableRow_86_2;
         _rvText_28_3=Var1.Create("");
         _inputField_36_3=Utilities.elA("div",List.ofArray([Utilities.cls("panel"),Utilities.cls("panel-default")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("panel-heading")]),List.ofArray([Utilities.elA("h3",List.ofArray([Utilities.cls("panel-title")]),List.ofArray([Doc.TextNode("Input")]))])),Utilities.elA("div",List.ofArray([Utilities.cls("panel-body")]),List.ofArray([Utilities.elA("form-horizontal",List.ofArray([Utilities.op_EqualsEqualsGreater("role","form")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("form-group")]),List.ofArray([Utilities.elA("label",List.ofArray([Utilities.cls("col-sm-2"),Utilities.cls("control-label"),Utilities.op_EqualsEqualsGreater("for","inputBox")]),List.ofArray([Doc.TextNode("Write something: ")])),Utilities.elA("div",List.ofArray([Utilities.cls("col-sm-10")]),List.ofArray([Doc.Input(List.ofArray([Utilities.op_EqualsEqualsGreater("class","form-control"),Utilities.op_EqualsEqualsGreater("id","inputBox")]),_rvText_28_3)]))]))]))]))]));
-        _view_60_1=View1.FromVar(_rvText_28_3);
-        _viewCaps_62_2=View1.Map(function(s)
+        _view_60_1=View.FromVar(_rvText_28_3);
+        _viewCaps_62_2=View.Map(function(s)
         {
          return s.toUpperCase();
         },_view_60_1);
-        _viewReverse_65_2=View1.Map(function(s)
+        _viewReverse_65_2=View.Map(function(s)
         {
          return String.fromCharCode.apply(undefined,Strings.ToCharArray(s).slice().reverse());
         },_view_60_1);
-        _viewWordCount_68_2=View1.Map(function(s)
+        _viewWordCount_68_2=View.Map(function(s)
         {
          return IntrinsicFunctionProxy.GetLength(Strings.SplitChars(s,[32],1));
         },_view_60_1);
-        _viewWordCountStr_71_2=View1.Map(function(value)
+        _viewWordCountStr_71_2=View.Map(function(value)
         {
          return Global.String(value);
         },_viewWordCount_68_2);
-        _viewWordOddEven_74_2=View1.Map(function(i)
+        _viewWordOddEven_74_2=View.Map(function(i)
         {
          return i%2===0?"Even":"Odd";
         },_viewWordCount_68_2);
         _views_77_1=List.ofArray([["Entered Text",_view_60_1],["Capitalised",_viewCaps_62_2],["Reversed",_viewReverse_65_2],["Word Count",_viewWordCountStr_71_2],["Is the word count odd or even?",_viewWordOddEven_74_2]]);
         _tableRow_86_2=Runtime.Tupled(function(tupledArg)
         {
-         var lbl,view;
-         lbl=tupledArg[0];
+         var view;
          view=tupledArg[1];
-         return(Utilities.el("tr"))(List.ofArray([(Utilities.el("td"))(List.ofArray([Doc.TextNode(lbl)])),(Utilities.el("td"))(List.ofArray([Doc.TextView(view)]))]));
+         return Utilities.el("tr",List.ofArray([Utilities.el("td",List.ofArray([Doc.TextNode(tupledArg[0])])),Utilities.el("td",List.ofArray([Doc.TextView(view)]))]));
         });
-        _tbl_96_1=Utilities.elA("div",List.ofArray([Utilities.cls("panel"),Utilities.cls("panel-default")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("panel-heading")]),List.ofArray([Utilities.elA("h3",List.ofArray([Utilities.cls("panel-title")]),List.ofArray([Doc.TextNode("Output")]))])),Utilities.elA("div",List.ofArray([Utilities.cls("panel-body")]),List.ofArray([Utilities.elA("table",List.ofArray([Utilities.cls("table")]),List.ofArray([(Utilities.el("tbody"))(List.ofArray([Doc.Concat(List.map(_tableRow_86_2,_views_77_1))]))]))]))]));
-        return(Utilities.el("div"))(List.ofArray([_inputField_36_3,_tbl_96_1]));
+        return Utilities.el("div",List.ofArray([_inputField_36_3,Utilities.elA("div",List.ofArray([Utilities.cls("panel"),Utilities.cls("panel-default")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("panel-heading")]),List.ofArray([Utilities.elA("h3",List.ofArray([Utilities.cls("panel-title")]),List.ofArray([Doc.TextNode("Output")]))])),Utilities.elA("div",List.ofArray([Utilities.cls("panel-body")]),List.ofArray([Utilities.elA("table",List.ofArray([Utilities.cls("table")]),List.ofArray([Utilities.el("tbody",List.ofArray([Doc.Concat(List.map(_tableRow_86_2,_views_77_1))]))]))]))]))]));
        }),
        Sample:Runtime.Field(function()
        {
@@ -14009,7 +14710,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        }),
        description:Runtime.Field(function()
        {
-        return(Utilities.el("div"))(List.ofArray([Doc.TextNode("Transforming the data provided by a single data source.")]));
+        return Utilities.el("div",List.ofArray([Doc.TextNode("Transforming the data provided by a single data source.")]));
        })
       },
       MessageBoard:{
@@ -14037,7 +14738,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
           return hidden.set_Value(false);
          };
          x=hidden.get_View();
-         loginForm=Utilities.elA("div",List.ofArray([Attr.ViewStyle("display",View1.Map(function(yes)
+         loginForm=Utilities.elA("div",List.ofArray([Attr.DynamicStyle("display",View.Map(function(yes)
          {
           return yes?"none":"block";
          },x))]),List.ofArray([Auth.LoginForm(function(user)
@@ -14069,51 +14770,48 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         },
         LoginForm:function(onLogin)
         {
-         var rvUser,rvPass,rvMsg,clo1,arg10,message,inputRow,clo11,arg102;
+         var rvUser,rvPass,rvMsg,message,inputRow,arg101;
          rvUser=Var1.Create("");
          rvPass=Var1.Create("");
          rvMsg=Var1.Create("");
-         clo1=Utilities.el("div");
-         arg10=List.ofArray([Utilities.elA("p",List.ofArray([Utilities.cls("bg-danger")]),List.ofArray([Doc.EmbedView(View1.Map(function(msg)
+         message=Utilities.el("div",List.ofArray([Utilities.elA("p",List.ofArray([Utilities.cls("bg-danger")]),List.ofArray([Doc.EmbedView(View.Map(function(msg)
          {
           return Doc.TextNode(msg);
-         },View1.FromVar(rvMsg)))]))]);
-         message=clo1(arg10);
+         },View.FromVar(rvMsg)))]))]));
          inputRow=function(rv,id,lblText,isPass)
          {
           var control;
           control=isPass?function(arg00)
           {
-           return function(arg101)
+           return function(arg10)
            {
-            return Doc.PasswordBox(arg00,arg101);
+            return Doc.PasswordBox(arg00,arg10);
            };
           }:function(arg00)
           {
-           return function(arg101)
+           return function(arg10)
            {
-            return Doc.Input(arg00,arg101);
+            return Doc.Input(arg00,arg10);
            };
           };
           return Utilities.elA("div",List.ofArray([Utilities.cls("form-group")]),List.ofArray([Utilities.elA("label",List.ofArray([Utilities.op_EqualsEqualsGreater("for",id),Utilities.cls("col-sm-2"),Utilities.cls("control-label")]),List.ofArray([Doc.TextNode(lblText)])),Utilities.elA("div",List.ofArray([Utilities.cls("col-sm-2")]),List.ofArray([(control(List.ofArray([Utilities.cls("form-control"),Utilities.op_EqualsEqualsGreater("id",id),Utilities.op_EqualsEqualsGreater("placeholder",lblText)])))(rv)]))]));
          };
-         clo11=Utilities.el("div");
-         arg102=List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-primary")]);
-         return clo11(List.ofArray([(Utilities.el("div"))(List.ofArray([Utilities.txt("Hint: TestUser/TestPass")])),message,Utilities.elA("form",List.ofArray([Utilities.cls("form-horizontal"),Utilities.op_EqualsEqualsGreater("role","form")]),List.ofArray([inputRow(rvUser,"user","Username",false),inputRow(rvPass,"pass","Password",true),Utilities.elA("div",List.ofArray([Utilities.cls("form-group")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("col-sm-offset-2"),Utilities.cls("col-sm-10")]),List.ofArray([Doc.Button("Log In",arg102,function()
+         arg101=List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-primary")]);
+         return Utilities.el("div",List.ofArray([Utilities.el("div",List.ofArray([Utilities.txt("Hint: TestUser/TestPass")])),message,Utilities.elA("form",List.ofArray([Utilities.cls("form-horizontal"),Utilities.op_EqualsEqualsGreater("role","form")]),List.ofArray([inputRow(rvUser,"user","Username",false),inputRow(rvPass,"pass","Password",true),Utilities.elA("div",List.ofArray([Utilities.cls("form-group")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("col-sm-offset-2"),Utilities.cls("col-sm-10")]),List.ofArray([Doc.Button("Log In",arg101,function()
          {
           return Concurrency.Start(Concurrency.Delay(function()
           {
-           return Concurrency.Bind(Server.CheckLogin(rvUser.get_Value(),rvPass.get_Value()),function(arg103)
+           return Concurrency.Bind(Server.CheckLogin(rvUser.get_Value(),rvPass.get_Value()),function(arg102)
            {
             var user;
-            if(arg103.$==0)
+            if(arg102.$==0)
              {
               Var.Set(rvMsg,"Invalid credentials.");
               return Concurrency.Return(null);
              }
             else
              {
-              user=arg103.$0;
+              user=arg102.$0;
               Var.Set(rvUser,"");
               Var.Set(rvPass,"");
               onLogin(user);
@@ -14125,30 +14823,21 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         },
         StatusWidget:function(login,logout,view)
         {
-         return Doc.EmbedView(View1.Map(function(_arg1)
+         return Doc.EmbedView(View.Map(function(_arg1)
          {
-          var t;
-          if(_arg1.$==0)
-           {
-            return Doc.Concat(List.ofArray([(Utilities.el("li"))(List.ofArray([Utilities.link("You are not logged in.",Runtime.New(T,{
-             $:0
-            }),function()
-            {
-            })])),(Utilities.el("li"))(List.ofArray([Utilities.link("Login",Runtime.New(T,{
-             $:0
-            }),login)]))]));
-           }
-          else
-           {
-            t="Welcome, "+_arg1.$0.Name+"!";
-            return Doc.Concat(List.ofArray([(Utilities.el("li"))(List.ofArray([Utilities.link(t,Runtime.New(T,{
-             $:0
-            }),function()
-            {
-            })])),(Utilities.el("li"))(List.ofArray([Utilities.link("Logout",Runtime.New(T,{
-             $:0
-            }),logout)]))]));
-           }
+          return _arg1.$==0?Doc.Concat(List.ofArray([Utilities.el("li",List.ofArray([Utilities.link("You are not logged in.",Runtime.New(T,{
+           $:0
+          }),function()
+          {
+          })])),Utilities.el("li",List.ofArray([Utilities.link("Login",Runtime.New(T,{
+           $:0
+          }),login)]))])):Doc.Concat(List.ofArray([Utilities.el("li",List.ofArray([Utilities.link("Welcome, "+_arg1.$0.Name+"!",Runtime.New(T,{
+           $:0
+          }),function()
+          {
+          })])),Utilities.el("li",List.ofArray([Utilities.link("Logout",Runtime.New(T,{
+           $:0
+          }),logout)]))]));
          },view));
         }
        },
@@ -14217,7 +14906,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         }]);
         renderLink=function(action)
         {
-         return Doc.EmbedView(View1.Map(function(active)
+         return Doc.EmbedView(View.Map(function(active)
          {
           return Utilities.elA("li",List.ofArray([MessageBoard.ShowAction(action)===MessageBoard.ShowAction(active)?Utilities.cls("active"):Attr.get_Empty()]),List.ofArray([Utilities.link(MessageBoard.ShowAction(action),Runtime.New(T,{
            $:0
@@ -14225,7 +14914,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
           {
            return st.Go.call(null,action);
           })]));
-         },View1.FromVar(_var)));
+         },View.FromVar(_var)));
         };
         return Utilities.elA("nav",List.ofArray([Utilities.cls("navbar"),Utilities.cls("navbar-default"),Attr.Create("role","navigation")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("container-fluid")]),List.ofArray([Utilities.elA("ul",List.ofArray([Utilities.cls("nav"),Utilities.cls("navbar-nav")]),List.ofArray([Doc.Concat(List.map(renderLink,actions))])),Utilities.elA("ul",List.ofArray([Utilities.cls("nav"),Utilities.cls("navbar-nav"),Utilities.cls("navbar-right")]),List.ofArray([auth.StatusWidget]))]))]));
        },
@@ -14233,7 +14922,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        {
         var x;
         x=st.Auth.LoggedIn;
-        return Doc.EmbedView(View1.Map(function(_arg3)
+        return Doc.EmbedView(View.Map(function(_arg3)
         {
          var user,rvTitle,rvPost,add;
          if(_arg3.$==0)
@@ -14280,7 +14969,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        ShowThreadPage:function(st,thread)
        {
-        var rvPosts,getPosts,renderPost,postList,clo1,x;
+        var rvPosts,getPosts,renderPost,postList,x;
         rvPosts=Var1.Create(Runtime.New(T,{
          $:0
         }));
@@ -14297,16 +14986,15 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         };
         renderPost=function(post)
         {
-         return(Utilities.el("tr"))(List.ofArray([(Utilities.el("td"))(List.ofArray([Doc.TextNode(post.PostAuthorName)])),(Utilities.el("td"))(List.ofArray([Doc.TextNode(post.Content)]))]));
+         return Utilities.el("tr",List.ofArray([Utilities.el("td",List.ofArray([Doc.TextNode(post.PostAuthorName)])),Utilities.el("td",List.ofArray([Doc.TextNode(post.Content)]))]));
         };
-        postList=Utilities.elA("div",List.ofArray([Utilities.cls("panel"),Utilities.cls("panel-default")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("panel-heading")]),List.ofArray([Utilities.elA("h3",List.ofArray([Utilities.cls("panel-title")]),List.ofArray([Doc.TextNode("Posts in thread \""+thread.Title+"\"")]))])),Utilities.elA("div",List.ofArray([Utilities.cls("panel-body")]),List.ofArray([Utilities.elA("table",List.ofArray([Utilities.cls("table"),Utilities.cls("table-hover")]),List.ofArray([(Utilities.el("tbody"))(List.ofArray([Doc.EmbedView(View1.Map(function(posts)
+        postList=Utilities.elA("div",List.ofArray([Utilities.cls("panel"),Utilities.cls("panel-default")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("panel-heading")]),List.ofArray([Utilities.elA("h3",List.ofArray([Utilities.cls("panel-title")]),List.ofArray([Doc.TextNode("Posts in thread \""+thread.Title+"\"")]))])),Utilities.elA("div",List.ofArray([Utilities.cls("panel-body")]),List.ofArray([Utilities.elA("table",List.ofArray([Utilities.cls("table"),Utilities.cls("table-hover")]),List.ofArray([Utilities.el("tbody",List.ofArray([Doc.EmbedView(View.Map(function(posts)
         {
          return Doc.Concat(List.map(renderPost,posts));
-        },View1.FromVar(rvPosts)))]))]))]))]));
+        },View.FromVar(rvPosts)))]))]))]))]));
         getPosts(null);
-        clo1=Utilities.el("div");
         x=st.Auth.LoggedIn;
-        return clo1(List.ofArray([postList,Doc.EmbedView(View1.Map(function(_arg3)
+        return Utilities.el("div",List.ofArray([postList,Doc.EmbedView(View.Map(function(_arg3)
         {
          var user,rvPost,add;
          if(_arg3.$==1)
@@ -14339,7 +15027,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         var renderThread,threads;
         renderThread=function(thread)
         {
-         return(Utilities.el("tr"))(List.ofArray([(Utilities.el("td"))(List.ofArray([Doc.TextNode(thread.ThreadAuthorName)])),(Utilities.el("td"))(List.ofArray([Utilities.link(thread.Title,Runtime.New(T,{
+         return Utilities.el("tr",List.ofArray([Utilities.el("td",List.ofArray([Doc.TextNode(thread.ThreadAuthorName)])),Utilities.el("td",List.ofArray([Utilities.link(thread.Title,Runtime.New(T,{
           $:0
          }),function()
          {
@@ -14358,14 +15046,14 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
           return Concurrency.Return(null);
          });
         }));
-        return Utilities.elA("table",List.ofArray([Utilities.cls("table"),Utilities.cls("table-hover")]),List.ofArray([(Utilities.el("tbody"))(List.ofArray([Doc.EmbedView(View1.Map(function(threads1)
+        return Utilities.elA("table",List.ofArray([Utilities.cls("table"),Utilities.cls("table-hover")]),List.ofArray([Utilities.el("tbody",List.ofArray([Doc.EmbedView(View.Map(function(threads1)
         {
          return Doc.Concat(List.map(renderThread,threads1));
-        },View1.FromVar(st.Threads)))]))]));
+        },View.FromVar(st.Threads)))]))]));
        },
        description:Runtime.Field(function()
        {
-        return(Utilities.el("div"))(List.ofArray([Doc.TextNode("A message board application built using MiniSitelets.")]));
+        return Utilities.el("div",List.ofArray([Doc.TextNode("A message board application built using MiniSitelets.")]));
        })
       },
       MiniSiteletTest:{
@@ -14399,13 +15087,13 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        NavBar:function(_var)
        {
         var x;
-        x=View1.FromVar(_var);
-        return Doc.EmbedView(View1.Map(function(active)
+        x=View.FromVar(_var);
+        return Doc.EmbedView(View.Map(function(active)
         {
          var renderLink;
          renderLink=function(action)
          {
-          return Utilities.elA("li",List.ofArray([Unchecked.Equals(action,active)?Utilities.cls("active"):Attr.get_Empty()]),List.ofArray([Doc.ElementWithEvents("a",List.ofArray([Utilities.op_EqualsEqualsGreater("href","#")]),List.ofArray([EventHandler.CreateHandler("click",function()
+          return Utilities.elA("li",List.ofArray([Unchecked.Equals(action,active)?Utilities.cls("active"):Attr.get_Empty()]),List.ofArray([Doc.Element("a",List.ofArray([Utilities.op_EqualsEqualsGreater("href","#"),Attr.Handler("click",function()
           {
            return MiniSiteletTest.GlobalGo(_var,action);
           })]),List.ofArray([Utilities.txt(MiniSiteletTest.showAct(action))]))]));
@@ -14415,8 +15103,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        Page1:function(ctx)
        {
-        var clo1,arg20,arg201;
-        clo1=Utilities.el("div");
+        var arg20,arg201;
         arg20=function()
         {
          return ctx.Go.call(null,{
@@ -14431,12 +15118,11 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
           $0:1
          });
         };
-        return Doc.Concat(List.ofArray([clo1(List.ofArray([(Utilities.el("h1"))(List.ofArray([Doc.TextNode("Page 1")])),(Utilities.el("p"))(List.ofArray([Doc.TextNode("Some exciting content from page 1!")])),Doc.Button("Go to P2/0",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-default")]),arg20),Doc.Button("Go to P2/1",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-default")]),arg201)]))]));
+        return Doc.Concat(List.ofArray([Utilities.el("div",List.ofArray([Utilities.el("h1",List.ofArray([Doc.TextNode("Page 1")])),Utilities.el("p",List.ofArray([Doc.TextNode("Some exciting content from page 1!")])),Doc.Button("Go to P2/0",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-default")]),arg20),Doc.Button("Go to P2/1",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-default")]),arg201)]))]));
        },
        Page2:function(ctx,v)
        {
-        var clo1,arg20,arg201;
-        clo1=Utilities.el("div");
+        var arg20,arg201;
         arg20=function()
         {
          return ctx.Go.call(null,{
@@ -14449,7 +15135,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
           $:2
          });
         };
-        return Doc.Concat(List.ofArray([clo1(List.ofArray([(Utilities.el("h1"))(List.ofArray([Doc.TextNode("Page 2")])),(Utilities.el("p"))(List.ofArray([Doc.TextNode("Some exciting content from page 2 ("+Global.String(v)+") !")])),Doc.Button("Go to P1",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-default")]),arg20),Doc.Button("Go to P3",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-default")]),arg201)]))]));
+        return Doc.Concat(List.ofArray([Utilities.el("div",List.ofArray([Utilities.el("h1",List.ofArray([Doc.TextNode("Page 2")])),Utilities.el("p",List.ofArray([Doc.TextNode("Some exciting content from page 2 ("+Global.String(v)+") !")])),Doc.Button("Go to P1",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-default")]),arg20),Doc.Button("Go to P3",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-default")]),arg201)]))]));
        },
        Page3:function(ctx)
        {
@@ -14460,7 +15146,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
           $:0
          });
         };
-        return Doc.Concat(List.ofArray([(Utilities.el("div"))(List.ofArray([(Utilities.el("h1"))(List.ofArray([Doc.TextNode("Page 3")])),(Utilities.el("p"))(List.ofArray([Doc.TextNode("Some exciting content from page 3!")])),Doc.Button("Go to P1",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-default")]),arg20)]))]));
+        return Doc.Concat(List.ofArray([Utilities.el("div",List.ofArray([Utilities.el("h1",List.ofArray([Doc.TextNode("Page 3")])),Utilities.el("p",List.ofArray([Doc.TextNode("Some exciting content from page 3!")])),Doc.Button("Go to P1",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-default")]),arg20)]))]));
        },
        Sample:Runtime.Field(function()
        {
@@ -14468,9 +15154,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        }),
        description:Runtime.Field(function()
        {
-        var arg00;
-        arg00=List.ofArray([Doc.TextNode("A small sitelet example")]);
-        return(Utilities.div())(arg00);
+        return Utilities.div(List.ofArray([Doc.TextNode("A small sitelet example")]));
        }),
        pages:Runtime.Field(function()
        {
@@ -14494,7 +15178,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
       MouseChase:{
        Main:Runtime.Field(function()
        {
-        var _rvX_26_1,_rvY_27_1,_widthAttr_43_1,_heightAttr_44_1,arg10,_xView_48_2,arg101,_yView_49_2,_bgAttr_51_1,_posAttr_52_1,arg00,arg001;
+        var _rvX_26_1,_rvY_27_1,_widthAttr_43_1,_heightAttr_44_1,arg10,_xView_48_2,arg101,_yView_49_2,_bgAttr_51_1;
         _rvX_26_1=Var1.Create(0);
         _rvY_27_1=Var1.Create(0);
         document.addEventListener("mousemove",function(evt)
@@ -14506,27 +15190,24 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         },false);
         _widthAttr_43_1=Attr.Create("width","200");
         _heightAttr_44_1=Attr.Create("height","100");
-        arg10=View1.Map(function(x)
+        arg10=View.Map(function(x)
         {
          return Global.String(x)+"px";
         },_rvX_26_1.get_View());
-        _xView_48_2=Attr.ViewStyle("left",arg10);
-        arg101=View1.Map(function(y)
+        _xView_48_2=Attr.DynamicStyle("left",arg10);
+        arg101=View.Map(function(y)
         {
          return Global.String(y)+"px";
         },_rvY_27_1.get_View());
-        _yView_49_2=Attr.ViewStyle("top",arg101);
-        _bgAttr_51_1=Attr.CreateStyle("background-color","#b0c4de");
-        _posAttr_52_1=Attr.CreateStyle("position","absolute");
-        arg00=List.ofArray([Doc.TextView(View1.Map(function(x)
+        _yView_49_2=Attr.DynamicStyle("top",arg101);
+        _bgAttr_51_1=Attr.Style("background-color","#b0c4de");
+        return Doc.Element("div",List.ofArray([_xView_48_2,_yView_49_2,_bgAttr_51_1,Attr.Style("position","absolute")]),List.ofArray([Utilities.div(List.ofArray([Doc.TextView(View.Map(function(x)
         {
          return"X: "+Global.String(x);
-        },_rvX_26_1.get_View()))]);
-        arg001=List.ofArray([Doc.TextView(View1.Map(function(y)
+        },_rvX_26_1.get_View()))])),Utilities.div(List.ofArray([Doc.TextView(View.Map(function(y)
         {
          return"Y: "+Global.String(y);
-        },_rvY_27_1.get_View()))]);
-        return Doc.Element("div",List.ofArray([_xView_48_2,_yView_49_2,_bgAttr_51_1,_posAttr_52_1]),List.ofArray([(Utilities.div())(arg00),(Utilities.div())(arg001)]));
+        },_rvY_27_1.get_View()))]))]));
        }),
        Sample:Runtime.Field(function()
        {
@@ -14534,7 +15215,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        }),
        description:Runtime.Field(function()
        {
-        return(Utilities.el("div"))(List.ofArray([Doc.TextNode("A box which follows the mouse, containing the co-ordinates.")]));
+        return Utilities.el("div",List.ofArray([Doc.TextNode("A box which follows the mouse, containing the co-ordinates.")]));
        })
       },
       PhoneExample:{
@@ -14569,7 +15250,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        }),
        PhonesWidget:function(phones)
        {
-        var allPhones,query,order,arg00,arg101,arg201,visiblePhones,showPhone,showPhones,clo1;
+        var allPhones,query,order,arg00,arg101,arg201,visiblePhones,showPhone,showPhones;
         allPhones=Var1.Create(phones);
         query=Var1.Create("");
         order=Var1.Create(Runtime.New(Order,{
@@ -14591,26 +15272,25 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
           },phones));
          };
         };
-        arg101=View1.FromVar(query);
-        arg201=View1.FromVar(order);
-        visiblePhones=View1.Map2(arg00,arg101,arg201);
+        arg101=View.FromVar(query);
+        arg201=View.FromVar(order);
+        visiblePhones=View.Map2(arg00,arg101,arg201);
         showPhone=function(ph)
         {
-         return(Utilities.el("li"))(List.ofArray([(Utilities.el("span"))(List.ofArray([Utilities.txt(ph.Name)])),(Utilities.el("p"))(List.ofArray([Utilities.txt(ph.Snippet)]))]));
+         return Utilities.el("li",List.ofArray([Utilities.el("span",List.ofArray([Utilities.txt(ph.Name)])),Utilities.el("p",List.ofArray([Utilities.txt(ph.Snippet)]))]));
         };
         showPhones=function(phones1)
         {
          return Doc.Concat(List.map(showPhone,phones1));
         };
-        clo1=Utilities.divc("row");
-        return clo1(List.ofArray([(Utilities.divc("col-sm-6"))(List.ofArray([Utilities.txt("Search: "),Doc.Input(List.ofArray([Attr.Create("class","form-control")]),query),Utilities.txt("Sort by: "),Doc.Select(List.ofArray([Attr.Create("class","form-control")]),function(arg001)
+        return Utilities.divc("row",List.ofArray([Utilities.divc("col-sm-6",List.ofArray([Utilities.txt("Search: "),Doc.Input(List.ofArray([Attr.Create("class","form-control")]),query),Utilities.txt("Sort by: "),Doc.Select(List.ofArray([Attr.Create("class","form-control")]),function(arg001)
         {
          return Order.Show(arg001);
         },List.ofArray([Runtime.New(Order,{
          $:1
         }),Runtime.New(Order,{
          $:0
-        })]),order)])),(Utilities.divc("col-sm-6"))(List.ofArray([(Utilities.el("ul"))(List.ofArray([Doc.EmbedView(View1.Map(showPhones,visiblePhones))]))]))]));
+        })]),order)])),Utilities.divc("col-sm-6",List.ofArray([Utilities.el("ul",List.ofArray([Doc.EmbedView(View.Map(showPhones,visiblePhones))]))]))]));
        },
        Sample:Runtime.Field(function()
        {
@@ -14618,7 +15298,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        }),
        description:Runtime.Field(function()
        {
-        return(Utilities.el("div"))(List.ofArray([Doc.TextNode("Taken from the "),PhoneExample.link("AngularJS Tutorial","https://docs.angularjs.org/tutorial/"),Doc.TextNode(", a list filtering and sorting application for phones.")]));
+        return Utilities.el("div",List.ofArray([Doc.TextNode("Taken from the "),PhoneExample.link("AngularJS Tutorial","https://docs.angularjs.org/tutorial/"),Doc.TextNode(", a list filtering and sorting application for phones.")]));
        }),
        link:function(txt,href)
        {
@@ -14758,22 +15438,22 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        mainContent:function(rvModel)
        {
-        return Doc.EmbedView(View1.Map(function(model)
+        return Doc.EmbedView(View.Map(function(model)
         {
          var matchValue;
          matchValue=model.ActiveSample;
          return matchValue.$==0?Doc.get_Empty():matchValue.$0.Render;
-        },View1.FromVar(rvModel)));
+        },View.FromVar(rvModel)));
        },
        navBar:function(rvModel)
        {
-        return Doc.EmbedView(View1.Map(function(model)
+        return Doc.EmbedView(View.Map(function(model)
         {
-         return Utilities.elA("ul",List.ofArray([Attr.CreateClass("nav"),Attr.CreateClass("nav-pills")]),List.ofArray([Doc.Concat(List.map(function(sample)
+         return Utilities.elA("ul",List.ofArray([Utilities.cls("nav"),Utilities.cls("nav-pills")]),List.ofArray([Doc.Concat(List.map(function(sample)
          {
           return Samples.renderLink(rvModel,sample);
          },model.Samples))]));
-        },View1.FromVar(rvModel)));
+        },View.FromVar(rvModel)));
        },
        op_PlusPlus:function(a,b)
        {
@@ -14782,7 +15462,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        renderLink:function(rvModel,sample)
        {
         var clickHandler;
-        clickHandler=EventHandler.CreateHandler("click",function()
+        clickHandler=Attr.Handler("click",function()
         {
          return Var.Update(rvModel,function(model)
          {
@@ -14800,7 +15480,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          return a.Id===sample.Id;
         },Samples.getActive(rvModel))?List.ofArray([Utilities.cls("active")]):Runtime.New(T,{
          $:0
-        }),List.ofArray([Doc.ElementWithEvents("a",List.ofArray([Attr.Create("href","#")]),List.ofArray([clickHandler]),List.ofArray([Utilities.txt(sample.Title)]))]));
+        }),List.ofArray([Doc.Element("a",List.ofArray([clickHandler,Attr.Create("href","#")]),List.ofArray([Utilities.txt(sample.Title)]))]));
        },
        req:function(name,f)
        {
@@ -14808,10 +15488,9 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        sideContent:function(rvModel)
        {
-        var view,clo1;
-        view=View1.FromVar(rvModel);
-        clo1=Utilities.el("div");
-        return clo1(List.ofArray([Doc.EmbedView(View1.Map(function(model)
+        var view;
+        view=View.FromVar(rvModel);
+        return Utilities.el("div",List.ofArray([Doc.EmbedView(View.Map(function(model)
         {
          var matchValue,sample;
          matchValue=model.ActiveSample;
@@ -14822,7 +15501,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          else
           {
            sample=matchValue.$0;
-           return Doc.Concat(List.ofArray([(Utilities.el("p"))(List.ofArray([sample.RenderDescription])),Utilities.elA("a",List.ofArray([Attr.CreateClass("btn"),Attr.CreateClass("btn-primary"),Attr.CreateClass("btn-lg"),Attr.Create("href","http://github.com/intellifactory/websharper.ui.next/blob/master/src/"+sample.FileName)]),List.ofArray([Utilities.txt("Source")]))]));
+           return Doc.Concat(List.ofArray([Utilities.el("p",List.ofArray([sample.RenderDescription])),Utilities.elA("a",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-primary"),Utilities.cls("btn-lg"),Utilities.op_EqualsEqualsGreater("href","http://github.com/intellifactory/websharper.ui.next/blob/master/src/"+sample.FileName)]),List.ofArray([Utilities.txt("Source")]))]));
           }
         },view))]));
        }
@@ -14949,7 +15628,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         _rvText_28_2=Var1.Create("");
         _inputField_36_2=Doc.Input(List.ofArray([Attr.Create("class","form-control")]),_rvText_28_2);
         _label_40_2=Doc.TextView(_rvText_28_2.get_View());
-        return(Utilities.divc("panel-default"))(List.ofArray([(Utilities.divc("panel-body"))(List.ofArray([(Utilities.el("div"))(List.ofArray([_inputField_36_2])),(Utilities.el("div"))(List.ofArray([_label_40_2]))]))]));
+        return Utilities.divc("panel-default",List.ofArray([Utilities.divc("panel-body",List.ofArray([Utilities.el("div",List.ofArray([_inputField_36_2])),Utilities.el("div",List.ofArray([_label_40_2]))]))]));
        }),
        Sample:Runtime.Field(function()
        {
@@ -14957,13 +15636,13 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        }),
        description:Runtime.Field(function()
        {
-        return(Utilities.el("div"))(List.ofArray([Doc.TextNode("A label which copies the contents of a text box.")]));
+        return Utilities.el("div",List.ofArray([Doc.TextNode("A label which copies the contents of a text box.")]));
        })
       },
       TodoList:{
        Add:function(m,item)
        {
-        return Model1.Update(function(all)
+        return Model.Update(function(all)
         {
          return all.Add(item);
         },m.Items);
@@ -14971,7 +15650,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        Create:function()
        {
         return{
-         Items:Model1.Create(function(arr)
+         Items:Model.Create(function(arr)
          {
           return arr.ToArray();
          },ResizeArrayProxy.New2())
@@ -14987,7 +15666,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        }),
        Remove:function(m,item)
        {
-        return Model1.Update(function(all)
+        return Model.Update(function(all)
         {
          return Arrays.iter(function(i)
          {
@@ -15000,15 +15679,13 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        RenderItem:function(m,todo)
        {
-        var clo1;
-        clo1=Utilities.el("tr");
-        return clo1(List.ofArray([(Utilities.el("td"))(List.ofArray([Doc.EmbedView(View1.Map(function(isDone)
+        return Utilities.el("tr",List.ofArray([Utilities.el("td",List.ofArray([Doc.EmbedView(View.Map(function(isDone)
         {
-         return isDone?(Utilities.el("del"))(List.ofArray([Utilities.txt(todo.TodoText)])):Utilities.txt(todo.TodoText);
-        },View1.FromVar(todo.Done)))])),(Utilities.el("td"))(List.ofArray([Util.button("Done",function()
+         return isDone?Utilities.el("del",List.ofArray([Utilities.txt(todo.TodoText)])):Utilities.txt(todo.TodoText);
+        },View.FromVar(todo.Done)))])),Utilities.el("td",List.ofArray([Util.button("Done",function()
         {
          return Var.Set(todo.Done,true);
-        })])),(Utilities.el("td"))(List.ofArray([Util.button("Remove",function()
+        })])),Utilities.el("td",List.ofArray([Util.button("Remove",function()
         {
          return TodoList.Remove(m,todo);
         })]))]));
@@ -15021,14 +15698,14 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        {
         var m;
         m=TodoList.Create();
-        return Utilities.elA("table",List.ofArray([Utilities.op_EqualsEqualsGreater("class","table table-hover")]),List.ofArray([(Utilities.el("tbody"))(List.ofArray([TodoList.TodoList(m),TodoList.TodoForm(m)]))]));
+        return Utilities.elA("table",List.ofArray([Utilities.op_EqualsEqualsGreater("class","table table-hover")]),List.ofArray([Utilities.el("tbody",List.ofArray([TodoList.TodoList(m),TodoList.TodoForm(m)]))]));
        },
        TodoForm:function(m)
        {
         var rvInput;
         rvInput=Var1.Create("");
-        View1.FromVar(rvInput);
-        return(Utilities.el("form"))(List.ofArray([(Utilities.divc("form-group"))(List.ofArray([(Utilities.el("label"))(List.ofArray([Utilities.txt("New entry: ")])),Util.input(rvInput)])),Util.button("Submit",function()
+        View.FromVar(rvInput);
+        return Utilities.el("form",List.ofArray([Utilities.divc("form-group",List.ofArray([Utilities.el("label",List.ofArray([Utilities.txt("New entry: ")])),Util.input(rvInput)])),Util.button("Submit",function()
         {
          return TodoList.Add(m,TodoItem.Create(Var1.Get(rvInput)));
         })]));
@@ -15079,73 +15756,53 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        description:Runtime.Field(function()
        {
-        return(Utilities.el("div"))(List.ofArray([Doc.TextNode("A to-do list application.")]));
+        return Utilities.el("div",List.ofArray([Doc.TextNode("A to-do list application.")]));
        })
       },
       Utilities:{
-       btn:function(caption)
+       btn:function(caption,act)
        {
-        var arg10;
-        arg10=List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-default")]);
-        return function(arg20)
-        {
-         return Doc.Button(caption,arg10,arg20);
-        };
+        return Doc.Button(caption,List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-default")]),act);
        },
-       cls:function(arg00)
+       cls:function(n)
        {
-        return Attr.CreateClass(arg00);
+        return Attr.Class(n);
        },
-       div:Runtime.Field(function()
+       div:function(docs)
        {
-        var _arg10_20_21;
-        _arg10_20_21=Runtime.New(T,{
+        return Doc.Element("div",Runtime.New(T,{
          $:0
-        });
-        return function(arg20)
-        {
-         return Doc.Element("div",_arg10_20_21,arg20);
-        };
-       }),
-       divc:function(c)
-       {
-        var arg10;
-        arg10=List.ofArray([Utilities.cls(c)]);
-        return function(arg20)
-        {
-         return Doc.Element("div",arg10,arg20);
-        };
+        }),docs);
        },
-       el:function(name)
+       divc:function(c,docs)
        {
-        var arg10;
-        arg10=Runtime.New(T,{
+        return Doc.Element("div",List.ofArray([Utilities.cls(c)]),docs);
+       },
+       el:function(name,c)
+       {
+        return Doc.Element(name,Runtime.New(T,{
          $:0
-        });
-        return function(arg20)
-        {
-         return Doc.Element(name,arg10,arg20);
-        };
+        }),c);
        },
-       elA:function(arg00,arg10,arg20)
+       elA:function(n,a,c)
        {
-        return Doc.Element(arg00,arg10,arg20);
+        return Doc.Element(n,a,c);
        },
-       link:function(arg00,arg10,arg20)
+       link:function(cap,attr,act)
        {
-        return Doc.Link(arg00,arg10,arg20);
+        return Doc.Link(cap,attr,act);
        },
        op_EqualsEqualsGreater:function(k,v)
        {
         return Attr.Create(k,v);
        },
-       sty:function(arg00,arg10)
+       sty:function(n,v)
        {
-        return Attr.CreateStyle(arg00,arg10);
+        return Attr.Style(n,v);
        },
-       txt:function(arg00)
+       txt:function(t)
        {
-        return Doc.TextNode(arg00);
+        return Doc.TextNode(t);
        }
       }
      }
@@ -15165,7 +15822,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   Var=Runtime.Safe(Next.Var);
   Doc=Runtime.Safe(Next.Doc);
   T=Runtime.Safe(List.T);
-  View1=Runtime.Safe(Next.View1);
+  View=Runtime.Safe(Next.View);
   Utilities=Runtime.Safe(Next.Utilities);
   CheckBoxTest=Runtime.Safe(Next.CheckBoxTest);
   Seq=Runtime.Safe(WebSharper.Seq);
@@ -15180,7 +15837,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   MessageBoard=Runtime.Safe(Next.MessageBoard);
   Client=Runtime.Safe(Next.Client);
   Operators=Runtime.Safe(WebSharper.Operators);
-  Model1=Runtime.Safe(Next.Model1);
+  Model=Runtime.Safe(Next.Model);
   Collections=Runtime.Safe(WebSharper.Collections);
   ResizeArray=Runtime.Safe(Collections.ResizeArray);
   ResizeArrayProxy=Runtime.Safe(ResizeArray.ResizeArrayProxy);
@@ -15198,7 +15855,6 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   ViewModel1=Runtime.Safe(Common.ViewModel1);
   MiniSitelet=Runtime.Safe(Next.MiniSitelet);
   Unchecked=Runtime.Safe(WebSharper.Unchecked);
-  EventHandler=Runtime.Safe(Next.EventHandler);
   document=Runtime.Safe(Global.document);
   Phone=Runtime.Safe(PhoneExample.Phone);
   Order=Runtime.Safe(PhoneExample.Order);
@@ -15213,7 +15869,6 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
  });
  Runtime.OnLoad(function()
  {
-  Utilities.div();
   TodoList.description();
   Util.fresh();
   TodoList.Sample();

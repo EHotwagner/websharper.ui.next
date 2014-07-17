@@ -3154,7 +3154,7 @@ declare module IntelliFactory {
                         <_M1>(_var: __ABBREV.__Next.Var1<_M1>): any;
                     };
                 }
-                module View1 {
+                module View {
                     var FromVar : {
                         <_M1>(_var: __ABBREV.__Next.Var1<_M1>): __ABBREV.__Next.View1<_M1>;
                     };
@@ -3192,6 +3192,18 @@ declare module IntelliFactory {
                             (x: _M1): _M2;
                         }, view: __ABBREV.__Next.View1<__ABBREV.__WebSharper.seq<_M1>>): __ABBREV.__Next.View1<__ABBREV.__WebSharper.seq<_M2>>;
                     };
+                    var CreateViewNode : {
+                        <_M1, _M2>(conv: {
+                            (x: __ABBREV.__Next.View1<_M1>): _M2;
+                        }, value: _M1): any;
+                    };
+                    var ConvertSeqBy : {
+                        <_M1, _M2, _M3>(key: {
+                            (x: _M1): _M3;
+                        }, conv: {
+                            (x: __ABBREV.__Next.View1<_M1>): _M2;
+                        }, view: __ABBREV.__Next.View1<__ABBREV.__WebSharper.seq<_M1>>): __ABBREV.__Next.View1<__ABBREV.__WebSharper.seq<_M2>>;
+                    };
                     var Join : {
                         <_M1>(_arg5: __ABBREV.__Next.View1<__ABBREV.__Next.View1<_M1>>): __ABBREV.__Next.View1<_M1>;
                     };
@@ -3203,11 +3215,6 @@ declare module IntelliFactory {
                     var Const : {
                         <_M1>(x: _M1): __ABBREV.__Next.View1<_M1>;
                     };
-                    var get_Do : {
-                        (): __ABBREV.__Next.ViewBuilder;
-                    };
-                }
-                module View {
                     var Sink : {
                         <_M1>(act: {
                             (x: _M1): void;
@@ -3218,8 +3225,11 @@ declare module IntelliFactory {
                             (x: _M1): _M2;
                         }>, view: __ABBREV.__Next.View1<_M1>): __ABBREV.__Next.View1<_M2>;
                     };
+                    var get_Do : {
+                        (): __ABBREV.__Next.ViewBuilder;
+                    };
                 }
-                module Model1 {
+                module Model {
                     var Create : {
                         <_M1, _M2>(proj: {
                             (x: _M1): _M2;
@@ -3230,86 +3240,118 @@ declare module IntelliFactory {
                             (x: _M1): void;
                         }, _arg1: __ABBREV.__Next.Model1<_M2, _M1>): void;
                     };
-                }
-                module Model {
                     var View : {
                         <_M1, _M2>(_arg2: __ABBREV.__Next.Model1<_M1, _M2>): __ABBREV.__Next.View1<_M1>;
                     };
                 }
-                module EventHandler {
-                    var CreateHandler : {
-                        (name: string, callback: {
-                            (x: __ABBREV.__Dom.Event): void;
-                        }): __ABBREV.__Next.EventHandler;
+                module Anim {
+                    var All : {
+                        (anim: __ABBREV.__Next.Anim): any[];
+                    };
+                    var Append : {
+                        (a: __ABBREV.__Next.Anim, b: __ABBREV.__Next.Anim): __ABBREV.__Next.Anim;
+                    };
+                    var Concat : {
+                        (par: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Anim>): __ABBREV.__Next.Anim;
+                    };
+                    var Custom : {
+                        (anim: any): __ABBREV.__Next.Anim;
+                    };
+                    var Play : {
+                        (anim: __ABBREV.__Next.Anim): any;
+                    };
+                    var WhenDone : {
+                        (f: {
+                            (): void;
+                        }, main: __ABBREV.__Next.Anim): __ABBREV.__Next.Anim;
+                    };
+                    var get_Empty : {
+                        (): __ABBREV.__Next.Anim;
                     };
                 }
                 module Attr {
-                    var ViewInternal : {
-                        (name: string, view: __ABBREV.__Next.View1<string>, attrTy: __ABBREV.__Next.AttrTy): __ABBREV.__Next.Attr;
+                    var Animated : {
+                        <_M1>(name: string, tr: __ABBREV.__Next.ITransition<_M1>, view: __ABBREV.__Next.View1<_M1>, value: {
+                            (x: _M1): string;
+                        }): __ABBREV.__Next.Attr;
                     };
-                    var View : {
-                        (name: string, view: __ABBREV.__Next.View1<string>): __ABBREV.__Next.Attr;
+                    var AnimatedStyle : {
+                        <_M1>(name: string, tr: __ABBREV.__Next.ITransition<_M1>, view: __ABBREV.__Next.View1<_M1>, value: {
+                            (x: _M1): string;
+                        }): __ABBREV.__Next.Attr;
+                    };
+                    var Dynamic : {
+                        (name: string, value: __ABBREV.__Next.View1<string>): __ABBREV.__Next.Attr;
+                    };
+                    var DynamicCustom : {
+                        <_M1>(set: {
+                            (x: __ABBREV.__Dom.Element): {
+                                (x: _M1): void;
+                            };
+                        }, value: __ABBREV.__Next.View1<_M1>): __ABBREV.__Next.Attr;
+                    };
+                    var DynamicStyle : {
+                        (name: string, value: __ABBREV.__Next.View1<string>): __ABBREV.__Next.Attr;
                     };
                     var Create : {
                         (name: string, value: string): __ABBREV.__Next.Attr;
                     };
+                    var Style : {
+                        (name: string, value: string): __ABBREV.__Next.Attr;
+                    };
+                    var Handler : {
+                        (name: string, callback: {
+                            (x: __ABBREV.__Dom.Event): void;
+                        }): __ABBREV.__Next.Attr;
+                    };
+                    var Class : {
+                        (name: string): __ABBREV.__Next.Attr;
+                    };
+                    var DynamicClass : {
+                        <_M1>(name: string, view: __ABBREV.__Next.View1<_M1>, apply: {
+                            (x: _M1): boolean;
+                        }): __ABBREV.__Next.Attr;
+                    };
                     var Append : {
-                        (_arg2: __ABBREV.__Next.Attr, _arg1: __ABBREV.__Next.Attr): __ABBREV.__Next.Attr;
+                        (a: __ABBREV.__Next.Attr, b: __ABBREV.__Next.Attr): __ABBREV.__Next.Attr;
                     };
                     var Concat : {
                         (xs: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>): __ABBREV.__Next.Attr;
-                    };
-                    var Custom : {
-                        <_M1>(f: {
-                            (x: _M1): void;
-                        }, view: __ABBREV.__Next.View1<_M1>): __ABBREV.__Next.Attr;
-                    };
-                    var CreateStyle : {
-                        (name: string, value: string): __ABBREV.__Next.Attr;
-                    };
-                    var CreateClass : {
-                        (name: string): __ABBREV.__Next.Attr;
-                    };
-                    var ViewStyle : {
-                        (name: string, view: __ABBREV.__Next.View1<string>): __ABBREV.__Next.Attr;
-                    };
-                    var ViewClass : {
-                        (view: __ABBREV.__Next.View1<string>): __ABBREV.__Next.Attr;
                     };
                     var get_Empty : {
                         (): __ABBREV.__Next.Attr;
                     };
                 }
                 module Doc {
-                    var EmbedView : {
-                        (v: __ABBREV.__Next.View1<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var Run : {
-                        (parent: __ABBREV.__Dom.Element, _arg1: __ABBREV.__Next.Doc): void;
-                    };
-                    var RunById : {
-                        (id: string, tr: __ABBREV.__Next.Doc): void;
-                    };
                     var Append : {
-                        (_arg3: __ABBREV.__Next.Doc, _arg2: __ABBREV.__Next.Doc): __ABBREV.__Next.Doc;
+                        (a: __ABBREV.__Next.Doc, b: __ABBREV.__Next.Doc): __ABBREV.__Next.Doc;
                     };
                     var Concat : {
                         (xs: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Elem : {
+                        (name: __ABBREV.__Dom.Element, attr: __ABBREV.__Next.Attr, children: __ABBREV.__Next.Doc): __ABBREV.__Next.Doc;
                     };
                     var Element : {
                         (name: string, attr: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, children: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                     };
                     var Static : {
-                        (elem: __ABBREV.__Dom.Element): __ABBREV.__Next.Doc;
+                        (el: __ABBREV.__Dom.Element): __ABBREV.__Next.Doc;
                     };
-                    var ElementWithEvents : {
-                        (name: string, attr: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, eventHandlers: __ABBREV.__WebSharper.seq<__ABBREV.__Next.EventHandler>, children: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var TextView : {
-                        (view: __ABBREV.__Next.View1<string>): __ABBREV.__Next.Doc;
+                    var EmbedView : {
+                        (view: __ABBREV.__Next.View1<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                     };
                     var TextNode : {
-                        (t: string): __ABBREV.__Next.Doc;
+                        (v: string): __ABBREV.__Next.Doc;
+                    };
+                    var TextView : {
+                        (txt: __ABBREV.__Next.View1<string>): __ABBREV.__Next.Doc;
+                    };
+                    var Run : {
+                        (parent: __ABBREV.__Dom.Element, doc: __ABBREV.__Next.Doc): void;
+                    };
+                    var RunById : {
+                        (id: string, tr: __ABBREV.__Next.Doc): void;
                     };
                     var EmbedBag : {
                         <_M1>(render: {
@@ -3345,10 +3387,10 @@ declare module IntelliFactory {
                             (x: _M1): string;
                         }, items: __ABBREV.__List.T<_M1>, chk: __ABBREV.__Next.Var1<__ABBREV.__List.T<_M1>>): __ABBREV.__Next.Doc;
                     };
-                    var clickableComponent : {
-                        (name: string, caption: string, attrs: __ABBREV.__Next.Attr, action: {
+                    var Clickable : {
+                        (elem: string, action: {
                             (): void;
-                        }): __ABBREV.__Next.Doc;
+                        }): __ABBREV.__Dom.Element;
                     };
                     var Button : {
                         (caption: string, attrs: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, action: {
@@ -3364,15 +3406,30 @@ declare module IntelliFactory {
                         (): __ABBREV.__Next.Doc;
                     };
                 }
+                module Router {
+                    var Install : {
+                        <_M1>(router: {
+                            (x: string): _M1;
+                        }): __ABBREV.__Next.Var1<_M1>;
+                    };
+                    var Remove : {
+                        (): void;
+                    };
+                }
                 module MiniSitelet {
                     var Create : {
-                        <_M1>(model: __ABBREV.__Next.Var1<_M1>, main: {
+                        <_M1>(model: __ABBREV.__Next.Var1<_M1>, renderWith: {
                             (x: {
                                 (x: _M1): void;
                             }): {
                                 (x: _M1): __ABBREV.__Next.Doc;
                             };
                         }): __ABBREV.__Next.Doc;
+                    };
+                    var Sync : {
+                        <_M1>(v: __ABBREV.__Next.Var1<_M1>, deserialise: {
+                            (x: string): _M1;
+                        }): void;
                     };
                 }
                 module Flow {
@@ -3413,8 +3470,11 @@ declare module IntelliFactory {
                         (): __ABBREV.__Flow.FlowBuilder;
                     };
                 }
+                interface EnumProxy {
+                }
                 interface HashSetProxy<_T1> {
                     CopyTo(arr: _T1[]): void;
+                    Contains(key: _T1): boolean;
                     ExceptWith(xs: __ABBREV.__WebSharper.seq<_T1>): void;
                     GetEnumerator1(): __ABBREV.__WebSharper.IEnumeratorProxy<_T1>;
                     seq(): __ABBREV.__WebSharper.seq<_T1>;
@@ -3441,15 +3501,28 @@ declare module IntelliFactory {
                 }
                 interface Model {
                 }
-                interface EventHandler {
-                    Name: string;
-                    Callback: {
-                        (x: __ABBREV.__Dom.Event): void;
-                    };
+                interface Anim {
+                }
+                interface ITransition<_T1> {
+                    AnimateEnter(x0: _T1, x1: {
+                        (x: _T1): void;
+                    }): __ABBREV.__Next.Anim;
+                    AnimateExit(x0: _T1, x1: {
+                        (x: _T1): void;
+                    }): __ABBREV.__Next.Anim;
+                    AnimateChange(x0: _T1, x1: _T1, x2: {
+                        (x: _T1): void;
+                    }): __ABBREV.__Next.Anim;
+                    get_CanAnimateEnter(): boolean;
+                    get_CanAnimateExit(): boolean;
                 }
                 interface Attr {
+                    Flags: any;
+                    Tree: __ABBREV.__Next.AttrTree;
                 }
                 interface Doc {
+                    DocNode: __ABBREV.__Next.DocNode;
+                    Updates: __ABBREV.__Next.View1<void>;
                 }
                 interface Flow1<_T1> {
                     Render: {
@@ -3969,50 +4042,6 @@ declare module IntelliFactory {
                     };
                     var Show : {
                         (samples: __ABBREV.__List.T<any>): void;
-                    };
-                }
-                module Utilities {
-                    var el : {
-                        (name: string): {
-                            (x: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                        };
-                    };
-                    var elA : {
-                        (arg00: string, arg10: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, arg20: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var cls : {
-                        (arg00: string): __ABBREV.__Next.Attr;
-                    };
-                    var sty : {
-                        (arg00: string, arg10: string): __ABBREV.__Next.Attr;
-                    };
-                    var op_EqualsEqualsGreater : {
-                        (k: string, v: string): __ABBREV.__Next.Attr;
-                    };
-                    var divc : {
-                        (c: string): {
-                            (x: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                        };
-                    };
-                    var txt : {
-                        (arg00: string): __ABBREV.__Next.Doc;
-                    };
-                    var btn : {
-                        (caption: string): {
-                            (x: {
-                                (): void;
-                            }): __ABBREV.__Next.Doc;
-                        };
-                    };
-                    var link : {
-                        (arg00: string, arg10: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, arg20: {
-                            (): void;
-                        }): __ABBREV.__Next.Doc;
-                    };
-                    var div : {
-                        (): {
-                            (x: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                        };
                     };
                 }
             }
