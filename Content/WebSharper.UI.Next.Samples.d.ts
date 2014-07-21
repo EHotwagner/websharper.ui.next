@@ -1285,6 +1285,8 @@ declare module IntelliFactory {
         }
         interface DoubleProxy {
         }
+        interface EnumProxy {
+        }
         interface ExceptionProxy {
         }
         interface MatchFailureExceptionProxy {
@@ -1939,6 +1941,33 @@ declare module __ABBREV {
 declare module IntelliFactory {
     module WebSharper {
         module Collections {
+            module HashSet {
+                interface HashSet<_T1> {
+                    Add(item: _T1): boolean;
+                    Clear(): void;
+                    Contains(item: _T1): boolean;
+                    CopyTo(arr: _T1[]): void;
+                    ExceptWith(xs: __ABBREV.__WebSharper.seq<_T1>): void;
+                    GetEnumerator(): __ABBREV.__WebSharper.IEnumeratorProxy<_T1>;
+                    IntersectWith(xs: __ABBREV.__WebSharper.seq<_T1>): void;
+                    IsProperSubsetOf(xs: __ABBREV.__WebSharper.seq<_T1>): boolean;
+                    IsProperSupersetOf(xs: __ABBREV.__WebSharper.seq<_T1>): boolean;
+                    IsSubsetOf(xs: __ABBREV.__WebSharper.seq<_T1>): boolean;
+                    IsSupersetOf(xs: __ABBREV.__WebSharper.seq<_T1>): boolean;
+                    Overlaps(xs: __ABBREV.__WebSharper.seq<_T1>): boolean;
+                    Remove(item: _T1): boolean;
+                    RemoveWhere(cond: {
+                        (x: _T1): boolean;
+                    }): void;
+                    SetEquals(xs: __ABBREV.__WebSharper.seq<_T1>): boolean;
+                    SymmetricExceptWith(xs: __ABBREV.__WebSharper.seq<_T1>): void;
+                    UnionWith(xs: __ABBREV.__WebSharper.seq<_T1>): void;
+                    arrContains(item: _T1, arr: _T1[]): boolean;
+                    arrRemove(item: _T1, arr: _T1[]): boolean;
+                    add(item: _T1): boolean;
+                    get_Count(): number;
+                }
+            }
             module LinkedList {
                 interface NodeProxy<_T1> {
                 }
@@ -2154,8 +2183,8 @@ declare module IntelliFactory {
 }
 declare module __ABBREV {
     
-    export import __LinkedList = IntelliFactory.WebSharper.Collections.LinkedList;
     export import __WebSharper = IntelliFactory.WebSharper;
+    export import __LinkedList = IntelliFactory.WebSharper.Collections.LinkedList;
     export import __ResizeArray = IntelliFactory.WebSharper.Collections.ResizeArray;
     export import __Collections = IntelliFactory.WebSharper.Collections;
 }
@@ -3134,11 +3163,11 @@ declare module IntelliFactory {
                     var Create : {
                         <_M1>(v: _M1): __ABBREV.__Next.Var1<_M1>;
                     };
+                }
+                module Var {
                     var Get : {
                         <_M1>(_var: __ABBREV.__Next.Var1<_M1>): _M1;
                     };
-                }
-                module Var {
                     var Set : {
                         <_M1>(_var: __ABBREV.__Next.Var1<_M1>, value: _M1): void;
                     };
@@ -3154,7 +3183,7 @@ declare module IntelliFactory {
                         <_M1>(_var: __ABBREV.__Next.Var1<_M1>): any;
                     };
                 }
-                module View {
+                module View1 {
                     var FromVar : {
                         <_M1>(_var: __ABBREV.__Next.Var1<_M1>): __ABBREV.__Next.View1<_M1>;
                     };
@@ -3192,6 +3221,11 @@ declare module IntelliFactory {
                             (x: _M1): _M2;
                         }, view: __ABBREV.__Next.View1<__ABBREV.__WebSharper.seq<_M1>>): __ABBREV.__Next.View1<__ABBREV.__WebSharper.seq<_M2>>;
                     };
+                    var get_Do : {
+                        (): __ABBREV.__Next.ViewBuilder;
+                    };
+                }
+                module View {
                     var CreateViewNode : {
                         <_M1, _M2>(conv: {
                             (x: __ABBREV.__Next.View1<_M1>): _M2;
@@ -3225,11 +3259,8 @@ declare module IntelliFactory {
                             (x: _M1): _M2;
                         }>, view: __ABBREV.__Next.View1<_M1>): __ABBREV.__Next.View1<_M2>;
                     };
-                    var get_Do : {
-                        (): __ABBREV.__Next.ViewBuilder;
-                    };
                 }
-                module Model {
+                module Model1 {
                     var Create : {
                         <_M1, _M2>(proj: {
                             (x: _M1): _M2;
@@ -3240,43 +3271,124 @@ declare module IntelliFactory {
                             (x: _M1): void;
                         }, _arg1: __ABBREV.__Next.Model1<_M2, _M1>): void;
                     };
+                }
+                module Model {
                     var View : {
                         <_M1, _M2>(_arg2: __ABBREV.__Next.Model1<_M1, _M2>): __ABBREV.__Next.View1<_M1>;
                     };
                 }
-                module Anim {
-                    var All : {
-                        (anim: __ABBREV.__Next.Anim): any[];
+                module Interpolation {
+                    var get_Double : {
+                        (): __ABBREV.__Next.Interpolation1<number>;
                     };
+                }
+                module Easing {
+                    var Custom : {
+                        (f: {
+                            (x: number): number;
+                        }): __ABBREV.__Next.Easing;
+                    };
+                    var get_CubicInOut : {
+                        (): __ABBREV.__Next.Easing;
+                    };
+                }
+                module Anim1 {
                     var Append : {
-                        (a: __ABBREV.__Next.Anim, b: __ABBREV.__Next.Anim): __ABBREV.__Next.Anim;
+                        (_arg2: __ABBREV.__Next.Anim, _arg1: __ABBREV.__Next.Anim): __ABBREV.__Next.Anim;
                     };
                     var Concat : {
-                        (par: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Anim>): __ABBREV.__Next.Anim;
+                        (xs: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Anim>): __ABBREV.__Next.Anim;
                     };
-                    var Custom : {
+                    var Const : {
+                        <_M1>(v: _M1): any;
+                    };
+                    var Simple : {
+                        <_M1>(inter: __ABBREV.__Next.Interpolation1<_M1>, easing: __ABBREV.__Next.Easing, dur: number, startValue: _M1, endValue: _M1): any;
+                    };
+                    var Map : {
+                        <_M1, _M2>(f: {
+                            (x: _M1): _M2;
+                        }, anim: any): any;
+                    };
+                    var Pack : {
                         (anim: any): __ABBREV.__Next.Anim;
                     };
                     var Play : {
                         (anim: __ABBREV.__Next.Anim): any;
+                    };
+                    var get_Empty : {
+                        (): __ABBREV.__Next.Anim;
+                    };
+                }
+                module Anim {
+                    var Run : {
+                        (k: {
+                            (): void;
+                        }, anim: any): any;
                     };
                     var WhenDone : {
                         (f: {
                             (): void;
                         }, main: __ABBREV.__Next.Anim): __ABBREV.__Next.Anim;
                     };
-                    var get_Empty : {
-                        (): __ABBREV.__Next.Anim;
+                }
+                module Trans1 {
+                    var AnimateChange : {
+                        <_M1>(tr: any, x: _M1, y: _M1): any;
+                    };
+                    var AnimateEnter : {
+                        <_M1>(tr: any, x: _M1): any;
+                    };
+                    var AnimateExit : {
+                        <_M1>(tr: any, x: _M1): any;
+                    };
+                    var CanAnimateChange : {
+                        <_M1>(tr: any): boolean;
+                    };
+                    var CanAnimateEnter : {
+                        <_M1>(tr: any): boolean;
+                    };
+                    var CanAnimateExit : {
+                        <_M1>(tr: any): boolean;
+                    };
+                    var Trivial : {
+                        <_M1>(): any;
+                    };
+                }
+                module Trans {
+                    var Create : {
+                        <_M1>(ch: {
+                            (x: _M1): {
+                                (x: _M1): any;
+                            };
+                        }): any;
+                    };
+                    var Change : {
+                        <_M1>(ch: {
+                            (x: _M1): {
+                                (x: _M1): any;
+                            };
+                        }, tr: any): any;
+                    };
+                    var Enter : {
+                        <_M1>(f: {
+                            (x: _M1): any;
+                        }, tr: any): any;
+                    };
+                    var Exit : {
+                        <_M1>(f: {
+                            (x: _M1): any;
+                        }, tr: any): any;
                     };
                 }
                 module Attr {
                     var Animated : {
-                        <_M1>(name: string, tr: __ABBREV.__Next.ITransition<_M1>, view: __ABBREV.__Next.View1<_M1>, value: {
+                        <_M1>(name: string, tr: any, view: __ABBREV.__Next.View1<_M1>, value: {
                             (x: _M1): string;
                         }): __ABBREV.__Next.Attr;
                     };
                     var AnimatedStyle : {
-                        <_M1>(name: string, tr: __ABBREV.__Next.ITransition<_M1>, view: __ABBREV.__Next.View1<_M1>, value: {
+                        <_M1>(name: string, tr: any, view: __ABBREV.__Next.View1<_M1>, value: {
                             (x: _M1): string;
                         }): __ABBREV.__Next.Attr;
                     };
@@ -3406,30 +3518,74 @@ declare module IntelliFactory {
                         (): __ABBREV.__Next.Doc;
                     };
                 }
-                module Router {
-                    var Install : {
-                        <_M1>(router: {
-                            (x: string): _M1;
-                        }): __ABBREV.__Next.Var1<_M1>;
+                module RouteFrag {
+                    var Create : {
+                        (s: string): __ABBREV.__Next.RouteFrag;
                     };
-                    var Remove : {
-                        (): void;
+                    var Text : {
+                        (_arg1: __ABBREV.__Next.RouteFrag): string;
                     };
                 }
-                module MiniSitelet {
-                    var Create : {
-                        <_M1>(model: __ABBREV.__Next.Var1<_M1>, renderWith: {
-                            (x: {
-                                (x: _M1): void;
-                            }): {
-                                (x: _M1): __ABBREV.__Next.Doc;
-                            };
-                        }): __ABBREV.__Next.Doc;
+                module Route {
+                    var Append : {
+                        (_arg2: __ABBREV.__Next.Route, _arg1: __ABBREV.__Next.Route): __ABBREV.__Next.Route;
                     };
-                    var Sync : {
-                        <_M1>(v: __ABBREV.__Next.Var1<_M1>, deserialise: {
-                            (x: string): _M1;
-                        }): void;
+                    var Create : {
+                        (xs: __ABBREV.__WebSharper.seq<__ABBREV.__Next.RouteFrag>): __ABBREV.__Next.Route;
+                    };
+                    var Frags : {
+                        (_arg3: __ABBREV.__Next.Route): __ABBREV.__WebSharper.seq<__ABBREV.__Next.RouteFrag>;
+                    };
+                    var Parse : {
+                        (xs: string): __ABBREV.__WebSharper.OptionProxy<__ABBREV.__Next.Route>;
+                    };
+                    var ToUrl : {
+                        (_arg4: __ABBREV.__Next.Route): string;
+                    };
+                }
+                module Router1 {
+                    var Create : {
+                        <_M1>(ser: {
+                            (x: _M1): __ABBREV.__Next.Route;
+                        }, deser: {
+                            (x: __ABBREV.__Next.Route): _M1;
+                        }): any;
+                    };
+                }
+                module Router {
+                    var Install : {
+                        <_M1>(rt: any, init: _M1): __ABBREV.__Next.Var1<_M1>;
+                    };
+                    var Route : {
+                        <_M1>(rt: any, route: __ABBREV.__Next.Route): _M1;
+                    };
+                    var Link : {
+                        <_M1>(rt: any, v: _M1): __ABBREV.__Next.Route;
+                    };
+                }
+                module Site1 {
+                    var Define : {
+                        <_M1, _M2>(r: any, init: _M1, render: {
+                            (x: __ABBREV.__Next.SiteId): {
+                                (x: __ABBREV.__Next.Var1<_M1>): _M2;
+                            };
+                        }): __ABBREV.__Next.Site1<_M2>;
+                    };
+                    var Dir : {
+                        <_M1>(prefix: string, sites: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Site1<_M1>>): __ABBREV.__Next.Site1<_M1>;
+                    };
+                }
+                module Site {
+                    var Install : {
+                        <_M1>(key: {
+                            (x: _M1): __ABBREV.__Next.SiteId;
+                        }, site: __ABBREV.__Next.Site1<_M1>): __ABBREV.__Next.Var1<_M1>;
+                    };
+                    var Merge : {
+                        <_M1>(sites: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Site1<_M1>>): __ABBREV.__Next.Site1<_M1>;
+                    };
+                    var Prefix : {
+                        <_M1>(prefix: string, _arg1: __ABBREV.__Next.Site1<_M1>): __ABBREV.__Next.Site1<_M1>;
                     };
                 }
                 module Flow {
@@ -3440,6 +3596,18 @@ declare module IntelliFactory {
                         Return<_M1>(value: _M1): any;
                         ReturnFrom<_M1>(wrappedVal: any): any;
                     }
+                    var Define : {
+                        <_M1>(f: {
+                            (x: {
+                                (x: _M1): void;
+                            }): __ABBREV.__Next.Doc;
+                        }): any;
+                    };
+                    var Static : {
+                        <_M1>(doc: __ABBREV.__Next.Doc): any;
+                    };
+                }
+                module Flow1 {
                     var Map : {
                         <_M1, _M2>(f: {
                             (x: _M1): _M2;
@@ -3456,29 +3624,9 @@ declare module IntelliFactory {
                     var Embed : {
                         <_M1>(fl: any): __ABBREV.__Next.Doc;
                     };
-                    var Define : {
-                        <_M1>(f: {
-                            (x: {
-                                (x: _M1): void;
-                            }): __ABBREV.__Next.Doc;
-                        }): any;
-                    };
-                    var Static : {
-                        <_M1>(doc: __ABBREV.__Next.Doc): any;
-                    };
                     var Do : {
                         (): __ABBREV.__Flow.FlowBuilder;
                     };
-                }
-                interface EnumProxy {
-                }
-                interface HashSetProxy<_T1> {
-                    CopyTo(arr: _T1[]): void;
-                    Contains(key: _T1): boolean;
-                    ExceptWith(xs: __ABBREV.__WebSharper.seq<_T1>): void;
-                    GetEnumerator1(): __ABBREV.__WebSharper.IEnumeratorProxy<_T1>;
-                    seq(): __ABBREV.__WebSharper.seq<_T1>;
-                    get_Count(): number;
                 }
                 interface Var1<_T1> {
                     get_View(): __ABBREV.__Next.View1<_T1>;
@@ -3501,20 +3649,39 @@ declare module IntelliFactory {
                 }
                 interface Model {
                 }
+                interface Interpolation1<_T1> {
+                    Interpolate(x0: number, x1: _T1, x2: _T1): _T1;
+                }
+                interface Interpolation {
+                }
+                interface Easing {
+                    TransformTime: {
+                        (x: number): number;
+                    };
+                }
+                interface Anim1<_T1> {
+                    Compute: {
+                        (x: number): _T1;
+                    };
+                    Duration: number;
+                }
                 interface Anim {
                 }
-                interface ITransition<_T1> {
-                    AnimateEnter(x0: _T1, x1: {
-                        (x: _T1): void;
-                    }): __ABBREV.__Next.Anim;
-                    AnimateExit(x0: _T1, x1: {
-                        (x: _T1): void;
-                    }): __ABBREV.__Next.Anim;
-                    AnimateChange(x0: _T1, x1: _T1, x2: {
-                        (x: _T1): void;
-                    }): __ABBREV.__Next.Anim;
-                    get_CanAnimateEnter(): boolean;
-                    get_CanAnimateExit(): boolean;
+                interface Trans1<_T1> {
+                    TChange: {
+                        (x: _T1): {
+                            (x: _T1): any;
+                        };
+                    };
+                    TEnter: {
+                        (x: _T1): any;
+                    };
+                    TExit: {
+                        (x: _T1): any;
+                    };
+                    TFlags: any;
+                }
+                interface Trans {
                 }
                 interface Attr {
                     Flags: any;
@@ -3532,6 +3699,26 @@ declare module IntelliFactory {
                             }): void;
                         };
                     };
+                }
+                interface RouteFrag {
+                }
+                interface Route {
+                }
+                interface Router1<_T1> {
+                    DeserialiseFn: {
+                        (x: __ABBREV.__Next.Route): _T1;
+                    };
+                    SerialiseFn: {
+                        (x: _T1): __ABBREV.__Next.Route;
+                    };
+                }
+                interface Router {
+                }
+                interface SiteId {
+                }
+                interface Site1<_T1> {
+                }
+                interface Site {
                 }
             }
         }
@@ -3556,6 +3743,133 @@ declare module IntelliFactory {
                     };
                     var Main : {
                         (): void;
+                    };
+                }
+                module BobsleighSite {
+                    interface Page {
+                    }
+                    interface Context {
+                        Go: {
+                            (x: __ABBREV.__BobsleighSite.Page): void;
+                        };
+                    }
+                    var GlobalGo : {
+                        (_var: __ABBREV.__Next.Var1<__ABBREV.__BobsleighSite.Page>, act: __ABBREV.__BobsleighSite.Page): void;
+                    };
+                    var showAct : {
+                        (_arg1: __ABBREV.__BobsleighSite.Page): string;
+                    };
+                    var NavBar : {
+                        (_var: __ABBREV.__Next.Var1<__ABBREV.__BobsleighSite.Page>): __ABBREV.__Next.Doc;
+                    };
+                    var HomePage : {
+                        (ctx: any): __ABBREV.__Next.Doc;
+                    };
+                    var History : {
+                        <_M1>(ctx: _M1): __ABBREV.__Next.Doc;
+                    };
+                    var Governance : {
+                        <_M1>(ctx: _M1): __ABBREV.__Next.Doc;
+                    };
+                    var Team : {
+                        <_M1>(ctx: _M1): __ABBREV.__Next.Doc;
+                    };
+                    var Main : {
+                        (): __ABBREV.__Next.Doc;
+                    };
+                    var description : {
+                        (): __ABBREV.__Next.Doc;
+                    };
+                    var pages : {
+                        (): __ABBREV.__List.T<__ABBREV.__BobsleighSite.Page>;
+                    };
+                    var Sample : {
+                        (): any;
+                    };
+                }
+                module ObjectConstancy {
+                    module DataSet {
+                        var Ratio : {
+                            (ds: __ABBREV.__ObjectConstancy.DataSet, br: __ABBREV.__ObjectConstancy.AgeBracket, st: __ABBREV.__ObjectConstancy.State): number;
+                        };
+                        var TopStatesByRatio : {
+                            (ds: __ABBREV.__ObjectConstancy.DataSet, bracket: __ABBREV.__ObjectConstancy.AgeBracket): any[];
+                        };
+                        var ParseCSV : {
+                            (data: string): __ABBREV.__ObjectConstancy.DataSet;
+                        };
+                        var LoadFromCSV : {
+                            (url: string): any;
+                        };
+                    }
+                    interface AgeBracket {
+                    }
+                    interface State {
+                    }
+                    interface DataSet {
+                        Brackets: __ABBREV.__ObjectConstancy.AgeBracket[];
+                        Population: {
+                            (x: __ABBREV.__ObjectConstancy.AgeBracket): {
+                                (x: __ABBREV.__ObjectConstancy.State): number;
+                            };
+                        };
+                        States: __ABBREV.__ObjectConstancy.State[];
+                    }
+                    interface StateView {
+                        MaxValue: number;
+                        Position: number;
+                        State: string;
+                        Total: number;
+                        Value: number;
+                    }
+                    var SetupDataModel : {
+                        (): any;
+                    };
+                    var SimpleAnimation : {
+                        (x: number, y: number): any;
+                    };
+                    var Percent : {
+                        (x: number): string;
+                    };
+                    var Render : {
+                        (state: __ABBREV.__Next.View1<any>): __ABBREV.__Next.Doc;
+                    };
+                    var Main : {
+                        (): __ABBREV.__Next.Doc;
+                    };
+                    var Description : {
+                        (): __ABBREV.__Next.Doc;
+                    };
+                    var Width : {
+                        (): number;
+                    };
+                    var Height : {
+                        (): number;
+                    };
+                    var SimpleTransition : {
+                        (): any;
+                    };
+                    var InOutTransition : {
+                        (): any;
+                    };
+                    var Sample : {
+                        (): any;
+                    };
+                }
+                module Messy {
+                    interface Action {
+                    }
+                    var Desc : {
+                        (current: __ABBREV.__Next.Var1<__ABBREV.__Messy.Action>): __ABBREV.__Next.Doc;
+                    };
+                    var Main : {
+                        (current: __ABBREV.__Next.Var1<__ABBREV.__Messy.Action>): __ABBREV.__Next.Doc;
+                    };
+                    var TheRouter : {
+                        (): any;
+                    };
+                    var Sample : {
+                        (): any;
                     };
                 }
                 module MessageBoard {
@@ -3626,7 +3940,7 @@ declare module IntelliFactory {
                     var Main : {
                         (): __ABBREV.__Next.Doc;
                     };
-                    var description : {
+                    var Description : {
                         (): __ABBREV.__Next.Doc;
                     };
                     var Sample : {
@@ -3672,6 +3986,8 @@ declare module IntelliFactory {
                                 (x: _M1): number;
                             }): any;
                         };
+                    }
+                    module ViewModel {
                         var Remove : {
                             <_M1>(m: any, item: _M1): void;
                         };
@@ -3683,7 +3999,7 @@ declare module IntelliFactory {
                             };
                         };
                     }
-                    interface ViewModel<_T1> {
+                    interface ViewModel1<_T1> {
                         Projection: {
                             (x: _T1): number;
                         };
@@ -3705,50 +4021,11 @@ declare module IntelliFactory {
                         Posts: __ABBREV.__Next.Var1<__ABBREV.__List.T<any>>;
                     }
                 }
-                module MiniSiteletTest {
-                    interface Page {
-                    }
-                    interface Context {
-                        Go: {
-                            (x: __ABBREV.__MiniSiteletTest.Page): void;
-                        };
-                    }
-                    var GlobalGo : {
-                        (_var: __ABBREV.__Next.Var1<__ABBREV.__MiniSiteletTest.Page>, act: __ABBREV.__MiniSiteletTest.Page): void;
-                    };
-                    var showAct : {
-                        (_arg1: __ABBREV.__MiniSiteletTest.Page): string;
-                    };
-                    var NavBar : {
-                        (_var: __ABBREV.__Next.Var1<__ABBREV.__MiniSiteletTest.Page>): __ABBREV.__Next.Doc;
-                    };
-                    var Page1 : {
-                        (ctx: any): __ABBREV.__Next.Doc;
-                    };
-                    var Page2 : {
-                        (ctx: any, v: number): __ABBREV.__Next.Doc;
-                    };
-                    var Page3 : {
-                        (ctx: any): __ABBREV.__Next.Doc;
-                    };
-                    var Main : {
-                        (): __ABBREV.__Next.Doc;
-                    };
-                    var pages : {
-                        (): __ABBREV.__List.T<__ABBREV.__MiniSiteletTest.Page>;
-                    };
-                    var description : {
-                        (): __ABBREV.__Next.Doc;
-                    };
-                    var Sample : {
-                        (): any;
-                    };
-                }
                 module SimpleTextBox {
                     var Main : {
                         (): __ABBREV.__Next.Doc;
                     };
-                    var description : {
+                    var Description : {
                         (): __ABBREV.__Next.Doc;
                     };
                     var Sample : {
@@ -3773,17 +4050,17 @@ declare module IntelliFactory {
                     var finalPage : {
                         (person: any, details: __ABBREV.__ContactFlow.ContactDetails): __ABBREV.__Next.Doc;
                     };
+                    var ExampleFlow : {
+                        (): __ABBREV.__Next.Doc;
+                    };
+                    var Description : {
+                        (): __ABBREV.__Next.Doc;
+                    };
                     var personFlowlet : {
                         (): any;
                     };
                     var contactTypeFlowlet : {
                         (): any;
-                    };
-                    var exampleFlow : {
-                        (): __ABBREV.__Next.Doc;
-                    };
-                    var description : {
-                        (): __ABBREV.__Next.Doc;
                     };
                     var Sample : {
                         (): any;
@@ -3793,7 +4070,7 @@ declare module IntelliFactory {
                     var Main : {
                         (): __ABBREV.__Next.Doc;
                     };
-                    var description : {
+                    var Description : {
                         (): __ABBREV.__Next.Doc;
                     };
                     var Sample : {
@@ -3845,6 +4122,12 @@ declare module IntelliFactory {
                     var calcView : {
                         (rvCalc: __ABBREV.__Next.Var1<any>): __ABBREV.__Next.Doc;
                     };
+                    var Main : {
+                        (): __ABBREV.__Next.Doc;
+                    };
+                    var Description : {
+                        (): __ABBREV.__Next.Doc;
+                    };
                     var initCalc : {
                         (): any;
                     };
@@ -3852,12 +4135,6 @@ declare module IntelliFactory {
                         (): {
                             (x: __ABBREV.__List.T<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
-                    };
-                    var Main : {
-                        (): __ABBREV.__Next.Doc;
-                    };
-                    var description : {
-                        (): __ABBREV.__Next.Doc;
                     };
                     var Sample : {
                         (): any;
@@ -3867,7 +4144,7 @@ declare module IntelliFactory {
                     var Main : {
                         (): __ABBREV.__Next.Doc;
                     };
-                    var description : {
+                    var Description : {
                         (): __ABBREV.__Next.Doc;
                     };
                     var Sample : {
@@ -3915,7 +4192,7 @@ declare module IntelliFactory {
                     var Main : {
                         (): __ABBREV.__Next.Doc;
                     };
-                    var description : {
+                    var Description : {
                         (): __ABBREV.__Next.Doc;
                     };
                     var Sample : {
@@ -3946,13 +4223,13 @@ declare module IntelliFactory {
                     var PhonesWidget : {
                         (phones: __ABBREV.__List.T<__ABBREV.__PhoneExample.Phone>): __ABBREV.__Next.Doc;
                     };
-                    var link : {
-                        (txt: string, href: string): __ABBREV.__Next.Doc;
-                    };
                     var Main : {
                         (): __ABBREV.__Next.Doc;
                     };
-                    var description : {
+                    var link : {
+                        (txt: string, href: string): __ABBREV.__Next.Doc;
+                    };
+                    var Description : {
                         (): __ABBREV.__Next.Doc;
                     };
                     var Sample : {
@@ -3969,79 +4246,69 @@ declare module IntelliFactory {
                         Name: string;
                         Age: number;
                     }
-                    var People : {
-                        (): __ABBREV.__List.T<__ABBREV.__CheckBoxTest.Person>;
-                    };
                     var Main : {
                         (): __ABBREV.__Next.Doc;
                     };
-                    var description : {
+                    var Description : {
                         (): __ABBREV.__Next.Doc;
+                    };
+                    var People : {
+                        (): __ABBREV.__List.T<__ABBREV.__CheckBoxTest.Person>;
                     };
                     var Sample : {
                         (): any;
                     };
                 }
                 module Samples {
-                    interface Sample {
+                    interface Meta {
                         FileName: string;
-                        Id: string;
                         Keywords: __ABBREV.__List.T<string>;
-                        Render: __ABBREV.__Next.Doc;
-                        RenderDescription: __ABBREV.__Next.Doc;
                         Title: string;
+                        Uri: string;
                     }
-                    interface Builder {
+                    interface Sample {
+                        Body: __ABBREV.__Next.Doc;
+                        Description: __ABBREV.__Next.Doc;
+                        Meta: any;
+                        Site: __ABBREV.__Next.Site1<any>;
+                        SiteId: __ABBREV.__Next.SiteId;
+                    }
+                    interface Visuals<_T1> {
+                        Desc: {
+                            (x: _T1): __ABBREV.__Next.Doc;
+                        };
+                        Main: {
+                            (x: _T1): __ABBREV.__Next.Doc;
+                        };
+                    }
+                    interface Builder<_T1> {
                         Create(): any;
-                        FileName(x: string): __ABBREV.__Samples.Builder;
-                        Id(x: string): __ABBREV.__Samples.Builder;
-                        Keywords(x: __ABBREV.__List.T<string>): __ABBREV.__Samples.Builder;
-                        Render(x: __ABBREV.__Next.Doc): __ABBREV.__Samples.Builder;
-                        RenderDescription(x: __ABBREV.__Next.Doc): __ABBREV.__Samples.Builder;
-                        Title(x: string): __ABBREV.__Samples.Builder;
-                        BFileName: __ABBREV.__WebSharper.OptionProxy<string>;
-                        BId: __ABBREV.__WebSharper.OptionProxy<string>;
-                        BKeywords: __ABBREV.__List.T<string>;
-                        BRender: __ABBREV.__WebSharper.OptionProxy<__ABBREV.__Next.Doc>;
-                        BRenderDescription: __ABBREV.__WebSharper.OptionProxy<__ABBREV.__Next.Doc>;
-                        BTitle: __ABBREV.__WebSharper.OptionProxy<string>;
+                        FileName(x: string): __ABBREV.__Samples.Builder<_T1>;
+                        Id(x: string): __ABBREV.__Samples.Builder<_T1>;
+                        Keywords(x: __ABBREV.__List.T<string>): __ABBREV.__Samples.Builder<_T1>;
+                        Render(f: {
+                            (x: _T1): __ABBREV.__Next.Doc;
+                        }): __ABBREV.__Samples.Builder<_T1>;
+                        RenderDescription(x: {
+                            (x: _T1): __ABBREV.__Next.Doc;
+                        }): __ABBREV.__Samples.Builder<_T1>;
+                        Title(x: string): __ABBREV.__Samples.Builder<_T1>;
+                        Uri(x: string): __ABBREV.__Samples.Builder<_T1>;
                     }
-                    interface SampleModel {
-                        ActiveSample: __ABBREV.__WebSharper.OptionProxy<any>;
-                        Samples: __ABBREV.__List.T<any>;
-                    }
-                    var op_PlusPlus : {
-                        <_M1>(a: __ABBREV.__WebSharper.OptionProxy<_M1>, b: __ABBREV.__WebSharper.OptionProxy<_M1>): __ABBREV.__WebSharper.OptionProxy<_M1>;
+                    var CreateRouted : {
+                        <_M1>(router: any, init: _M1, vis: any, meta: any): any;
                     };
-                    var req : {
-                        <_M1>(name: string, f: __ABBREV.__WebSharper.OptionProxy<_M1>): _M1;
-                    };
-                    var Build : {
-                        (): __ABBREV.__Samples.Builder;
-                    };
-                    var createModelRv : {
-                        (samples: __ABBREV.__List.T<any>, initExample: __ABBREV.__WebSharper.OptionProxy<any>): __ABBREV.__Next.Var1<any>;
-                    };
-                    var getActive : {
-                        (rvModel: __ABBREV.__Next.Var1<any>): __ABBREV.__WebSharper.OptionProxy<any>;
-                    };
-                    var renderLink : {
-                        (rvModel: __ABBREV.__Next.Var1<any>, sample: any): __ABBREV.__Next.Doc;
-                    };
-                    var navBar : {
-                        (rvModel: __ABBREV.__Next.Var1<any>): __ABBREV.__Next.Doc;
-                    };
-                    var mainContent : {
-                        (rvModel: __ABBREV.__Next.Var1<any>): __ABBREV.__Next.Doc;
-                    };
-                    var sideContent : {
-                        (rvModel: __ABBREV.__Next.Var1<any>): __ABBREV.__Next.Doc;
-                    };
-                    var initExample : {
-                        (filename: string, _arg1: __ABBREV.__List.T<any>): __ABBREV.__WebSharper.OptionProxy<any>;
+                    var CreateSimple : {
+                        (vis: any, meta: any): any;
                     };
                     var Show : {
-                        (samples: __ABBREV.__List.T<any>): void;
+                        (samples: __ABBREV.__WebSharper.seq<any>): void;
+                    };
+                    var Build : {
+                        (): __ABBREV.__Samples.Builder<void>;
+                    };
+                    var Routed : {
+                        <_M1>(router: any, init: _M1): __ABBREV.__Samples.Builder<__ABBREV.__Next.Var1<_M1>>;
                     };
                 }
             }
@@ -4051,12 +4318,14 @@ declare module IntelliFactory {
 declare module __ABBREV {
     
     export import __List = IntelliFactory.WebSharper.List;
+    export import __BobsleighSite = IntelliFactory.WebSharper.UI.Next.BobsleighSite;
     export import __Next = IntelliFactory.WebSharper.UI.Next;
+    export import __ObjectConstancy = IntelliFactory.WebSharper.UI.Next.ObjectConstancy;
+    export import __Messy = IntelliFactory.WebSharper.UI.Next.Messy;
     export import __WebSharper = IntelliFactory.WebSharper;
     export import __MessageBoard = IntelliFactory.WebSharper.UI.Next.MessageBoard;
     export import __Collections = IntelliFactory.WebSharper.Collections;
     export import __ResizeArray = IntelliFactory.WebSharper.Collections.ResizeArray;
-    export import __MiniSiteletTest = IntelliFactory.WebSharper.UI.Next.MiniSiteletTest;
     export import __ContactFlow = IntelliFactory.WebSharper.UI.Next.ContactFlow;
     export import __Calculator = IntelliFactory.WebSharper.UI.Next.Calculator;
     export import __TodoList = IntelliFactory.WebSharper.UI.Next.TodoList;
