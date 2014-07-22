@@ -12004,7 +12004,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
 
 (function()
 {
- var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,IntrinsicFunctionProxy,Concurrency,Array,Seq,UI,Next,Abbrev,Fresh,Collections,HashSet,HashSet1,HashSet2,Arrays,JQueue,Unchecked,Slot,window,Anim1,Anim,AppendList,Anims,Trans1,Option,View1,Lazy,Array1,Attrs,DomUtility,Attr,AnimatedAttrNode,DynamicAttrNode,View,Diff,BagDiff,ResizeArray,ResizeArrayProxy,Docs,Doc,List,Var,T,Mailbox,Operators,NodeSet,DocElemNode,DomNodes,jQuery,document,Easing,Easings,Var1,Flow1,Flow,FlowBuilder,DoubleInterpolation,Model,Model1,Route,RouteFrag,Strings,Site,Sites,Trie,Router,Dictionary,Snap,Async,Enumerator,MapModule,FSharpMap,Dict;
+ var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,IntrinsicFunctionProxy,Concurrency,Array,Seq,UI,Next,Abbrev,Fresh,Collections,HashSet,HashSet1,HashSet2,Arrays,JQueue,Unchecked,Slot,Anim,AppendList,Anims,window,Anim1,Trans1,Trans,Option,View1,Lazy,Array1,Attrs,DomUtility,Attr,AnimatedAttrNode,DynamicAttrNode,View,Diff,BagDiff,ResizeArray,ResizeArrayProxy,Docs,Doc,List,Var,T,Mailbox,Operators,NodeSet,DocElemNode,DomNodes,jQuery,document,Easing,Easings,Var1,Flow,FlowBuilder,DoubleInterpolation,Model1,ReactiveCollection1,Route,RouteFrag,Strings,Trie,Sites,Router,Site,Site1,Dictionary,Router1,Snap,Async,Enumerator,MapModule,FSharpMap,Dict,Flow1;
  Runtime.Define(Global,{
   IntelliFactory:{
    WebSharper:{
@@ -12252,62 +12252,6 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        }
       },
       Anim:Runtime.Class({},{
-       Run:function(k,anim)
-       {
-        var dur,arg00;
-        dur=anim.Duration;
-        arg00=Runtime.Tupled(function(tupledArg)
-        {
-         var ok,start,loop;
-         ok=tupledArg[0];
-         start=function()
-         {
-          window.requestAnimationFrame(function(t)
-          {
-           return loop(t,t);
-          });
-         };
-         loop=function(start1,now)
-         {
-          var t;
-          t=now-start1;
-          k(anim.Compute.call(null,t));
-          return t<=dur?void window.requestAnimationFrame(function(t1)
-          {
-           return loop(start1,t1);
-          }):ok(null);
-         };
-         return start(null);
-        });
-        return Concurrency.FromContinuations(function(ok)
-        {
-         return function(no)
-         {
-          return arg00([ok,no,function()
-          {
-          }]);
-         };
-        });
-       },
-       WhenDone:function(f,main)
-       {
-        return Anim1.Append(Runtime.New(Anim,{
-         $:0,
-         $0:AppendList.Single({
-          $:0,
-          $0:f
-         })
-        }),main);
-       }
-      }),
-      Anim1:Runtime.Class({},{
-       Append:function(_arg2,_arg1)
-       {
-        return Runtime.New(Anim,{
-         $:0,
-         $0:AppendList.Append(_arg2.$0,_arg1.$0)
-        });
-       },
        Concat:function(xs)
        {
         return Runtime.New(Anim,{
@@ -12353,6 +12297,43 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          });
         });
        },
+       Run:function(k,anim)
+       {
+        var dur,arg00;
+        dur=anim.Duration;
+        arg00=Runtime.Tupled(function(tupledArg)
+        {
+         var ok,start,loop;
+         ok=tupledArg[0];
+         start=function()
+         {
+          window.requestAnimationFrame(function(t)
+          {
+           return loop(t,t);
+          });
+         };
+         loop=function(start1,now)
+         {
+          var t;
+          t=now-start1;
+          k(anim.Compute.call(null,t));
+          return t<=dur?void window.requestAnimationFrame(function(t1)
+          {
+           return loop(start1,t1);
+          }):ok(null);
+         };
+         return start(null);
+        });
+        return Concurrency.FromContinuations(function(ok)
+        {
+         return function(no)
+         {
+          return arg00([ok,no,function()
+          {
+          }]);
+         };
+        });
+       },
        Simple:function(inter,easing,dur,x,y)
        {
         return{
@@ -12362,6 +12343,25 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          },
          Duration:dur
         };
+       },
+       WhenDone:function(f,main)
+       {
+        return Anim1.Append(Runtime.New(Anim,{
+         $:0,
+         $0:AppendList.Single({
+          $:0,
+          $0:f
+         })
+        }),main);
+       }
+      }),
+      Anim1:Runtime.Class({},{
+       Append:function(_arg2,_arg1)
+       {
+        return Runtime.New(Anim,{
+         $:0,
+         $0:AppendList.Append(_arg2.$0,_arg1.$0)
+        });
        },
        get_Empty:function()
        {
@@ -12379,7 +12379,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         return Anim.WhenDone(function()
         {
          return a.sync(parent);
-        },matchValue[0].$==1?matchValue[1].$==1?a.dirty?Anim1.Pack(Anim1.Map(function(v)
+        },matchValue[0].$==1?matchValue[1].$==1?a.dirty?Anim.Pack(Anim.Map(function(v)
         {
          return a.pushVisible(parent,v);
         },Trans1.AnimateChange(a.tr,matchValue[0].$0,matchValue[1].$0))):Anim1.get_Empty():Anim1.get_Empty():Anim1.get_Empty());
@@ -12391,19 +12391,19 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         return Anim.WhenDone(function()
         {
          return a.sync(parent);
-        },matchValue[0].$==1?matchValue[1].$==1?a.dirty?Anim1.Pack(Anim1.Map(function(v)
+        },matchValue[0].$==1?matchValue[1].$==1?a.dirty?Anim.Pack(Anim.Map(function(v)
         {
          return a.pushVisible(parent,v);
-        },Trans1.AnimateChange(a.tr,matchValue[0].$0,matchValue[1].$0))):matchValue[0].$==0?matchValue[1].$==1?Anim1.Pack(Anim1.Map(function(v)
+        },Trans1.AnimateChange(a.tr,matchValue[0].$0,matchValue[1].$0))):matchValue[0].$==0?matchValue[1].$==1?Anim.Pack(Anim.Map(function(v)
         {
          return a.pushVisible(parent,v);
-        },Trans1.AnimateEnter(a.tr,matchValue[1].$0))):Anim1.get_Empty():Anim1.get_Empty():matchValue[0].$==0?matchValue[1].$==1?Anim1.Pack(Anim1.Map(function(v)
+        },Trans.AnimateEnter(a.tr,matchValue[1].$0))):Anim1.get_Empty():Anim1.get_Empty():matchValue[0].$==0?matchValue[1].$==1?Anim.Pack(Anim.Map(function(v)
         {
          return a.pushVisible(parent,v);
-        },Trans1.AnimateEnter(a.tr,matchValue[1].$0))):Anim1.get_Empty():Anim1.get_Empty():matchValue[0].$==0?matchValue[1].$==1?Anim1.Pack(Anim1.Map(function(v)
+        },Trans.AnimateEnter(a.tr,matchValue[1].$0))):Anim1.get_Empty():Anim1.get_Empty():matchValue[0].$==0?matchValue[1].$==1?Anim.Pack(Anim.Map(function(v)
         {
          return a.pushVisible(parent,v);
-        },Trans1.AnimateEnter(a.tr,matchValue[1].$0))):Anim1.get_Empty():Anim1.get_Empty());
+        },Trans.AnimateEnter(a.tr,matchValue[1].$0))):Anim1.get_Empty():Anim1.get_Empty());
        },
        GetExitAnim:function(parent)
        {
@@ -12416,10 +12416,10 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
           $:0
          };
          return;
-        },matchValue.$==1?Anim1.Pack(Anim1.Map(function(v)
+        },matchValue.$==1?Anim.Pack(Anim.Map(function(v)
         {
          return a.pushVisible(parent,v);
-        },Trans1.AnimateExit(a.tr,matchValue.$0))):Anim1.get_Empty());
+        },Trans.AnimateExit(a.tr,matchValue.$0))):Anim1.get_Empty());
        },
        Sync:function()
        {
@@ -12752,11 +12752,11 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         var node,flags;
         node=AnimatedAttrNode.New(tr,view,set);
         flags=4;
-        if(Trans1.CanAnimateEnter(tr))
+        if(Trans.CanAnimateEnter(tr))
          {
           flags=flags|1;
          }
-        if(Trans1.CanAnimateExit(tr))
+        if(Trans.CanAnimateExit(tr))
          {
           flags=flags|2;
          }
@@ -12790,7 +12790,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        }),
        GetAnim:function(dyn,f)
        {
-        return Anim1.Concat(Arrays.map(function(n)
+        return Anim.Concat(Arrays.map(function(n)
         {
          return(f(n))(dyn.DynElem);
         },dyn.DynNodes));
@@ -13338,14 +13338,14 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         {
          return NodeSet.Filter(arg00,arg10);
         };
-        return Anim1.Concat(Arrays.map(function(n)
+        return Anim.Concat(Arrays.map(function(n)
         {
          return Attrs.GetChangeAnim(n.Attr);
         },NodeSet.ToArray(NodeSet.Intersect(relevant(st.PreviousNodes),relevant(cur)))));
        },
        ComputeEnterAnim:function(st,cur)
        {
-        return Anim1.Concat(Arrays.map(function(n)
+        return Anim.Concat(Arrays.map(function(n)
         {
          return Attrs.GetEnterAnim(n.Attr);
         },NodeSet.ToArray(NodeSet.Except(st.PreviousNodes,NodeSet.Filter(function(n)
@@ -13355,7 +13355,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        ComputeExitAnim:function(st,cur)
        {
-        return Anim1.Concat(Arrays.map(function(n)
+        return Anim.Concat(Arrays.map(function(n)
         {
          return Attrs.GetExitAnim(n.Attr);
         },NodeSet.ToArray(NodeSet.Except(cur,NodeSet.Filter(function(n)
@@ -13648,10 +13648,10 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          cur=NodeSet.FindAll(doc);
          change=Docs.ComputeChangeAnim(st,cur);
          enter=Docs.ComputeEnterAnim(st,cur);
-         return Concurrency.Bind(Anim1.Play(Anim1.Append(change,Docs.ComputeExitAnim(st,cur))),function()
+         return Concurrency.Bind(Anim.Play(Anim1.Append(change,Docs.ComputeExitAnim(st,cur))),function()
          {
           Docs.SyncElemNode(st.Top);
-          return Concurrency.Bind(Anim1.Play(enter),function()
+          return Concurrency.Bind(Anim.Play(enter),function()
           {
            return Concurrency.Return(void(st.PreviousNodes=cur));
           });
@@ -13932,6 +13932,21 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        })
       },
       Flow:{
+       Bind:function(m,k)
+       {
+        return{
+         Render:function(_var)
+         {
+          return function(cont)
+          {
+           return(m.Render.call(null,_var))(function(r)
+           {
+            return(k(r).Render.call(null,_var))(cont);
+           });
+          };
+         }
+        };
+       },
        Define:function(f)
        {
         return{
@@ -13956,11 +13971,11 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        FlowBuilder:Runtime.Class({
         Bind:function(comp,func)
         {
-         return Flow1.Bind(comp,func);
+         return Flow.Bind(comp,func);
         },
         Return:function(value)
         {
-         return Flow1.Return(value);
+         return Flow.Return(value);
         },
         ReturnFrom:function(wrappedVal)
         {
@@ -13971,39 +13986,6 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         {
          return Runtime.New(this,{});
         }
-       }),
-       Static:function(doc)
-       {
-        return{
-         Render:function(_var)
-         {
-          return function()
-          {
-           return _var.set_Value(doc);
-          };
-         }
-        };
-       }
-      },
-      Flow1:Runtime.Class({},{
-       Bind:function(m,k)
-       {
-        return{
-         Render:function(_var)
-         {
-          return function(cont)
-          {
-           return(m.Render.call(null,_var))(function(r)
-           {
-            return(k(r).Render.call(null,_var))(cont);
-           });
-          };
-         }
-        };
-       },
-       Do:Runtime.Field(function()
-       {
-        return FlowBuilder.New();
        }),
        Map:function(f,x)
        {
@@ -14031,7 +14013,25 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
           };
          }
         };
+       },
+       Static:function(doc)
+       {
+        return{
+         Render:function(_var)
+         {
+          return function()
+          {
+           return _var.set_Value(doc);
+          };
+         }
+        };
        }
+      },
+      Flow1:Runtime.Class({},{
+       Do:Runtime.Field(function()
+       {
+        return FlowBuilder.New();
+       })
       }),
       Interpolation:Runtime.Class({},{
        get_Double:function()
@@ -14041,16 +14041,10 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         });
        }
       }),
-      Model:Runtime.Class({},{
-       View:function(_arg2)
-       {
-        return _arg2.$1;
-       }
-      }),
       Model1:Runtime.Class({
        get_View:function()
        {
-        return Model.View(this);
+        return Model1.View(this);
        }
       },{
        Create:function(proj,init)
@@ -14070,6 +14064,58 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          update(x);
          return x;
         });
+       },
+       View:function(_arg2)
+       {
+        return _arg2.$1;
+       }
+      }),
+      ReactiveCollection:Runtime.Class({},{
+       Remove:function(coll,item)
+       {
+        return Model1.Update(function(all)
+        {
+         return Arrays.iter(function(i)
+         {
+          return all.RemoveAt(i);
+         },Seq.toArray(Seq.filter(function(i)
+         {
+          return(coll.EqFn.call(null,all.get_Item(i)))(item);
+         },Operators.range(0,all.get_Count()-1))));
+        },coll.Items);
+       },
+       View:function(coll)
+       {
+        return coll.Items.get_View();
+       }
+      }),
+      ReactiveCollection1:Runtime.Class({},{
+       Add:function(coll,item)
+       {
+        return Model1.Update(function(all)
+        {
+         return all.Add(item);
+        },coll.Items);
+       },
+       Create:function(eqFn)
+       {
+        return{
+         Items:Model1.Create(function(arr)
+         {
+          return arr.ToArray();
+         },ResizeArrayProxy.New1()),
+         EqFn:eqFn
+        };
+       },
+       CreateFrom:function(eqFn,elems)
+       {
+        var coll;
+        coll=ReactiveCollection1.Create(eqFn);
+        Seq.iter(function(x)
+        {
+         return ReactiveCollection1.Add(coll,x);
+        },elems);
+        return coll;
        }
       }),
       Route:Runtime.Class({},{
@@ -14130,6 +14176,16 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        }
       }),
       Router:Runtime.Class({},{
+       Link:function(rt,v)
+       {
+        return rt.SerialiseFn.call(null,v);
+       },
+       Route:function(rt,route)
+       {
+        return rt.DeserialiseFn.call(null,route);
+       }
+      }),
+      Router1:Runtime.Class({},{
        Create:function(ser,deser)
        {
         return{
@@ -14167,43 +14223,9 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          return noHash(window.location.hash)!==ha?void(window.location.hash=ha):null;
         },_var.get_View());
         return _var;
-       },
-       Link:function(rt,v)
-       {
-        return rt.SerialiseFn.call(null,v);
-       },
-       Route:function(rt,route)
-       {
-        return rt.DeserialiseFn.call(null,route);
        }
       }),
       Site:Runtime.Class({},{
-       Dir:function(prefix,sites)
-       {
-        return Site.Prefix(prefix,Site.Merge(sites));
-       },
-       Install:function(key,site)
-       {
-        return Sites.Install(key,site);
-       },
-       Merge:function(sites)
-       {
-        var sites1,merged,value;
-        sites1=Seq.toArray(sites);
-        merged=Trie.Merge(Seq.map(function(_arg1)
-        {
-         return _arg1.$1;
-        },sites1));
-        value=Seq.tryPick(function(_arg2)
-        {
-         return _arg2.$0;
-        },sites1);
-        return merged.$==1?{
-         $:0,
-         $0:value,
-         $1:merged.$0
-        }:Operators.FailWith("Invalid Site.Merge: need more prefix disambiguation");
-       },
        Prefix:function(prefix,_arg1)
        {
         var tree;
@@ -14254,6 +14276,32 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          },
          $1:t
         };
+       },
+       Dir:function(prefix,sites)
+       {
+        return Site.Prefix(prefix,Site1.Merge(sites));
+       },
+       Install:function(key,site)
+       {
+        return Sites.Install(key,site);
+       },
+       Merge:function(sites)
+       {
+        var sites1,merged,value;
+        sites1=Seq.toArray(sites);
+        merged=Trie.Merge(Seq.map(function(_arg1)
+        {
+         return _arg1.$1;
+        },sites1));
+        value=Seq.tryPick(function(_arg2)
+        {
+         return _arg2.$0;
+        },sites1);
+        return merged.$==1?{
+         $:0,
+         $0:value,
+         $1:merged.$0
+        }:Operators.FailWith("Invalid Site.Merge: need more prefix disambiguation");
        }
       }),
       Sites:{
@@ -14279,7 +14327,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         var va,site,mainRouter,arg10,currentRoute,state,siteTrie,parseRoute,matchValue,glob,site1,updateRoute;
         va=_arg1.$0;
         site=_arg1.$1;
-        mainRouter=Router.Create(function(x)
+        mainRouter=Router1.Create(function(x)
         {
          return x;
         },function(x)
@@ -14289,7 +14337,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         arg10=Route.Create(Runtime.New(T,{
          $:0
         }));
-        currentRoute=Router.Install(mainRouter,arg10);
+        currentRoute=Router1.Install(mainRouter,arg10);
         state={
          CurrentRoute:currentRoute,
          CurrentSite:0,
@@ -14679,6 +14727,26 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        }
       },
       Trans:Runtime.Class({},{
+       AnimateEnter:function(tr,x)
+       {
+        return tr.TEnter.call(null,x);
+       },
+       AnimateExit:function(tr,x)
+       {
+        return tr.TExit.call(null,x);
+       },
+       CanAnimateChange:function(tr)
+       {
+        return(tr.TFlags&1)!==0;
+       },
+       CanAnimateEnter:function(tr)
+       {
+        return(tr.TFlags&2)!==0;
+       },
+       CanAnimateExit:function(tr)
+       {
+        return(tr.TFlags&4)!==0;
+       },
        Change:function(ch,tr)
        {
         return{
@@ -14694,11 +14762,11 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          TChange:ch,
          TEnter:function(t)
          {
-          return Anim1.Const(t);
+          return Anim.Const(t);
          },
          TExit:function(t)
          {
-          return Anim1.Const(t);
+          return Anim.Const(t);
          },
          TFlags:1
         };
@@ -14720,32 +14788,6 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          TExit:f,
          TFlags:tr.TFlags|4
         };
-       }
-      }),
-      Trans1:Runtime.Class({},{
-       AnimateChange:function(tr,x,y)
-       {
-        return(tr.TChange.call(null,x))(y);
-       },
-       AnimateEnter:function(tr,x)
-       {
-        return tr.TEnter.call(null,x);
-       },
-       AnimateExit:function(tr,x)
-       {
-        return tr.TExit.call(null,x);
-       },
-       CanAnimateChange:function(tr)
-       {
-        return(tr.TFlags&1)!==0;
-       },
-       CanAnimateEnter:function(tr)
-       {
-        return(tr.TFlags&2)!==0;
-       },
-       CanAnimateExit:function(tr)
-       {
-        return(tr.TFlags&4)!==0;
        },
        Trivial:function()
        {
@@ -14754,19 +14796,25 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          {
           return function(y)
           {
-           return Anim1.Const(y);
+           return Anim.Const(y);
           };
          },
          TEnter:function(t)
          {
-          return Anim1.Const(t);
+          return Anim.Const(t);
          },
          TExit:function(t)
          {
-          return Anim1.Const(t);
+          return Anim.Const(t);
          },
          TFlags:0
         };
+       }
+      }),
+      Trans1:Runtime.Class({},{
+       AnimateChange:function(tr,x,y)
+       {
+        return(tr.TChange.call(null,x))(y);
        }
       }),
       Trie:{
@@ -15337,12 +15385,13 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   JQueue=Runtime.Safe(Abbrev.JQueue);
   Unchecked=Runtime.Safe(WebSharper.Unchecked);
   Slot=Runtime.Safe(Abbrev.Slot);
-  window=Runtime.Safe(Global.window);
-  Anim1=Runtime.Safe(Next.Anim1);
   Anim=Runtime.Safe(Next.Anim);
   AppendList=Runtime.Safe(Next.AppendList);
   Anims=Runtime.Safe(Next.Anims);
+  window=Runtime.Safe(Global.window);
+  Anim1=Runtime.Safe(Next.Anim1);
   Trans1=Runtime.Safe(Next.Trans1);
+  Trans=Runtime.Safe(Next.Trans);
   Option=Runtime.Safe(WebSharper.Option);
   View1=Runtime.Safe(Next.View1);
   Lazy=Runtime.Safe(WebSharper.Lazy);
@@ -15372,26 +15421,28 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   Easing=Runtime.Safe(Next.Easing);
   Easings=Runtime.Safe(Next.Easings);
   Var1=Runtime.Safe(Next.Var1);
-  Flow1=Runtime.Safe(Next.Flow1);
   Flow=Runtime.Safe(Next.Flow);
   FlowBuilder=Runtime.Safe(Flow.FlowBuilder);
   DoubleInterpolation=Runtime.Safe(Next.DoubleInterpolation);
-  Model=Runtime.Safe(Next.Model);
   Model1=Runtime.Safe(Next.Model1);
+  ReactiveCollection1=Runtime.Safe(Next.ReactiveCollection1);
   Route=Runtime.Safe(Next.Route);
   RouteFrag=Runtime.Safe(Next.RouteFrag);
   Strings=Runtime.Safe(WebSharper.Strings);
-  Site=Runtime.Safe(Next.Site);
-  Sites=Runtime.Safe(Next.Sites);
   Trie=Runtime.Safe(Next.Trie);
+  Sites=Runtime.Safe(Next.Sites);
   Router=Runtime.Safe(Next.Router);
+  Site=Runtime.Safe(Next.Site);
+  Site1=Runtime.Safe(Next.Site1);
   Dictionary=Runtime.Safe(Collections.Dictionary);
+  Router1=Runtime.Safe(Next.Router1);
   Snap=Runtime.Safe(Next.Snap);
   Async=Runtime.Safe(Abbrev.Async);
   Enumerator=Runtime.Safe(WebSharper.Enumerator);
   MapModule=Runtime.Safe(Collections.MapModule);
   FSharpMap=Runtime.Safe(Collections.FSharpMap);
-  return Dict=Runtime.Safe(Abbrev.Dict);
+  Dict=Runtime.Safe(Abbrev.Dict);
+  return Flow1=Runtime.Safe(Next.Flow1);
  });
  Runtime.OnLoad(function()
  {
@@ -15407,7 +15458,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
 
 (function()
 {
- var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,UI,Next,Var,Doc,List,Utilities,T,Var1,BobsleighSite,View1,Unchecked,Attr,Samples,Calculator,CheckBoxTest,Seq,Person,SimpleTextBox,InputTransform,TodoList,PhoneExample,MouseChase,ContactFlow,MessageBoard,RoutedBobsleighSite,ObjectConstancy,Client,Operators,Model1,Collections,ResizeArray,ResizeArrayProxy,Arrays,Flow1,Flow,String,Strings,IntrinsicFunctionProxy,Auth,Concurrency,Server,Common,Fresh,ViewModel1,document,jQuery,DataSet,OperatorIntrinsics,Trans,View,Math,Anim1,Interpolation,Easing,Phone,Order,Router,Route,RouteFrag,Builder,Site,Site1,MapModule,FSharpMap,Util,TodoItem;
+ var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,UI,Next,Var,Doc,List,Utilities,T,Var1,BobsleighSite,View1,Unchecked,Attr,Samples,Calculator,CheckBoxTest,Seq,Person,SimpleTextBox,InputTransform,TodoList,PhoneExample,MouseChase,ContactFlow,MessageBoard,RoutedBobsleighSite,ObjectConstancy,Client,Common,Fresh,Flow1,Flow,String,Strings,IntrinsicFunctionProxy,Auth,Concurrency,Server,document,jQuery,DataSet,Arrays,OperatorIntrinsics,Trans,View,Math,Anim,Interpolation,Easing,Phone,Operators,Order,Router1,Route,RouteFrag,Builder,Site,Site1,Collections,MapModule,FSharpMap,Util,ReactiveCollection,ReactiveCollection1,TodoItem;
  Runtime.Define(Global,{
   IntelliFactory:{
    WebSharper:{
@@ -15771,51 +15822,40 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        })
       },
       Common:{
-       Fresh:{
-        Int:Runtime.Field(function()
-        {
-         var _tid_12_1;
-         _tid_12_1={
-          contents:0
-         };
-         return function()
-         {
-          Operators.Increment(_tid_12_1);
-          return _tid_12_1.contents;
-         };
-        })
+       CreatePost:function(user,content)
+       {
+        return{
+         PostId:Fresh.Int(),
+         PostAuthorName:user.Name,
+         Content:content
+        };
        },
-       ViewModel1:{
-        Add:function(m,item)
+       CreateThread:function(author,title)
+       {
+        return{
+         ThreadId:Fresh.Int(),
+         Title:title,
+         ThreadAuthorName:author,
+         Posts:Var1.Create(Runtime.New(T,{
+          $:0
+         }))
+        };
+       },
+       Fresh:{
+        Int:function()
         {
-         return Model1.Update(function(all)
+         var _;
+         _=Fresh.i()+1;
+         Fresh.i=function()
          {
-          return all.Add(item);
-         },m.Items);
-        },
-        Create:function(proj)
-        {
-         return{
-          Projection:proj,
-          Items:Model1.Create(function(arr)
-          {
-           return arr.ToArray();
-          },ResizeArrayProxy.New1())
+          return _;
          };
+         return Fresh.i();
         },
-        Remove:function(m,item)
+        i:Runtime.Field(function()
         {
-         return Model1.Update(function(all)
-         {
-          return Arrays.iter(function(i)
-          {
-           return all.RemoveAt(i);
-          },Seq.toArray(Seq.filter(function(i)
-          {
-           return m.Projection.call(null,all.get_Item(i))===m.Projection.call(null,item);
-          },Operators.range(0,all.get_Count()-1))));
-         },m.Items);
-        }
+         return 0;
+        })
        }
       },
       ContactFlow:{
@@ -15977,13 +16017,6 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        })
       },
       MessageBoard:{
-       AddPost:function(thread,post)
-       {
-        return Var.Update(thread.Posts,function(xs)
-        {
-         return List.append(xs,List.ofArray([post]));
-        });
-       },
        Auth:{
         Create:function()
         {
@@ -16104,43 +16137,33 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          },view));
         }
        },
-       CreatePost:function(user,content)
-       {
-        return{
-         PostId:(Fresh.Int())(null),
-         PostAuthorName:user.Name,
-         Content:content
-        };
-       },
-       CreateThread:function(author,title)
-       {
-        return{
-         ThreadId:(Fresh.Int())(null),
-         Title:title,
-         ThreadAuthorName:author,
-         Posts:Var1.Create(Runtime.New(T,{
-          $:0
-         }))
-        };
-       },
        Description:function()
        {
         return Utilities.el("div",List.ofArray([Doc.TextNode("A message board application built using MiniSitelets.")]));
        },
-       InitialThreads:function()
+       Initialise:function()
        {
-        var thread,threadModel;
-        thread=MessageBoard.CreateThread("SimonJF","Hello, World! This is a topic.");
-        threadModel=ViewModel1.Create(function(t)
+        var thread,post;
+        thread=Common.CreateThread("SimonJF","Hello, World! This is a topic.");
+        post=Common.CreatePost({
+         Name:"SimonJF",
+         Password:""
+        },"Hello, world! This is a post.");
+        return Concurrency.Start(Concurrency.Delay(function()
         {
-         return t.ThreadId;
-        });
-        ViewModel1.Add(threadModel,thread);
-        return threadModel;
+         return Concurrency.Bind(Server.AddThread(thread),function()
+         {
+          return Concurrency.Bind(Server.AddPost(thread,post),function()
+          {
+           return Concurrency.Return(null);
+          });
+         });
+        }));
        },
        Main:function()
        {
         var actVar,auth,Go,st,navbar;
+        MessageBoard.Initialise();
         actVar=Var1.Create({
          $:2
         });
@@ -16205,8 +16228,8 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
            add=function()
            {
             var newThread,post;
-            newThread=MessageBoard.CreateThread(user.Name,Var.Get(rvTitle));
-            post=MessageBoard.CreatePost(user,Var.Get(rvPost));
+            newThread=Common.CreateThread(user.Name,Var.Get(rvTitle));
+            post=Common.CreatePost(user,Var.Get(rvPost));
             Concurrency.Start(Concurrency.Delay(function()
             {
              return Concurrency.Bind(Server.AddThread(newThread),function()
@@ -16277,7 +16300,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
            add=function()
            {
             var post;
-            post=MessageBoard.CreatePost(user,rvPost.get_Value());
+            post=Common.CreatePost(user,rvPost.get_Value());
             return Concurrency.Start(Concurrency.Delay(function()
             {
              return Concurrency.Bind(Server.AddPost(thread,post),function()
@@ -16628,7 +16651,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        SimpleAnimation:function(x,y)
        {
-        return Anim1.Simple(Interpolation.get_Double(),Easing.get_CubicInOut(),300,x,y);
+        return Anim.Simple(Interpolation.get_Double(),Easing.get_CubicInOut(),300,x,y);
        },
        SimpleTransition:Runtime.Field(function()
        {
@@ -16772,7 +16795,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        }),
        TheRouter:Runtime.Field(function()
        {
-        return Router.Create(function(_arg1)
+        return Router1.Create(function(_arg1)
         {
          return _arg1.$==1?Route.Create(List.ofArray([RouteFrag.Create("history")])):_arg1.$==2?Route.Create(List.ofArray([RouteFrag.Create("governance")])):_arg1.$==3?Route.Create(List.ofArray([RouteFrag.Create("team")])):Route.Create(Runtime.New(T,{
           $:0
@@ -16949,7 +16972,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        CreateSimple:function(vis,meta)
        {
         var unitRouter,sample;
-        unitRouter=Router.Create(function()
+        unitRouter=Router1.Create(function()
         {
          return Route.Create(Runtime.New(T,{
           $:0
@@ -16988,14 +17011,14 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        Show:function(samples)
        {
         var mainSite,current,arg00,arg10,x,main,navs,side,x2;
-        mainSite=Site.Merge(Seq.toList(Seq.delay(function()
+        mainSite=Site1.Merge(Seq.toList(Seq.delay(function()
         {
          return Seq.map(function(sample)
          {
           return sample.Site;
          },samples);
         })));
-        current=Site.Install(function(samp)
+        current=Site1.Install(function(samp)
         {
          return samp.SiteId;
         },mainSite);
@@ -17175,22 +17198,6 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        })
       },
       TodoList:{
-       Add:function(m,item)
-       {
-        return Model1.Update(function(all)
-        {
-         return all.Add(item);
-        },m.Items);
-       },
-       Create:function()
-       {
-        return{
-         Items:Model1.Create(function(arr)
-         {
-          return arr.ToArray();
-         },ResizeArrayProxy.New1())
-        };
-       },
        Description:function()
        {
         return Utilities.el("div",List.ofArray([Doc.TextNode("A to-do list application.")]));
@@ -17203,19 +17210,6 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        {
         return TodoList.TodoExample();
        },
-       Remove:function(m,item)
-       {
-        return Model1.Update(function(all)
-        {
-         return Arrays.iter(function(i)
-         {
-          return all.RemoveAt(i);
-         },Seq.toArray(Seq.filter(function(i)
-         {
-          return all.get_Item(i).TodoKey===item.TodoKey;
-         },Operators.range(0,all.get_Count()-1))));
-        },m.Items);
-       },
        RenderItem:function(m,todo)
        {
         return Utilities.el("tr",List.ofArray([Utilities.el("td",List.ofArray([Doc.EmbedView(View1.Map(function(isDone)
@@ -17226,7 +17220,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          return Var.Set(todo.Done,true);
         })])),Utilities.el("td",List.ofArray([Util.button("Remove",function()
         {
-         return TodoList.Remove(m,todo);
+         return ReactiveCollection.Remove(m,todo);
         })]))]));
        },
        Sample:Runtime.Field(function()
@@ -17242,7 +17236,13 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        TodoExample:function()
        {
         var m;
-        m=TodoList.Create();
+        m=ReactiveCollection1.Create(function(i1)
+        {
+         return function(i2)
+         {
+          return i1.TodoKey===i2.TodoKey;
+         };
+        });
         return Utilities.elA("table",List.ofArray([Utilities.op_EqualsEqualsGreater("class","table table-hover")]),List.ofArray([Utilities.el("tbody",List.ofArray([TodoList.TodoList(m),TodoList.TodoForm(m)]))]));
        },
        TodoForm:function(m)
@@ -17252,7 +17252,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         View1.FromVar(rvInput);
         return Utilities.el("form",List.ofArray([Utilities.divc("form-group",List.ofArray([Utilities.el("label",List.ofArray([Utilities.txt("New entry: ")])),Util.input(rvInput)])),Util.button("Submit",function()
         {
-         return TodoList.Add(m,TodoItem.Create(Var.Get(rvInput)));
+         return ReactiveCollection1.Add(m,TodoItem.Create(Var.Get(rvInput)));
         })]));
        },
        TodoItem:Runtime.Class({},{
@@ -17275,7 +17275,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         },function(todo)
         {
          return TodoList.RenderItem(m,todo);
-        },m.Items.get_View());
+        },ReactiveCollection.View(m));
        },
        Util:{
         button:function(name,handler)
@@ -17385,12 +17385,8 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   RoutedBobsleighSite=Runtime.Safe(Next.RoutedBobsleighSite);
   ObjectConstancy=Runtime.Safe(Next.ObjectConstancy);
   Client=Runtime.Safe(Next.Client);
-  Operators=Runtime.Safe(WebSharper.Operators);
-  Model1=Runtime.Safe(Next.Model1);
-  Collections=Runtime.Safe(WebSharper.Collections);
-  ResizeArray=Runtime.Safe(Collections.ResizeArray);
-  ResizeArrayProxy=Runtime.Safe(ResizeArray.ResizeArrayProxy);
-  Arrays=Runtime.Safe(WebSharper.Arrays);
+  Common=Runtime.Safe(Next.Common);
+  Fresh=Runtime.Safe(Common.Fresh);
   Flow1=Runtime.Safe(Next.Flow1);
   Flow=Runtime.Safe(Next.Flow);
   String=Runtime.Safe(Global.String);
@@ -17399,30 +17395,32 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   Auth=Runtime.Safe(MessageBoard.Auth);
   Concurrency=Runtime.Safe(WebSharper.Concurrency);
   Server=Runtime.Safe(Next.Server);
-  Common=Runtime.Safe(Next.Common);
-  Fresh=Runtime.Safe(Common.Fresh);
-  ViewModel1=Runtime.Safe(Common.ViewModel1);
   document=Runtime.Safe(Global.document);
   jQuery=Runtime.Safe(Global.jQuery);
   DataSet=Runtime.Safe(ObjectConstancy.DataSet);
+  Arrays=Runtime.Safe(WebSharper.Arrays);
   OperatorIntrinsics=Runtime.Safe(WebSharper.OperatorIntrinsics);
   Trans=Runtime.Safe(Next.Trans);
   View=Runtime.Safe(Next.View);
   Math=Runtime.Safe(Global.Math);
-  Anim1=Runtime.Safe(Next.Anim1);
+  Anim=Runtime.Safe(Next.Anim);
   Interpolation=Runtime.Safe(Next.Interpolation);
   Easing=Runtime.Safe(Next.Easing);
   Phone=Runtime.Safe(PhoneExample.Phone);
+  Operators=Runtime.Safe(WebSharper.Operators);
   Order=Runtime.Safe(PhoneExample.Order);
-  Router=Runtime.Safe(Next.Router);
+  Router1=Runtime.Safe(Next.Router1);
   Route=Runtime.Safe(Next.Route);
   RouteFrag=Runtime.Safe(Next.RouteFrag);
   Builder=Runtime.Safe(Samples.Builder);
   Site=Runtime.Safe(Next.Site);
   Site1=Runtime.Safe(Next.Site1);
+  Collections=Runtime.Safe(WebSharper.Collections);
   MapModule=Runtime.Safe(Collections.MapModule);
   FSharpMap=Runtime.Safe(Collections.FSharpMap);
   Util=Runtime.Safe(TodoList.Util);
+  ReactiveCollection=Runtime.Safe(Next.ReactiveCollection);
+  ReactiveCollection1=Runtime.Safe(Next.ReactiveCollection1);
   return TodoItem=Runtime.Safe(TodoList.TodoItem);
  });
  Runtime.OnLoad(function()
@@ -17447,7 +17445,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   ContactFlow.personFlowlet();
   ContactFlow.contactTypeFlowlet();
   ContactFlow.Sample();
-  Fresh.Int();
+  Fresh.i();
   Client.Main();
   Client.All();
   CheckBoxTest.Sample();
