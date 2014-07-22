@@ -3745,6 +3745,20 @@ declare module IntelliFactory {
                         (): void;
                     };
                 }
+                module RoutedBobsleighSite {
+                    var Main : {
+                        (current: __ABBREV.__Next.Var1<__ABBREV.__BobsleighSite.Page>): __ABBREV.__Next.Doc;
+                    };
+                    var description : {
+                        <_M1>(v: _M1): __ABBREV.__Next.Doc;
+                    };
+                    var TheRouter : {
+                        (): any;
+                    };
+                    var Sample : {
+                        (): any;
+                    };
+                }
                 module BobsleighSite {
                     interface Page {
                     }
@@ -3850,22 +3864,6 @@ declare module IntelliFactory {
                         (): any;
                     };
                     var InOutTransition : {
-                        (): any;
-                    };
-                    var Sample : {
-                        (): any;
-                    };
-                }
-                module Messy {
-                    interface Action {
-                    }
-                    var Desc : {
-                        (current: __ABBREV.__Next.Var1<__ABBREV.__Messy.Action>): __ABBREV.__Next.Doc;
-                    };
-                    var Main : {
-                        (current: __ABBREV.__Next.Var1<__ABBREV.__Messy.Action>): __ABBREV.__Next.Doc;
-                    };
-                    var TheRouter : {
                         (): any;
                     };
                     var Sample : {
@@ -3986,8 +3984,6 @@ declare module IntelliFactory {
                                 (x: _M1): number;
                             }): any;
                         };
-                    }
-                    module ViewModel {
                         var Remove : {
                             <_M1>(m: any, item: _M1): void;
                         };
@@ -3999,7 +3995,7 @@ declare module IntelliFactory {
                             };
                         };
                     }
-                    interface ViewModel1<_T1> {
+                    interface ViewModel<_T1> {
                         Projection: {
                             (x: _T1): number;
                         };
@@ -4318,10 +4314,9 @@ declare module IntelliFactory {
 declare module __ABBREV {
     
     export import __List = IntelliFactory.WebSharper.List;
-    export import __BobsleighSite = IntelliFactory.WebSharper.UI.Next.BobsleighSite;
     export import __Next = IntelliFactory.WebSharper.UI.Next;
+    export import __BobsleighSite = IntelliFactory.WebSharper.UI.Next.BobsleighSite;
     export import __ObjectConstancy = IntelliFactory.WebSharper.UI.Next.ObjectConstancy;
-    export import __Messy = IntelliFactory.WebSharper.UI.Next.Messy;
     export import __WebSharper = IntelliFactory.WebSharper;
     export import __MessageBoard = IntelliFactory.WebSharper.UI.Next.MessageBoard;
     export import __Collections = IntelliFactory.WebSharper.Collections;
