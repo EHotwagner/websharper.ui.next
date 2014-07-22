@@ -3539,11 +3539,14 @@ declare module IntelliFactory {
                     var Parse : {
                         (xs: string): __ABBREV.__WebSharper.OptionProxy<__ABBREV.__Next.Route>;
                     };
+                    var ToStringList : {
+                        (_arg4: __ABBREV.__Next.Route): __ABBREV.__List.T<string>;
+                    };
                     var ToUrl : {
-                        (_arg4: __ABBREV.__Next.Route): string;
+                        (_arg5: __ABBREV.__Next.Route): string;
                     };
                 }
-                module Router1 {
+                module Router {
                     var Create : {
                         <_M1>(ser: {
                             (x: _M1): __ABBREV.__Next.Route;
@@ -3551,8 +3554,6 @@ declare module IntelliFactory {
                             (x: __ABBREV.__Next.Route): _M1;
                         }): any;
                     };
-                }
-                module Router {
                     var Install : {
                         <_M1>(rt: any, init: _M1): __ABBREV.__Next.Var1<_M1>;
                     };
@@ -3571,11 +3572,11 @@ declare module IntelliFactory {
                             };
                         }): __ABBREV.__Next.Site1<_M2>;
                     };
+                }
+                module Site {
                     var Dir : {
                         <_M1>(prefix: string, sites: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Site1<_M1>>): __ABBREV.__Next.Site1<_M1>;
                     };
-                }
-                module Site {
                     var Install : {
                         <_M1>(key: {
                             (x: _M1): __ABBREV.__Next.SiteId;
@@ -3596,6 +3597,9 @@ declare module IntelliFactory {
                         Return<_M1>(value: _M1): any;
                         ReturnFrom<_M1>(wrappedVal: any): any;
                     }
+                    var Embed : {
+                        <_M1>(fl: any): __ABBREV.__Next.Doc;
+                    };
                     var Define : {
                         <_M1>(f: {
                             (x: {
@@ -3620,9 +3624,6 @@ declare module IntelliFactory {
                     };
                     var Return : {
                         <_M1>(x: _M1): any;
-                    };
-                    var Embed : {
-                        <_M1>(fl: any): __ABBREV.__Next.Doc;
                     };
                     var Do : {
                         (): __ABBREV.__Flow.FlowBuilder;

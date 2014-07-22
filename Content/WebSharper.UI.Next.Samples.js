@@ -12004,7 +12004,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
 
 (function()
 {
- var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,IntrinsicFunctionProxy,Concurrency,Array,Seq,UI,Next,Abbrev,Fresh,Collections,HashSet,HashSet1,HashSet2,Arrays,JQueue,Unchecked,Slot,window,Anim1,Anim,AppendList,Anims,Trans1,Option,View1,Lazy,Array1,Attrs,DomUtility,Attr,AnimatedAttrNode,DynamicAttrNode,View,Diff,BagDiff,ResizeArray,ResizeArrayProxy,Docs,Doc,List,Var,T,Mailbox,Operators,NodeSet,DocElemNode,DomNodes,jQuery,document,Easing,Easings,Flow1,Flow,FlowBuilder,Var1,DoubleInterpolation,Model,Model1,Route,RouteFrag,Strings,Sites,Trie,Router,Site,Dictionary,Router1,Snap,Async,Enumerator,MapModule,FSharpMap,Dict;
+ var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,IntrinsicFunctionProxy,Concurrency,Array,Seq,UI,Next,Abbrev,Fresh,Collections,HashSet,HashSet1,HashSet2,Arrays,JQueue,Unchecked,Slot,window,Anim1,Anim,AppendList,Anims,Trans1,Option,View1,Lazy,Array1,Attrs,DomUtility,Attr,AnimatedAttrNode,DynamicAttrNode,View,Diff,BagDiff,ResizeArray,ResizeArrayProxy,Docs,Doc,List,Var,T,Mailbox,Operators,NodeSet,DocElemNode,DomNodes,jQuery,document,Easing,Easings,Var1,Flow1,Flow,FlowBuilder,DoubleInterpolation,Model,Model1,Route,RouteFrag,Strings,Site,Sites,Trie,Router,Dictionary,Snap,Async,Enumerator,MapModule,FSharpMap,Dict;
  Runtime.Define(Global,{
   IntelliFactory:{
    WebSharper:{
@@ -13944,6 +13944,15 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          }
         };
        },
+       Embed:function(fl)
+       {
+        var _var;
+        _var=Var1.Create(Doc.get_Empty());
+        (fl.Render.call(null,_var))(function()
+        {
+        });
+        return Doc.EmbedView(_var.get_View());
+       },
        FlowBuilder:Runtime.Class({
         Bind:function(comp,func)
         {
@@ -13996,15 +14005,6 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        {
         return FlowBuilder.New();
        }),
-       Embed:function(fl)
-       {
-        var _var;
-        _var=Var1.Create(Doc.get_Empty());
-        (fl.Render.call(null,_var))(function()
-        {
-        });
-        return Doc.EmbedView(_var.get_View());
-       },
        Map:function(f,x)
        {
         return{
@@ -14101,12 +14101,19 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          },Strings.SplitChars(xs,[47],1)))
         };
        },
-       ToUrl:function(_arg4)
+       ToStringList:function(_arg4)
+       {
+        return List.map(function(arg00)
+        {
+         return RouteFrag.Text(arg00);
+        },Seq.toList(_arg4.$0));
+       },
+       ToUrl:function(_arg5)
        {
         return Strings.concat("/",Seq.map(function(_arg1)
         {
          return _arg1.$0;
-        },_arg4.$0));
+        },_arg5.$0));
        }
       }),
       RouteFrag:Runtime.Class({},{
@@ -14123,6 +14130,13 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        }
       }),
       Router:Runtime.Class({},{
+       Create:function(ser,deser)
+       {
+        return{
+         DeserialiseFn:deser,
+         SerialiseFn:ser
+        };
+       },
        Install:function(rt,init)
        {
         var noHash,cur,loc,_var,set,onUpdate;
@@ -14163,16 +14177,11 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         return rt.DeserialiseFn.call(null,route);
        }
       }),
-      Router1:Runtime.Class({},{
-       Create:function(ser,deser)
-       {
-        return{
-         DeserialiseFn:deser,
-         SerialiseFn:ser
-        };
-       }
-      }),
       Site:Runtime.Class({},{
+       Dir:function(prefix,sites)
+       {
+        return Site.Prefix(prefix,Site.Merge(sites));
+       },
        Install:function(key,site)
        {
         return Sites.Install(key,site);
@@ -14245,10 +14254,6 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          },
          $1:t
         };
-       },
-       Dir:function(prefix,sites)
-       {
-        return Site.Prefix(prefix,Site.Merge(sites));
        }
       }),
       Sites:{
@@ -14274,7 +14279,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         var va,site,mainRouter,arg10,currentRoute,state,siteTrie,parseRoute,matchValue,glob,site1,updateRoute;
         va=_arg1.$0;
         site=_arg1.$1;
-        mainRouter=Router1.Create(function(x)
+        mainRouter=Router.Create(function(x)
         {
          return x;
         },function(x)
@@ -15366,22 +15371,21 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   document=Runtime.Safe(Global.document);
   Easing=Runtime.Safe(Next.Easing);
   Easings=Runtime.Safe(Next.Easings);
+  Var1=Runtime.Safe(Next.Var1);
   Flow1=Runtime.Safe(Next.Flow1);
   Flow=Runtime.Safe(Next.Flow);
   FlowBuilder=Runtime.Safe(Flow.FlowBuilder);
-  Var1=Runtime.Safe(Next.Var1);
   DoubleInterpolation=Runtime.Safe(Next.DoubleInterpolation);
   Model=Runtime.Safe(Next.Model);
   Model1=Runtime.Safe(Next.Model1);
   Route=Runtime.Safe(Next.Route);
   RouteFrag=Runtime.Safe(Next.RouteFrag);
   Strings=Runtime.Safe(WebSharper.Strings);
+  Site=Runtime.Safe(Next.Site);
   Sites=Runtime.Safe(Next.Sites);
   Trie=Runtime.Safe(Next.Trie);
   Router=Runtime.Safe(Next.Router);
-  Site=Runtime.Safe(Next.Site);
   Dictionary=Runtime.Safe(Collections.Dictionary);
-  Router1=Runtime.Safe(Next.Router1);
   Snap=Runtime.Safe(Next.Snap);
   Async=Runtime.Safe(Abbrev.Async);
   Enumerator=Runtime.Safe(WebSharper.Enumerator);
@@ -15403,7 +15407,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
 
 (function()
 {
- var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,UI,Next,Var,Doc,List,Utilities,T,Var1,BobsleighSite,View1,Unchecked,Attr,Samples,Calculator,CheckBoxTest,Seq,Person,SimpleTextBox,InputTransform,TodoList,PhoneExample,MouseChase,ContactFlow,MessageBoard,RoutedBobsleighSite,ObjectConstancy,Client,Operators,Model1,Collections,ResizeArray,ResizeArrayProxy,Arrays,Flow1,Flow,String,Strings,IntrinsicFunctionProxy,Auth,Concurrency,Server,Common,Fresh,ViewModel1,document,jQuery,DataSet,OperatorIntrinsics,Trans,View,Math,Anim1,Interpolation,Easing,Phone,Order,Router1,Route,RouteFrag,Builder,Site,Site1,MapModule,FSharpMap,Util,TodoItem;
+ var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,UI,Next,Var,Doc,List,Utilities,T,Var1,BobsleighSite,View1,Unchecked,Attr,Samples,Calculator,CheckBoxTest,Seq,Person,SimpleTextBox,InputTransform,TodoList,PhoneExample,MouseChase,ContactFlow,MessageBoard,RoutedBobsleighSite,ObjectConstancy,Client,Operators,Model1,Collections,ResizeArray,ResizeArrayProxy,Arrays,Flow1,Flow,String,Strings,IntrinsicFunctionProxy,Auth,Concurrency,Server,Common,Fresh,ViewModel1,document,jQuery,DataSet,OperatorIntrinsics,Trans,View,Math,Anim1,Interpolation,Easing,Phone,Order,Router,Route,RouteFrag,Builder,Site,Site1,MapModule,FSharpMap,Util,TodoItem;
  Runtime.Define(Global,{
   IntelliFactory:{
    WebSharper:{
@@ -15424,7 +15428,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        HomePage:function(ctx)
        {
-        return Doc.Concat(List.ofArray([Utilities.el("div",List.ofArray([Utilities.el("h1",List.ofArray([Utilities.txt("Welcome!")])),Utilities.el("p",List.ofArray([Utilities.txt("Welcome to the IntelliFactory Bobsleigh MiniSitelet!")])),Utilities.el("p",List.ofArray([Utilities.txt("Here you can find out about the "),Utilities.link("history",Runtime.New(T,{
+        return Doc.Concat(List.ofArray([Utilities.el("div",List.ofArray([Utilities.el("h1",List.ofArray([Utilities.txt("Welcome!")])),Utilities.el("p",List.ofArray([Utilities.txt("Welcome to the IntelliFactory Bobsleigh MiniSite!")])),Utilities.el("p",List.ofArray([Utilities.txt("Here you can find out about the "),Utilities.link("history",Runtime.New(T,{
          $:0
         }),function()
         {
@@ -15509,7 +15513,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        description:function()
        {
-        return Utilities.div(List.ofArray([Utilities.txt("A small website about bobsleighs, demonstrating how MiniSitelets may be used to structure single-page applications.")]));
+        return Utilities.div(List.ofArray([Utilities.txt("A small website about bobsleighs, demonstrating how UI.Next may be used to structure single-page applications.")]));
        },
        pages:Runtime.Field(function()
        {
@@ -15823,7 +15827,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        {
         var _builder_;
         _builder_=Flow1.Do();
-        return Flow1.Embed(_builder_.Bind(ContactFlow.personFlowlet(),function(_arg1)
+        return Flow.Embed(_builder_.Bind(ContactFlow.personFlowlet(),function(_arg1)
         {
          return _builder_.Bind(ContactFlow.contactTypeFlowlet(),function(_arg2)
          {
@@ -16768,7 +16772,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        }),
        TheRouter:Runtime.Field(function()
        {
-        return Router1.Create(function(_arg1)
+        return Router.Create(function(_arg1)
         {
          return _arg1.$==1?Route.Create(List.ofArray([RouteFrag.Create("history")])):_arg1.$==2?Route.Create(List.ofArray([RouteFrag.Create("governance")])):_arg1.$==3?Route.Create(List.ofArray([RouteFrag.Create("team")])):Route.Create(Runtime.New(T,{
           $:0
@@ -16776,10 +16780,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         },function(route)
         {
          var matchValue;
-         matchValue=List.map(function(arg00)
-         {
-          return RouteFrag.Text(arg00);
-         },Seq.toList(Route.Frags(route)));
+         matchValue=Route.ToStringList(route);
          return matchValue.$==1?matchValue.$0==="history"?matchValue.$1.$==0?{
           $:1
          }:{
@@ -16801,7 +16802,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        }),
        description:function()
        {
-        return Utilities.div(List.ofArray([Utilities.txt("A small website about bobsleighs, demonstrating how MiniSitelets may be used to structure single-page applications. Routed using the URL.")]));
+        return Utilities.div(List.ofArray([Utilities.txt("A small website about bobsleighs, demonstrating how UI.Next may be used to structure single-page applications. Routed using the URL.")]));
        }
       },
       Samples:{
@@ -16948,7 +16949,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        CreateSimple:function(vis,meta)
        {
         var unitRouter,sample;
-        unitRouter=Router1.Create(function()
+        unitRouter=Router.Create(function()
         {
          return Route.Create(Runtime.New(T,{
           $:0
@@ -17413,7 +17414,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   Easing=Runtime.Safe(Next.Easing);
   Phone=Runtime.Safe(PhoneExample.Phone);
   Order=Runtime.Safe(PhoneExample.Order);
-  Router1=Runtime.Safe(Next.Router1);
+  Router=Runtime.Safe(Next.Router);
   Route=Runtime.Safe(Next.Route);
   RouteFrag=Runtime.Safe(Next.RouteFrag);
   Builder=Runtime.Safe(Samples.Builder);
