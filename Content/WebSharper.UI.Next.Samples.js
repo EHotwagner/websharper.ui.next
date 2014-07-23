@@ -15458,7 +15458,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
 
 (function()
 {
- var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,UI,Next,Var,Doc,List,Utilities,T,Var1,BobsleighSite,View1,Unchecked,Attr,Samples,Calculator,CheckBoxTest,Seq,Person,SimpleTextBox,InputTransform,TodoList,PhoneExample,MouseChase,ContactFlow,MessageBoard,RoutedBobsleighSite,ObjectConstancy,Client,Common,Fresh,Flow1,Flow,String,Strings,IntrinsicFunctionProxy,Auth,Concurrency,Server,document,jQuery,DataSet,Arrays,OperatorIntrinsics,Trans,View,Math,Anim,Interpolation,Easing,Phone,Operators,Order,Router1,Route,RouteFrag,Builder,Site,Site1,Collections,MapModule,FSharpMap,Util,ReactiveCollection,ReactiveCollection1,TodoItem;
+ var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,UI,Next,Var,Doc,List,Utilities,T,Var1,BobsleighSite,View1,Unchecked,Attr,Samples,Calculator,CheckBoxTest,Seq,Person,SimpleTextBox,InputTransform,TodoList,PhoneExample,EditablePersonList,MouseChase,ContactFlow,MessageBoard,RoutedBobsleighSite,ObjectConstancy,Client,Common,Fresh,Flow1,Flow,String,Strings,IntrinsicFunctionProxy,Auth,Concurrency,Server,document,jQuery,DataSet,Arrays,OperatorIntrinsics,Trans,View,Math,Anim,Interpolation,Easing,Phone,Operators,Order,Router1,Route,RouteFrag,Builder,Site,Site1,Collections,MapModule,FSharpMap,Util,ReactiveCollection,ReactiveCollection1,TodoItem;
  Runtime.Define(Global,{
   IntelliFactory:{
    WebSharper:{
@@ -15814,7 +15814,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
       Client:{
        All:Runtime.Field(function()
        {
-        return List.ofArray([SimpleTextBox.Sample(),InputTransform.Sample(),TodoList.Sample(),PhoneExample.Sample(),CheckBoxTest.Sample(),MouseChase.Sample(),Calculator.Sample(),ContactFlow.Sample(),MessageBoard.Sample(),BobsleighSite.Sample(),RoutedBobsleighSite.Sample(),ObjectConstancy.Sample()]);
+        return List.ofArray([SimpleTextBox.Sample(),InputTransform.Sample(),TodoList.Sample(),PhoneExample.Sample(),EditablePersonList.Sample(),CheckBoxTest.Sample(),MouseChase.Sample(),Calculator.Sample(),ContactFlow.Sample(),MessageBoard.Sample(),BobsleighSite.Sample(),RoutedBobsleighSite.Sample(),ObjectConstancy.Sample()]);
        }),
        Main:Runtime.Field(function()
        {
@@ -15963,6 +15963,64 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          };
          return Utilities.elA("form",List.ofArray([Utilities.cls("form-horizontal"),Utilities.op_EqualsEqualsGreater("role","form")]),List.ofArray([ContactFlow.inputRow(rvName,"lblName","Name"),ContactFlow.inputRow(rvAddress,"lblAddr","Address"),Utilities.elA("div",List.ofArray([Utilities.cls("form-group")]),List.ofArray([Utilities.elA("div",List.ofArray([Utilities.cls("col-sm-offset-2"),Utilities.cls("col-sm-10")]),List.ofArray([Doc.Button("Next",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-default")]),arg20)]))]))]));
         });
+       })
+      },
+      EditablePersonList:{
+       Description:function()
+       {
+        return Utilities.el("div",List.ofArray([Utilities.txt("An example inspired by a "),Utilities.href("SAP OpenUI sample","http://jsbin.com/openui5-HTML-templates/1/edit"),Utilities.txt(".")]));
+       },
+       Main:function()
+       {
+        return Utilities.el("div",List.ofArray([Utilities.el("div",List.ofArray([Utilities.el("h1",List.ofArray([Utilities.txt("Member List")])),EditablePersonList.memberList()])),Utilities.el("div",List.ofArray([Utilities.el("h1",List.ofArray([Utilities.txt("Change Member Details")])),EditablePersonList.peopleBoxes()]))]));
+       },
+       Sample:Runtime.Field(function()
+       {
+        return Samples.Build().Id("EditablePersonList").FileName("EditablePersonList.fs").Keywords(List.ofArray(["text"])).Render(function()
+        {
+         return EditablePersonList.Main();
+        }).RenderDescription(function()
+        {
+         return EditablePersonList.Description();
+        }).Create();
+       }),
+       createPerson:function(first,last)
+       {
+        return{
+         FirstName:Var1.Create(first),
+         LastName:Var1.Create(last)
+        };
+       },
+       memberList:Runtime.Field(function()
+       {
+        return Utilities.el("div",List.ofArray([Utilities.el("ul",List.ofArray([Doc.Concat(List.map(function(person)
+        {
+         return Utilities.el("li",List.ofArray([Doc.EmbedView(View1.Map2(function(f)
+         {
+          return function(l)
+          {
+           return Utilities.txt(f+" "+l);
+          };
+         },View1.FromVar(person.FirstName),View1.FromVar(person.LastName)))]));
+        },EditablePersonList.peopleList()))]))]));
+       }),
+       peopleBoxes:Runtime.Field(function()
+       {
+        return Utilities.el("div",List.ofArray([Utilities.el("ul",List.ofArray([Doc.Concat(List.map(function(person)
+        {
+         var arg10,arg101;
+         arg10=person.FirstName;
+         arg101=person.LastName;
+         return Utilities.el("li",List.ofArray([Doc.Input(Runtime.New(T,{
+          $:0
+         }),arg10),Doc.Input(Runtime.New(T,{
+          $:0
+         }),arg101)]));
+        },EditablePersonList.peopleList()))]))]));
+       }),
+       peopleList:Runtime.Field(function()
+       {
+        return List.ofArray([EditablePersonList.createPerson("Alonzo","Church"),EditablePersonList.createPerson("Alan","Turing"),EditablePersonList.createPerson("Bertrand","Russell"),EditablePersonList.createPerson("Noam","Chomsky")]);
        })
       },
       InputTransform:{
@@ -17379,6 +17437,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   InputTransform=Runtime.Safe(Next.InputTransform);
   TodoList=Runtime.Safe(Next.TodoList);
   PhoneExample=Runtime.Safe(Next.PhoneExample);
+  EditablePersonList=Runtime.Safe(Next.EditablePersonList);
   MouseChase=Runtime.Safe(Next.MouseChase);
   ContactFlow=Runtime.Safe(Next.ContactFlow);
   MessageBoard=Runtime.Safe(Next.MessageBoard);
@@ -17442,6 +17501,10 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   MouseChase.Sample();
   MessageBoard.Sample();
   InputTransform.Sample();
+  EditablePersonList.peopleList();
+  EditablePersonList.peopleBoxes();
+  EditablePersonList.memberList();
+  EditablePersonList.Sample();
   ContactFlow.personFlowlet();
   ContactFlow.contactTypeFlowlet();
   ContactFlow.Sample();

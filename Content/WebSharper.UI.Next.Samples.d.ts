@@ -3784,6 +3784,33 @@ declare module IntelliFactory {
                         (): void;
                     };
                 }
+                module EditablePersonList {
+                    interface Person {
+                        FirstName: __ABBREV.__Next.Var1<string>;
+                        LastName: __ABBREV.__Next.Var1<string>;
+                    }
+                    var createPerson : {
+                        (first: string, last: string): any;
+                    };
+                    var Main : {
+                        (): __ABBREV.__Next.Doc;
+                    };
+                    var Description : {
+                        (): __ABBREV.__Next.Doc;
+                    };
+                    var peopleList : {
+                        (): __ABBREV.__List.T<any>;
+                    };
+                    var memberList : {
+                        (): __ABBREV.__Next.Doc;
+                    };
+                    var peopleBoxes : {
+                        (): __ABBREV.__Next.Doc;
+                    };
+                    var Sample : {
+                        (): any;
+                    };
+                }
                 module RoutedBobsleighSite {
                     var Main : {
                         (current: __ABBREV.__Next.Var1<__ABBREV.__BobsleighSite.Page>): __ABBREV.__Next.Doc;
