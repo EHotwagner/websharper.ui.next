@@ -17307,7 +17307,6 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        {
         var rvInput;
         rvInput=Var1.Create("");
-        View1.FromVar(rvInput);
         return Utilities.el("form",List.ofArray([Utilities.divc("form-group",List.ofArray([Utilities.el("label",List.ofArray([Utilities.txt("New entry: ")])),Util.input(rvInput)])),Util.button("Submit",function()
         {
          return ReactiveCollection1.Add(m,TodoItem.Create(Var.Get(rvInput)));
