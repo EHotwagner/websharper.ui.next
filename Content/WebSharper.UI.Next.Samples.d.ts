@@ -3163,8 +3163,6 @@ declare module IntelliFactory {
                     var Create : {
                         <_M1>(v: _M1): __ABBREV.__Next.Var1<_M1>;
                     };
-                }
-                module Var {
                     var Get : {
                         <_M1>(_var: __ABBREV.__Next.Var1<_M1>): _M1;
                     };
@@ -3174,6 +3172,8 @@ declare module IntelliFactory {
                     var SetFinal : {
                         <_M1>(_var: __ABBREV.__Next.Var1<_M1>, value: _M1): void;
                     };
+                }
+                module Var {
                     var Update : {
                         <_M1>(_var: __ABBREV.__Next.Var1<_M1>, fn: {
                             (x: _M1): _M1;
@@ -3187,6 +3187,11 @@ declare module IntelliFactory {
                     var FromVar : {
                         <_M1>(_var: __ABBREV.__Next.Var1<_M1>): __ABBREV.__Next.View1<_M1>;
                     };
+                    var get_Do : {
+                        (): __ABBREV.__Next.ViewBuilder;
+                    };
+                }
+                module View {
                     var CreateLazy : {
                         <_M1>(observe: {
                             (): any;
@@ -3209,24 +3214,19 @@ declare module IntelliFactory {
                             (x: _M1): any;
                         }, _arg4: __ABBREV.__Next.View1<_M1>): __ABBREV.__Next.View1<_M2>;
                     };
-                    var ConvertBag : {
-                        <_M1, _M2>(fn: {
-                            (x: _M1): _M2;
-                        }, view: __ABBREV.__Next.View1<__ABBREV.__WebSharper.seq<_M1>>): __ABBREV.__Next.View1<__ABBREV.__WebSharper.seq<_M2>>;
-                    };
-                    var ConvertBagBy : {
+                    var ConvertBy : {
                         <_M1, _M2, _M3>(key: {
                             (x: _M1): _M3;
-                        }, fn: {
+                        }, conv: {
                             (x: _M1): _M2;
                         }, view: __ABBREV.__Next.View1<__ABBREV.__WebSharper.seq<_M1>>): __ABBREV.__Next.View1<__ABBREV.__WebSharper.seq<_M2>>;
                     };
-                    var get_Do : {
-                        (): __ABBREV.__Next.ViewBuilder;
+                    var Convert : {
+                        <_M1, _M2>(conv: {
+                            (x: _M1): _M2;
+                        }, view: __ABBREV.__Next.View1<__ABBREV.__WebSharper.seq<_M1>>): __ABBREV.__Next.View1<__ABBREV.__WebSharper.seq<_M2>>;
                     };
-                }
-                module View {
-                    var CreateViewNode : {
+                    var ConvertSeqNode : {
                         <_M1, _M2>(conv: {
                             (x: __ABBREV.__Next.View1<_M1>): _M2;
                         }, value: _M1): any;
@@ -3235,6 +3235,11 @@ declare module IntelliFactory {
                         <_M1, _M2, _M3>(key: {
                             (x: _M1): _M3;
                         }, conv: {
+                            (x: __ABBREV.__Next.View1<_M1>): _M2;
+                        }, view: __ABBREV.__Next.View1<__ABBREV.__WebSharper.seq<_M1>>): __ABBREV.__Next.View1<__ABBREV.__WebSharper.seq<_M2>>;
+                    };
+                    var ConvertSeq : {
+                        <_M1, _M2>(conv: {
                             (x: __ABBREV.__Next.View1<_M1>): _M2;
                         }, view: __ABBREV.__Next.View1<__ABBREV.__WebSharper.seq<_M1>>): __ABBREV.__Next.View1<__ABBREV.__WebSharper.seq<_M2>>;
                     };
@@ -3260,6 +3265,11 @@ declare module IntelliFactory {
                         }>, view: __ABBREV.__Next.View1<_M1>): __ABBREV.__Next.View1<_M2>;
                     };
                 }
+                module Key {
+                    var Fresh : {
+                        (): __ABBREV.__Next.Key;
+                    };
+                }
                 module Model1 {
                     var Create : {
                         <_M1, _M2>(proj: {
@@ -3275,31 +3285,19 @@ declare module IntelliFactory {
                         <_M1, _M2>(_arg2: __ABBREV.__Next.Model1<_M1, _M2>): __ABBREV.__Next.View1<_M1>;
                     };
                 }
-                module ReactiveCollection1 {
+                module ListModel1 {
                     var Create : {
-                        <_M1>(eqFn: {
-                            (x: _M1): {
-                                (x: _M1): boolean;
-                            };
-                        }): any;
+                        <_M1, _M2>(key: {
+                            (x: _M2): _M1;
+                        }, init: __ABBREV.__WebSharper.seq<_M2>): __ABBREV.__Next.ListModel1<_M1, _M2>;
                     };
-                    var CreateFrom : {
-                        <_M1>(eqFn: {
-                            (x: _M1): {
-                                (x: _M1): boolean;
-                            };
-                        }, elems: __ABBREV.__WebSharper.seq<_M1>): any;
-                    };
-                    var Add : {
-                        <_M1>(coll: any, item: _M1): void;
+                    var FromSeq : {
+                        <_M1>(xs: __ABBREV.__WebSharper.seq<_M1>): __ABBREV.__Next.ListModel1<_M1, _M1>;
                     };
                 }
-                module ReactiveCollection {
-                    var Remove : {
-                        <_M1>(coll: any, item: _M1): void;
-                    };
+                module ListModel {
                     var View : {
-                        <_M1>(coll: any): __ABBREV.__Next.View1<__ABBREV.__WebSharper.seq<_M1>>;
+                        <_M1, _M2>(m: __ABBREV.__Next.ListModel1<_M1, _M2>): __ABBREV.__Next.View1<__ABBREV.__WebSharper.seq<_M2>>;
                     };
                 }
                 module Interpolation {
@@ -3317,17 +3315,12 @@ declare module IntelliFactory {
                         (): __ABBREV.__Next.Easing;
                     };
                 }
-                module Anim1 {
+                module An {
                     var Append : {
-                        (_arg2: __ABBREV.__Next.Anim, _arg1: __ABBREV.__Next.Anim): __ABBREV.__Next.Anim;
+                        (_arg2: __ABBREV.__Next.An, _arg1: __ABBREV.__Next.An): __ABBREV.__Next.An;
                     };
-                    var get_Empty : {
-                        (): __ABBREV.__Next.Anim;
-                    };
-                }
-                module Anim {
                     var Concat : {
-                        (xs: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Anim>): __ABBREV.__Next.Anim;
+                        (xs: __ABBREV.__WebSharper.seq<__ABBREV.__Next.An>): __ABBREV.__Next.An;
                     };
                     var Const : {
                         <_M1>(v: _M1): any;
@@ -3341,10 +3334,10 @@ declare module IntelliFactory {
                         }, anim: any): any;
                     };
                     var Pack : {
-                        (anim: any): __ABBREV.__Next.Anim;
+                        (anim: any): __ABBREV.__Next.An;
                     };
                     var Play : {
-                        (anim: __ABBREV.__Next.Anim): any;
+                        (anim: __ABBREV.__Next.An): any;
                     };
                     var Run : {
                         (k: {
@@ -3354,15 +3347,16 @@ declare module IntelliFactory {
                     var WhenDone : {
                         (f: {
                             (): void;
-                        }, main: __ABBREV.__Next.Anim): __ABBREV.__Next.Anim;
+                        }, main: __ABBREV.__Next.An): __ABBREV.__Next.An;
+                    };
+                    var get_Empty : {
+                        (): __ABBREV.__Next.An;
                     };
                 }
                 module Trans1 {
                     var AnimateChange : {
                         <_M1>(tr: any, x: _M1, y: _M1): any;
                     };
-                }
-                module Trans {
                     var AnimateEnter : {
                         <_M1>(tr: any, x: _M1): any;
                     };
@@ -3381,6 +3375,8 @@ declare module IntelliFactory {
                     var Trivial : {
                         <_M1>(): any;
                     };
+                }
+                module Trans {
                     var Create : {
                         <_M1>(ch: {
                             (x: _M1): {
@@ -3490,16 +3486,31 @@ declare module IntelliFactory {
                     var RunById : {
                         (id: string, tr: __ABBREV.__Next.Doc): void;
                     };
-                    var EmbedBag : {
+                    var Flatten : {
+                        <_M1>(view: __ABBREV.__Next.View1<_M1>): __ABBREV.__Next.Doc;
+                    };
+                    var Convert : {
                         <_M1>(render: {
                             (x: _M1): __ABBREV.__Next.Doc;
                         }, view: __ABBREV.__Next.View1<__ABBREV.__WebSharper.seq<_M1>>): __ABBREV.__Next.Doc;
                     };
-                    var EmbedBagBy : {
+                    var ConvertBy : {
                         <_M1, _M2>(key: {
                             (x: _M1): _M2;
                         }, render: {
                             (x: _M1): __ABBREV.__Next.Doc;
+                        }, view: __ABBREV.__Next.View1<__ABBREV.__WebSharper.seq<_M1>>): __ABBREV.__Next.Doc;
+                    };
+                    var ConvertSeq : {
+                        <_M1>(render: {
+                            (x: __ABBREV.__Next.View1<_M1>): __ABBREV.__Next.Doc;
+                        }, view: __ABBREV.__Next.View1<__ABBREV.__WebSharper.seq<_M1>>): __ABBREV.__Next.Doc;
+                    };
+                    var ConvertSeqBy : {
+                        <_M1, _M2>(key: {
+                            (x: _M1): _M2;
+                        }, render: {
+                            (x: __ABBREV.__Next.View1<_M1>): __ABBREV.__Next.Doc;
                         }, view: __ABBREV.__Next.View1<__ABBREV.__WebSharper.seq<_M1>>): __ABBREV.__Next.Doc;
                     };
                     var InputInternal : {
@@ -3543,87 +3554,7 @@ declare module IntelliFactory {
                         (): __ABBREV.__Next.Doc;
                     };
                 }
-                module RouteFrag {
-                    var Create : {
-                        (s: string): __ABBREV.__Next.RouteFrag;
-                    };
-                    var Text : {
-                        (_arg1: __ABBREV.__Next.RouteFrag): string;
-                    };
-                }
-                module Route {
-                    var Append : {
-                        (_arg2: __ABBREV.__Next.Route, _arg1: __ABBREV.__Next.Route): __ABBREV.__Next.Route;
-                    };
-                    var Create : {
-                        (xs: __ABBREV.__WebSharper.seq<__ABBREV.__Next.RouteFrag>): __ABBREV.__Next.Route;
-                    };
-                    var Frags : {
-                        (_arg3: __ABBREV.__Next.Route): __ABBREV.__WebSharper.seq<__ABBREV.__Next.RouteFrag>;
-                    };
-                    var Parse : {
-                        (xs: string): __ABBREV.__WebSharper.OptionProxy<__ABBREV.__Next.Route>;
-                    };
-                    var ToStringList : {
-                        (_arg4: __ABBREV.__Next.Route): __ABBREV.__List.T<string>;
-                    };
-                    var ToUrl : {
-                        (_arg5: __ABBREV.__Next.Route): string;
-                    };
-                }
-                module Router1 {
-                    var Create : {
-                        <_M1>(ser: {
-                            (x: _M1): __ABBREV.__Next.Route;
-                        }, deser: {
-                            (x: __ABBREV.__Next.Route): _M1;
-                        }): any;
-                    };
-                    var Install : {
-                        <_M1>(rt: any, init: _M1): __ABBREV.__Next.Var1<_M1>;
-                    };
-                }
-                module Router {
-                    var Route : {
-                        <_M1>(rt: any, route: __ABBREV.__Next.Route): _M1;
-                    };
-                    var Link : {
-                        <_M1>(rt: any, v: _M1): __ABBREV.__Next.Route;
-                    };
-                }
-                module Site1 {
-                    var Define : {
-                        <_M1, _M2>(r: any, init: _M1, render: {
-                            (x: __ABBREV.__Next.SiteId): {
-                                (x: __ABBREV.__Next.Var1<_M1>): _M2;
-                            };
-                        }): __ABBREV.__Next.Site1<_M2>;
-                    };
-                    var Dir : {
-                        <_M1>(prefix: string, sites: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Site1<_M1>>): __ABBREV.__Next.Site1<_M1>;
-                    };
-                    var Install : {
-                        <_M1>(key: {
-                            (x: _M1): __ABBREV.__Next.SiteId;
-                        }, site: __ABBREV.__Next.Site1<_M1>): __ABBREV.__Next.Var1<_M1>;
-                    };
-                    var Merge : {
-                        <_M1>(sites: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Site1<_M1>>): __ABBREV.__Next.Site1<_M1>;
-                    };
-                }
-                module Site {
-                    var Prefix : {
-                        <_M1>(prefix: string, _arg1: __ABBREV.__Next.Site1<_M1>): __ABBREV.__Next.Site1<_M1>;
-                    };
-                }
-                module Flow {
-                    interface FlowBuilder {
-                        Bind<_M1, _M2>(comp: any, func: {
-                            (x: _M1): any;
-                        }): any;
-                        Return<_M1>(value: _M1): any;
-                        ReturnFrom<_M1>(wrappedVal: any): any;
-                    }
+                module Flow1 {
                     var Map : {
                         <_M1, _M2>(f: {
                             (x: _M1): _M2;
@@ -3648,12 +3579,592 @@ declare module IntelliFactory {
                         }): any;
                     };
                     var Static : {
-                        <_M1>(doc: __ABBREV.__Next.Doc): any;
+                        (doc: __ABBREV.__Next.Doc): any;
+                    };
+                    var get_Do : {
+                        (): __ABBREV.__Next.FlowBuilder;
                     };
                 }
-                module Flow1 {
-                    var Do : {
-                        (): __ABBREV.__Flow.FlowBuilder;
+                module RouteMap {
+                    var Create : {
+                        <_M1>(ser: {
+                            (x: _M1): __ABBREV.__List.T<string>;
+                        }, des: {
+                            (x: __ABBREV.__List.T<string>): _M1;
+                        }): any;
+                    };
+                    var Install : {
+                        <_M1>(map: any): __ABBREV.__Next.Var1<_M1>;
+                    };
+                }
+                module Router1 {
+                    var Dir : {
+                        <_M1>(prefix: string, sites: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Router1<_M1>>): __ABBREV.__Next.Router1<_M1>;
+                    };
+                    var Install : {
+                        <_M1>(key: {
+                            (x: _M1): __ABBREV.__Next.RouteId;
+                        }, site: __ABBREV.__Next.Router1<_M1>): __ABBREV.__Next.Var1<_M1>;
+                    };
+                    var Merge : {
+                        <_M1>(sites: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Router1<_M1>>): __ABBREV.__Next.Router1<_M1>;
+                    };
+                    var Prefix : {
+                        <_M1>(prefix: string, _arg1: __ABBREV.__Next.Router1<_M1>): __ABBREV.__Next.Router1<_M1>;
+                    };
+                    var Route : {
+                        <_M1, _M2>(r: any, init: _M1, render: {
+                            (x: __ABBREV.__Next.RouteId): {
+                                (x: __ABBREV.__Next.Var1<_M1>): _M2;
+                            };
+                        }): __ABBREV.__Next.Router1<_M2>;
+                    };
+                }
+                module Html {
+                    module SVG {
+                        var Animate : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Animatecolor : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Animatemotion : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Animatetransform : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Mpath : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Set : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Circle : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Ellipse : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Line : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Polygon : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Polyline : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Rect : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var A : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Defs : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Glyph : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var G : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Marker : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Mask : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var MissingGlyph : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Pattern : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Svg : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Switch : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Symbol : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Desc : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Metadata : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Title : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Feblend : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Fecolormatrix : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Fecomponenttransfer : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Fecomposite : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Feconvolvematrix : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Fediffuselighting : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Fedisplacementmap : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Feflood : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Fefunca : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Fefuncb : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Fefuncg : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Fefuncr : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Fegaussianblur : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Feimage : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Femerge : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Femergenode : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Femorphology : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Feoffset : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Fespecularlighting : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Fetile : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Feturbulence : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Font : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var FontFace : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var FontFaceFormat : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var FontFaceName : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var FontFaceSrc : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var FontFaceUri : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Hkern : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Vkern : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Lineargradient : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Radialgradient : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Stop : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Image : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Text : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Use : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Fedistantlight : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Fepointlight : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Fespotlight : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Path : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Altglyph : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Altglyphdef : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Altglyphitem : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Glyphref : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Textpath : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Tref : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Tspan : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Clippath : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Colorprofile : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Cursor : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Filter : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Foreignobject : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Script : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Style : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var View : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                    }
+                    var Body : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Article : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Section : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Nav : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Aside : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var H1 : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var H2 : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var H3 : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var H4 : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var H5 : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var H6 : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Header : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Footer : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Address : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var P : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var HR : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Pre : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Blockquote : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var OL : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var UL : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var LI : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var DL : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var DT : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var DD : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Figure : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Figcaption : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Div : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var MAIN : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var A : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var EM : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Strong : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Small : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var S : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Cite : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Q : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var DFN : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Abbr : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Data : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Time : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Code : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var VAR : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Samp : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Kbd : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Sub : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Sup : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var I : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var B : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var U : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Mark : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Ruby : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var RB : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var RT : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Rtc : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var RP : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Bdi : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Bdo : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Span : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Br : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Wbr : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Ins : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Del : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Img : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var IFrame : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Embed : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Object : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Param : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Video : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Audio : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Source : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Track : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var MAP : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Area : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Table : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Caption : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Colgroup : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Col : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var TBody : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var THead : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var TFoot : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var TR : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var TD : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var TH : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Form : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Label : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Input : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Button : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Select : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Datalist : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Optgroup : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Option : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Textarea : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Keygen : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Output : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Progress : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Meter : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Fieldset : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Legend : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Script : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>): __ABBREV.__Next.Doc;
+                    };
+                    var Noscript : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Template : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Canvas : {
+                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                     };
                 }
                 interface Var1<_T1> {
@@ -3672,20 +4183,23 @@ declare module IntelliFactory {
                 }
                 interface ViewBuilder {
                 }
+                interface Key {
+                }
                 interface Model1<_T1, _T2> {
                     get_View(): __ABBREV.__Next.View1<_T1>;
                 }
                 interface Model {
                 }
-                interface ReactiveCollection1<_T1> {
-                    Items: __ABBREV.__Next.Model1<__ABBREV.__WebSharper.seq<_T1>, __ABBREV.__ResizeArray.ResizeArrayProxy<_T1>>;
-                    EqFn: {
-                        (x: _T1): {
-                            (x: _T1): boolean;
-                        };
+                interface ListModel1<_T1, _T2> {
+                    Add(item: _T2): void;
+                    Remove(item: _T2): void;
+                    Key: {
+                        (x: _T2): _T1;
                     };
+                    Var: __ABBREV.__Next.Var1<_T2[]>;
+                    View: __ABBREV.__Next.View1<__ABBREV.__WebSharper.seq<_T2>>;
                 }
-                interface ReactiveCollection {
+                interface ListModel {
                 }
                 interface Interpolation1<_T1> {
                     Interpolate(x0: number, x1: _T1, x2: _T1): _T1;
@@ -3697,13 +4211,13 @@ declare module IntelliFactory {
                         (x: number): number;
                     };
                 }
-                interface Anim1<_T1> {
+                interface Anim<_T1> {
                     Compute: {
                         (x: number): _T1;
                     };
                     Duration: number;
                 }
-                interface Anim {
+                interface An {
                 }
                 interface Trans1<_T1> {
                     TChange: {
@@ -3738,25 +4252,30 @@ declare module IntelliFactory {
                         };
                     };
                 }
-                interface RouteFrag {
+                interface FlowBuilder {
+                    Bind<_M1, _M2>(comp: any, func: {
+                        (x: _M1): any;
+                    }): any;
+                    Return<_M1>(value: _M1): any;
+                    ReturnFrom<_M1>(inner: any): any;
                 }
-                interface Route {
+                interface Flow {
+                }
+                interface RouteMap1<_T1> {
+                    Des: {
+                        (x: __ABBREV.__List.T<string>): _T1;
+                    };
+                    Ser: {
+                        (x: _T1): __ABBREV.__List.T<string>;
+                    };
+                }
+                interface RouteId {
                 }
                 interface Router1<_T1> {
-                    DeserialiseFn: {
-                        (x: __ABBREV.__Next.Route): _T1;
-                    };
-                    SerialiseFn: {
-                        (x: _T1): __ABBREV.__Next.Route;
-                    };
+                }
+                interface RouteMap {
                 }
                 interface Router {
-                }
-                interface SiteId {
-                }
-                interface Site1<_T1> {
-                }
-                interface Site {
                 }
             }
         }
@@ -3768,8 +4287,6 @@ declare module __ABBREV {
     export import __WebSharper = IntelliFactory.WebSharper;
     export import __Dom = IntelliFactory.WebSharper.Dom;
     export import __List = IntelliFactory.WebSharper.List;
-    export import __Flow = IntelliFactory.WebSharper.UI.Next.Flow;
-    export import __ResizeArray = IntelliFactory.WebSharper.Collections.ResizeArray;
 }
 
 declare module IntelliFactory {
@@ -3777,9 +4294,6 @@ declare module IntelliFactory {
         module UI {
             module Next {
                 module Client {
-                    var All : {
-                        (): __ABBREV.__List.T<any>;
-                    };
                     var Main : {
                         (): void;
                     };
@@ -3818,7 +4332,7 @@ declare module IntelliFactory {
                     var description : {
                         <_M1>(v: _M1): __ABBREV.__Next.Doc;
                     };
-                    var TheRouter : {
+                    var TheRouteMap : {
                         (): any;
                     };
                     var Sample : {
@@ -4172,11 +4686,6 @@ declare module IntelliFactory {
                     var initCalc : {
                         (): any;
                     };
-                    var div : {
-                        (): {
-                            (x: __ABBREV.__List.T<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                        };
-                    };
                     var Sample : {
                         (): any;
                     };
@@ -4200,11 +4709,14 @@ declare module IntelliFactory {
                     }
                     interface TodoItem {
                         Done: __ABBREV.__Next.Var1<boolean>;
-                        TodoKey: number;
+                        Key: __ABBREV.__Next.Key;
                         TodoText: string;
                     }
-                    var Key : {
-                        (item: __ABBREV.__TodoList.TodoItem): number;
+                    interface Model {
+                        Items: __ABBREV.__Next.ListModel1<__ABBREV.__Next.Key, __ABBREV.__TodoList.TodoItem>;
+                    }
+                    var CreateModel : {
+                        (): any;
                     };
                     var RenderItem : {
                         (m: any, todo: __ABBREV.__TodoList.TodoItem): __ABBREV.__Next.Doc;
@@ -4255,9 +4767,6 @@ declare module IntelliFactory {
                     var Main : {
                         (): __ABBREV.__Next.Doc;
                     };
-                    var link : {
-                        (txt: string, href: string): __ABBREV.__Next.Doc;
-                    };
                     var Description : {
                         (): __ABBREV.__Next.Doc;
                     };
@@ -4299,8 +4808,8 @@ declare module IntelliFactory {
                         Body: __ABBREV.__Next.Doc;
                         Description: __ABBREV.__Next.Doc;
                         Meta: any;
-                        Site: __ABBREV.__Next.Site1<any>;
-                        SiteId: __ABBREV.__Next.SiteId;
+                        Router: __ABBREV.__Next.Router1<any>;
+                        RouteId: __ABBREV.__Next.RouteId;
                     }
                     interface Visuals<_T1> {
                         Desc: {
@@ -4346,8 +4855,8 @@ declare module IntelliFactory {
 }
 declare module __ABBREV {
     
-    export import __List = IntelliFactory.WebSharper.List;
     export import __Next = IntelliFactory.WebSharper.UI.Next;
+    export import __List = IntelliFactory.WebSharper.List;
     export import __BobsleighSite = IntelliFactory.WebSharper.UI.Next.BobsleighSite;
     export import __ObjectConstancy = IntelliFactory.WebSharper.UI.Next.ObjectConstancy;
     export import __WebSharper = IntelliFactory.WebSharper;
