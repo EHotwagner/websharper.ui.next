@@ -3166,14 +3166,14 @@ declare module IntelliFactory {
                     var Get : {
                         <_M1>(_var: __ABBREV.__Next.Var1<_M1>): _M1;
                     };
+                }
+                module Var {
                     var Set : {
                         <_M1>(_var: __ABBREV.__Next.Var1<_M1>, value: _M1): void;
                     };
                     var SetFinal : {
                         <_M1>(_var: __ABBREV.__Next.Var1<_M1>, value: _M1): void;
                     };
-                }
-                module Var {
                     var Update : {
                         <_M1>(_var: __ABBREV.__Next.Var1<_M1>, fn: {
                             (x: _M1): _M1;
@@ -3187,11 +3187,6 @@ declare module IntelliFactory {
                     var FromVar : {
                         <_M1>(_var: __ABBREV.__Next.Var1<_M1>): __ABBREV.__Next.View1<_M1>;
                     };
-                    var get_Do : {
-                        (): __ABBREV.__Next.ViewBuilder;
-                    };
-                }
-                module View {
                     var CreateLazy : {
                         <_M1>(observe: {
                             (): any;
@@ -3246,6 +3241,11 @@ declare module IntelliFactory {
                     var Join : {
                         <_M1>(_arg5: __ABBREV.__Next.View1<__ABBREV.__Next.View1<_M1>>): __ABBREV.__Next.View1<_M1>;
                     };
+                    var get_Do : {
+                        (): __ABBREV.__Next.ViewBuilder;
+                    };
+                }
+                module View {
                     var Bind : {
                         <_M1, _M2>(fn: {
                             (x: _M1): __ABBREV.__Next.View1<_M2>;
@@ -3281,11 +3281,13 @@ declare module IntelliFactory {
                             (x: _M1): void;
                         }, _arg1: __ABBREV.__Next.Model1<_M2, _M1>): void;
                     };
+                }
+                module Model {
                     var View : {
                         <_M1, _M2>(_arg2: __ABBREV.__Next.Model1<_M1, _M2>): __ABBREV.__Next.View1<_M1>;
                     };
                 }
-                module ListModel1 {
+                module ListModel {
                     var Create : {
                         <_M1, _M2>(key: {
                             (x: _M2): _M1;
@@ -3294,8 +3296,6 @@ declare module IntelliFactory {
                     var FromSeq : {
                         <_M1>(xs: __ABBREV.__WebSharper.seq<_M1>): __ABBREV.__Next.ListModel1<_M1, _M1>;
                     };
-                }
-                module ListModel {
                     var View : {
                         <_M1, _M2>(m: __ABBREV.__Next.ListModel1<_M1, _M2>): __ABBREV.__Next.View1<__ABBREV.__WebSharper.seq<_M2>>;
                     };
@@ -3372,11 +3372,11 @@ declare module IntelliFactory {
                     var CanAnimateExit : {
                         <_M1>(tr: any): boolean;
                     };
+                }
+                module Trans {
                     var Trivial : {
                         <_M1>(): any;
                     };
-                }
-                module Trans {
                     var Create : {
                         <_M1>(ch: {
                             (x: _M1): {
@@ -3466,6 +3466,9 @@ declare module IntelliFactory {
                         (name: __ABBREV.__Dom.Element, attr: __ABBREV.__Next.Attr, children: __ABBREV.__Next.Doc): __ABBREV.__Next.Doc;
                     };
                     var Element : {
+                        (name: string, attr: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, children: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var SvgElement : {
                         (name: string, attr: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, children: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                     };
                     var Static : {
@@ -3571,6 +3574,11 @@ declare module IntelliFactory {
                     var Embed : {
                         <_M1>(fl: any): __ABBREV.__Next.Doc;
                     };
+                    var get_Do : {
+                        (): __ABBREV.__Next.FlowBuilder;
+                    };
+                }
+                module Flow {
                     var Define : {
                         <_M1>(f: {
                             (x: {
@@ -3580,9 +3588,6 @@ declare module IntelliFactory {
                     };
                     var Static : {
                         (doc: __ABBREV.__Next.Doc): any;
-                    };
-                    var get_Do : {
-                        (): __ABBREV.__Next.FlowBuilder;
                     };
                 }
                 module RouteMap {
@@ -3597,7 +3602,7 @@ declare module IntelliFactory {
                         <_M1>(map: any): __ABBREV.__Next.Var1<_M1>;
                     };
                 }
-                module Router1 {
+                module Router {
                     var Dir : {
                         <_M1>(prefix: string, sites: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Router1<_M1>>): __ABBREV.__Next.Router1<_M1>;
                     };
@@ -3621,146 +3626,598 @@ declare module IntelliFactory {
                     };
                 }
                 module Html {
-                    module SVG {
+                    module SvgAttributes {
+                        var AccentHeight : {
+                            (): string;
+                        };
+                        var Accumulate : {
+                            (): string;
+                        };
+                        var Additive : {
+                            (): string;
+                        };
+                        var AlignmentBaseline : {
+                            (): string;
+                        };
+                        var Ascent : {
+                            (): string;
+                        };
+                        var AttributeName : {
+                            (): string;
+                        };
+                        var AttributeType : {
+                            (): string;
+                        };
+                        var Azimuth : {
+                            (): string;
+                        };
+                        var BaseFrequency : {
+                            (): string;
+                        };
+                        var BaselineShift : {
+                            (): string;
+                        };
+                        var Begin : {
+                            (): string;
+                        };
+                        var Bias : {
+                            (): string;
+                        };
+                        var CalcMode : {
+                            (): string;
+                        };
+                        var Class : {
+                            (): string;
+                        };
+                        var Clip : {
+                            (): string;
+                        };
+                        var ClipPathUnits : {
+                            (): string;
+                        };
+                        var ClipPath : {
+                            (): string;
+                        };
+                        var ClipRule : {
+                            (): string;
+                        };
+                        var Color : {
+                            (): string;
+                        };
+                        var ColorInterpolation : {
+                            (): string;
+                        };
+                        var ColorInterpolationFilters : {
+                            (): string;
+                        };
+                        var ColorProfile : {
+                            (): string;
+                        };
+                        var ColorRendering : {
+                            (): string;
+                        };
+                        var ContentScriptType : {
+                            (): string;
+                        };
+                        var ContentStyleType : {
+                            (): string;
+                        };
+                        var Cursor : {
+                            (): string;
+                        };
+                        var CX : {
+                            (): string;
+                        };
+                        var CY : {
+                            (): string;
+                        };
+                        var D : {
+                            (): string;
+                        };
+                        var DiffuseConstant : {
+                            (): string;
+                        };
+                        var Direction : {
+                            (): string;
+                        };
+                        var Display : {
+                            (): string;
+                        };
+                        var Divisor : {
+                            (): string;
+                        };
+                        var DominantBaseline : {
+                            (): string;
+                        };
+                        var Dur : {
+                            (): string;
+                        };
+                        var DX : {
+                            (): string;
+                        };
+                        var DY : {
+                            (): string;
+                        };
+                        var EdgeMode : {
+                            (): string;
+                        };
+                        var Elevation : {
+                            (): string;
+                        };
+                        var End : {
+                            (): string;
+                        };
+                        var ExternalResourcesRequired : {
+                            (): string;
+                        };
+                        var Fill : {
+                            (): string;
+                        };
+                        var FillOpacity : {
+                            (): string;
+                        };
+                        var FillRule : {
+                            (): string;
+                        };
+                        var Filter : {
+                            (): string;
+                        };
+                        var FilterRes : {
+                            (): string;
+                        };
+                        var FilterUnits : {
+                            (): string;
+                        };
+                        var FloodColor : {
+                            (): string;
+                        };
+                        var FloodOpacity : {
+                            (): string;
+                        };
+                        var FontFamily : {
+                            (): string;
+                        };
+                        var FontSize : {
+                            (): string;
+                        };
+                        var FontSizeAdjust : {
+                            (): string;
+                        };
+                        var FontStretch : {
+                            (): string;
+                        };
+                        var FontStyle : {
+                            (): string;
+                        };
+                        var FontVariant : {
+                            (): string;
+                        };
+                        var FontWeight : {
+                            (): string;
+                        };
+                        var From : {
+                            (): string;
+                        };
+                        var GradientTransform : {
+                            (): string;
+                        };
+                        var GradientUnits : {
+                            (): string;
+                        };
+                        var Height : {
+                            (): string;
+                        };
+                        var ImageRendering : {
+                            (): string;
+                        };
+                        var IN : {
+                            (): string;
+                        };
+                        var In2 : {
+                            (): string;
+                        };
+                        var K1 : {
+                            (): string;
+                        };
+                        var K2 : {
+                            (): string;
+                        };
+                        var K3 : {
+                            (): string;
+                        };
+                        var K4 : {
+                            (): string;
+                        };
+                        var KernelMatrix : {
+                            (): string;
+                        };
+                        var KernelUnitLength : {
+                            (): string;
+                        };
+                        var Kerning : {
+                            (): string;
+                        };
+                        var KeySplines : {
+                            (): string;
+                        };
+                        var KeyTimes : {
+                            (): string;
+                        };
+                        var LetterSpacing : {
+                            (): string;
+                        };
+                        var LightingColor : {
+                            (): string;
+                        };
+                        var LimitingConeAngle : {
+                            (): string;
+                        };
+                        var Local : {
+                            (): string;
+                        };
+                        var MarkerEnd : {
+                            (): string;
+                        };
+                        var MarkerMid : {
+                            (): string;
+                        };
+                        var MarkerStart : {
+                            (): string;
+                        };
+                        var MarkerHeight : {
+                            (): string;
+                        };
+                        var MarkerUnits : {
+                            (): string;
+                        };
+                        var MarkerWidth : {
+                            (): string;
+                        };
+                        var Mask : {
+                            (): string;
+                        };
+                        var MaskContentUnits : {
+                            (): string;
+                        };
+                        var MaskUnits : {
+                            (): string;
+                        };
+                        var Max : {
+                            (): string;
+                        };
+                        var Min : {
+                            (): string;
+                        };
+                        var Mode : {
+                            (): string;
+                        };
+                        var NumOctaves : {
+                            (): string;
+                        };
+                        var Opacity : {
+                            (): string;
+                        };
+                        var Operator : {
+                            (): string;
+                        };
+                        var Order : {
+                            (): string;
+                        };
+                        var Overflow : {
+                            (): string;
+                        };
+                        var PaintOrder : {
+                            (): string;
+                        };
+                        var PathLength : {
+                            (): string;
+                        };
+                        var PatternContentUnits : {
+                            (): string;
+                        };
+                        var PatternTransform : {
+                            (): string;
+                        };
+                        var PatternUnits : {
+                            (): string;
+                        };
+                        var PointerEvents : {
+                            (): string;
+                        };
+                        var Points : {
+                            (): string;
+                        };
+                        var PointsAtX : {
+                            (): string;
+                        };
+                        var PointsAtY : {
+                            (): string;
+                        };
+                        var PointsAtZ : {
+                            (): string;
+                        };
+                        var PreserveAlpha : {
+                            (): string;
+                        };
+                        var PreserveAspectRatio : {
+                            (): string;
+                        };
+                        var PrimitiveUnits : {
+                            (): string;
+                        };
+                        var R : {
+                            (): string;
+                        };
+                        var Radius : {
+                            (): string;
+                        };
+                        var RepeatCount : {
+                            (): string;
+                        };
+                        var RepeatDur : {
+                            (): string;
+                        };
+                        var RequiredFeatures : {
+                            (): string;
+                        };
+                        var Restart : {
+                            (): string;
+                        };
+                        var Result : {
+                            (): string;
+                        };
+                        var RX : {
+                            (): string;
+                        };
+                        var RY : {
+                            (): string;
+                        };
+                        var Scale : {
+                            (): string;
+                        };
+                        var Seed : {
+                            (): string;
+                        };
+                        var ShapeRendering : {
+                            (): string;
+                        };
+                        var SpecularConstant : {
+                            (): string;
+                        };
+                        var SpecularExponent : {
+                            (): string;
+                        };
+                        var StdDeviation : {
+                            (): string;
+                        };
+                        var StitchTiles : {
+                            (): string;
+                        };
+                        var StopColor : {
+                            (): string;
+                        };
+                        var StopOpacity : {
+                            (): string;
+                        };
+                        var Stroke : {
+                            (): string;
+                        };
+                        var StrokeDashArray : {
+                            (): string;
+                        };
+                        var StrokeDashOffset : {
+                            (): string;
+                        };
+                        var StrokeLineCap : {
+                            (): string;
+                        };
+                        var StrokeLineJoin : {
+                            (): string;
+                        };
+                        var StrokeMiterLimit : {
+                            (): string;
+                        };
+                        var StrokeOpacity : {
+                            (): string;
+                        };
+                        var StrokeWidth : {
+                            (): string;
+                        };
+                        var Style : {
+                            (): string;
+                        };
+                        var SurfaceScale : {
+                            (): string;
+                        };
+                        var TargetX : {
+                            (): string;
+                        };
+                        var TargetY : {
+                            (): string;
+                        };
+                        var TextAnchor : {
+                            (): string;
+                        };
+                        var TextDecoration : {
+                            (): string;
+                        };
+                        var TextRendering : {
+                            (): string;
+                        };
+                        var To : {
+                            (): string;
+                        };
+                        var Transform : {
+                            (): string;
+                        };
+                        var Type : {
+                            (): string;
+                        };
+                        var Values : {
+                            (): string;
+                        };
+                        var ViewBox : {
+                            (): string;
+                        };
+                        var Visibility : {
+                            (): string;
+                        };
+                        var Width : {
+                            (): string;
+                        };
+                        var WordSpacing : {
+                            (): string;
+                        };
+                        var WritingMode : {
+                            (): string;
+                        };
+                        var X : {
+                            (): string;
+                        };
+                        var X1 : {
+                            (): string;
+                        };
+                        var X2 : {
+                            (): string;
+                        };
+                        var XChannelSelector : {
+                            (): string;
+                        };
+                        var Y : {
+                            (): string;
+                        };
+                        var Y1 : {
+                            (): string;
+                        };
+                        var Y2 : {
+                            (): string;
+                        };
+                        var YChannelSelector : {
+                            (): string;
+                        };
+                        var Z : {
+                            (): string;
+                        };
+                    }
+                    module SvgElements {
+                        var A : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var AltGlyph : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var AltGlyphDef : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var AltGlyphItem : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
                         var Animate : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
-                        var Animatecolor : {
+                        var AnimateColor : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
-                        var Animatemotion : {
+                        var AnimateMotion : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
-                        var Animatetransform : {
-                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                        };
-                        var Mpath : {
-                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                        };
-                        var Set : {
+                        var AnimateTransform : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
                         var Circle : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
-                        var Ellipse : {
+                        var ClipPath : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
-                        var Line : {
+                        var ColorProfile : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
-                        var Polygon : {
-                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                        };
-                        var Polyline : {
-                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                        };
-                        var Rect : {
-                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                        };
-                        var A : {
+                        var Cursor : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
                         var Defs : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
-                        var Glyph : {
-                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                        };
-                        var G : {
-                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                        };
-                        var Marker : {
-                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                        };
-                        var Mask : {
-                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                        };
-                        var MissingGlyph : {
-                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                        };
-                        var Pattern : {
-                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                        };
-                        var Svg : {
-                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                        };
-                        var Switch : {
-                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                        };
-                        var Symbol : {
-                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                        };
                         var Desc : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
-                        var Metadata : {
+                        var Ellipse : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
-                        var Title : {
+                        var FeBlend : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
-                        var Feblend : {
+                        var FeColorMatrix : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
-                        var Fecolormatrix : {
+                        var FeComponentTransfer : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
-                        var Fecomponenttransfer : {
+                        var FeComposite : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
-                        var Fecomposite : {
+                        var FeConvolveMatrix : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
-                        var Feconvolvematrix : {
+                        var FeDiffuseLighting : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
-                        var Fediffuselighting : {
+                        var FeDisplacementMap : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
-                        var Fedisplacementmap : {
+                        var FeDistantLight : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
-                        var Feflood : {
+                        var FeFlood : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
-                        var Fefunca : {
+                        var FeFuncA : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
-                        var Fefuncb : {
+                        var FeFuncB : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
-                        var Fefuncg : {
+                        var FeFuncG : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
-                        var Fefuncr : {
+                        var FeFuncR : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
-                        var Fegaussianblur : {
+                        var FeGaussianBlur : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
-                        var Feimage : {
+                        var FeImage : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
-                        var Femerge : {
+                        var FeMerge : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
-                        var Femergenode : {
+                        var FeMergeNode : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
-                        var Femorphology : {
+                        var FeMorphology : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
-                        var Feoffset : {
+                        var FeOffset : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
-                        var Fespecularlighting : {
+                        var FePointLight : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
-                        var Fetile : {
+                        var FeSpecularLighting : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
-                        var Feturbulence : {
+                        var FeSpotLight : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var FeTile : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var FeTurbulence : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Filter : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
                         var Font : {
@@ -3781,390 +4238,904 @@ declare module IntelliFactory {
                         var FontFaceUri : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
-                        var Hkern : {
+                        var ForeignObject : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
-                        var Vkern : {
+                        var G : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
-                        var Lineargradient : {
+                        var Glyph : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
-                        var Radialgradient : {
+                        var GlyphRef : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
-                        var Stop : {
+                        var HKern : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
                         var Image : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
-                        var Text : {
+                        var Line : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
-                        var Use : {
+                        var LinearGradient : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
-                        var Fedistantlight : {
+                        var Marker : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
-                        var Fepointlight : {
+                        var Mask : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
-                        var Fespotlight : {
+                        var Metadata : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var MissingGlyph : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var MPath : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
                         var Path : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
-                        var Altglyph : {
+                        var Pattern : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
-                        var Altglyphdef : {
+                        var Polygon : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
-                        var Altglyphitem : {
+                        var Polyline : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
-                        var Glyphref : {
+                        var RadialGradient : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
-                        var Textpath : {
-                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                        };
-                        var Tref : {
-                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                        };
-                        var Tspan : {
-                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                        };
-                        var Clippath : {
-                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                        };
-                        var Colorprofile : {
-                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                        };
-                        var Cursor : {
-                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                        };
-                        var Filter : {
-                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                        };
-                        var Foreignobject : {
+                        var Rect : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
                         var Script : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
+                        var Set : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Stop : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
                         var Style : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Svg : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Switch : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Symbol : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Text : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var TextPath : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Title : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var TRef : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var TSpan : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Use : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
                         var View : {
                             (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                         };
+                        var VKern : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
                     }
-                    var Body : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var Article : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var Section : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var Nav : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var Aside : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var H1 : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var H2 : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var H3 : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var H4 : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var H5 : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var H6 : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var Header : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var Footer : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var Address : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var P : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var HR : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var Pre : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var Blockquote : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var OL : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var UL : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var LI : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var DL : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var DT : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var DD : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var Figure : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var Figcaption : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var Div : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var MAIN : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
+                    module Attributes {
+                        var Accept : {
+                            (): string;
+                        };
+                        var AcceptCharset : {
+                            (): string;
+                        };
+                        var Accesskey : {
+                            (): string;
+                        };
+                        var Action : {
+                            (): string;
+                        };
+                        var Align : {
+                            (): string;
+                        };
+                        var Alt : {
+                            (): string;
+                        };
+                        var Async : {
+                            (): string;
+                        };
+                        var AutoComplete : {
+                            (): string;
+                        };
+                        var AutoFocus : {
+                            (): string;
+                        };
+                        var AutoPlay : {
+                            (): string;
+                        };
+                        var AutoSave : {
+                            (): string;
+                        };
+                        var BgColor : {
+                            (): string;
+                        };
+                        var Border : {
+                            (): string;
+                        };
+                        var Buffered : {
+                            (): string;
+                        };
+                        var Challenge : {
+                            (): string;
+                        };
+                        var Charset : {
+                            (): string;
+                        };
+                        var Checked : {
+                            (): string;
+                        };
+                        var Cite : {
+                            (): string;
+                        };
+                        var Class : {
+                            (): string;
+                        };
+                        var Code : {
+                            (): string;
+                        };
+                        var Codebase : {
+                            (): string;
+                        };
+                        var Color : {
+                            (): string;
+                        };
+                        var Cols : {
+                            (): string;
+                        };
+                        var ColSpan : {
+                            (): string;
+                        };
+                        var Content : {
+                            (): string;
+                        };
+                        var ContentEditable : {
+                            (): string;
+                        };
+                        var ContextMenu : {
+                            (): string;
+                        };
+                        var Controls : {
+                            (): string;
+                        };
+                        var Coords : {
+                            (): string;
+                        };
+                        var Datetime : {
+                            (): string;
+                        };
+                        var Default : {
+                            (): string;
+                        };
+                        var Defer : {
+                            (): string;
+                        };
+                        var Dir : {
+                            (): string;
+                        };
+                        var DirName : {
+                            (): string;
+                        };
+                        var Disabled : {
+                            (): string;
+                        };
+                        var Download : {
+                            (): string;
+                        };
+                        var Draggable : {
+                            (): string;
+                        };
+                        var Dropzone : {
+                            (): string;
+                        };
+                        var EncType : {
+                            (): string;
+                        };
+                        var For : {
+                            (): string;
+                        };
+                        var Form : {
+                            (): string;
+                        };
+                        var FormAction : {
+                            (): string;
+                        };
+                        var Headers : {
+                            (): string;
+                        };
+                        var Height : {
+                            (): string;
+                        };
+                        var Hidden : {
+                            (): string;
+                        };
+                        var High : {
+                            (): string;
+                        };
+                        var Href : {
+                            (): string;
+                        };
+                        var HrefLang : {
+                            (): string;
+                        };
+                        var HttpEquiv : {
+                            (): string;
+                        };
+                        var Icon : {
+                            (): string;
+                        };
+                        var ID : {
+                            (): string;
+                        };
+                        var IsMap : {
+                            (): string;
+                        };
+                        var ItemProp : {
+                            (): string;
+                        };
+                        var KeyType : {
+                            (): string;
+                        };
+                        var Kind : {
+                            (): string;
+                        };
+                        var Label : {
+                            (): string;
+                        };
+                        var Lang : {
+                            (): string;
+                        };
+                        var Language : {
+                            (): string;
+                        };
+                        var List : {
+                            (): string;
+                        };
+                        var Loop : {
+                            (): string;
+                        };
+                        var Low : {
+                            (): string;
+                        };
+                        var Manifest : {
+                            (): string;
+                        };
+                        var Max : {
+                            (): string;
+                        };
+                        var MaxLength : {
+                            (): string;
+                        };
+                        var Media : {
+                            (): string;
+                        };
+                        var Method : {
+                            (): string;
+                        };
+                        var Min : {
+                            (): string;
+                        };
+                        var Multiple : {
+                            (): string;
+                        };
+                        var Name : {
+                            (): string;
+                        };
+                        var NoValidate : {
+                            (): string;
+                        };
+                        var Open : {
+                            (): string;
+                        };
+                        var Optimum : {
+                            (): string;
+                        };
+                        var Pattern : {
+                            (): string;
+                        };
+                        var Ping : {
+                            (): string;
+                        };
+                        var Placeholder : {
+                            (): string;
+                        };
+                        var Poster : {
+                            (): string;
+                        };
+                        var Preload : {
+                            (): string;
+                        };
+                        var PubDate : {
+                            (): string;
+                        };
+                        var RadioGroup : {
+                            (): string;
+                        };
+                        var Readonly : {
+                            (): string;
+                        };
+                        var Rel : {
+                            (): string;
+                        };
+                        var Required : {
+                            (): string;
+                        };
+                        var Reversed : {
+                            (): string;
+                        };
+                        var Rows : {
+                            (): string;
+                        };
+                        var RowSpan : {
+                            (): string;
+                        };
+                        var Sandbox : {
+                            (): string;
+                        };
+                        var Spellcheck : {
+                            (): string;
+                        };
+                        var Scope : {
+                            (): string;
+                        };
+                        var Scoped : {
+                            (): string;
+                        };
+                        var Seamless : {
+                            (): string;
+                        };
+                        var Selected : {
+                            (): string;
+                        };
+                        var Shape : {
+                            (): string;
+                        };
+                        var Size : {
+                            (): string;
+                        };
+                        var Sizes : {
+                            (): string;
+                        };
+                        var Span : {
+                            (): string;
+                        };
+                        var Src : {
+                            (): string;
+                        };
+                        var Srcdoc : {
+                            (): string;
+                        };
+                        var SrcLang : {
+                            (): string;
+                        };
+                        var Start : {
+                            (): string;
+                        };
+                        var Step : {
+                            (): string;
+                        };
+                        var Style : {
+                            (): string;
+                        };
+                        var Summary : {
+                            (): string;
+                        };
+                        var TabIndex : {
+                            (): string;
+                        };
+                        var Target : {
+                            (): string;
+                        };
+                        var Title : {
+                            (): string;
+                        };
+                        var Type : {
+                            (): string;
+                        };
+                        var Usemap : {
+                            (): string;
+                        };
+                        var Value : {
+                            (): string;
+                        };
+                        var Width : {
+                            (): string;
+                        };
+                        var Wrap : {
+                            (): string;
+                        };
+                    }
+                    module Elements {
+                        var A : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Abbr : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Address : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Area : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Article : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Aside : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Audio : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var B : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Base : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var BDI : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var BDO : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var BlockQuote : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Body : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Br : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Button : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Canvas : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Caption : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Cite : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Code : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Col : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var ColGroup : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Data : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var DataList : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var DD : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Del : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Details : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var DFN : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Div : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var DL : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var DT : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Em : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Embed : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var FieldSet : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var FigCaption : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Figure : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Footer : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Form : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var H1 : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var H2 : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var H3 : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var H4 : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var H5 : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var H6 : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Head : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Header : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var HR : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Html : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var I : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var IFrame : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Img : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Input : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Ins : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Kbd : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Keygen : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Label : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Legend : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var LI : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Link : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Main : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Map : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Mark : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Menu : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var MenuItem : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Meta : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Meter : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Nav : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var NoScript : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Object : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var OL : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var OptGroup : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Option : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Output : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var P : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Param : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Picture : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Pre : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Progress : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Q : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var RP : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var RT : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Ruby : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var S : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Samp : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Script : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Section : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Select : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Small : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Source : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Span : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Strong : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Style : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Sub : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Summary : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Sup : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Table : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var TBody : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var TD : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var TextArea : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var TFoot : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var TH : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var THead : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Time : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Title : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var TR : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Track : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var U : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var UL : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Var : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var Video : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                        var WBR : {
+                            (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        };
+                    }
                     var A : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        (atr: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                     };
-                    var EM : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var Strong : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var Small : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var S : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var Cite : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var Q : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var DFN : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var Abbr : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var Data : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var Time : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var Code : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var VAR : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var Samp : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var Kbd : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var Sub : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var Sup : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var I : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var B : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var U : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var Mark : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var Ruby : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var RB : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var RT : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var Rtc : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var RP : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var Bdi : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var Bdo : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var Span : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var Br : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var Wbr : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var Ins : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    var A0 : {
+                        (ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                     };
                     var Del : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        (atr: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                     };
-                    var Img : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    var Del0 : {
+                        (ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                     };
-                    var IFrame : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    var Div : {
+                        (atr: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                     };
-                    var Embed : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var Object : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var Param : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var Video : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var Audio : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var Source : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var Track : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var MAP : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var Area : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var Table : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var Caption : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var Colgroup : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var Col : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var TBody : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var THead : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var TFoot : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var TR : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var TD : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                    };
-                    var TH : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    var Div0 : {
+                        (ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                     };
                     var Form : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        (atr: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var Form0 : {
+                        (ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var H1 : {
+                        (atr: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var H10 : {
+                        (ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var H2 : {
+                        (atr: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var H20 : {
+                        (ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var H3 : {
+                        (atr: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var H30 : {
+                        (ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var H4 : {
+                        (atr: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var H40 : {
+                        (ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var H5 : {
+                        (atr: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var H50 : {
+                        (ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var H6 : {
+                        (atr: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var H60 : {
+                        (ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var LI : {
+                        (atr: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var LI0 : {
+                        (ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                     };
                     var Label : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                        (atr: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                     };
-                    var Input : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    var Label0 : {
+                        (ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                     };
-                    var Button : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    var Nav : {
+                        (atr: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                     };
-                    var Select : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    var Nav0 : {
+                        (ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                     };
-                    var Datalist : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    var P : {
+                        (atr: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                     };
-                    var Optgroup : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    var P0 : {
+                        (ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                     };
-                    var Option : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    var Span : {
+                        (atr: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                     };
-                    var Textarea : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    var Span0 : {
+                        (ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                     };
-                    var Keygen : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    var Table : {
+                        (atr: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                     };
-                    var Output : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    var Table0 : {
+                        (ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                     };
-                    var Progress : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    var TBody : {
+                        (atr: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                     };
-                    var Meter : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    var TBody0 : {
+                        (ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                     };
-                    var Fieldset : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    var THead : {
+                        (atr: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                     };
-                    var Legend : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    var THead0 : {
+                        (ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                     };
-                    var Script : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>): __ABBREV.__Next.Doc;
+                    var TR : {
+                        (atr: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                     };
-                    var Noscript : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    var TR0 : {
+                        (ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                     };
-                    var Template : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    var TD : {
+                        (atr: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                     };
-                    var Canvas : {
-                        (ats: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    var TD0 : {
+                        (ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var UL : {
+                        (atr: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var UL0 : {
+                        (ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var OL : {
+                        (atr: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                    };
+                    var OL0 : {
+                        (ch: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
                     };
                 }
                 interface Var1<_T1> {
@@ -4252,14 +5223,14 @@ declare module IntelliFactory {
                         };
                     };
                 }
+                interface Flow {
+                }
                 interface FlowBuilder {
                     Bind<_M1, _M2>(comp: any, func: {
                         (x: _M1): any;
                     }): any;
                     Return<_M1>(value: _M1): any;
                     ReturnFrom<_M1>(inner: any): any;
-                }
-                interface Flow {
                 }
                 interface RouteMap1<_T1> {
                     Des: {

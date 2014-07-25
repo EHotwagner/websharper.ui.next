@@ -12004,7 +12004,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
 
 (function()
 {
- var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,IntrinsicFunctionProxy,Concurrency,Array,Seq,UI,Next,Abbrev,Fresh,Collections,HashSet,HashSet1,HashSet2,Arrays,JQueue,Unchecked,Slot,An,AppendList,Anims,window,Trans1,Option,View,Lazy,Array1,Attrs,DomUtility,Attr,AnimatedAttrNode,DynamicAttrNode,Docs,Doc,View1,List,Var,T,Var1,Mailbox,Operators,NodeSet,DocElemNode,DomNodes,jQuery,document,Easing,Easings,FlowBuilder,Flow1,DoubleInterpolation,Key,ListModels,ListModel1,Model1,Strings,encodeURIComponent,decodeURIComponent,Route,Routing,Router1,Trie,Dictionary,Snap,Async,Enumerator,ResizeArray,ResizeArrayProxy,MapModule,FSharpMap;
+ var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,IntrinsicFunctionProxy,Concurrency,Array,Seq,UI,Next,Abbrev,Fresh,Collections,HashSet,HashSet1,HashSet2,Arrays,JQueue,Unchecked,Slot,An,AppendList,Anims,window,Trans1,Option,View1,Lazy,Array1,Attrs,DomUtility,Attr,AnimatedAttrNode,DynamicAttrNode,View,Docs,Doc,List,Var,T,Mailbox,Operators,NodeSet,DocElemNode,DomNodes,jQuery,document,Easing,Easings,Var1,FlowBuilder,Flow1,Html,Elements,DoubleInterpolation,Key,ListModel1,ListModel,ListModels,Model,Model1,Strings,encodeURIComponent,decodeURIComponent,Route,Routing,Router,Trie,Dictionary,Snap,Async,Enumerator,ResizeArray,ResizeArrayProxy,MapModule,FSharpMap,Attributes,SvgAttributes;
  Runtime.Define(Global,{
   IntelliFactory:{
    WebSharper:{
@@ -12464,7 +12464,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          $:0
         };
         r.dirty=true;
-        r.updates=View.Map(function(x)
+        r.updates=View1.Map(function(x)
         {
          r.logical={
           $:1,
@@ -12912,7 +12912,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         {
          return function(y)
          {
-          return View.Map2(function()
+          return View1.Map2(function()
           {
            return function()
            {
@@ -12932,7 +12932,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        Append:function(a,b)
        {
         var x;
-        x=View.Map2(function()
+        x=View1.Map2(function()
         {
          return function()
          {
@@ -13012,26 +13012,26 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        Convert:function(render,view)
        {
-        return Doc.Flatten(View.Convert(render,view));
+        return Doc.Flatten(View1.Convert(render,view));
        },
        ConvertBy:function(key,render,view)
        {
-        return Doc.Flatten(View.ConvertBy(key,render,view));
+        return Doc.Flatten(View1.ConvertBy(key,render,view));
        },
        ConvertSeq:function(render,view)
        {
-        return Doc.Flatten(View.ConvertSeq(render,view));
+        return Doc.Flatten(View1.ConvertSeq(render,view));
        },
        ConvertSeqBy:function(key,render,view)
        {
-        return Doc.Flatten(View.ConvertSeqBy(key,render,view));
+        return Doc.Flatten(View1.ConvertSeqBy(key,render,view));
        },
        Elem:function(name,attr,children)
        {
         var node,arg20,updates;
         node=Docs.CreateElemNode(name,attr,children.DocNode);
         arg20=children.Updates;
-        updates=View.Map2(function()
+        updates=View1.Map2(function()
         {
          return function()
          {
@@ -13054,7 +13054,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        {
         var node,x;
         node=Docs.CreateEmbedNode();
-        x=View.Map(function()
+        x=View1.Map(function()
         {
         },View.Bind(function(doc)
         {
@@ -13068,7 +13068,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        Flatten:function(view)
        {
-        return Doc.EmbedView(View.Map(function(arg00)
+        return Doc.EmbedView(View1.Map(function(arg00)
         {
          return Doc.Concat(arg00);
         },view));
@@ -13100,7 +13100,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         },View1.FromVar(_var));
         el.addEventListener("input",function()
         {
-         return Var1.Set(_var,el.value);
+         return Var.Set(_var,el.value);
         },false);
         return Doc.Elem(el,Attr.Append(attrN,valAttr),Doc.get_Empty());
        },
@@ -13153,7 +13153,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         selectedItemAttr=Attr.DynamicCustom(setSelectedItem,x);
         el1.addEventListener("change",function()
         {
-         return Var1.Set(current,options.get_Item(el1.selectedIndex));
+         return Var.Set(current,options.get_Item(el1.selectedIndex));
         },false);
         optionElements=Doc.Concat(List.mapi(function(i)
         {
@@ -13170,6 +13170,13 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        {
         return Doc.Elem(el,Attr.get_Empty(),Doc.get_Empty());
        },
+       SvgElement:function(name,attr,children)
+       {
+        var attr1,arg20;
+        attr1=Attr.Concat(attr);
+        arg20=Doc.Concat(children);
+        return Doc.Elem(DomUtility.CreateSvgElement(name),attr1,arg20);
+       },
        TextNode:function(v)
        {
         return Doc.TextView(View.Const(v));
@@ -13178,7 +13185,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        {
         var node,x;
         node=Docs.CreateTextNode();
-        x=View.Map(function(t)
+        x=View1.Map(function(t)
         {
          return Docs.UpdateTextNode(node,t);
         },txt);
@@ -13667,7 +13674,11 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        CreateElement:function(name)
        {
-        return(DomUtility.SvgNames())[name]?DomUtility.Doc().createElementNS("http://www.w3.org/2000/svg",name):DomUtility.Doc().createElement(name);
+        return DomUtility.Doc().createElement(name);
+       },
+       CreateSvgElement:function(name)
+       {
+        return DomUtility.Doc().createElementNS("http://www.w3.org/2000/svg",name);
        },
        CreateText:function(s)
        {
@@ -13717,19 +13728,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        SetStyle:function(el,name,value)
        {
         return DomUtility.SetProperty(el.style,name,value);
-       },
-       SvgNames:Runtime.Field(function()
-       {
-        var _names_44_1;
-        _names_44_1={};
-        _names_44_1.circle=true;
-        _names_44_1.g=true;
-        _names_44_1.line=true;
-        _names_44_1.rect=true;
-        _names_44_1.svg=true;
-        _names_44_1.text=true;
-        return _names_44_1;
-       })
+       }
       },
       DoubleInterpolation:Runtime.Class({
        Interpolate:function(t,x,y)
@@ -13775,7 +13774,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         r.push=push;
         r.value=Abbrev.U();
         r.dirty=true;
-        r.updates=View.Map(function(x)
+        r.updates=View1.Map(function(x)
         {
          r.value=x;
          r.dirty=true;
@@ -13809,6 +13808,33 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         });
        })
       },
+      Flow:Runtime.Class({},{
+       Define:function(f)
+       {
+        return{
+         Render:function(_var)
+         {
+          return function(cont)
+          {
+           return Var.Set(_var,f(cont));
+          };
+         }
+        };
+       },
+       Static:function(doc)
+       {
+        return{
+         Render:function(_var)
+         {
+          return function(cont)
+          {
+           Var.Set(_var,doc);
+           return cont(null);
+          };
+         }
+        };
+       }
+      }),
       Flow1:Runtime.Class({},{
        Bind:function(m,k)
        {
@@ -13821,18 +13847,6 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
            {
             return(k(r).Render.call(null,_var))(cont);
            });
-          };
-         }
-        };
-       },
-       Define:function(f)
-       {
-        return{
-         Render:function(_var)
-         {
-          return function(cont)
-          {
-           return Var1.Set(_var,f(cont));
           };
          }
         };
@@ -13873,19 +13887,6 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          }
         };
        },
-       Static:function(doc)
-       {
-        return{
-         Render:function(_var)
-         {
-          return function(cont)
-          {
-           Var1.Set(_var,doc);
-           return cont(null);
-          };
-         }
-        };
-       },
        get_Do:function()
        {
         return FlowBuilder.New();
@@ -13911,733 +13912,2061 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        }
       }),
       Html:{
-       A:function(ats,ch)
-       {
-        return Doc.Element("a",ats,ch);
-       },
-       Abbr:function(ats,ch)
-       {
-        return Doc.Element("abbr",ats,ch);
-       },
-       Address:function(ats,ch)
-       {
-        return Doc.Element("address",ats,ch);
-       },
-       Area:function(ats,ch)
-       {
-        return Doc.Element("area",ats,ch);
-       },
-       Article:function(ats,ch)
-       {
-        return Doc.Element("article",ats,ch);
-       },
-       Aside:function(ats,ch)
-       {
-        return Doc.Element("aside",ats,ch);
-       },
-       Audio:function(ats,ch)
-       {
-        return Doc.Element("audio",ats,ch);
-       },
-       B:function(ats,ch)
-       {
-        return Doc.Element("b",ats,ch);
-       },
-       Bdi:function(ats,ch)
-       {
-        return Doc.Element("bdi",ats,ch);
-       },
-       Bdo:function(ats,ch)
-       {
-        return Doc.Element("bdo",ats,ch);
-       },
-       Blockquote:function(ats,ch)
-       {
-        return Doc.Element("blockquote",ats,ch);
-       },
-       Body:function(ats,ch)
-       {
-        return Doc.Element("body",ats,ch);
-       },
-       Br:function(ats,ch)
-       {
-        return Doc.Element("br",ats,ch);
-       },
-       Button:function(ats,ch)
-       {
-        return Doc.Element("button",ats,ch);
-       },
-       Canvas:function(ats,ch)
-       {
-        return Doc.Element("canvas",ats,ch);
-       },
-       Caption:function(ats,ch)
-       {
-        return Doc.Element("caption",ats,ch);
-       },
-       Cite:function(ats,ch)
-       {
-        return Doc.Element("cite",ats,ch);
-       },
-       Code:function(ats,ch)
-       {
-        return Doc.Element("code",ats,ch);
-       },
-       Col:function(ats,ch)
-       {
-        return Doc.Element("col",ats,ch);
-       },
-       Colgroup:function(ats,ch)
-       {
-        return Doc.Element("colgroup",ats,ch);
-       },
-       DD:function(ats,ch)
-       {
-        return Doc.Element("dd",ats,ch);
-       },
-       DFN:function(ats,ch)
-       {
-        return Doc.Element("dfn",ats,ch);
-       },
-       DL:function(ats,ch)
-       {
-        return Doc.Element("dl",ats,ch);
-       },
-       DT:function(ats,ch)
-       {
-        return Doc.Element("dt",ats,ch);
-       },
-       Data:function(ats,ch)
-       {
-        return Doc.Element("data",ats,ch);
-       },
-       Datalist:function(ats,ch)
-       {
-        return Doc.Element("datalist",ats,ch);
-       },
-       Del:function(ats,ch)
-       {
-        return Doc.Element("del",ats,ch);
-       },
-       Div:function(ats,ch)
-       {
-        return Doc.Element("div",ats,ch);
-       },
-       EM:function(ats,ch)
-       {
-        return Doc.Element("em",ats,ch);
-       },
-       Embed:function(ats,ch)
-       {
-        return Doc.Element("embed",ats,ch);
-       },
-       Fieldset:function(ats,ch)
-       {
-        return Doc.Element("fieldset",ats,ch);
-       },
-       Figcaption:function(ats,ch)
-       {
-        return Doc.Element("figcaption",ats,ch);
-       },
-       Figure:function(ats,ch)
-       {
-        return Doc.Element("figure",ats,ch);
-       },
-       Footer:function(ats,ch)
-       {
-        return Doc.Element("footer",ats,ch);
-       },
-       Form:function(ats,ch)
-       {
-        return Doc.Element("form",ats,ch);
-       },
-       H1:function(ats,ch)
-       {
-        return Doc.Element("h1",ats,ch);
-       },
-       H2:function(ats,ch)
-       {
-        return Doc.Element("h2",ats,ch);
-       },
-       H3:function(ats,ch)
-       {
-        return Doc.Element("h3",ats,ch);
-       },
-       H4:function(ats,ch)
-       {
-        return Doc.Element("h4",ats,ch);
-       },
-       H5:function(ats,ch)
-       {
-        return Doc.Element("h5",ats,ch);
-       },
-       H6:function(ats,ch)
-       {
-        return Doc.Element("h6",ats,ch);
-       },
-       HR:function(ats,ch)
-       {
-        return Doc.Element("hr",ats,ch);
-       },
-       Header:function(ats,ch)
-       {
-        return Doc.Element("header",ats,ch);
-       },
-       I:function(ats,ch)
-       {
-        return Doc.Element("i",ats,ch);
-       },
-       IFrame:function(ats,ch)
-       {
-        return Doc.Element("iframe",ats,ch);
-       },
-       Img:function(ats,ch)
-       {
-        return Doc.Element("img",ats,ch);
-       },
-       Input:function(ats,ch)
-       {
-        return Doc.Element("input",ats,ch);
-       },
-       Ins:function(ats,ch)
-       {
-        return Doc.Element("ins",ats,ch);
-       },
-       Kbd:function(ats,ch)
-       {
-        return Doc.Element("kbd",ats,ch);
-       },
-       Keygen:function(ats,ch)
-       {
-        return Doc.Element("keygen",ats,ch);
-       },
-       LI:function(ats,ch)
-       {
-        return Doc.Element("li",ats,ch);
-       },
-       Label:function(ats,ch)
-       {
-        return Doc.Element("label",ats,ch);
-       },
-       Legend:function(ats,ch)
-       {
-        return Doc.Element("legend",ats,ch);
-       },
-       MAIN:function(ats,ch)
-       {
-        return Doc.Element("main",ats,ch);
-       },
-       MAP:function(ats,ch)
-       {
-        return Doc.Element("map",ats,ch);
-       },
-       Mark:function(ats,ch)
-       {
-        return Doc.Element("mark",ats,ch);
-       },
-       Meter:function(ats,ch)
-       {
-        return Doc.Element("meter",ats,ch);
-       },
-       Nav:function(ats,ch)
-       {
-        return Doc.Element("nav",ats,ch);
-       },
-       Noscript:function(ats,ch)
-       {
-        return Doc.Element("noscript",ats,ch);
-       },
-       OL:function(ats,ch)
-       {
-        return Doc.Element("ol",ats,ch);
-       },
-       Object:function(ats,ch)
-       {
-        return Doc.Element("object",ats,ch);
-       },
-       Optgroup:function(ats,ch)
-       {
-        return Doc.Element("optgroup",ats,ch);
-       },
-       Option:function(ats,ch)
-       {
-        return Doc.Element("option",ats,ch);
-       },
-       Output:function(ats,ch)
-       {
-        return Doc.Element("output",ats,ch);
-       },
-       P:function(ats,ch)
-       {
-        return Doc.Element("p",ats,ch);
-       },
-       Param:function(ats,ch)
-       {
-        return Doc.Element("param",ats,ch);
-       },
-       Pre:function(ats,ch)
-       {
-        return Doc.Element("pre",ats,ch);
-       },
-       Progress:function(ats,ch)
-       {
-        return Doc.Element("progress",ats,ch);
-       },
-       Q:function(ats,ch)
-       {
-        return Doc.Element("q",ats,ch);
-       },
-       RB:function(ats,ch)
-       {
-        return Doc.Element("rb",ats,ch);
-       },
-       RP:function(ats,ch)
-       {
-        return Doc.Element("rp",ats,ch);
-       },
-       RT:function(ats,ch)
-       {
-        return Doc.Element("rt",ats,ch);
-       },
-       Rtc:function(ats,ch)
-       {
-        return Doc.Element("rtc",ats,ch);
-       },
-       Ruby:function(ats,ch)
-       {
-        return Doc.Element("ruby",ats,ch);
-       },
-       S:function(ats,ch)
-       {
-        return Doc.Element("s",ats,ch);
-       },
-       SVG:{
+       A:function(atr,ch)
+       {
+        return Elements.A(atr,ch);
+       },
+       A0:function(ch)
+       {
+        return Elements.A(Runtime.New(T,{
+         $:0
+        }),ch);
+       },
+       Attributes:{
+        Accept:Runtime.Field(function()
+        {
+         return"accept";
+        }),
+        AcceptCharset:Runtime.Field(function()
+        {
+         return"accept-charset";
+        }),
+        Accesskey:Runtime.Field(function()
+        {
+         return"accesskey";
+        }),
+        Action:Runtime.Field(function()
+        {
+         return"action";
+        }),
+        Align:Runtime.Field(function()
+        {
+         return"align";
+        }),
+        Alt:Runtime.Field(function()
+        {
+         return"alt";
+        }),
+        Async:Runtime.Field(function()
+        {
+         return"async";
+        }),
+        AutoComplete:Runtime.Field(function()
+        {
+         return"autocomplete";
+        }),
+        AutoFocus:Runtime.Field(function()
+        {
+         return"autofocus";
+        }),
+        AutoPlay:Runtime.Field(function()
+        {
+         return"autoplay";
+        }),
+        AutoSave:Runtime.Field(function()
+        {
+         return"autosave";
+        }),
+        BgColor:Runtime.Field(function()
+        {
+         return"bgcolor";
+        }),
+        Border:Runtime.Field(function()
+        {
+         return"border";
+        }),
+        Buffered:Runtime.Field(function()
+        {
+         return"buffered";
+        }),
+        Challenge:Runtime.Field(function()
+        {
+         return"challenge";
+        }),
+        Charset:Runtime.Field(function()
+        {
+         return"charset";
+        }),
+        Checked:Runtime.Field(function()
+        {
+         return"checked";
+        }),
+        Cite:Runtime.Field(function()
+        {
+         return"cite";
+        }),
+        Class:Runtime.Field(function()
+        {
+         return"class";
+        }),
+        Code:Runtime.Field(function()
+        {
+         return"code";
+        }),
+        Codebase:Runtime.Field(function()
+        {
+         return"codebase";
+        }),
+        ColSpan:Runtime.Field(function()
+        {
+         return"colspan";
+        }),
+        Color:Runtime.Field(function()
+        {
+         return"color";
+        }),
+        Cols:Runtime.Field(function()
+        {
+         return"cols";
+        }),
+        Content:Runtime.Field(function()
+        {
+         return"content";
+        }),
+        ContentEditable:Runtime.Field(function()
+        {
+         return"contenteditable";
+        }),
+        ContextMenu:Runtime.Field(function()
+        {
+         return"contextmenu";
+        }),
+        Controls:Runtime.Field(function()
+        {
+         return"controls";
+        }),
+        Coords:Runtime.Field(function()
+        {
+         return"coords";
+        }),
+        Datetime:Runtime.Field(function()
+        {
+         return"datetime";
+        }),
+        Default:Runtime.Field(function()
+        {
+         return"default";
+        }),
+        Defer:Runtime.Field(function()
+        {
+         return"defer";
+        }),
+        Dir:Runtime.Field(function()
+        {
+         return"dir";
+        }),
+        DirName:Runtime.Field(function()
+        {
+         return"dirname";
+        }),
+        Disabled:Runtime.Field(function()
+        {
+         return"disabled";
+        }),
+        Download:Runtime.Field(function()
+        {
+         return"download";
+        }),
+        Draggable:Runtime.Field(function()
+        {
+         return"draggable";
+        }),
+        Dropzone:Runtime.Field(function()
+        {
+         return"dropzone";
+        }),
+        EncType:Runtime.Field(function()
+        {
+         return"enctype";
+        }),
+        For:Runtime.Field(function()
+        {
+         return"for";
+        }),
+        Form:Runtime.Field(function()
+        {
+         return"form";
+        }),
+        FormAction:Runtime.Field(function()
+        {
+         return"formaction";
+        }),
+        Headers:Runtime.Field(function()
+        {
+         return"headers";
+        }),
+        Height:Runtime.Field(function()
+        {
+         return"height";
+        }),
+        Hidden:Runtime.Field(function()
+        {
+         return"hidden";
+        }),
+        High:Runtime.Field(function()
+        {
+         return"high";
+        }),
+        Href:Runtime.Field(function()
+        {
+         return"href";
+        }),
+        HrefLang:Runtime.Field(function()
+        {
+         return"hreflang";
+        }),
+        HttpEquiv:Runtime.Field(function()
+        {
+         return"http-equiv";
+        }),
+        ID:Runtime.Field(function()
+        {
+         return"id";
+        }),
+        Icon:Runtime.Field(function()
+        {
+         return"icon";
+        }),
+        IsMap:Runtime.Field(function()
+        {
+         return"ismap";
+        }),
+        ItemProp:Runtime.Field(function()
+        {
+         return"itemprop";
+        }),
+        KeyType:Runtime.Field(function()
+        {
+         return"keytype";
+        }),
+        Kind:Runtime.Field(function()
+        {
+         return"kind";
+        }),
+        Label:Runtime.Field(function()
+        {
+         return"label";
+        }),
+        Lang:Runtime.Field(function()
+        {
+         return"lang";
+        }),
+        Language:Runtime.Field(function()
+        {
+         return"language";
+        }),
+        List:Runtime.Field(function()
+        {
+         return"list";
+        }),
+        Loop:Runtime.Field(function()
+        {
+         return"loop";
+        }),
+        Low:Runtime.Field(function()
+        {
+         return"low";
+        }),
+        Manifest:Runtime.Field(function()
+        {
+         return"manifest";
+        }),
+        Max:Runtime.Field(function()
+        {
+         return"max";
+        }),
+        MaxLength:Runtime.Field(function()
+        {
+         return"maxlength";
+        }),
+        Media:Runtime.Field(function()
+        {
+         return"media";
+        }),
+        Method:Runtime.Field(function()
+        {
+         return"method";
+        }),
+        Min:Runtime.Field(function()
+        {
+         return"min";
+        }),
+        Multiple:Runtime.Field(function()
+        {
+         return"multiple";
+        }),
+        Name:Runtime.Field(function()
+        {
+         return"name";
+        }),
+        NoValidate:Runtime.Field(function()
+        {
+         return"novalidate";
+        }),
+        Open:Runtime.Field(function()
+        {
+         return"open";
+        }),
+        Optimum:Runtime.Field(function()
+        {
+         return"optimum";
+        }),
+        Pattern:Runtime.Field(function()
+        {
+         return"pattern";
+        }),
+        Ping:Runtime.Field(function()
+        {
+         return"ping";
+        }),
+        Placeholder:Runtime.Field(function()
+        {
+         return"placeholder";
+        }),
+        Poster:Runtime.Field(function()
+        {
+         return"poster";
+        }),
+        Preload:Runtime.Field(function()
+        {
+         return"preload";
+        }),
+        PubDate:Runtime.Field(function()
+        {
+         return"pubdate";
+        }),
+        RadioGroup:Runtime.Field(function()
+        {
+         return"radiogroup";
+        }),
+        Readonly:Runtime.Field(function()
+        {
+         return"readonly";
+        }),
+        Rel:Runtime.Field(function()
+        {
+         return"rel";
+        }),
+        Required:Runtime.Field(function()
+        {
+         return"required";
+        }),
+        Reversed:Runtime.Field(function()
+        {
+         return"reversed";
+        }),
+        RowSpan:Runtime.Field(function()
+        {
+         return"rowspan";
+        }),
+        Rows:Runtime.Field(function()
+        {
+         return"rows";
+        }),
+        Sandbox:Runtime.Field(function()
+        {
+         return"sandbox";
+        }),
+        Scope:Runtime.Field(function()
+        {
+         return"scope";
+        }),
+        Scoped:Runtime.Field(function()
+        {
+         return"scoped";
+        }),
+        Seamless:Runtime.Field(function()
+        {
+         return"seamless";
+        }),
+        Selected:Runtime.Field(function()
+        {
+         return"selected";
+        }),
+        Shape:Runtime.Field(function()
+        {
+         return"shape";
+        }),
+        Size:Runtime.Field(function()
+        {
+         return"size";
+        }),
+        Sizes:Runtime.Field(function()
+        {
+         return"sizes";
+        }),
+        Span:Runtime.Field(function()
+        {
+         return"span";
+        }),
+        Spellcheck:Runtime.Field(function()
+        {
+         return"spellcheck";
+        }),
+        Src:Runtime.Field(function()
+        {
+         return"src";
+        }),
+        SrcLang:Runtime.Field(function()
+        {
+         return"srclang";
+        }),
+        Srcdoc:Runtime.Field(function()
+        {
+         return"srcdoc";
+        }),
+        Start:Runtime.Field(function()
+        {
+         return"start";
+        }),
+        Step:Runtime.Field(function()
+        {
+         return"step";
+        }),
+        Style:Runtime.Field(function()
+        {
+         return"style";
+        }),
+        Summary:Runtime.Field(function()
+        {
+         return"summary";
+        }),
+        TabIndex:Runtime.Field(function()
+        {
+         return"tabindex";
+        }),
+        Target:Runtime.Field(function()
+        {
+         return"target";
+        }),
+        Title:Runtime.Field(function()
+        {
+         return"title";
+        }),
+        Type:Runtime.Field(function()
+        {
+         return"type";
+        }),
+        Usemap:Runtime.Field(function()
+        {
+         return"usemap";
+        }),
+        Value:Runtime.Field(function()
+        {
+         return"value";
+        }),
+        Width:Runtime.Field(function()
+        {
+         return"width";
+        }),
+        Wrap:Runtime.Field(function()
+        {
+         return"wrap";
+        })
+       },
+       Del:function(atr,ch)
+       {
+        return Elements.Del(atr,ch);
+       },
+       Del0:function(ch)
+       {
+        return Elements.Del(Runtime.New(T,{
+         $:0
+        }),ch);
+       },
+       Div:function(atr,ch)
+       {
+        return Elements.Div(atr,ch);
+       },
+       Div0:function(ch)
+       {
+        return Elements.Div(Runtime.New(T,{
+         $:0
+        }),ch);
+       },
+       Elements:{
         A:function(ats,ch)
         {
          return Doc.Element("a",ats,ch);
         },
-        Altglyph:function(ats,ch)
+        Abbr:function(ats,ch)
         {
-         return Doc.Element("altglyph",ats,ch);
+         return Doc.Element("abbr",ats,ch);
         },
-        Altglyphdef:function(ats,ch)
+        Address:function(ats,ch)
         {
-         return Doc.Element("altglyphdef",ats,ch);
+         return Doc.Element("address",ats,ch);
         },
-        Altglyphitem:function(ats,ch)
+        Area:function(ats,ch)
         {
-         return Doc.Element("altglyphitem",ats,ch);
+         return Doc.Element("area",ats,ch);
         },
-        Animate:function(ats,ch)
+        Article:function(ats,ch)
         {
-         return Doc.Element("animate",ats,ch);
+         return Doc.Element("article",ats,ch);
         },
-        Animatecolor:function(ats,ch)
+        Aside:function(ats,ch)
         {
-         return Doc.Element("animatecolor",ats,ch);
+         return Doc.Element("aside",ats,ch);
         },
-        Animatemotion:function(ats,ch)
+        Audio:function(ats,ch)
         {
-         return Doc.Element("animatemotion",ats,ch);
+         return Doc.Element("audio",ats,ch);
         },
-        Animatetransform:function(ats,ch)
+        B:function(ats,ch)
         {
-         return Doc.Element("animatetransform",ats,ch);
+         return Doc.Element("b",ats,ch);
         },
-        Circle:function(ats,ch)
+        BDI:function(ats,ch)
         {
-         return Doc.Element("circle",ats,ch);
+         return Doc.Element("bdi",ats,ch);
         },
-        Clippath:function(ats,ch)
+        BDO:function(ats,ch)
         {
-         return Doc.Element("clippath",ats,ch);
+         return Doc.Element("bdo",ats,ch);
         },
-        Colorprofile:function(ats,ch)
+        Base:function(ats,ch)
         {
-         return Doc.Element("colorprofile",ats,ch);
+         return Doc.Element("base",ats,ch);
         },
-        Cursor:function(ats,ch)
+        BlockQuote:function(ats,ch)
         {
-         return Doc.Element("cursor",ats,ch);
+         return Doc.Element("blockquote",ats,ch);
         },
-        Defs:function(ats,ch)
+        Body:function(ats,ch)
         {
-         return Doc.Element("defs",ats,ch);
+         return Doc.Element("body",ats,ch);
         },
-        Desc:function(ats,ch)
+        Br:function(ats,ch)
         {
-         return Doc.Element("desc",ats,ch);
+         return Doc.Element("br",ats,ch);
         },
-        Ellipse:function(ats,ch)
+        Button:function(ats,ch)
         {
-         return Doc.Element("ellipse",ats,ch);
+         return Doc.Element("button",ats,ch);
         },
-        Feblend:function(ats,ch)
+        Canvas:function(ats,ch)
         {
-         return Doc.Element("feblend",ats,ch);
+         return Doc.Element("canvas",ats,ch);
         },
-        Fecolormatrix:function(ats,ch)
+        Caption:function(ats,ch)
         {
-         return Doc.Element("fecolormatrix",ats,ch);
+         return Doc.Element("caption",ats,ch);
         },
-        Fecomponenttransfer:function(ats,ch)
+        Cite:function(ats,ch)
         {
-         return Doc.Element("fecomponenttransfer",ats,ch);
+         return Doc.Element("cite",ats,ch);
         },
-        Fecomposite:function(ats,ch)
+        Code:function(ats,ch)
         {
-         return Doc.Element("fecomposite",ats,ch);
+         return Doc.Element("code",ats,ch);
         },
-        Feconvolvematrix:function(ats,ch)
+        Col:function(ats,ch)
         {
-         return Doc.Element("feconvolvematrix",ats,ch);
+         return Doc.Element("col",ats,ch);
         },
-        Fediffuselighting:function(ats,ch)
+        ColGroup:function(ats,ch)
         {
-         return Doc.Element("fediffuselighting",ats,ch);
+         return Doc.Element("colgroup",ats,ch);
         },
-        Fedisplacementmap:function(ats,ch)
+        DD:function(ats,ch)
         {
-         return Doc.Element("fedisplacementmap",ats,ch);
+         return Doc.Element("dd",ats,ch);
         },
-        Fedistantlight:function(ats,ch)
+        DFN:function(ats,ch)
         {
-         return Doc.Element("fedistantlight",ats,ch);
+         return Doc.Element("dfn",ats,ch);
         },
-        Feflood:function(ats,ch)
+        DL:function(ats,ch)
         {
-         return Doc.Element("feflood",ats,ch);
+         return Doc.Element("dl",ats,ch);
         },
-        Fefunca:function(ats,ch)
+        DT:function(ats,ch)
         {
-         return Doc.Element("fefunca",ats,ch);
+         return Doc.Element("dt",ats,ch);
         },
-        Fefuncb:function(ats,ch)
+        Data:function(ats,ch)
         {
-         return Doc.Element("fefuncb",ats,ch);
+         return Doc.Element("data",ats,ch);
         },
-        Fefuncg:function(ats,ch)
+        DataList:function(ats,ch)
         {
-         return Doc.Element("fefuncg",ats,ch);
+         return Doc.Element("datalist",ats,ch);
         },
-        Fefuncr:function(ats,ch)
+        Del:function(ats,ch)
         {
-         return Doc.Element("fefuncr",ats,ch);
+         return Doc.Element("del",ats,ch);
         },
-        Fegaussianblur:function(ats,ch)
+        Details:function(ats,ch)
         {
-         return Doc.Element("fegaussianblur",ats,ch);
+         return Doc.Element("details",ats,ch);
         },
-        Feimage:function(ats,ch)
+        Div:function(ats,ch)
         {
-         return Doc.Element("feimage",ats,ch);
+         return Doc.Element("div",ats,ch);
         },
-        Femerge:function(ats,ch)
+        Em:function(ats,ch)
         {
-         return Doc.Element("femerge",ats,ch);
+         return Doc.Element("em",ats,ch);
         },
-        Femergenode:function(ats,ch)
+        Embed:function(ats,ch)
         {
-         return Doc.Element("femergenode",ats,ch);
+         return Doc.Element("embed",ats,ch);
         },
-        Femorphology:function(ats,ch)
+        FieldSet:function(ats,ch)
         {
-         return Doc.Element("femorphology",ats,ch);
+         return Doc.Element("fieldset",ats,ch);
         },
-        Feoffset:function(ats,ch)
+        FigCaption:function(ats,ch)
         {
-         return Doc.Element("feoffset",ats,ch);
+         return Doc.Element("figcaption",ats,ch);
         },
-        Fepointlight:function(ats,ch)
+        Figure:function(ats,ch)
         {
-         return Doc.Element("fepointlight",ats,ch);
+         return Doc.Element("figure",ats,ch);
         },
-        Fespecularlighting:function(ats,ch)
+        Footer:function(ats,ch)
         {
-         return Doc.Element("fespecularlighting",ats,ch);
+         return Doc.Element("footer",ats,ch);
         },
-        Fespotlight:function(ats,ch)
+        Form:function(ats,ch)
         {
-         return Doc.Element("fespotlight",ats,ch);
+         return Doc.Element("form",ats,ch);
         },
-        Fetile:function(ats,ch)
+        H1:function(ats,ch)
         {
-         return Doc.Element("fetile",ats,ch);
+         return Doc.Element("h1",ats,ch);
         },
-        Feturbulence:function(ats,ch)
+        H2:function(ats,ch)
         {
-         return Doc.Element("feturbulence",ats,ch);
+         return Doc.Element("h2",ats,ch);
         },
-        Filter:function(ats,ch)
+        H3:function(ats,ch)
         {
-         return Doc.Element("filter",ats,ch);
+         return Doc.Element("h3",ats,ch);
         },
-        Font:function(ats,ch)
+        H4:function(ats,ch)
         {
-         return Doc.Element("font",ats,ch);
+         return Doc.Element("h4",ats,ch);
         },
-        FontFace:function(ats,ch)
+        H5:function(ats,ch)
         {
-         return Doc.Element("fontFace",ats,ch);
+         return Doc.Element("h5",ats,ch);
         },
-        FontFaceFormat:function(ats,ch)
+        H6:function(ats,ch)
         {
-         return Doc.Element("FontFaceFormat",ats,ch);
+         return Doc.Element("h6",ats,ch);
         },
-        FontFaceName:function(ats,ch)
+        HR:function(ats,ch)
         {
-         return Doc.Element("FontFaceName",ats,ch);
+         return Doc.Element("hr",ats,ch);
         },
-        FontFaceSrc:function(ats,ch)
+        Head:function(ats,ch)
         {
-         return Doc.Element("FontFaceSrc",ats,ch);
+         return Doc.Element("head",ats,ch);
         },
-        FontFaceUri:function(ats,ch)
+        Header:function(ats,ch)
         {
-         return Doc.Element("FontFaceUri",ats,ch);
+         return Doc.Element("header",ats,ch);
         },
-        Foreignobject:function(ats,ch)
+        Html:function(ats,ch)
         {
-         return Doc.Element("foreignobject",ats,ch);
+         return Doc.Element("html",ats,ch);
         },
-        G:function(ats,ch)
+        I:function(ats,ch)
         {
-         return Doc.Element("g",ats,ch);
+         return Doc.Element("i",ats,ch);
         },
-        Glyph:function(ats,ch)
+        IFrame:function(ats,ch)
         {
-         return Doc.Element("glyph",ats,ch);
+         return Doc.Element("iframe",ats,ch);
         },
-        Glyphref:function(ats,ch)
+        Img:function(ats,ch)
         {
-         return Doc.Element("glyphref",ats,ch);
+         return Doc.Element("img",ats,ch);
         },
-        Hkern:function(ats,ch)
+        Input:function(ats,ch)
         {
-         return Doc.Element("hkern",ats,ch);
+         return Doc.Element("input",ats,ch);
         },
-        Image:function(ats,ch)
+        Ins:function(ats,ch)
         {
-         return Doc.Element("image",ats,ch);
+         return Doc.Element("ins",ats,ch);
         },
-        Line:function(ats,ch)
+        Kbd:function(ats,ch)
         {
-         return Doc.Element("line",ats,ch);
+         return Doc.Element("kbd",ats,ch);
         },
-        Lineargradient:function(ats,ch)
+        Keygen:function(ats,ch)
         {
-         return Doc.Element("lineargradient",ats,ch);
+         return Doc.Element("keygen",ats,ch);
         },
-        Marker:function(ats,ch)
+        LI:function(ats,ch)
         {
-         return Doc.Element("marker",ats,ch);
+         return Doc.Element("li",ats,ch);
         },
-        Mask:function(ats,ch)
+        Label:function(ats,ch)
         {
-         return Doc.Element("mask",ats,ch);
+         return Doc.Element("label",ats,ch);
         },
-        Metadata:function(ats,ch)
+        Legend:function(ats,ch)
         {
-         return Doc.Element("metadata",ats,ch);
+         return Doc.Element("legend",ats,ch);
         },
-        MissingGlyph:function(ats,ch)
+        Link:function(ats,ch)
         {
-         return Doc.Element("MissingGlyph",ats,ch);
+         return Doc.Element("link",ats,ch);
         },
-        Mpath:function(ats,ch)
+        Main:function(ats,ch)
         {
-         return Doc.Element("mpath",ats,ch);
+         return Doc.Element("main",ats,ch);
         },
-        Path:function(ats,ch)
+        Map:function(ats,ch)
         {
-         return Doc.Element("path",ats,ch);
+         return Doc.Element("map",ats,ch);
         },
-        Pattern:function(ats,ch)
+        Mark:function(ats,ch)
         {
-         return Doc.Element("pattern",ats,ch);
+         return Doc.Element("mark",ats,ch);
         },
-        Polygon:function(ats,ch)
+        Menu:function(ats,ch)
         {
-         return Doc.Element("polygon",ats,ch);
+         return Doc.Element("menu",ats,ch);
         },
-        Polyline:function(ats,ch)
+        MenuItem:function(ats,ch)
         {
-         return Doc.Element("polyline",ats,ch);
+         return Doc.Element("menuitem",ats,ch);
         },
-        Radialgradient:function(ats,ch)
+        Meta:function(ats,ch)
         {
-         return Doc.Element("radialgradient",ats,ch);
+         return Doc.Element("meta",ats,ch);
         },
-        Rect:function(ats,ch)
+        Meter:function(ats,ch)
         {
-         return Doc.Element("rect",ats,ch);
+         return Doc.Element("meter",ats,ch);
+        },
+        Nav:function(ats,ch)
+        {
+         return Doc.Element("nav",ats,ch);
+        },
+        NoScript:function(ats,ch)
+        {
+         return Doc.Element("noscript",ats,ch);
+        },
+        OL:function(ats,ch)
+        {
+         return Doc.Element("ol",ats,ch);
+        },
+        Object:function(ats,ch)
+        {
+         return Doc.Element("object",ats,ch);
+        },
+        OptGroup:function(ats,ch)
+        {
+         return Doc.Element("optgroup",ats,ch);
+        },
+        Option:function(ats,ch)
+        {
+         return Doc.Element("option",ats,ch);
+        },
+        Output:function(ats,ch)
+        {
+         return Doc.Element("output",ats,ch);
+        },
+        P:function(ats,ch)
+        {
+         return Doc.Element("p",ats,ch);
+        },
+        Param:function(ats,ch)
+        {
+         return Doc.Element("param",ats,ch);
+        },
+        Picture:function(ats,ch)
+        {
+         return Doc.Element("picture",ats,ch);
+        },
+        Pre:function(ats,ch)
+        {
+         return Doc.Element("pre",ats,ch);
+        },
+        Progress:function(ats,ch)
+        {
+         return Doc.Element("progress",ats,ch);
+        },
+        Q:function(ats,ch)
+        {
+         return Doc.Element("q",ats,ch);
+        },
+        RP:function(ats,ch)
+        {
+         return Doc.Element("rp",ats,ch);
+        },
+        RT:function(ats,ch)
+        {
+         return Doc.Element("rt",ats,ch);
+        },
+        Ruby:function(ats,ch)
+        {
+         return Doc.Element("ruby",ats,ch);
+        },
+        S:function(ats,ch)
+        {
+         return Doc.Element("s",ats,ch);
+        },
+        Samp:function(ats,ch)
+        {
+         return Doc.Element("samp",ats,ch);
         },
         Script:function(ats,ch)
         {
          return Doc.Element("script",ats,ch);
         },
-        Set:function(ats,ch)
+        Section:function(ats,ch)
         {
-         return Doc.Element("set",ats,ch);
+         return Doc.Element("section",ats,ch);
         },
-        Stop:function(ats,ch)
+        Select:function(ats,ch)
         {
-         return Doc.Element("stop",ats,ch);
+         return Doc.Element("select",ats,ch);
+        },
+        Small:function(ats,ch)
+        {
+         return Doc.Element("small",ats,ch);
+        },
+        Source:function(ats,ch)
+        {
+         return Doc.Element("source",ats,ch);
+        },
+        Span:function(ats,ch)
+        {
+         return Doc.Element("span",ats,ch);
+        },
+        Strong:function(ats,ch)
+        {
+         return Doc.Element("strong",ats,ch);
         },
         Style:function(ats,ch)
         {
          return Doc.Element("style",ats,ch);
         },
-        Svg:function(ats,ch)
+        Sub:function(ats,ch)
         {
-         return Doc.Element("svg",ats,ch);
+         return Doc.Element("sub",ats,ch);
         },
-        Switch:function(ats,ch)
+        Summary:function(ats,ch)
         {
-         return Doc.Element("switch",ats,ch);
+         return Doc.Element("summary",ats,ch);
         },
-        Symbol:function(ats,ch)
+        Sup:function(ats,ch)
         {
-         return Doc.Element("symbol",ats,ch);
+         return Doc.Element("sup",ats,ch);
         },
-        Text:function(ats,ch)
+        TBody:function(ats,ch)
         {
-         return Doc.Element("text",ats,ch);
+         return Doc.Element("tbody",ats,ch);
         },
-        Textpath:function(ats,ch)
+        TD:function(ats,ch)
         {
-         return Doc.Element("textpath",ats,ch);
+         return Doc.Element("td",ats,ch);
+        },
+        TFoot:function(ats,ch)
+        {
+         return Doc.Element("tfoot",ats,ch);
+        },
+        TH:function(ats,ch)
+        {
+         return Doc.Element("th",ats,ch);
+        },
+        THead:function(ats,ch)
+        {
+         return Doc.Element("thead",ats,ch);
+        },
+        TR:function(ats,ch)
+        {
+         return Doc.Element("tr",ats,ch);
+        },
+        Table:function(ats,ch)
+        {
+         return Doc.Element("table",ats,ch);
+        },
+        TextArea:function(ats,ch)
+        {
+         return Doc.Element("textarea",ats,ch);
+        },
+        Time:function(ats,ch)
+        {
+         return Doc.Element("time",ats,ch);
         },
         Title:function(ats,ch)
         {
          return Doc.Element("title",ats,ch);
         },
-        Tref:function(ats,ch)
+        Track:function(ats,ch)
         {
-         return Doc.Element("tref",ats,ch);
+         return Doc.Element("track",ats,ch);
         },
-        Tspan:function(ats,ch)
+        U:function(ats,ch)
         {
-         return Doc.Element("tspan",ats,ch);
+         return Doc.Element("u",ats,ch);
+        },
+        UL:function(ats,ch)
+        {
+         return Doc.Element("ul",ats,ch);
+        },
+        Var:function(ats,ch)
+        {
+         return Doc.Element("var",ats,ch);
+        },
+        Video:function(ats,ch)
+        {
+         return Doc.Element("video",ats,ch);
+        },
+        WBR:function(ats,ch)
+        {
+         return Doc.Element("wbr",ats,ch);
+        }
+       },
+       Form:function(atr,ch)
+       {
+        return Elements.Form(atr,ch);
+       },
+       Form0:function(ch)
+       {
+        return Elements.Form(Runtime.New(T,{
+         $:0
+        }),ch);
+       },
+       H1:function(atr,ch)
+       {
+        return Elements.H1(atr,ch);
+       },
+       H10:function(ch)
+       {
+        return Elements.H1(Runtime.New(T,{
+         $:0
+        }),ch);
+       },
+       H2:function(atr,ch)
+       {
+        return Elements.H2(atr,ch);
+       },
+       H20:function(ch)
+       {
+        return Elements.H2(Runtime.New(T,{
+         $:0
+        }),ch);
+       },
+       H3:function(atr,ch)
+       {
+        return Elements.H3(atr,ch);
+       },
+       H30:function(ch)
+       {
+        return Elements.H3(Runtime.New(T,{
+         $:0
+        }),ch);
+       },
+       H4:function(atr,ch)
+       {
+        return Elements.H4(atr,ch);
+       },
+       H40:function(ch)
+       {
+        return Elements.H4(Runtime.New(T,{
+         $:0
+        }),ch);
+       },
+       H5:function(atr,ch)
+       {
+        return Elements.H5(atr,ch);
+       },
+       H50:function(ch)
+       {
+        return Elements.H5(Runtime.New(T,{
+         $:0
+        }),ch);
+       },
+       H6:function(atr,ch)
+       {
+        return Elements.H6(atr,ch);
+       },
+       H60:function(ch)
+       {
+        return Elements.H6(Runtime.New(T,{
+         $:0
+        }),ch);
+       },
+       LI:function(atr,ch)
+       {
+        return Elements.LI(atr,ch);
+       },
+       LI0:function(ch)
+       {
+        return Elements.LI(Runtime.New(T,{
+         $:0
+        }),ch);
+       },
+       Label:function(atr,ch)
+       {
+        return Elements.Label(atr,ch);
+       },
+       Label0:function(ch)
+       {
+        return Elements.Label(Runtime.New(T,{
+         $:0
+        }),ch);
+       },
+       Nav:function(atr,ch)
+       {
+        return Elements.Nav(atr,ch);
+       },
+       Nav0:function(ch)
+       {
+        return Elements.Nav(Runtime.New(T,{
+         $:0
+        }),ch);
+       },
+       OL:function(atr,ch)
+       {
+        return Elements.OL(atr,ch);
+       },
+       OL0:function(ch)
+       {
+        return Elements.OL(Runtime.New(T,{
+         $:0
+        }),ch);
+       },
+       P:function(atr,ch)
+       {
+        return Elements.P(atr,ch);
+       },
+       P0:function(ch)
+       {
+        return Elements.P(Runtime.New(T,{
+         $:0
+        }),ch);
+       },
+       Span:function(atr,ch)
+       {
+        return Elements.Span(atr,ch);
+       },
+       Span0:function(ch)
+       {
+        return Elements.Span(Runtime.New(T,{
+         $:0
+        }),ch);
+       },
+       SvgAttributes:{
+        AccentHeight:Runtime.Field(function()
+        {
+         return"accent-height";
+        }),
+        Accumulate:Runtime.Field(function()
+        {
+         return"accumulate";
+        }),
+        Additive:Runtime.Field(function()
+        {
+         return"additive";
+        }),
+        AlignmentBaseline:Runtime.Field(function()
+        {
+         return"alignment-baseline";
+        }),
+        Ascent:Runtime.Field(function()
+        {
+         return"ascent";
+        }),
+        AttributeName:Runtime.Field(function()
+        {
+         return"attributeName";
+        }),
+        AttributeType:Runtime.Field(function()
+        {
+         return"attributeType";
+        }),
+        Azimuth:Runtime.Field(function()
+        {
+         return"azimuth";
+        }),
+        BaseFrequency:Runtime.Field(function()
+        {
+         return"baseFrequency";
+        }),
+        BaselineShift:Runtime.Field(function()
+        {
+         return"baseline-shift";
+        }),
+        Begin:Runtime.Field(function()
+        {
+         return"begin";
+        }),
+        Bias:Runtime.Field(function()
+        {
+         return"bias";
+        }),
+        CX:Runtime.Field(function()
+        {
+         return"cx";
+        }),
+        CY:Runtime.Field(function()
+        {
+         return"cy";
+        }),
+        CalcMode:Runtime.Field(function()
+        {
+         return"calcMode";
+        }),
+        Class:Runtime.Field(function()
+        {
+         return"class";
+        }),
+        Clip:Runtime.Field(function()
+        {
+         return"clip";
+        }),
+        ClipPath:Runtime.Field(function()
+        {
+         return"clip-path";
+        }),
+        ClipPathUnits:Runtime.Field(function()
+        {
+         return"clipPathUnits";
+        }),
+        ClipRule:Runtime.Field(function()
+        {
+         return"clip-rule";
+        }),
+        Color:Runtime.Field(function()
+        {
+         return"color";
+        }),
+        ColorInterpolation:Runtime.Field(function()
+        {
+         return"color-interpolation";
+        }),
+        ColorInterpolationFilters:Runtime.Field(function()
+        {
+         return"color-interpolation-filters";
+        }),
+        ColorProfile:Runtime.Field(function()
+        {
+         return"color-profile";
+        }),
+        ColorRendering:Runtime.Field(function()
+        {
+         return"color-rendering";
+        }),
+        ContentScriptType:Runtime.Field(function()
+        {
+         return"contentScriptType";
+        }),
+        ContentStyleType:Runtime.Field(function()
+        {
+         return"contentStyleType";
+        }),
+        Cursor:Runtime.Field(function()
+        {
+         return"cursor";
+        }),
+        D:Runtime.Field(function()
+        {
+         return"d";
+        }),
+        DX:Runtime.Field(function()
+        {
+         return"dx";
+        }),
+        DY:Runtime.Field(function()
+        {
+         return"dy";
+        }),
+        DiffuseConstant:Runtime.Field(function()
+        {
+         return"diffuseConstant";
+        }),
+        Direction:Runtime.Field(function()
+        {
+         return"direction";
+        }),
+        Display:Runtime.Field(function()
+        {
+         return"display";
+        }),
+        Divisor:Runtime.Field(function()
+        {
+         return"divisor";
+        }),
+        DominantBaseline:Runtime.Field(function()
+        {
+         return"dominant-baseline";
+        }),
+        Dur:Runtime.Field(function()
+        {
+         return"dur";
+        }),
+        EdgeMode:Runtime.Field(function()
+        {
+         return"edgeMode";
+        }),
+        Elevation:Runtime.Field(function()
+        {
+         return"elevation";
+        }),
+        End:Runtime.Field(function()
+        {
+         return"end";
+        }),
+        ExternalResourcesRequired:Runtime.Field(function()
+        {
+         return"externalResourcesRequired";
+        }),
+        Fill:Runtime.Field(function()
+        {
+         return"fill";
+        }),
+        FillOpacity:Runtime.Field(function()
+        {
+         return"fill-opacity";
+        }),
+        FillRule:Runtime.Field(function()
+        {
+         return"fill-rule";
+        }),
+        Filter:Runtime.Field(function()
+        {
+         return"filter";
+        }),
+        FilterRes:Runtime.Field(function()
+        {
+         return"filterRes";
+        }),
+        FilterUnits:Runtime.Field(function()
+        {
+         return"filterUnits";
+        }),
+        FloodColor:Runtime.Field(function()
+        {
+         return"flood-color";
+        }),
+        FloodOpacity:Runtime.Field(function()
+        {
+         return"flood-opacity";
+        }),
+        FontFamily:Runtime.Field(function()
+        {
+         return"font-family";
+        }),
+        FontSize:Runtime.Field(function()
+        {
+         return"font-size";
+        }),
+        FontSizeAdjust:Runtime.Field(function()
+        {
+         return"font-size-adjust";
+        }),
+        FontStretch:Runtime.Field(function()
+        {
+         return"font-stretch";
+        }),
+        FontStyle:Runtime.Field(function()
+        {
+         return"font-style";
+        }),
+        FontVariant:Runtime.Field(function()
+        {
+         return"font-variant";
+        }),
+        FontWeight:Runtime.Field(function()
+        {
+         return"font-weight";
+        }),
+        From:Runtime.Field(function()
+        {
+         return"from";
+        }),
+        GradientTransform:Runtime.Field(function()
+        {
+         return"gradientTransform";
+        }),
+        GradientUnits:Runtime.Field(function()
+        {
+         return"gradientUnits";
+        }),
+        Height:Runtime.Field(function()
+        {
+         return"height";
+        }),
+        IN:Runtime.Field(function()
+        {
+         return"in";
+        }),
+        ImageRendering:Runtime.Field(function()
+        {
+         return"image-rendering";
+        }),
+        In2:Runtime.Field(function()
+        {
+         return"in2";
+        }),
+        K1:Runtime.Field(function()
+        {
+         return"k1";
+        }),
+        K2:Runtime.Field(function()
+        {
+         return"k2";
+        }),
+        K3:Runtime.Field(function()
+        {
+         return"k3";
+        }),
+        K4:Runtime.Field(function()
+        {
+         return"k4";
+        }),
+        KernelMatrix:Runtime.Field(function()
+        {
+         return"kernelMatrix";
+        }),
+        KernelUnitLength:Runtime.Field(function()
+        {
+         return"kernelUnitLength";
+        }),
+        Kerning:Runtime.Field(function()
+        {
+         return"kerning";
+        }),
+        KeySplines:Runtime.Field(function()
+        {
+         return"keySplines";
+        }),
+        KeyTimes:Runtime.Field(function()
+        {
+         return"keyTimes";
+        }),
+        LetterSpacing:Runtime.Field(function()
+        {
+         return"letter-spacing";
+        }),
+        LightingColor:Runtime.Field(function()
+        {
+         return"lighting-color";
+        }),
+        LimitingConeAngle:Runtime.Field(function()
+        {
+         return"limitingConeAngle";
+        }),
+        Local:Runtime.Field(function()
+        {
+         return"local";
+        }),
+        MarkerEnd:Runtime.Field(function()
+        {
+         return"marker-end";
+        }),
+        MarkerHeight:Runtime.Field(function()
+        {
+         return"markerHeight";
+        }),
+        MarkerMid:Runtime.Field(function()
+        {
+         return"marker-mid";
+        }),
+        MarkerStart:Runtime.Field(function()
+        {
+         return"marker-start";
+        }),
+        MarkerUnits:Runtime.Field(function()
+        {
+         return"markerUnits";
+        }),
+        MarkerWidth:Runtime.Field(function()
+        {
+         return"markerWidth";
+        }),
+        Mask:Runtime.Field(function()
+        {
+         return"mask";
+        }),
+        MaskContentUnits:Runtime.Field(function()
+        {
+         return"maskContentUnits";
+        }),
+        MaskUnits:Runtime.Field(function()
+        {
+         return"maskUnits";
+        }),
+        Max:Runtime.Field(function()
+        {
+         return"max";
+        }),
+        Min:Runtime.Field(function()
+        {
+         return"min";
+        }),
+        Mode:Runtime.Field(function()
+        {
+         return"mode";
+        }),
+        NumOctaves:Runtime.Field(function()
+        {
+         return"numOctaves";
+        }),
+        Opacity:Runtime.Field(function()
+        {
+         return"opacity";
+        }),
+        Operator:Runtime.Field(function()
+        {
+         return"operator";
+        }),
+        Order:Runtime.Field(function()
+        {
+         return"order";
+        }),
+        Overflow:Runtime.Field(function()
+        {
+         return"overflow";
+        }),
+        PaintOrder:Runtime.Field(function()
+        {
+         return"paint-order";
+        }),
+        PathLength:Runtime.Field(function()
+        {
+         return"pathLength";
+        }),
+        PatternContentUnits:Runtime.Field(function()
+        {
+         return"patternContentUnits";
+        }),
+        PatternTransform:Runtime.Field(function()
+        {
+         return"patternTransform";
+        }),
+        PatternUnits:Runtime.Field(function()
+        {
+         return"patternUnits";
+        }),
+        PointerEvents:Runtime.Field(function()
+        {
+         return"pointer-events";
+        }),
+        Points:Runtime.Field(function()
+        {
+         return"points";
+        }),
+        PointsAtX:Runtime.Field(function()
+        {
+         return"pointsAtX";
+        }),
+        PointsAtY:Runtime.Field(function()
+        {
+         return"pointsAtY";
+        }),
+        PointsAtZ:Runtime.Field(function()
+        {
+         return"pointsAtZ";
+        }),
+        PreserveAlpha:Runtime.Field(function()
+        {
+         return"preserveAlpha";
+        }),
+        PreserveAspectRatio:Runtime.Field(function()
+        {
+         return"preserveAspectRatio";
+        }),
+        PrimitiveUnits:Runtime.Field(function()
+        {
+         return"primitiveUnits";
+        }),
+        R:Runtime.Field(function()
+        {
+         return"r";
+        }),
+        RX:Runtime.Field(function()
+        {
+         return"rx";
+        }),
+        RY:Runtime.Field(function()
+        {
+         return"ry";
+        }),
+        Radius:Runtime.Field(function()
+        {
+         return"radius";
+        }),
+        RepeatCount:Runtime.Field(function()
+        {
+         return"repeatCount";
+        }),
+        RepeatDur:Runtime.Field(function()
+        {
+         return"repeatDur";
+        }),
+        RequiredFeatures:Runtime.Field(function()
+        {
+         return"requiredFeatures";
+        }),
+        Restart:Runtime.Field(function()
+        {
+         return"restart";
+        }),
+        Result:Runtime.Field(function()
+        {
+         return"result";
+        }),
+        Scale:Runtime.Field(function()
+        {
+         return"scale";
+        }),
+        Seed:Runtime.Field(function()
+        {
+         return"seed";
+        }),
+        ShapeRendering:Runtime.Field(function()
+        {
+         return"shape-rendering";
+        }),
+        SpecularConstant:Runtime.Field(function()
+        {
+         return"specularConstant";
+        }),
+        SpecularExponent:Runtime.Field(function()
+        {
+         return"specularExponent";
+        }),
+        StdDeviation:Runtime.Field(function()
+        {
+         return"stdDeviation";
+        }),
+        StitchTiles:Runtime.Field(function()
+        {
+         return"stitchTiles";
+        }),
+        StopColor:Runtime.Field(function()
+        {
+         return"stop-color";
+        }),
+        StopOpacity:Runtime.Field(function()
+        {
+         return"stop-opacity";
+        }),
+        Stroke:Runtime.Field(function()
+        {
+         return"stroke";
+        }),
+        StrokeDashArray:Runtime.Field(function()
+        {
+         return"stroke-dasharray";
+        }),
+        StrokeDashOffset:Runtime.Field(function()
+        {
+         return"stroke-dashoffset";
+        }),
+        StrokeLineCap:Runtime.Field(function()
+        {
+         return"stroke-linecap";
+        }),
+        StrokeLineJoin:Runtime.Field(function()
+        {
+         return"stroke-linejoin";
+        }),
+        StrokeMiterLimit:Runtime.Field(function()
+        {
+         return"stroke-miterlimit";
+        }),
+        StrokeOpacity:Runtime.Field(function()
+        {
+         return"stroke-opacity";
+        }),
+        StrokeWidth:Runtime.Field(function()
+        {
+         return"stroke-width";
+        }),
+        Style:Runtime.Field(function()
+        {
+         return"style";
+        }),
+        SurfaceScale:Runtime.Field(function()
+        {
+         return"surfaceScale";
+        }),
+        TargetX:Runtime.Field(function()
+        {
+         return"targetX";
+        }),
+        TargetY:Runtime.Field(function()
+        {
+         return"targetY";
+        }),
+        TextAnchor:Runtime.Field(function()
+        {
+         return"text-anchor";
+        }),
+        TextDecoration:Runtime.Field(function()
+        {
+         return"text-decoration";
+        }),
+        TextRendering:Runtime.Field(function()
+        {
+         return"text-rendering";
+        }),
+        To:Runtime.Field(function()
+        {
+         return"to";
+        }),
+        Transform:Runtime.Field(function()
+        {
+         return"transform";
+        }),
+        Type:Runtime.Field(function()
+        {
+         return"type";
+        }),
+        Values:Runtime.Field(function()
+        {
+         return"values";
+        }),
+        ViewBox:Runtime.Field(function()
+        {
+         return"viewBox";
+        }),
+        Visibility:Runtime.Field(function()
+        {
+         return"visibility";
+        }),
+        Width:Runtime.Field(function()
+        {
+         return"width";
+        }),
+        WordSpacing:Runtime.Field(function()
+        {
+         return"word-spacing";
+        }),
+        WritingMode:Runtime.Field(function()
+        {
+         return"writing-mode";
+        }),
+        X:Runtime.Field(function()
+        {
+         return"x";
+        }),
+        X1:Runtime.Field(function()
+        {
+         return"x1";
+        }),
+        X2:Runtime.Field(function()
+        {
+         return"x2";
+        }),
+        XChannelSelector:Runtime.Field(function()
+        {
+         return"xChannelSelector";
+        }),
+        Y:Runtime.Field(function()
+        {
+         return"y";
+        }),
+        Y1:Runtime.Field(function()
+        {
+         return"y1";
+        }),
+        Y2:Runtime.Field(function()
+        {
+         return"y2";
+        }),
+        YChannelSelector:Runtime.Field(function()
+        {
+         return"yChannelSelector";
+        }),
+        Z:Runtime.Field(function()
+        {
+         return"z";
+        })
+       },
+       SvgElements:{
+        A:function(ats,ch)
+        {
+         return Doc.SvgElement("a",ats,ch);
+        },
+        AltGlyph:function(ats,ch)
+        {
+         return Doc.SvgElement("altglyph",ats,ch);
+        },
+        AltGlyphDef:function(ats,ch)
+        {
+         return Doc.SvgElement("altglyphdef",ats,ch);
+        },
+        AltGlyphItem:function(ats,ch)
+        {
+         return Doc.SvgElement("altglyphitem",ats,ch);
+        },
+        Animate:function(ats,ch)
+        {
+         return Doc.SvgElement("animate",ats,ch);
+        },
+        AnimateColor:function(ats,ch)
+        {
+         return Doc.SvgElement("animatecolor",ats,ch);
+        },
+        AnimateMotion:function(ats,ch)
+        {
+         return Doc.SvgElement("animatemotion",ats,ch);
+        },
+        AnimateTransform:function(ats,ch)
+        {
+         return Doc.SvgElement("animatetransform",ats,ch);
+        },
+        Circle:function(ats,ch)
+        {
+         return Doc.SvgElement("circle",ats,ch);
+        },
+        ClipPath:function(ats,ch)
+        {
+         return Doc.SvgElement("clippath",ats,ch);
+        },
+        ColorProfile:function(ats,ch)
+        {
+         return Doc.SvgElement("color-profile",ats,ch);
+        },
+        Cursor:function(ats,ch)
+        {
+         return Doc.SvgElement("cursor",ats,ch);
+        },
+        Defs:function(ats,ch)
+        {
+         return Doc.SvgElement("defs",ats,ch);
+        },
+        Desc:function(ats,ch)
+        {
+         return Doc.SvgElement("desc",ats,ch);
+        },
+        Ellipse:function(ats,ch)
+        {
+         return Doc.SvgElement("ellipse",ats,ch);
+        },
+        FeBlend:function(ats,ch)
+        {
+         return Doc.SvgElement("feblend",ats,ch);
+        },
+        FeColorMatrix:function(ats,ch)
+        {
+         return Doc.SvgElement("fecolormatrix",ats,ch);
+        },
+        FeComponentTransfer:function(ats,ch)
+        {
+         return Doc.SvgElement("fecomponenttransfer",ats,ch);
+        },
+        FeComposite:function(ats,ch)
+        {
+         return Doc.SvgElement("fecomposite",ats,ch);
+        },
+        FeConvolveMatrix:function(ats,ch)
+        {
+         return Doc.SvgElement("feconvolvematrix",ats,ch);
+        },
+        FeDiffuseLighting:function(ats,ch)
+        {
+         return Doc.SvgElement("fediffuselighting",ats,ch);
+        },
+        FeDisplacementMap:function(ats,ch)
+        {
+         return Doc.SvgElement("fedisplacementmap",ats,ch);
+        },
+        FeDistantLight:function(ats,ch)
+        {
+         return Doc.SvgElement("fedistantlight",ats,ch);
+        },
+        FeFlood:function(ats,ch)
+        {
+         return Doc.SvgElement("feflood",ats,ch);
+        },
+        FeFuncA:function(ats,ch)
+        {
+         return Doc.SvgElement("fefunca",ats,ch);
+        },
+        FeFuncB:function(ats,ch)
+        {
+         return Doc.SvgElement("fefuncb",ats,ch);
+        },
+        FeFuncG:function(ats,ch)
+        {
+         return Doc.SvgElement("fefuncg",ats,ch);
+        },
+        FeFuncR:function(ats,ch)
+        {
+         return Doc.SvgElement("fefuncr",ats,ch);
+        },
+        FeGaussianBlur:function(ats,ch)
+        {
+         return Doc.SvgElement("fegaussianblur",ats,ch);
+        },
+        FeImage:function(ats,ch)
+        {
+         return Doc.SvgElement("feimage",ats,ch);
+        },
+        FeMerge:function(ats,ch)
+        {
+         return Doc.SvgElement("femerge",ats,ch);
+        },
+        FeMergeNode:function(ats,ch)
+        {
+         return Doc.SvgElement("femergenode",ats,ch);
+        },
+        FeMorphology:function(ats,ch)
+        {
+         return Doc.SvgElement("femorphology",ats,ch);
+        },
+        FeOffset:function(ats,ch)
+        {
+         return Doc.SvgElement("feoffset",ats,ch);
+        },
+        FePointLight:function(ats,ch)
+        {
+         return Doc.SvgElement("fepointlight",ats,ch);
+        },
+        FeSpecularLighting:function(ats,ch)
+        {
+         return Doc.SvgElement("fespecularlighting",ats,ch);
+        },
+        FeSpotLight:function(ats,ch)
+        {
+         return Doc.SvgElement("fespotlight",ats,ch);
+        },
+        FeTile:function(ats,ch)
+        {
+         return Doc.SvgElement("fetile",ats,ch);
+        },
+        FeTurbulence:function(ats,ch)
+        {
+         return Doc.SvgElement("feturbulence",ats,ch);
+        },
+        Filter:function(ats,ch)
+        {
+         return Doc.SvgElement("filter",ats,ch);
+        },
+        Font:function(ats,ch)
+        {
+         return Doc.SvgElement("font",ats,ch);
+        },
+        FontFace:function(ats,ch)
+        {
+         return Doc.SvgElement("font-face",ats,ch);
+        },
+        FontFaceFormat:function(ats,ch)
+        {
+         return Doc.SvgElement("font-face-format",ats,ch);
+        },
+        FontFaceName:function(ats,ch)
+        {
+         return Doc.SvgElement("font-face-name",ats,ch);
+        },
+        FontFaceSrc:function(ats,ch)
+        {
+         return Doc.SvgElement("font-face-src",ats,ch);
+        },
+        FontFaceUri:function(ats,ch)
+        {
+         return Doc.SvgElement("font-face-uri",ats,ch);
+        },
+        ForeignObject:function(ats,ch)
+        {
+         return Doc.SvgElement("foreignobject",ats,ch);
+        },
+        G:function(ats,ch)
+        {
+         return Doc.SvgElement("g",ats,ch);
+        },
+        Glyph:function(ats,ch)
+        {
+         return Doc.SvgElement("glyph",ats,ch);
+        },
+        GlyphRef:function(ats,ch)
+        {
+         return Doc.SvgElement("glyphref",ats,ch);
+        },
+        HKern:function(ats,ch)
+        {
+         return Doc.SvgElement("hkern",ats,ch);
+        },
+        Image:function(ats,ch)
+        {
+         return Doc.SvgElement("image",ats,ch);
+        },
+        Line:function(ats,ch)
+        {
+         return Doc.SvgElement("line",ats,ch);
+        },
+        LinearGradient:function(ats,ch)
+        {
+         return Doc.SvgElement("lineargradient",ats,ch);
+        },
+        MPath:function(ats,ch)
+        {
+         return Doc.SvgElement("mpath",ats,ch);
+        },
+        Marker:function(ats,ch)
+        {
+         return Doc.SvgElement("marker",ats,ch);
+        },
+        Mask:function(ats,ch)
+        {
+         return Doc.SvgElement("mask",ats,ch);
+        },
+        Metadata:function(ats,ch)
+        {
+         return Doc.SvgElement("metadata",ats,ch);
+        },
+        MissingGlyph:function(ats,ch)
+        {
+         return Doc.SvgElement("missing-glyph",ats,ch);
+        },
+        Path:function(ats,ch)
+        {
+         return Doc.SvgElement("path",ats,ch);
+        },
+        Pattern:function(ats,ch)
+        {
+         return Doc.SvgElement("pattern",ats,ch);
+        },
+        Polygon:function(ats,ch)
+        {
+         return Doc.SvgElement("polygon",ats,ch);
+        },
+        Polyline:function(ats,ch)
+        {
+         return Doc.SvgElement("polyline",ats,ch);
+        },
+        RadialGradient:function(ats,ch)
+        {
+         return Doc.SvgElement("radialgradient",ats,ch);
+        },
+        Rect:function(ats,ch)
+        {
+         return Doc.SvgElement("rect",ats,ch);
+        },
+        Script:function(ats,ch)
+        {
+         return Doc.SvgElement("script",ats,ch);
+        },
+        Set:function(ats,ch)
+        {
+         return Doc.SvgElement("set",ats,ch);
+        },
+        Stop:function(ats,ch)
+        {
+         return Doc.SvgElement("stop",ats,ch);
+        },
+        Style:function(ats,ch)
+        {
+         return Doc.SvgElement("style",ats,ch);
+        },
+        Svg:function(ats,ch)
+        {
+         return Doc.SvgElement("svg",ats,ch);
+        },
+        Switch:function(ats,ch)
+        {
+         return Doc.SvgElement("switch",ats,ch);
+        },
+        Symbol:function(ats,ch)
+        {
+         return Doc.SvgElement("symbol",ats,ch);
+        },
+        TRef:function(ats,ch)
+        {
+         return Doc.SvgElement("tref",ats,ch);
+        },
+        TSpan:function(ats,ch)
+        {
+         return Doc.SvgElement("tspan",ats,ch);
+        },
+        Text:function(ats,ch)
+        {
+         return Doc.SvgElement("text",ats,ch);
+        },
+        TextPath:function(ats,ch)
+        {
+         return Doc.SvgElement("textpath",ats,ch);
+        },
+        Title:function(ats,ch)
+        {
+         return Doc.SvgElement("title",ats,ch);
         },
         Use:function(ats,ch)
         {
-         return Doc.Element("Use",ats,ch);
+         return Doc.SvgElement("use",ats,ch);
+        },
+        VKern:function(ats,ch)
+        {
+         return Doc.SvgElement("vkern",ats,ch);
         },
         View:function(ats,ch)
         {
-         return Doc.Element("view",ats,ch);
-        },
-        Vkern:function(ats,ch)
-        {
-         return Doc.Element("vkern",ats,ch);
+         return Doc.SvgElement("view",ats,ch);
         }
        },
-       Samp:function(ats,ch)
+       TBody:function(atr,ch)
        {
-        return Doc.Element("samp",ats,ch);
+        return Elements.TBody(atr,ch);
        },
-       Script:function(ats)
+       TBody0:function(ch)
        {
-        return Doc.Element("script",ats,Runtime.New(T,{
+        return Elements.TBody(Runtime.New(T,{
          $:0
-        }));
+        }),ch);
        },
-       Section:function(ats,ch)
+       TD:function(atr,ch)
        {
-        return Doc.Element("section",ats,ch);
+        return Elements.TD(atr,ch);
        },
-       Select:function(ats,ch)
+       TD0:function(ch)
        {
-        return Doc.Element("select",ats,ch);
+        return Elements.TD(Runtime.New(T,{
+         $:0
+        }),ch);
        },
-       Small:function(ats,ch)
+       THead:function(atr,ch)
        {
-        return Doc.Element("small",ats,ch);
+        return Elements.THead(atr,ch);
        },
-       Source:function(ats,ch)
+       THead0:function(ch)
        {
-        return Doc.Element("source",ats,ch);
+        return Elements.THead(Runtime.New(T,{
+         $:0
+        }),ch);
        },
-       Span:function(ats,ch)
+       TR:function(atr,ch)
        {
-        return Doc.Element("span",ats,ch);
+        return Elements.TR(atr,ch);
        },
-       Strong:function(ats,ch)
+       TR0:function(ch)
        {
-        return Doc.Element("strong",ats,ch);
+        return Elements.TR(Runtime.New(T,{
+         $:0
+        }),ch);
        },
-       Sub:function(ats,ch)
+       Table:function(atr,ch)
        {
-        return Doc.Element("sub",ats,ch);
+        return Elements.Table(atr,ch);
        },
-       Sup:function(ats,ch)
+       Table0:function(ch)
        {
-        return Doc.Element("sup",ats,ch);
+        return Elements.Table(Runtime.New(T,{
+         $:0
+        }),ch);
        },
-       TBody:function(ats,ch)
+       UL:function(atr,ch)
        {
-        return Doc.Element("tbody",ats,ch);
+        return Elements.UL(atr,ch);
        },
-       TD:function(ats,ch)
+       UL0:function(ch)
        {
-        return Doc.Element("td",ats,ch);
-       },
-       TFoot:function(ats,ch)
-       {
-        return Doc.Element("tfoot",ats,ch);
-       },
-       TH:function(ats,ch)
-       {
-        return Doc.Element("th",ats,ch);
-       },
-       THead:function(ats,ch)
-       {
-        return Doc.Element("thead",ats,ch);
-       },
-       TR:function(ats,ch)
-       {
-        return Doc.Element("tr",ats,ch);
-       },
-       Table:function(ats,ch)
-       {
-        return Doc.Element("table",ats,ch);
-       },
-       Template:function(ats,ch)
-       {
-        return Doc.Element("template",ats,ch);
-       },
-       Textarea:function(ats,ch)
-       {
-        return Doc.Element("textarea",ats,ch);
-       },
-       Time:function(ats,ch)
-       {
-        return Doc.Element("time",ats,ch);
-       },
-       Track:function(ats,ch)
-       {
-        return Doc.Element("track",ats,ch);
-       },
-       U:function(ats,ch)
-       {
-        return Doc.Element("u",ats,ch);
-       },
-       UL:function(ats,ch)
-       {
-        return Doc.Element("ul",ats,ch);
-       },
-       VAR:function(ats,ch)
-       {
-        return Doc.Element("var",ats,ch);
-       },
-       Video:function(ats,ch)
-       {
-        return Doc.Element("video",ats,ch);
-       },
-       Wbr:function(ats,ch)
-       {
-        return Doc.Element("wbr",ats,ch);
+        return Elements.UL(Runtime.New(T,{
+         $:0
+        }),ch);
        }
       },
       Interpolation:Runtime.Class({},{
@@ -14658,6 +15987,26 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        }
       }),
       ListModel:Runtime.Class({},{
+       Create:function(key,init)
+       {
+        var _var;
+        _var=Var1.Create(Seq.toArray(Seq.distinctBy(key,init)));
+        return Runtime.New(ListModel1,{
+         Key:key,
+         Var:_var,
+         View:View1.Map(function(x)
+         {
+          return x.slice();
+         },_var.get_View())
+        });
+       },
+       FromSeq:function(xs)
+       {
+        return ListModel.Create(function(x)
+        {
+         return x;
+        },xs);
+       },
        View:function(m)
        {
         return m.View;
@@ -14696,27 +16045,6 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
           return null;
          }
        }
-      },{
-       Create:function(key,init)
-       {
-        var _var;
-        _var=Var1.Create(Seq.toArray(Seq.distinctBy(key,init)));
-        return Runtime.New(ListModel1,{
-         Key:key,
-         Var:_var,
-         View:View.Map(function(x)
-         {
-          return x.slice();
-         },_var.get_View())
-        });
-       },
-       FromSeq:function(xs)
-       {
-        return ListModel1.Create(function(x)
-        {
-         return x;
-        },xs);
-       }
       }),
       ListModels:{
        Contains:function(keyFn,item,xs)
@@ -14729,10 +16057,16 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         },xs);
        }
       },
+      Model:Runtime.Class({},{
+       View:function(_arg2)
+       {
+        return _arg2.$1;
+       }
+      }),
       Model1:Runtime.Class({
        get_View:function()
        {
-        return Model1.View(this);
+        return Model.View(this);
        }
       },{
        Create:function(proj,init)
@@ -14742,7 +16076,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         return Runtime.New(Model1,{
          $:0,
          $0:_var,
-         $1:View.Map(proj,_var.get_View())
+         $1:View1.Map(proj,_var.get_View())
         });
        },
        Update:function(update,_arg1)
@@ -14752,10 +16086,6 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          update(x);
          return x;
         });
-       },
-       View:function(_arg2)
-       {
-        return _arg2.$1;
        }
       }),
       Route:{
@@ -14816,10 +16146,10 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         return Routing.InstallMap(map);
        }
       }),
-      Router1:Runtime.Class({},{
+      Router:Runtime.Class({},{
        Dir:function(prefix,sites)
        {
-        return Router1.Prefix(prefix,Router1.Merge(sites));
+        return Router.Prefix(prefix,Router.Merge(sites));
        },
        Install:function(key,site)
        {
@@ -15389,6 +16719,27 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          TExit:f,
          TFlags:tr.TFlags|4
         };
+       },
+       Trivial:function()
+       {
+        return{
+         TChange:function()
+         {
+          return function(y)
+          {
+           return An.Const(y);
+          };
+         },
+         TEnter:function(t)
+         {
+          return An.Const(t);
+         },
+         TExit:function(t)
+         {
+          return An.Const(t);
+         },
+         TFlags:0
+        };
        }
       }),
       Trans1:Runtime.Class({},{
@@ -15415,27 +16766,6 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        CanAnimateExit:function(tr)
        {
         return(tr.TFlags&4)!==0;
-       },
-       Trivial:function()
-       {
-        return{
-         TChange:function()
-         {
-          return function(y)
-          {
-           return An.Const(y);
-          };
-         },
-         TEnter:function(t)
-         {
-          return An.Const(t);
-         },
-         TExit:function(t)
-         {
-          return An.Const(t);
-         },
-         TFlags:0
-        };
        }
       }),
       Trie:{
@@ -15682,37 +17012,6 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        {
         return _var.Snap;
        },
-       Update:function(_var,fn)
-       {
-        return Var1.Set(_var,fn(Var1.Get(_var)));
-       }
-      }),
-      Var1:Runtime.Class({
-       get_Value:function()
-       {
-        return Var1.Get(this);
-       },
-       get_View:function()
-       {
-        return View1.FromVar(this);
-       },
-       set_Value:function(value)
-       {
-        return Var1.Set(this,value);
-       }
-      },{
-       Create:function(v)
-       {
-        return Runtime.New(Var1,{
-         Const:false,
-         Current:v,
-         Snap:Snap.CreateWithValue(v)
-        });
-       },
-       Get:function(_var)
-       {
-        return _var.Current;
-       },
        Set:function(_var,value)
        {
         if(_var.Const)
@@ -15740,12 +17039,43 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
           _var.Snap=Snap.CreateForever(value);
           return;
          }
+       },
+       Update:function(_var,fn)
+       {
+        return Var.Set(_var,fn(Var1.Get(_var)));
+       }
+      }),
+      Var1:Runtime.Class({
+       get_Value:function()
+       {
+        return Var1.Get(this);
+       },
+       get_View:function()
+       {
+        return View1.FromVar(this);
+       },
+       set_Value:function(value)
+       {
+        return Var.Set(this,value);
+       }
+      },{
+       Create:function(v)
+       {
+        return Runtime.New(Var1,{
+         Const:false,
+         Current:v,
+         Snap:Snap.CreateWithValue(v)
+        });
+       },
+       Get:function(_var)
+       {
+        return _var.Current;
        }
       }),
       View:Runtime.Class({},{
        Apply:function(fn,view)
        {
-        return View.Map2(function(f)
+        return View1.Map2(function(f)
         {
          return function(x)
          {
@@ -15755,7 +17085,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        Bind:function(fn,view)
        {
-        return View.Join(View.Map(fn,view));
+        return View1.Join(View1.Map(fn,view));
        },
        Const:function(x)
        {
@@ -15769,9 +17099,24 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          }
         };
        },
+       Sink:function(act,_arg6)
+       {
+        var observe,loop;
+        observe=_arg6.$0;
+        loop=function()
+        {
+         return Snap.When(observe(null),act,function()
+         {
+          return Async.Schedule(loop);
+         });
+        };
+        return Async.Schedule(loop);
+       }
+      }),
+      View1:Runtime.Class({},{
        Convert:function(conv,view)
        {
-        return View.ConvertBy(function(x)
+        return View1.ConvertBy(function(x)
         {
          return x;
         },conv,view);
@@ -15782,7 +17127,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         state={
          contents:Dictionary.New2()
         };
-        return View.Map(function(xs)
+        return View1.Map(function(xs)
         {
          var prevState,newState,result;
          prevState=state.contents;
@@ -15801,7 +17146,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        ConvertSeq:function(conv,view)
        {
-        return View.ConvertSeqBy(function(x)
+        return View1.ConvertSeqBy(function(x)
         {
          return x;
         },conv,view);
@@ -15812,7 +17157,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         state={
          contents:Dictionary.New2()
         };
-        return View.Map(function(xs)
+        return View1.Map(function(xs)
         {
          var prevState,newState,result;
          prevState=state.contents;
@@ -15824,12 +17169,12 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
           if(prevState.ContainsKey(k))
            {
             n=prevState.get_Item(k);
-            Var1.Set(n.NVar,x);
+            Var.Set(n.NVar,x);
             node=n;
            }
           else
            {
-            node=View.ConvertSeqNode(conv,x);
+            node=View1.ConvertSeqNode(conv,x);
            }
           newState.set_Item(k,node);
           return node.NValue;
@@ -15891,11 +17236,21 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          }
         };
        },
+       FromVar:function(_var)
+       {
+        return{
+         $:0,
+         $0:function()
+         {
+          return Var.Observe(_var);
+         }
+        };
+       },
        Join:function(_arg5)
        {
         var observe;
         observe=_arg5.$0;
-        return View.CreateLazy(function()
+        return View1.CreateLazy(function()
         {
          return Snap.Bind(function(_arg1)
          {
@@ -15907,7 +17262,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        {
         var observe;
         observe=_arg1.$0;
-        return View.CreateLazy(function()
+        return View1.CreateLazy(function()
         {
          return Snap.Map(fn,observe(null));
         });
@@ -15917,7 +17272,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         var o1,o2;
         o1=_arg3.$0;
         o2=_arg2.$0;
-        return View.CreateLazy(function()
+        return View1.CreateLazy(function()
         {
          return Snap.Map2(fn,o1(null),o2(null));
         });
@@ -15926,35 +17281,10 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        {
         var observe;
         observe=_arg4.$0;
-        return View.CreateLazy(function()
+        return View1.CreateLazy(function()
         {
          return Snap.MapAsync(fn,observe(null));
         });
-       },
-       Sink:function(act,_arg6)
-       {
-        var observe,loop;
-        observe=_arg6.$0;
-        loop=function()
-        {
-         return Snap.When(observe(null),act,function()
-         {
-          return Async.Schedule(loop);
-         });
-        };
-        return Async.Schedule(loop);
-       }
-      }),
-      View1:Runtime.Class({},{
-       FromVar:function(_var)
-       {
-        return{
-         $:0,
-         $0:function()
-         {
-          return Var.Observe(_var);
-         }
-        };
        },
        get_Do:function()
        {
@@ -15993,7 +17323,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   window=Runtime.Safe(Global.window);
   Trans1=Runtime.Safe(Next.Trans1);
   Option=Runtime.Safe(WebSharper.Option);
-  View=Runtime.Safe(Next.View);
+  View1=Runtime.Safe(Next.View1);
   Lazy=Runtime.Safe(WebSharper.Lazy);
   Array1=Runtime.Safe(Abbrev.Array);
   Attrs=Runtime.Safe(Next.Attrs);
@@ -16001,13 +17331,12 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   Attr=Runtime.Safe(Next.Attr);
   AnimatedAttrNode=Runtime.Safe(Next.AnimatedAttrNode);
   DynamicAttrNode=Runtime.Safe(Next.DynamicAttrNode);
+  View=Runtime.Safe(Next.View);
   Docs=Runtime.Safe(Next.Docs);
   Doc=Runtime.Safe(Next.Doc);
-  View1=Runtime.Safe(Next.View1);
   List=Runtime.Safe(WebSharper.List);
   Var=Runtime.Safe(Next.Var);
   T=Runtime.Safe(List.T);
-  Var1=Runtime.Safe(Next.Var1);
   Mailbox=Runtime.Safe(Abbrev.Mailbox);
   Operators=Runtime.Safe(WebSharper.Operators);
   NodeSet=Runtime.Safe(Docs.NodeSet);
@@ -16017,19 +17346,24 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   document=Runtime.Safe(Global.document);
   Easing=Runtime.Safe(Next.Easing);
   Easings=Runtime.Safe(Next.Easings);
+  Var1=Runtime.Safe(Next.Var1);
   FlowBuilder=Runtime.Safe(Next.FlowBuilder);
   Flow1=Runtime.Safe(Next.Flow1);
+  Html=Runtime.Safe(Next.Html);
+  Elements=Runtime.Safe(Html.Elements);
   DoubleInterpolation=Runtime.Safe(Next.DoubleInterpolation);
   Key=Runtime.Safe(Next.Key);
-  ListModels=Runtime.Safe(Next.ListModels);
   ListModel1=Runtime.Safe(Next.ListModel1);
+  ListModel=Runtime.Safe(Next.ListModel);
+  ListModels=Runtime.Safe(Next.ListModels);
+  Model=Runtime.Safe(Next.Model);
   Model1=Runtime.Safe(Next.Model1);
   Strings=Runtime.Safe(WebSharper.Strings);
   encodeURIComponent=Runtime.Safe(Global.encodeURIComponent);
   decodeURIComponent=Runtime.Safe(Global.decodeURIComponent);
   Route=Runtime.Safe(Next.Route);
   Routing=Runtime.Safe(Next.Routing);
-  Router1=Runtime.Safe(Next.Router1);
+  Router=Runtime.Safe(Next.Router);
   Trie=Runtime.Safe(Next.Trie);
   Dictionary=Runtime.Safe(Collections.Dictionary);
   Snap=Runtime.Safe(Next.Snap);
@@ -16038,12 +17372,280 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   ResizeArray=Runtime.Safe(Collections.ResizeArray);
   ResizeArrayProxy=Runtime.Safe(ResizeArray.ResizeArrayProxy);
   MapModule=Runtime.Safe(Collections.MapModule);
-  return FSharpMap=Runtime.Safe(Collections.FSharpMap);
+  FSharpMap=Runtime.Safe(Collections.FSharpMap);
+  Attributes=Runtime.Safe(Html.Attributes);
+  return SvgAttributes=Runtime.Safe(Html.SvgAttributes);
  });
  Runtime.OnLoad(function()
  {
+  SvgAttributes.Z();
+  SvgAttributes.YChannelSelector();
+  SvgAttributes.Y2();
+  SvgAttributes.Y1();
+  SvgAttributes.Y();
+  SvgAttributes.XChannelSelector();
+  SvgAttributes.X2();
+  SvgAttributes.X1();
+  SvgAttributes.X();
+  SvgAttributes.WritingMode();
+  SvgAttributes.WordSpacing();
+  SvgAttributes.Width();
+  SvgAttributes.Visibility();
+  SvgAttributes.ViewBox();
+  SvgAttributes.Values();
+  SvgAttributes.Type();
+  SvgAttributes.Transform();
+  SvgAttributes.To();
+  SvgAttributes.TextRendering();
+  SvgAttributes.TextDecoration();
+  SvgAttributes.TextAnchor();
+  SvgAttributes.TargetY();
+  SvgAttributes.TargetX();
+  SvgAttributes.SurfaceScale();
+  SvgAttributes.Style();
+  SvgAttributes.StrokeWidth();
+  SvgAttributes.StrokeOpacity();
+  SvgAttributes.StrokeMiterLimit();
+  SvgAttributes.StrokeLineJoin();
+  SvgAttributes.StrokeLineCap();
+  SvgAttributes.StrokeDashOffset();
+  SvgAttributes.StrokeDashArray();
+  SvgAttributes.Stroke();
+  SvgAttributes.StopOpacity();
+  SvgAttributes.StopColor();
+  SvgAttributes.StitchTiles();
+  SvgAttributes.StdDeviation();
+  SvgAttributes.SpecularExponent();
+  SvgAttributes.SpecularConstant();
+  SvgAttributes.ShapeRendering();
+  SvgAttributes.Seed();
+  SvgAttributes.Scale();
+  SvgAttributes.Result();
+  SvgAttributes.Restart();
+  SvgAttributes.RequiredFeatures();
+  SvgAttributes.RepeatDur();
+  SvgAttributes.RepeatCount();
+  SvgAttributes.Radius();
+  SvgAttributes.RY();
+  SvgAttributes.RX();
+  SvgAttributes.R();
+  SvgAttributes.PrimitiveUnits();
+  SvgAttributes.PreserveAspectRatio();
+  SvgAttributes.PreserveAlpha();
+  SvgAttributes.PointsAtZ();
+  SvgAttributes.PointsAtY();
+  SvgAttributes.PointsAtX();
+  SvgAttributes.Points();
+  SvgAttributes.PointerEvents();
+  SvgAttributes.PatternUnits();
+  SvgAttributes.PatternTransform();
+  SvgAttributes.PatternContentUnits();
+  SvgAttributes.PathLength();
+  SvgAttributes.PaintOrder();
+  SvgAttributes.Overflow();
+  SvgAttributes.Order();
+  SvgAttributes.Operator();
+  SvgAttributes.Opacity();
+  SvgAttributes.NumOctaves();
+  SvgAttributes.Mode();
+  SvgAttributes.Min();
+  SvgAttributes.Max();
+  SvgAttributes.MaskUnits();
+  SvgAttributes.MaskContentUnits();
+  SvgAttributes.Mask();
+  SvgAttributes.MarkerWidth();
+  SvgAttributes.MarkerUnits();
+  SvgAttributes.MarkerStart();
+  SvgAttributes.MarkerMid();
+  SvgAttributes.MarkerHeight();
+  SvgAttributes.MarkerEnd();
+  SvgAttributes.Local();
+  SvgAttributes.LimitingConeAngle();
+  SvgAttributes.LightingColor();
+  SvgAttributes.LetterSpacing();
+  SvgAttributes.KeyTimes();
+  SvgAttributes.KeySplines();
+  SvgAttributes.Kerning();
+  SvgAttributes.KernelUnitLength();
+  SvgAttributes.KernelMatrix();
+  SvgAttributes.K4();
+  SvgAttributes.K3();
+  SvgAttributes.K2();
+  SvgAttributes.K1();
+  SvgAttributes.In2();
+  SvgAttributes.ImageRendering();
+  SvgAttributes.IN();
+  SvgAttributes.Height();
+  SvgAttributes.GradientUnits();
+  SvgAttributes.GradientTransform();
+  SvgAttributes.From();
+  SvgAttributes.FontWeight();
+  SvgAttributes.FontVariant();
+  SvgAttributes.FontStyle();
+  SvgAttributes.FontStretch();
+  SvgAttributes.FontSizeAdjust();
+  SvgAttributes.FontSize();
+  SvgAttributes.FontFamily();
+  SvgAttributes.FloodOpacity();
+  SvgAttributes.FloodColor();
+  SvgAttributes.FilterUnits();
+  SvgAttributes.FilterRes();
+  SvgAttributes.Filter();
+  SvgAttributes.FillRule();
+  SvgAttributes.FillOpacity();
+  SvgAttributes.Fill();
+  SvgAttributes.ExternalResourcesRequired();
+  SvgAttributes.End();
+  SvgAttributes.Elevation();
+  SvgAttributes.EdgeMode();
+  SvgAttributes.Dur();
+  SvgAttributes.DominantBaseline();
+  SvgAttributes.Divisor();
+  SvgAttributes.Display();
+  SvgAttributes.Direction();
+  SvgAttributes.DiffuseConstant();
+  SvgAttributes.DY();
+  SvgAttributes.DX();
+  SvgAttributes.D();
+  SvgAttributes.Cursor();
+  SvgAttributes.ContentStyleType();
+  SvgAttributes.ContentScriptType();
+  SvgAttributes.ColorRendering();
+  SvgAttributes.ColorProfile();
+  SvgAttributes.ColorInterpolationFilters();
+  SvgAttributes.ColorInterpolation();
+  SvgAttributes.Color();
+  SvgAttributes.ClipRule();
+  SvgAttributes.ClipPathUnits();
+  SvgAttributes.ClipPath();
+  SvgAttributes.Clip();
+  SvgAttributes.Class();
+  SvgAttributes.CalcMode();
+  SvgAttributes.CY();
+  SvgAttributes.CX();
+  SvgAttributes.Bias();
+  SvgAttributes.Begin();
+  SvgAttributes.BaselineShift();
+  SvgAttributes.BaseFrequency();
+  SvgAttributes.Azimuth();
+  SvgAttributes.AttributeType();
+  SvgAttributes.AttributeName();
+  SvgAttributes.Ascent();
+  SvgAttributes.AlignmentBaseline();
+  SvgAttributes.Additive();
+  SvgAttributes.Accumulate();
+  SvgAttributes.AccentHeight();
+  Attributes.Wrap();
+  Attributes.Width();
+  Attributes.Value();
+  Attributes.Usemap();
+  Attributes.Type();
+  Attributes.Title();
+  Attributes.Target();
+  Attributes.TabIndex();
+  Attributes.Summary();
+  Attributes.Style();
+  Attributes.Step();
+  Attributes.Start();
+  Attributes.Srcdoc();
+  Attributes.SrcLang();
+  Attributes.Src();
+  Attributes.Spellcheck();
+  Attributes.Span();
+  Attributes.Sizes();
+  Attributes.Size();
+  Attributes.Shape();
+  Attributes.Selected();
+  Attributes.Seamless();
+  Attributes.Scoped();
+  Attributes.Scope();
+  Attributes.Sandbox();
+  Attributes.Rows();
+  Attributes.RowSpan();
+  Attributes.Reversed();
+  Attributes.Required();
+  Attributes.Rel();
+  Attributes.Readonly();
+  Attributes.RadioGroup();
+  Attributes.PubDate();
+  Attributes.Preload();
+  Attributes.Poster();
+  Attributes.Placeholder();
+  Attributes.Ping();
+  Attributes.Pattern();
+  Attributes.Optimum();
+  Attributes.Open();
+  Attributes.NoValidate();
+  Attributes.Name();
+  Attributes.Multiple();
+  Attributes.Min();
+  Attributes.Method();
+  Attributes.Media();
+  Attributes.MaxLength();
+  Attributes.Max();
+  Attributes.Manifest();
+  Attributes.Low();
+  Attributes.Loop();
+  Attributes.List();
+  Attributes.Language();
+  Attributes.Lang();
+  Attributes.Label();
+  Attributes.Kind();
+  Attributes.KeyType();
+  Attributes.ItemProp();
+  Attributes.IsMap();
+  Attributes.Icon();
+  Attributes.ID();
+  Attributes.HttpEquiv();
+  Attributes.HrefLang();
+  Attributes.Href();
+  Attributes.High();
+  Attributes.Hidden();
+  Attributes.Height();
+  Attributes.Headers();
+  Attributes.FormAction();
+  Attributes.Form();
+  Attributes.For();
+  Attributes.EncType();
+  Attributes.Dropzone();
+  Attributes.Draggable();
+  Attributes.Download();
+  Attributes.Disabled();
+  Attributes.DirName();
+  Attributes.Dir();
+  Attributes.Defer();
+  Attributes.Default();
+  Attributes.Datetime();
+  Attributes.Coords();
+  Attributes.Controls();
+  Attributes.ContextMenu();
+  Attributes.ContentEditable();
+  Attributes.Content();
+  Attributes.Cols();
+  Attributes.Color();
+  Attributes.ColSpan();
+  Attributes.Codebase();
+  Attributes.Code();
+  Attributes.Class();
+  Attributes.Cite();
+  Attributes.Checked();
+  Attributes.Charset();
+  Attributes.Challenge();
+  Attributes.Buffered();
+  Attributes.Border();
+  Attributes.BgColor();
+  Attributes.AutoSave();
+  Attributes.AutoPlay();
+  Attributes.AutoFocus();
+  Attributes.AutoComplete();
+  Attributes.Async();
+  Attributes.Alt();
+  Attributes.Align();
+  Attributes.Action();
+  Attributes.Accesskey();
+  Attributes.AcceptCharset();
+  Attributes.Accept();
   Easings.CubicInOut();
-  DomUtility.SvgNames();
   DomUtility.Doc();
   Attrs.EmptyAttr();
   Fresh.counter();
@@ -16053,7 +17655,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
 
 (function()
 {
- var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,UI,Next,Var1,Doc,List,Html,T,Utilities,BobsleighSite,View,View1,Unchecked,Attr,Samples,Calculator,Var,CheckBoxTest,Seq,Person,SimpleTextBox,InputTransform,TodoList,PhoneExample,EditablePersonList,MouseChase,ContactFlow,MessageBoard,RoutedBobsleighSite,ObjectConstancy,Common,Fresh,Flow1,String,Strings,IntrinsicFunctionProxy,Auth,Concurrency,Server,document,jQuery,DataSet,Arrays,OperatorIntrinsics,Trans,SVG,Math,An,Interpolation,Easing,Phone,Operators,Order,RouteMap,Builder,Router1,Collections,MapModule,FSharpMap,ListModel1,Util,TodoItem,Key,ListModel,Client;
+ var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,UI,Next,Var,Doc,List,Html,Utilities,T,Var1,BobsleighSite,View1,Unchecked,Attr,Samples,Calculator,CheckBoxTest,Seq,Person,SimpleTextBox,InputTransform,TodoList,PhoneExample,EditablePersonList,MouseChase,ContactFlow,MessageBoard,RoutedBobsleighSite,ObjectConstancy,Common,Fresh,Flow1,Flow,String,Strings,IntrinsicFunctionProxy,Auth,Concurrency,Server,document,jQuery,DataSet,Arrays,OperatorIntrinsics,Trans,SvgElements,Math,View,An,Interpolation,Easing,Phone,Operators,Order,RouteMap,Builder,Router,Collections,MapModule,FSharpMap,ListModel,Util,TodoItem,Key,Client;
  Runtime.Define(Global,{
   IntelliFactory:{
    WebSharper:{
@@ -16062,41 +17664,19 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
       BobsleighSite:{
        GlobalGo:function(_var,act)
        {
-        return Var1.Set(_var,act);
+        return Var.Set(_var,act);
        },
        Governance:function()
        {
-        return Doc.Concat(List.ofArray([Html.Div(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Html.H1(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Utilities.txt("Governance")])),Html.P(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Utilities.txt("The sport is overseen by the "),Utilities.href("International Bobsleigh and Skeleton Federation","http://www.fibt.com/"),Utilities.txt(", an organisation founded in 1923. The organisation governs all international competitions, acting as a body to regulate athletes' conduct, as well as providing funding for training and education.")]))]))]));
+        return Doc.Concat(List.ofArray([Html.Div0(List.ofArray([Html.H10(List.ofArray([Utilities.txt("Governance")])),Html.P0(List.ofArray([Utilities.txt("The sport is overseen by the "),Utilities.href("International Bobsleigh and Skeleton Federation","http://www.fibt.com/"),Utilities.txt(", an organisation founded in 1923. The organisation governs all international competitions, acting as a body to regulate athletes' conduct, as well as providing funding for training and education.")]))]))]));
        },
        History:function()
        {
-        return Doc.Concat(List.ofArray([Html.Div(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Html.H1(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Utilities.txt("History")])),Html.P(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Utilities.txt("According to "),Utilities.href("Wikipedia","http://en.wikipedia.org/wiki/Bobsleigh"),Utilities.txt(", the beginnings of bobsleigh came about due to a hotelier becoming increasingly frustrated about having entire seasons where he could not rent out his properties. In response, he got a few people interested, and the Swiss town of St Moritz became the home of the first bobsleigh races.")])),Html.P(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Utilities.txt("Bobsleigh races have been a regular event at the Winter Olympics since the very first competition in 1924.")]))]))]));
+        return Doc.Concat(List.ofArray([Html.Div0(List.ofArray([Html.H10(List.ofArray([Utilities.txt("History")])),Html.P0(List.ofArray([Utilities.txt("According to "),Utilities.href("Wikipedia","http://en.wikipedia.org/wiki/Bobsleigh"),Utilities.txt(", the beginnings of bobsleigh came about due to a hotelier becoming increasingly frustrated about having entire seasons where he could not rent out his properties. In response, he got a few people interested, and the Swiss town of St Moritz became the home of the first bobsleigh races.")])),Html.P0(List.ofArray([Utilities.txt("Bobsleigh races have been a regular event at the Winter Olympics since the very first competition in 1924.")]))]))]));
        },
        HomePage:function(ctx)
        {
-        return Doc.Concat(List.ofArray([Html.Div(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Html.H1(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Utilities.txt("Welcome!")])),Html.P(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Utilities.txt("Welcome to the IntelliFactory Bobsleigh MiniSite!")])),Html.P(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Utilities.txt("Here you can find out about the "),Utilities.link("history",Runtime.New(T,{
+        return Doc.Concat(List.ofArray([Html.Div0(List.ofArray([Html.H10(List.ofArray([Utilities.txt("Welcome!")])),Html.P0(List.ofArray([Utilities.txt("Welcome to the IntelliFactory Bobsleigh MiniSite!")])),Html.P0(List.ofArray([Utilities.txt("Here you can find out about the "),Utilities.link("history",Runtime.New(T,{
          $:0
         }),function()
         {
@@ -16133,10 +17713,10 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         ctx={
          Go:function(arg10)
          {
-          return Var1.Set(m,arg10);
+          return Var.Set(m,arg10);
          }
         };
-        return Doc.EmbedView(View.Map(function(pg)
+        return Doc.EmbedView(View1.Map(function(pg)
         {
          return pg.$==1?withNavbar(BobsleighSite.History(ctx)):pg.$==2?withNavbar(BobsleighSite.Governance(ctx)):pg.$==3?withNavbar(BobsleighSite.Team(ctx)):withNavbar(BobsleighSite.HomePage(ctx));
         },View1.FromVar(m)));
@@ -16145,7 +17725,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        {
         var x;
         x=View1.FromVar(_var);
-        return Doc.EmbedView(View.Map(function(active)
+        return Doc.EmbedView(View1.Map(function(active)
         {
          var renderLink;
          renderLink=function(action)
@@ -16174,29 +17754,14 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        {
         var teamMembers;
         teamMembers=List.ofArray([["Adam","granicz"],["András","AndrasJanko"],["Anton","t0yv0"],["István","inchester23"],["Loic","tarmil_"],["Sándor","sandorrakonczai"],["Simon","Simon_JF"]]);
-        return Doc.Concat(List.ofArray([Html.Div(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Html.H1(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Utilities.txt("The IntelliFactory Bobsleigh Team")])),Html.P(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Utilities.txt("The world-famous IntelliFactory Bobsleigh Team was founded in 2004, and currently consists of:")])),Html.P(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Html.UL(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Doc.Concat(List.map(Runtime.Tupled(function(tupledArg)
+        return Doc.Concat(List.ofArray([Html.Div0(List.ofArray([Html.H10(List.ofArray([Utilities.txt("The IntelliFactory Bobsleigh Team")])),Html.P0(List.ofArray([Utilities.txt("The world-famous IntelliFactory Bobsleigh Team was founded in 2004, and currently consists of:")])),Html.UL0(List.ofArray([Doc.Concat(List.map(Runtime.Tupled(function(tupledArg)
         {
-         var name,handle;
-         name=tupledArg[0];
-         handle=tupledArg[1];
-         return Html.LI(Runtime.New(T,{
-          $:0
-         }),List.ofArray([Utilities.href(name,"http://www.twitter.com/"+handle)]));
-        }),teamMembers))]))]))]))]));
+         return Html.LI0(List.ofArray([Utilities.href(tupledArg[0],"http://www.twitter.com/"+tupledArg[1])]));
+        }),teamMembers))]))]))]));
        },
        description:function()
        {
-        return Utilities.div(List.ofArray([Utilities.txt("A small website about bobsleighs, demonstrating how UI.Next may be used to structure single-page applications.")]));
+        return Html.Div0(List.ofArray([Utilities.txt("A small website about bobsleighs, demonstrating how UI.Next may be used to structure single-page applications.")]));
        },
        pages:Runtime.Field(function()
        {
@@ -16218,9 +17783,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
       Calculator:{
        Description:function()
        {
-        return Html.Div(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Doc.TextNode("A calculator application")]));
+        return Html.Div0(List.ofArray([Doc.TextNode("A calculator application")]));
        },
        Main:function()
        {
@@ -16241,7 +17804,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         var arg20;
         arg20=function()
         {
-         return Var1.Set(rvCalc,Calculator.initCalc());
+         return Var.Set(rvCalc,Calculator.initCalc());
         };
         return Doc.Button("C",Runtime.New(T,{
          $:0
@@ -16272,23 +17835,13 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         };
         cbtn=Calculator.cBtn(rvCalc);
         eqbtn=Calculator.eqBtn(rvCalc);
-        return Html.Div(Runtime.New(T,{
+        return Html.Div0(List.ofArray([Doc.TextView(Calculator.displayCalc(rvCalc)),Html.Div0(List.ofArray([btn(1),btn(2),btn(3),obtn({
          $:0
-        }),List.ofArray([Doc.TextView(Calculator.displayCalc(rvCalc)),Html.Div(Runtime.New(T,{
-         $:0
-        }),List.ofArray([btn(1),btn(2),btn(3),obtn({
-         $:0
-        })])),Html.Div(Runtime.New(T,{
-         $:0
-        }),List.ofArray([btn(4),btn(5),btn(6),obtn({
+        })])),Html.Div0(List.ofArray([btn(4),btn(5),btn(6),obtn({
          $:1
-        })])),Html.Div(Runtime.New(T,{
-         $:0
-        }),List.ofArray([btn(7),btn(8),btn(9),obtn({
+        })])),Html.Div0(List.ofArray([btn(7),btn(8),btn(9),obtn({
          $:2
-        })])),Html.Div(Runtime.New(T,{
-         $:0
-        }),List.ofArray([btn(0),cbtn,eqbtn,obtn({
+        })])),Html.Div0(List.ofArray([btn(0),cbtn,eqbtn,obtn({
          $:3
         })]))]));
        },
@@ -16307,7 +17860,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        displayCalc:function(rvCalc)
        {
-        return View.Map(function(c)
+        return View1.Map(function(c)
         {
          return Global.String(c.Operand);
         },View1.FromVar(rvCalc));
@@ -16402,9 +17955,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
       CheckBoxTest:{
        Description:function()
        {
-        return Html.Div(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Doc.TextNode("An application which shows the selected values.")]));
+        return Html.Div0(List.ofArray([Doc.TextNode("An application which shows the selected values.")]));
        },
        Main:function()
        {
@@ -16415,7 +17966,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         return Doc.Concat(List.ofArray([Doc.CheckBox(function(p)
         {
          return p.Name;
-        },CheckBoxTest.People(),selPeople),Doc.TextView(View.Map(function(xs)
+        },CheckBoxTest.People(),selPeople),Doc.TextView(View1.Map(function(xs)
         {
          return Seq.fold(function(acc)
          {
@@ -16496,9 +18047,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
       ContactFlow:{
        Description:function()
        {
-        return Html.Div(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Doc.TextNode("A WS.UI.Next flowlet implementation.")]));
+        return Html.Div0(List.ofArray([Doc.TextNode("A WS.UI.Next flowlet implementation.")]));
        },
        ExampleFlow:function()
        {
@@ -16510,7 +18059,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          {
           return _builder_.Bind(ContactFlow.contactFlowlet(_arg2),function(_arg3)
           {
-           return _builder_.ReturnFrom(Flow1.Static(ContactFlow.finalPage(_arg1,_arg3)));
+           return _builder_.ReturnFrom(Flow.Static(ContactFlow.finalPage(_arg1,_arg3)));
           });
          });
         }));
@@ -16543,7 +18092,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         }];
         label=patternInput[0];
         constr=patternInput[1];
-        return Flow1.Define(function(cont)
+        return Flow.Define(function(cont)
         {
          var rvContact,arg20;
          rvContact=Var1.Create("");
@@ -16556,7 +18105,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        contactTypeFlowlet:Runtime.Field(function()
        {
-        return Flow1.Define(function(cont)
+        return Flow.Define(function(cont)
         {
          var arg20,arg201;
          arg20=function()
@@ -16571,20 +18120,14 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
            $:1
           });
          };
-         return Html.Form(List.ofArray([Utilities.cls("form-horizontal"),Utilities.op_EqualsEqualsGreater("role","form")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("form-group")]),List.ofArray([Html.Div(Runtime.New(T,{
-          $:0
-         }),List.ofArray([Doc.Button("E-Mail Address",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-default")]),arg20)])),Html.Div(Runtime.New(T,{
-          $:0
-         }),List.ofArray([Doc.Button("Phone Number",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-default")]),arg201)]))]))]));
+         return Html.Form(List.ofArray([Utilities.cls("form-horizontal"),Utilities.op_EqualsEqualsGreater("role","form")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("form-group")]),List.ofArray([Html.Div0(List.ofArray([Doc.Button("E-Mail Address",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-default")]),arg20)])),Html.Div0(List.ofArray([Doc.Button("Phone Number",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-default")]),arg201)]))]))]));
         });
        }),
        finalPage:function(person,details)
        {
         var detailsStr;
         detailsStr=details.$==1?"the phone number "+details.$0:"the e-mail address "+details.$0;
-        return Html.Div(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Doc.TextNode("You said your name was "+person.Name+", your address was "+person.Address+", "),Doc.TextNode(" and you provided "+detailsStr+".")]));
+        return Html.Div0(List.ofArray([Doc.TextNode("You said your name was "+person.Name+", your address was "+person.Address+", "),Doc.TextNode(" and you provided "+detailsStr+".")]));
        },
        inputRow:function(rv,id,lblText)
        {
@@ -16592,7 +18135,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        personFlowlet:Runtime.Field(function()
        {
-        return Flow1.Define(function(cont)
+        return Flow.Define(function(cont)
         {
          var rvName,rvAddress,arg20;
          rvName=Var1.Create("");
@@ -16611,23 +18154,11 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
       EditablePersonList:{
        Description:function()
        {
-        return Html.Div(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Utilities.txt("An example inspired by a "),Utilities.href("SAP OpenUI sample","http://jsbin.com/openui5-HTML-templates/1/edit"),Utilities.txt(".")]));
+        return Html.Div0(List.ofArray([Utilities.txt("An example inspired by a "),Utilities.href("SAP OpenUI sample","http://jsbin.com/openui5-HTML-templates/1/edit"),Utilities.txt(".")]));
        },
        Main:function()
        {
-        return Html.Div(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Html.Div(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Html.H1(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Utilities.txt("Member List")])),EditablePersonList.memberList()])),Html.Div(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Html.H1(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Utilities.txt("Change Member Details")])),EditablePersonList.peopleBoxes()]))]));
+        return Html.Div0(List.ofArray([Html.Div0(List.ofArray([Html.H10(List.ofArray([Utilities.txt("Member List")])),EditablePersonList.memberList()])),Html.Div0(List.ofArray([Html.H10(List.ofArray([Utilities.txt("Change Member Details")])),EditablePersonList.peopleBoxes()]))]));
        },
        Sample:Runtime.Field(function()
        {
@@ -16648,46 +18179,30 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        memberList:Runtime.Field(function()
        {
-        var _renderItem_34_3;
-        _renderItem_34_3=function(person)
+        return Html.Div0(List.ofArray([Html.UL0(List.ofArray([Doc.Concat(List.map(function(person)
         {
-         return Html.LI(Runtime.New(T,{
-          $:0
-         }),List.ofArray([Doc.EmbedView(View.Map2(function(f)
+         return Html.LI0(List.ofArray([Doc.EmbedView(View1.Map2(function(f)
          {
           return function(l)
           {
            return Utilities.txt(f+" "+l);
           };
          },View1.FromVar(person.FirstName),View1.FromVar(person.LastName)))]));
-        };
-        return Html.Div(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Html.UL(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Doc.Concat(List.map(_renderItem_34_3,EditablePersonList.peopleList()))]))]));
+        },EditablePersonList.peopleList()))]))]));
        }),
        peopleBoxes:Runtime.Field(function()
        {
-        var _renderPersonInput_62_2;
-        _renderPersonInput_62_2=function(person)
+        return Html.Div0(List.ofArray([Html.UL0(List.ofArray([Doc.Concat(List.map(function(person)
         {
          var arg10,arg101;
          arg10=person.FirstName;
          arg101=person.LastName;
-         return Html.LI(Runtime.New(T,{
-          $:0
-         }),List.ofArray([Doc.Input(Runtime.New(T,{
+         return Html.LI0(List.ofArray([Doc.Input(Runtime.New(T,{
           $:0
          }),arg10),Doc.Input(Runtime.New(T,{
           $:0
          }),arg101)]));
-        };
-        return Html.Div(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Html.UL(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Doc.Concat(List.map(_renderPersonInput_62_2,EditablePersonList.peopleList()))]))]));
+        },EditablePersonList.peopleList()))]))]));
        }),
        peopleList:Runtime.Field(function()
        {
@@ -16697,56 +18212,42 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
       InputTransform:{
        Description:function()
        {
-        return Html.Div(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Doc.TextNode("Transforming the data provided by a single data source.")]));
+        return Html.Div0(List.ofArray([Doc.TextNode("Transforming the data provided by a single data source.")]));
        },
        Main:function()
        {
-        var rvText,inputField,view,viewCaps,viewReverse,viewWordCount,viewWordCountStr,viewWordOddEven,views,tableRow,tbl;
+        var rvText,inputField,view,viewCaps,viewReverse,viewWordCount,viewWordCountStr,viewWordOddEven,views,tableRow;
         rvText=Var1.Create("");
         inputField=Html.Div(List.ofArray([Utilities.cls("panel"),Utilities.cls("panel-default")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("panel-heading")]),List.ofArray([Html.H3(List.ofArray([Utilities.cls("panel-title")]),List.ofArray([Doc.TextNode("Input")]))])),Html.Div(List.ofArray([Utilities.cls("panel-body")]),List.ofArray([Html.Form(List.ofArray([Utilities.cls("form-horizontal"),Utilities.op_EqualsEqualsGreater("role","form")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("form-group")]),List.ofArray([Html.Label(List.ofArray([Utilities.cls("col-sm-2"),Utilities.cls("control-label"),Utilities.op_EqualsEqualsGreater("for","inputBox")]),List.ofArray([Doc.TextNode("Write something: ")])),Html.Div(List.ofArray([Utilities.cls("col-sm-10")]),List.ofArray([Doc.Input(List.ofArray([Utilities.op_EqualsEqualsGreater("class","form-control"),Utilities.op_EqualsEqualsGreater("id","inputBox")]),rvText)]))]))]))]))]));
         view=View1.FromVar(rvText);
-        viewCaps=View.Map(function(s)
+        viewCaps=View1.Map(function(s)
         {
          return s.toUpperCase();
         },view);
-        viewReverse=View.Map(function(s)
+        viewReverse=View1.Map(function(s)
         {
          return String.fromCharCode.apply(undefined,Strings.ToCharArray(s).slice().reverse());
         },view);
-        viewWordCount=View.Map(function(s)
+        viewWordCount=View1.Map(function(s)
         {
          return IntrinsicFunctionProxy.GetLength(Strings.SplitChars(s,[32],1));
         },view);
-        viewWordCountStr=View.Map(function(value)
+        viewWordCountStr=View1.Map(function(value)
         {
          return Global.String(value);
         },viewWordCount);
-        viewWordOddEven=View.Map(function(i)
+        viewWordOddEven=View1.Map(function(i)
         {
          return i%2===0?"Even":"Odd";
         },viewWordCount);
         views=List.ofArray([["Entered Text",view],["Capitalised",viewCaps],["Reversed",viewReverse],["Word Count",viewWordCountStr],["Is the word count odd or even?",viewWordOddEven]]);
         tableRow=Runtime.Tupled(function(tupledArg)
         {
-         var lbl,view1;
-         lbl=tupledArg[0];
+         var view1;
          view1=tupledArg[1];
-         return Html.TR(Runtime.New(T,{
-          $:0
-         }),List.ofArray([Html.TD(Runtime.New(T,{
-          $:0
-         }),List.ofArray([Doc.TextNode(lbl)])),Html.TD(Runtime.New(T,{
-          $:0
-         }),List.ofArray([Doc.TextView(view1)]))]));
+         return Html.TR0(List.ofArray([Html.TD0(List.ofArray([Doc.TextNode(tupledArg[0])])),Html.TD0(List.ofArray([Doc.TextView(view1)]))]));
         });
-        tbl=Html.Div(List.ofArray([Utilities.cls("panel"),Utilities.cls("panel-default")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("panel-heading")]),List.ofArray([Html.H3(List.ofArray([Utilities.cls("panel-title")]),List.ofArray([Doc.TextNode("Output")]))])),Html.Div(List.ofArray([Utilities.cls("panel-body")]),List.ofArray([Html.Table(List.ofArray([Utilities.cls("table")]),List.ofArray([Html.TBody(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Doc.Concat(List.map(tableRow,views))]))]))]))]));
-        return Html.Div(Runtime.New(T,{
-         $:0
-        }),List.ofArray([inputField,tbl]));
+        return Html.Div0(List.ofArray([inputField,Html.Div(List.ofArray([Utilities.cls("panel"),Utilities.cls("panel-default")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("panel-heading")]),List.ofArray([Html.H3(List.ofArray([Utilities.cls("panel-title")]),List.ofArray([Doc.TextNode("Output")]))])),Html.Div(List.ofArray([Utilities.cls("panel-body")]),List.ofArray([Html.Table(List.ofArray([Utilities.cls("table")]),List.ofArray([Html.TBody0(List.ofArray([Doc.Concat(List.map(tableRow,views))]))]))]))]))]));
        },
        Sample:Runtime.Field(function()
        {
@@ -16777,7 +18278,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
           return hidden.set_Value(false);
          };
          x=hidden.get_View();
-         loginForm=Html.Div(List.ofArray([Attr.DynamicStyle("display",View.Map(function(yes)
+         loginForm=Html.Div(List.ofArray([Attr.DynamicStyle("display",View1.Map(function(yes)
          {
           return yes?"none":"block";
          },x))]),List.ofArray([Auth.LoginForm(function(user)
@@ -16813,9 +18314,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          rvUser=Var1.Create("");
          rvPass=Var1.Create("");
          rvMsg=Var1.Create("");
-         message=Html.Div(Runtime.New(T,{
-          $:0
-         }),List.ofArray([Html.P(List.ofArray([Utilities.cls("bg-danger")]),List.ofArray([Doc.TextView(rvMsg.get_View())]))]));
+         message=Html.Div0(List.ofArray([Html.P(List.ofArray([Utilities.cls("bg-danger")]),List.ofArray([Doc.TextView(rvMsg.get_View())]))]));
          inputRow=function(rv,id,lblText,isPass)
          {
           var control;
@@ -16835,11 +18334,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
           return Html.Div(List.ofArray([Utilities.cls("form-group")]),List.ofArray([Html.Label(List.ofArray([Utilities.op_EqualsEqualsGreater("for",id),Utilities.cls("col-sm-2"),Utilities.cls("control-label")]),List.ofArray([Doc.TextNode(lblText)])),Html.Div(List.ofArray([Utilities.cls("col-sm-2")]),List.ofArray([(control(List.ofArray([Utilities.cls("form-control"),Utilities.op_EqualsEqualsGreater("id",id),Utilities.op_EqualsEqualsGreater("placeholder",lblText)])))(rv)]))]));
          };
          arg101=List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-primary")]);
-         return Html.Div(Runtime.New(T,{
-          $:0
-         }),List.ofArray([Html.Div(Runtime.New(T,{
-          $:0
-         }),List.ofArray([Utilities.txt("Hint: TestUser/TestPass")])),message,Html.Form(List.ofArray([Utilities.cls("form-horizontal"),Utilities.op_EqualsEqualsGreater("role","form")]),List.ofArray([inputRow(rvUser,"user","Username",false),inputRow(rvPass,"pass","Password",true),Html.Div(List.ofArray([Utilities.cls("form-group")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("col-sm-offset-2"),Utilities.cls("col-sm-10")]),List.ofArray([Doc.Button("Log In",arg101,function()
+         return Html.Div0(List.ofArray([Html.Div0(List.ofArray([Utilities.txt("Hint: TestUser/TestPass")])),message,Html.Form(List.ofArray([Utilities.cls("form-horizontal"),Utilities.op_EqualsEqualsGreater("role","form")]),List.ofArray([inputRow(rvUser,"user","Username",false),inputRow(rvPass,"pass","Password",true),Html.Div(List.ofArray([Utilities.cls("form-group")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("col-sm-offset-2"),Utilities.cls("col-sm-10")]),List.ofArray([Doc.Button("Log In",arg101,function()
          {
           return Concurrency.Start(Concurrency.Delay(function()
           {
@@ -16848,14 +18343,14 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
             var user;
             if(arg102.$==0)
              {
-              Var1.Set(rvMsg,"Invalid credentials.");
+              Var.Set(rvMsg,"Invalid credentials.");
               return Concurrency.Return(null);
              }
             else
              {
               user=arg102.$0;
-              Var1.Set(rvUser,"");
-              Var1.Set(rvPass,"");
+              Var.Set(rvUser,"");
+              Var.Set(rvPass,"");
               onLogin(user);
               return Concurrency.Return(null);
              }
@@ -16865,47 +18360,27 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         },
         StatusWidget:function(login,logout,view)
         {
-         return Doc.EmbedView(View.Map(function(_arg1)
+         return Doc.EmbedView(View1.Map(function(_arg1)
          {
-          var usr,t;
-          if(_arg1.$==0)
-           {
-            return Doc.Concat(List.ofArray([Html.LI(Runtime.New(T,{
-             $:0
-            }),List.ofArray([Utilities.link("You are not logged in.",Runtime.New(T,{
-             $:0
-            }),function()
-            {
-            })])),Html.LI(Runtime.New(T,{
-             $:0
-            }),List.ofArray([Utilities.link("Login",Runtime.New(T,{
-             $:0
-            }),login)]))]));
-           }
-          else
-           {
-            usr=_arg1.$0;
-            t="Welcome, "+usr.Name+"!";
-            return Doc.Concat(List.ofArray([Html.LI(Runtime.New(T,{
-             $:0
-            }),List.ofArray([Utilities.link(t,Runtime.New(T,{
-             $:0
-            }),function()
-            {
-            })])),Html.LI(Runtime.New(T,{
-             $:0
-            }),List.ofArray([Utilities.link("Logout",Runtime.New(T,{
-             $:0
-            }),logout)]))]));
-           }
+          return _arg1.$==0?Doc.Concat(List.ofArray([Html.LI0(List.ofArray([Utilities.link("You are not logged in.",Runtime.New(T,{
+           $:0
+          }),function()
+          {
+          })])),Html.LI0(List.ofArray([Utilities.link("Login",Runtime.New(T,{
+           $:0
+          }),login)]))])):Doc.Concat(List.ofArray([Html.LI0(List.ofArray([Utilities.link("Welcome, "+_arg1.$0.Name+"!",Runtime.New(T,{
+           $:0
+          }),function()
+          {
+          })])),Html.LI0(List.ofArray([Utilities.link("Logout",Runtime.New(T,{
+           $:0
+          }),logout)]))]));
          },view));
         }
        },
        Description:function()
        {
-        return Html.Div(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Doc.TextNode("A message board application built using MiniSitelets.")]));
+        return Html.Div0(List.ofArray([Doc.TextNode("A message board application built using MiniSitelets.")]));
        },
        Initialise:function()
        {
@@ -16936,7 +18411,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         auth=Auth.Create();
         Go=function(arg10)
         {
-         return Var1.Set(actVar,arg10);
+         return Var.Set(actVar,arg10);
         };
         st={
          Auth:auth,
@@ -16946,7 +18421,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          Go:Go
         };
         navbar=MessageBoard.NavBar(auth,actVar,st);
-        return Doc.EmbedView(View.Map(function(act)
+        return Doc.EmbedView(View1.Map(function(act)
         {
          auth.HideForm.call(null,null);
          return Doc.Concat(List.ofArray([navbar,auth.LoginForm,act.$==2?MessageBoard.ThreadListPage(st):act.$==1?MessageBoard.ShowThreadPage(st,act.$0):MessageBoard.NewThreadPage(st)]));
@@ -16962,7 +18437,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         }]);
         renderLink=function(action)
         {
-         return Doc.EmbedView(View.Map(function(active)
+         return Doc.EmbedView(View1.Map(function(active)
          {
           return Html.LI(List.ofArray([MessageBoard.ShowAction(action)===MessageBoard.ShowAction(active)?Utilities.cls("active"):Attr.get_Empty()]),List.ofArray([Utilities.link(MessageBoard.ShowAction(action),Runtime.New(T,{
            $:0
@@ -16978,7 +18453,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        {
         var x;
         x=st.Auth.LoggedIn;
-        return Doc.EmbedView(View.Map(function(_arg3)
+        return Doc.EmbedView(View1.Map(function(_arg3)
         {
          var user,rvTitle,rvPost,add;
          if(_arg3.$==0)
@@ -17041,32 +18516,22 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          {
           return Concurrency.Bind(Server.GetPosts(thread),function(arg101)
           {
-           Var1.Set(rvPosts,arg101);
+           Var.Set(rvPosts,arg101);
            return Concurrency.Return(null);
           });
          }));
         };
         renderPost=function(post)
         {
-         return Html.TR(Runtime.New(T,{
-          $:0
-         }),List.ofArray([Html.TD(Runtime.New(T,{
-          $:0
-         }),List.ofArray([Doc.TextNode(post.PostAuthorName)])),Html.TD(Runtime.New(T,{
-          $:0
-         }),List.ofArray([Doc.TextNode(post.Content)]))]));
+         return Html.TR0(List.ofArray([Html.TD0(List.ofArray([Doc.TextNode(post.PostAuthorName)])),Html.TD0(List.ofArray([Doc.TextNode(post.Content)]))]));
         };
-        postList=Html.Div(List.ofArray([Utilities.cls("panel"),Utilities.cls("panel-default")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("panel-heading")]),List.ofArray([Html.H3(List.ofArray([Utilities.cls("panel-title")]),List.ofArray([Doc.TextNode("Posts in thread \""+thread.Title+"\"")]))])),Html.Div(List.ofArray([Utilities.cls("panel-body")]),List.ofArray([Html.Table(List.ofArray([Utilities.cls("table"),Utilities.cls("table-hover")]),List.ofArray([Html.TBody(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Doc.EmbedView(View.Map(function(posts)
+        postList=Html.Div(List.ofArray([Utilities.cls("panel"),Utilities.cls("panel-default")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("panel-heading")]),List.ofArray([Html.H3(List.ofArray([Utilities.cls("panel-title")]),List.ofArray([Doc.TextNode("Posts in thread \""+thread.Title+"\"")]))])),Html.Div(List.ofArray([Utilities.cls("panel-body")]),List.ofArray([Html.Table(List.ofArray([Utilities.cls("table"),Utilities.cls("table-hover")]),List.ofArray([Html.TBody0(List.ofArray([Doc.EmbedView(View1.Map(function(posts)
         {
          return Doc.Concat(List.map(renderPost,posts));
         },View1.FromVar(rvPosts)))]))]))]))]));
         getPosts(null);
         x=st.Auth.LoggedIn;
-        return Html.Div(Runtime.New(T,{
-         $:0
-        }),List.ofArray([postList,Doc.EmbedView(View.Map(function(_arg3)
+        return Html.Div0(List.ofArray([postList,Doc.EmbedView(View1.Map(function(_arg3)
         {
          var user,rvPost,add;
          if(_arg3.$==1)
@@ -17099,13 +18564,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         var renderThread,threads;
         renderThread=function(thread)
         {
-         return Html.TR(Runtime.New(T,{
-          $:0
-         }),List.ofArray([Html.TD(Runtime.New(T,{
-          $:0
-         }),List.ofArray([Doc.TextNode(thread.ThreadAuthorName)])),Html.TD(Runtime.New(T,{
-          $:0
-         }),List.ofArray([Utilities.link(thread.Title,Runtime.New(T,{
+         return Html.TR0(List.ofArray([Html.TD0(List.ofArray([Doc.TextNode(thread.ThreadAuthorName)])),Html.TD0(List.ofArray([Utilities.link(thread.Title,Runtime.New(T,{
           $:0
          }),function()
          {
@@ -17120,13 +18579,11 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         {
          return Concurrency.Bind(Server.GetThreads(),function(arg101)
          {
-          Var1.Set(threads,arg101);
+          Var.Set(threads,arg101);
           return Concurrency.Return(null);
          });
         }));
-        return Html.Table(List.ofArray([Utilities.cls("table"),Utilities.cls("table-hover")]),List.ofArray([Html.TBody(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Doc.EmbedView(View.Map(function(threads1)
+        return Html.Table(List.ofArray([Utilities.cls("table"),Utilities.cls("table-hover")]),List.ofArray([Html.TBody0(List.ofArray([Doc.EmbedView(View1.Map(function(threads1)
         {
          return Doc.Concat(List.map(renderThread,threads1));
         },View1.FromVar(st.Threads)))]))]));
@@ -17135,9 +18592,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
       MouseChase:{
        Description:function()
        {
-        return Html.Div(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Doc.TextNode("A box which follows the mouse, containing the co-ordinates.")]));
+        return Html.Div0(List.ofArray([Doc.TextNode("A box which follows the mouse, containing the co-ordinates.")]));
        },
        Main:function()
        {
@@ -17148,26 +18603,26 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         {
          var py;
          py=evt.pageY;
-         Var1.Set(rvX,evt.pageX);
-         return Var1.Set(rvY,py);
+         Var.Set(rvX,evt.pageX);
+         return Var.Set(rvY,py);
         },false);
         widthAttr=Attr.Create("width","200");
         heightAttr=Attr.Create("height","100");
-        arg10=View.Map(function(x)
+        arg10=View1.Map(function(x)
         {
          return Global.String(x)+"px";
         },rvX.get_View());
         xView=Attr.DynamicStyle("left",arg10);
-        arg101=View.Map(function(y)
+        arg101=View1.Map(function(y)
         {
          return Global.String(y)+"px";
         },rvY.get_View());
         yView=Attr.DynamicStyle("top",arg101);
         bgAttr=Attr.Style("background-color","#b0c4de");
-        return Html.Div(List.ofArray([xView,yView,bgAttr,Attr.Style("position","absolute")]),List.ofArray([Utilities.div(List.ofArray([Doc.TextView(View.Map(function(x)
+        return Html.Div(List.ofArray([xView,yView,bgAttr,Attr.Style("position","absolute")]),List.ofArray([Html.Div0(List.ofArray([Doc.TextView(View1.Map(function(x)
         {
          return"X: "+Global.String(x);
-        },rvX.get_View()))])),Utilities.div(List.ofArray([Doc.TextView(View.Map(function(y)
+        },rvX.get_View()))])),Html.Div0(List.ofArray([Doc.TextView(View1.Map(function(y)
         {
          return"Y: "+Global.String(y);
         },rvY.get_View()))]))]));
@@ -17288,7 +18743,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        }),
        Description:function()
        {
-        return Utilities.div(List.ofArray([Utilities.txt("This sample show-cases declarative animation and interpolation (tweening)")]));
+        return Html.Div0(List.ofArray([Utilities.txt("This sample show-cases declarative animation and interpolation (tweening)")]));
        },
        Height:Runtime.Field(function()
        {
@@ -17311,11 +18766,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         shownData=patternInput[2];
         dataSet=patternInput[0];
         bracket=patternInput[1];
-        return Html.Div(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Html.H2(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Utilities.txt("Top States by Age Bracket, 2008")])),Doc.EmbedView(View.Map(function(dS)
+        return Html.Div0(List.ofArray([Html.H20(List.ofArray([Utilities.txt("Top States by Age Bracket, 2008")])),Doc.EmbedView(View1.Map(function(dS)
         {
          return Doc.Select(List.ofArray([Utilities.cls("form-control")]),function(_arg1)
          {
@@ -17328,20 +18779,16 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          })),bracket);
         },dataSet)),Html.Div(List.ofArray([Utilities.cls("skip")]),Runtime.New(T,{
          $:0
-        })),SVG.Svg(List.ofArray([Utilities.op_EqualsEqualsGreater("width",Global.String(ObjectConstancy.Width())),Utilities.op_EqualsEqualsGreater("height",Global.String(ObjectConstancy.Height()))]),List.ofArray([Doc.EmbedView(View.Map(function(arg00)
+        })),SvgElements.Svg(List.ofArray([Utilities.op_EqualsEqualsGreater("width",Global.String(ObjectConstancy.Width())),Utilities.op_EqualsEqualsGreater("height",Global.String(ObjectConstancy.Height()))]),List.ofArray([Doc.EmbedView(View1.Map(function(arg00)
         {
          return Doc.Concat(arg00);
-        },View.ConvertSeqBy(function(s)
+        },View1.ConvertSeqBy(function(s)
         {
          return s.State;
         },function(state)
         {
          return ObjectConstancy.Render(state);
-        },shownData)))])),Html.P(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Utilities.txt("Source: "),Utilities.href("Census Bureau","http://www.census.gov/popest/data/historical/2000s/vintage_2008/")])),Html.P(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Utilities.txt("Original Sample by Mike Bostock: "),Utilities.href("Object Constancy","http://bost.ocks.org/mike/constancy/")]))]));
+        },shownData)))])),Html.P0(List.ofArray([Utilities.txt("Source: "),Utilities.href("Census Bureau","http://www.census.gov/popest/data/historical/2000s/vintage_2008/")])),Html.P0(List.ofArray([Utilities.txt("Original Sample by Mike Bostock: "),Utilities.href("Object Constancy","http://bost.ocks.org/mike/constancy/")]))]));
        },
        Percent:function(x)
        {
@@ -17357,7 +18804,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          {
           return Global.String(value);
          };
-         return Attr.Animated(name,kind,View.Map(proj,state),arg30);
+         return Attr.Animated(name,kind,View1.Map(proj,state),arg30);
         };
         x=function(st)
         {
@@ -17375,10 +18822,10 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         {
          return function(attr)
          {
-          return SVG.Text(attr,List.ofArray([Doc.TextView(View.Map(f,state))]));
+          return SvgElements.Text(attr,List.ofArray([Doc.TextView(View1.Map(f,state))]));
          };
         };
-        return Doc.Concat(List.ofArray([SVG.G(List.ofArray([Attr.Style("fill","steelblue")]),List.ofArray([SVG.Rect(List.ofArray([Utilities.op_EqualsEqualsGreater("x","0"),anim("y",ObjectConstancy.InOutTransition(),y),anim("width",ObjectConstancy.SimpleTransition(),x),anim("height",ObjectConstancy.SimpleTransition(),h)]),Runtime.New(T,{
+        return Doc.Concat(List.ofArray([SvgElements.G(List.ofArray([Attr.Style("fill","steelblue")]),List.ofArray([SvgElements.Rect(List.ofArray([Utilities.op_EqualsEqualsGreater("x","0"),anim("y",ObjectConstancy.InOutTransition(),y),anim("width",ObjectConstancy.SimpleTransition(),x),anim("height",ObjectConstancy.SimpleTransition(),h)]),Runtime.New(T,{
          $:0
         }))])),(txt(function(s)
         {
@@ -17402,7 +18849,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        {
         var x,dataSet,bracket;
         x=View.Const(null);
-        dataSet=View.MapAsync(function()
+        dataSet=View1.MapAsync(function()
         {
          return DataSet.LoadFromCSV("ObjectConstancy.csv");
         },x);
@@ -17410,7 +18857,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          $:0,
          $0:"Under 5 Years"
         });
-        return[dataSet,bracket,View.Map(function(xs)
+        return[dataSet,bracket,View1.Map(function(xs)
         {
          var n,m;
          n=IntrinsicFunctionProxy.GetLength(xs);
@@ -17431,7 +18878,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
            };
           });
          },xs);
-        },View.Map2(function(arg00)
+        },View1.Map2(function(arg00)
         {
          return function(arg10)
          {
@@ -17461,9 +18908,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
       PhoneExample:{
        Description:function()
        {
-        return Html.Div(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Doc.TextNode("Taken from the "),Utilities.href("AngularJS Tutorial","https://docs.angularjs.org/tutorial/"),Doc.TextNode(", a list filtering and sorting application for phones.")]));
+        return Html.Div0(List.ofArray([Doc.TextNode("Taken from the "),Utilities.href("AngularJS Tutorial","https://docs.angularjs.org/tutorial/"),Doc.TextNode(", a list filtering and sorting application for phones.")]));
        },
        Main:function()
        {
@@ -17520,16 +18965,10 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         };
         arg101=View1.FromVar(query);
         arg201=View1.FromVar(order);
-        visiblePhones=View.Map2(arg00,arg101,arg201);
+        visiblePhones=View1.Map2(arg00,arg101,arg201);
         showPhone=function(ph)
         {
-         return Html.LI(Runtime.New(T,{
-          $:0
-         }),List.ofArray([Html.Span(Runtime.New(T,{
-          $:0
-         }),List.ofArray([Utilities.txt(ph.Name)])),Html.P(Runtime.New(T,{
-          $:0
-         }),List.ofArray([Utilities.txt(ph.Snippet)]))]));
+         return Html.LI0(List.ofArray([Html.Span0(List.ofArray([Utilities.txt(ph.Name)])),Html.P0(List.ofArray([Utilities.txt(ph.Snippet)]))]));
         };
         showPhones=function(phones1)
         {
@@ -17542,9 +18981,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          $:1
         }),Runtime.New(Order,{
          $:0
-        })]),order)])),Html.Div(List.ofArray([Utilities.cls("col-sm-6")]),List.ofArray([Html.UL(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Doc.EmbedView(View.Map(showPhones,visiblePhones))]))]))]));
+        })]),order)])),Html.Div(List.ofArray([Utilities.cls("col-sm-6")]),List.ofArray([Html.UL0(List.ofArray([Doc.EmbedView(View1.Map(showPhones,visiblePhones))]))]))]));
        },
        Sample:Runtime.Field(function()
        {
@@ -17569,10 +19006,10 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         ctx={
          Go:function(arg10)
          {
-          return Var1.Set(current,arg10);
+          return Var.Set(current,arg10);
          }
         };
-        return Doc.EmbedView(View.Map(function(pg)
+        return Doc.EmbedView(View1.Map(function(pg)
         {
          return pg.$==1?withNavbar(BobsleighSite.History(ctx)):pg.$==2?withNavbar(BobsleighSite.Governance(ctx)):pg.$==3?withNavbar(BobsleighSite.Team(ctx)):withNavbar(BobsleighSite.HomePage(ctx));
         },View1.FromVar(current)));
@@ -17619,7 +19056,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        }),
        description:function()
        {
-        return Utilities.div(List.ofArray([Utilities.txt("A small website about bobsleighs, demonstrating how UI.Next may be used to structure single-page applications. Routed using the URL.")]));
+        return Html.Div0(List.ofArray([Utilities.txt("A small website about bobsleighs, demonstrating how UI.Next may be used to structure single-page applications. Routed using the URL.")]));
        }
       },
       Samples:{
@@ -17751,7 +19188,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          Router:undefined,
          RouteId:undefined
         };
-        sample.Router=Router1.Prefix(meta.Uri,Router1.Route(router,init,function(id)
+        sample.Router=Router.Prefix(meta.Uri,Router.Route(router,init,function(id)
         {
          return function(cur)
          {
@@ -17782,7 +19219,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          Router:undefined,
          RouteId:undefined
         };
-        sample.Router=Router1.Prefix(meta.Uri,Router1.Route(unitRouter,null,function(id)
+        sample.Router=Router.Prefix(meta.Uri,Router.Route(unitRouter,null,function(id)
         {
          return function()
          {
@@ -17805,14 +19242,14 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        Show:function(samples)
        {
         var mainSite,current,arg00,arg10,x,main,navs,side,x2;
-        mainSite=Router1.Merge(Seq.toList(Seq.delay(function()
+        mainSite=Router.Merge(Seq.toList(Seq.delay(function()
         {
          return Seq.map(function(sample)
          {
           return sample.Router;
          },samples);
         })));
-        current=Router1.Install(function(samp)
+        current=Router.Install(function(samp)
         {
          return samp.RouteId;
         },mainSite);
@@ -17821,7 +19258,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          return info.Body;
         };
         arg10=current.get_View();
-        x=View.Map(arg00,arg10);
+        x=View1.Map(arg00,arg10);
         main=Doc.EmbedView(x);
         navs=Html.UL(List.ofArray([Utilities.cls("nav"),Utilities.cls("nav-pills")]),Seq.toList(Seq.delay(function()
         {
@@ -17841,15 +19278,11 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          },samples);
         })));
         x2=current.get_View();
-        side=Html.Div(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Doc.EmbedView(View.Map(function(s)
+        side=Html.Div0(List.ofArray([Doc.EmbedView(View1.Map(function(s)
         {
          var sample;
          sample=s.Meta;
-         return Doc.Concat(List.ofArray([Html.P(Runtime.New(T,{
-          $:0
-         }),List.ofArray([s.Description])),Html.A(List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-primary"),Utilities.cls("btn-lg"),Utilities.op_EqualsEqualsGreater("href","http://github.com/intellifactory/websharper.ui.next/blob/master/src/"+sample.FileName)]),List.ofArray([Utilities.txt("Source")]))]));
+         return Doc.Concat(List.ofArray([Html.P0(List.ofArray([s.Description])),Html.A(List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-primary"),Utilities.cls("btn-lg"),Utilities.op_EqualsEqualsGreater("href","http://github.com/intellifactory/websharper.ui.next/blob/master/src/"+sample.FileName)]),List.ofArray([Utilities.txt("Source")]))]));
         },x2))]));
         Doc.RunById("sample-navs",navs);
         Doc.RunById("sample-main",main);
@@ -17974,9 +19407,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
       SimpleTextBox:{
        Description:function()
        {
-        return Html.Div(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Doc.TextNode("A label which copies the contents of a text box.")]));
+        return Html.Div0(List.ofArray([Doc.TextNode("A label which copies the contents of a text box.")]));
        },
        Main:function()
        {
@@ -17984,11 +19415,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         rvText=Var1.Create("");
         inputField=Doc.Input(List.ofArray([Attr.Create("class","form-control")]),rvText);
         label=Doc.TextView(rvText.get_View());
-        return Utilities.divc("panel-default",List.ofArray([Utilities.divc("panel-body",List.ofArray([Html.Div(Runtime.New(T,{
-         $:0
-        }),List.ofArray([inputField])),Html.Div(Runtime.New(T,{
-         $:0
-        }),List.ofArray([label]))]))]));
+        return Utilities.divc("panel-default",List.ofArray([Utilities.divc("panel-body",List.ofArray([Html.Div0(List.ofArray([inputField])),Html.Div0(List.ofArray([label]))]))]));
        },
        Sample:Runtime.Field(function()
        {
@@ -18005,7 +19432,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        CreateModel:function()
        {
         return{
-         Items:ListModel1.Create(function(item)
+         Items:ListModel.Create(function(item)
          {
           return item.Key;
          },Runtime.New(T,{
@@ -18015,9 +19442,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        Description:function()
        {
-        return Html.Div(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Doc.TextNode("A to-do list application.")]));
+        return Html.Div0(List.ofArray([Doc.TextNode("A to-do list application.")]));
        },
        Main:function()
        {
@@ -18025,23 +19450,13 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        RenderItem:function(m,todo)
        {
-        return Html.TR(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Html.TD(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Doc.EmbedView(View.Map(function(isDone)
+        return Html.TR0(List.ofArray([Html.TD0(List.ofArray([Doc.EmbedView(View1.Map(function(isDone)
         {
-         return isDone?Html.Del(Runtime.New(T,{
-          $:0
-         }),List.ofArray([Utilities.txt(todo.TodoText)])):Utilities.txt(todo.TodoText);
-        },View1.FromVar(todo.Done)))])),Html.TD(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Util.button("Done",function()
+         return isDone?Html.Del0(List.ofArray([Utilities.txt(todo.TodoText)])):Utilities.txt(todo.TodoText);
+        },View1.FromVar(todo.Done)))])),Html.TD0(List.ofArray([Util.button("Done",function()
         {
-         return Var1.Set(todo.Done,true);
-        })])),Html.TD(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Util.button("Remove",function()
+         return Var.Set(todo.Done,true);
+        })])),Html.TD0(List.ofArray([Util.button("Remove",function()
         {
          return m.Items.Remove(todo);
         })]))]));
@@ -18060,19 +19475,13 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        {
         var m;
         m=TodoList.CreateModel();
-        return Html.Table(List.ofArray([Utilities.op_EqualsEqualsGreater("class","table table-hover")]),List.ofArray([Html.TBody(Runtime.New(T,{
-         $:0
-        }),List.ofArray([TodoList.TodoList(m),TodoList.TodoForm(m)]))]));
+        return Html.Table(List.ofArray([Utilities.op_EqualsEqualsGreater("class","table table-hover")]),List.ofArray([Html.TBody0(List.ofArray([TodoList.TodoList(m),TodoList.TodoForm(m)]))]));
        },
        TodoForm:function(m)
        {
         var rvInput;
         rvInput=Var1.Create("");
-        return Html.Form(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Utilities.divc("form-group",List.ofArray([Html.Label(Runtime.New(T,{
-         $:0
-        }),List.ofArray([Utilities.txt("New entry: ")])),Util.input(rvInput)])),Util.button("Submit",function()
+        return Html.Form0(List.ofArray([Utilities.divc("form-group",List.ofArray([Html.Label0(List.ofArray([Utilities.txt("New entry: ")])),Util.input(rvInput)])),Util.button("Submit",function()
         {
          return m.Items.Add(TodoItem.Create(Var1.Get(rvInput)));
         })]));
@@ -18119,12 +19528,6 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        {
         return Attr.Class(n);
        },
-       div:function(docs)
-       {
-        return Doc.Element("div",Runtime.New(T,{
-         $:0
-        }),docs);
-       },
        divc:function(c,docs)
        {
         return Doc.Element("div",List.ofArray([Utilities.cls(c)]),docs);
@@ -18160,20 +19563,19 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   WebSharper=Runtime.Safe(Global.IntelliFactory.WebSharper);
   UI=Runtime.Safe(WebSharper.UI);
   Next=Runtime.Safe(UI.Next);
-  Var1=Runtime.Safe(Next.Var1);
+  Var=Runtime.Safe(Next.Var);
   Doc=Runtime.Safe(Next.Doc);
   List=Runtime.Safe(WebSharper.List);
   Html=Runtime.Safe(Next.Html);
-  T=Runtime.Safe(List.T);
   Utilities=Runtime.Safe(Next.Utilities);
+  T=Runtime.Safe(List.T);
+  Var1=Runtime.Safe(Next.Var1);
   BobsleighSite=Runtime.Safe(Next.BobsleighSite);
-  View=Runtime.Safe(Next.View);
   View1=Runtime.Safe(Next.View1);
   Unchecked=Runtime.Safe(WebSharper.Unchecked);
   Attr=Runtime.Safe(Next.Attr);
   Samples=Runtime.Safe(Next.Samples);
   Calculator=Runtime.Safe(Next.Calculator);
-  Var=Runtime.Safe(Next.Var);
   CheckBoxTest=Runtime.Safe(Next.CheckBoxTest);
   Seq=Runtime.Safe(WebSharper.Seq);
   Person=Runtime.Safe(CheckBoxTest.Person);
@@ -18190,6 +19592,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   Common=Runtime.Safe(Next.Common);
   Fresh=Runtime.Safe(Common.Fresh);
   Flow1=Runtime.Safe(Next.Flow1);
+  Flow=Runtime.Safe(Next.Flow);
   String=Runtime.Safe(Global.String);
   Strings=Runtime.Safe(WebSharper.Strings);
   IntrinsicFunctionProxy=Runtime.Safe(WebSharper.IntrinsicFunctionProxy);
@@ -18202,8 +19605,9 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   Arrays=Runtime.Safe(WebSharper.Arrays);
   OperatorIntrinsics=Runtime.Safe(WebSharper.OperatorIntrinsics);
   Trans=Runtime.Safe(Next.Trans);
-  SVG=Runtime.Safe(Html.SVG);
+  SvgElements=Runtime.Safe(Html.SvgElements);
   Math=Runtime.Safe(Global.Math);
+  View=Runtime.Safe(Next.View);
   An=Runtime.Safe(Next.An);
   Interpolation=Runtime.Safe(Next.Interpolation);
   Easing=Runtime.Safe(Next.Easing);
@@ -18212,15 +19616,14 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   Order=Runtime.Safe(PhoneExample.Order);
   RouteMap=Runtime.Safe(Next.RouteMap);
   Builder=Runtime.Safe(Samples.Builder);
-  Router1=Runtime.Safe(Next.Router1);
+  Router=Runtime.Safe(Next.Router);
   Collections=Runtime.Safe(WebSharper.Collections);
   MapModule=Runtime.Safe(Collections.MapModule);
   FSharpMap=Runtime.Safe(Collections.FSharpMap);
-  ListModel1=Runtime.Safe(Next.ListModel1);
+  ListModel=Runtime.Safe(Next.ListModel);
   Util=Runtime.Safe(TodoList.Util);
   TodoItem=Runtime.Safe(TodoList.TodoItem);
   Key=Runtime.Safe(Next.Key);
-  ListModel=Runtime.Safe(Next.ListModel);
   return Client=Runtime.Safe(Next.Client);
  });
  Runtime.OnLoad(function()
