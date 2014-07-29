@@ -12004,7 +12004,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
 
 (function()
 {
- var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,IntrinsicFunctionProxy,Concurrency,Array,Seq,UI,Next,Abbrev,Fresh,Collections,HashSet,HashSet1,HashSet2,Arrays,JQueue,Unchecked,Slot,An,AppendList,Anims,window,Trans1,Option,View1,Lazy,Array1,Attrs,DomUtility,Attr,AnimatedAttrNode,DynamicAttrNode,View,Docs,Doc,List,Var,T,Mailbox,Operators,NodeSet,DocElemNode,DomNodes,jQuery,document,Easing,Easings,Var1,FlowBuilder,Flow1,Html,Elements,DoubleInterpolation,Key,ListModel1,ListModel,ListModels,Model,Model1,Strings,encodeURIComponent,decodeURIComponent,Route,Routing,Router,Trie,Dictionary,Snap,Async,Enumerator,ResizeArray,ResizeArrayProxy,MapModule,FSharpMap,Attributes,SvgAttributes;
+ var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,IntrinsicFunctionProxy,Concurrency,Array,Seq,UI,Next,Abbrev,Fresh,Collections,HashSet,HashSet1,HashSet2,Arrays,JQueue,Unchecked,Slot,An,AppendList,Anims,window,Trans1,Option,View1,Lazy,Array1,Attrs,DomUtility,Attr,AnimatedAttrNode,DynamicAttrNode,View,Docs,Doc,List,Var,T,Mailbox,Operators,NodeSet,DocElemNode,DomNodes,jQuery,document,Easing,Easings,Var1,FlowBuilder,Flow1,Html,Elements,DoubleInterpolation,Key,ListModel1,ListModel,ListModels,Model,Model1,Strings,encodeURIComponent,decodeURIComponent,Route,Routing,Router,Trie,Dictionary,Snap,Async,Enumerator,ResizeArray,ResizeArrayProxy,MapModule,FSharpMap,ViewBuilder,Attributes,SvgAttributes;
  Runtime.Define(Global,{
   IntelliFactory:{
    WebSharper:{
@@ -17288,9 +17288,19 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        get_Do:function()
        {
-        return{
+        return Runtime.New(ViewBuilder,{
          $:0
-        };
+        });
+       }
+      }),
+      ViewBuilder:Runtime.Class({
+       Bind:function(x,f)
+       {
+        return View.Bind(f,x);
+       },
+       Return:function(x)
+       {
+        return View.Const(x);
        }
       })
      }
@@ -17373,6 +17383,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   ResizeArrayProxy=Runtime.Safe(ResizeArray.ResizeArrayProxy);
   MapModule=Runtime.Safe(Collections.MapModule);
   FSharpMap=Runtime.Safe(Collections.FSharpMap);
+  ViewBuilder=Runtime.Safe(Next.ViewBuilder);
   Attributes=Runtime.Safe(Html.Attributes);
   return SvgAttributes=Runtime.Safe(Html.SvgAttributes);
  });
@@ -17655,7 +17666,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
 
 (function()
 {
- var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,UI,Next,Var,Doc,List,Html,Utilities,T,Var1,BobsleighSite,View1,Unchecked,Attr,Samples,Calculator,CheckBoxTest,Seq,Person,SimpleTextBox,InputTransform,TodoList,PhoneExample,EditablePersonList,MouseChase,ContactFlow,MessageBoard,RoutedBobsleighSite,ObjectConstancy,Common,Fresh,Flow1,Flow,String,Strings,IntrinsicFunctionProxy,Auth,Concurrency,Server,document,jQuery,DataSet,Arrays,OperatorIntrinsics,Trans,SvgElements,Math,View,An,Interpolation,Easing,Phone,Operators,Order,RouteMap,Builder,Router,Collections,MapModule,FSharpMap,ListModel,Util,TodoItem,Key,Client;
+ var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,UI,Next,Var,Doc,List,Html,Utilities,T,Var1,BobsleighSite,View1,Unchecked,Attr,Samples,Calculator,CheckBoxTest,Seq,Person,Site,SimpleTextBox,InputTransform,TodoList,PhoneExample,EditablePersonList,MouseChase,ContactFlow,MessageBoard,RoutedBobsleighSite,ObjectConstancy,Common,Fresh,Flow1,Flow,String,Strings,IntrinsicFunctionProxy,Auth,Concurrency,Server,document,jQuery,DataSet,Arrays,OperatorIntrinsics,Trans,SvgElements,Math,View,An,Interpolation,Easing,Phone,Operators,Order,RouteMap,Builder,Router,SiteCommon,Elements,Option,Collections,MapModule,FSharpMap,JavaScript,ListModel,Util,TodoItem,Key,Client;
  Runtime.Define(Global,{
   IntelliFactory:{
    WebSharper:{
@@ -18004,7 +18015,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
       Client:{
        Main:Runtime.Field(function()
        {
-        return Samples.Show(List.ofArray([SimpleTextBox.Sample(),InputTransform.Sample(),TodoList.Sample(),PhoneExample.Sample(),EditablePersonList.Sample(),CheckBoxTest.Sample(),MouseChase.Sample(),Calculator.Sample(),ContactFlow.Sample(),MessageBoard.Sample(),BobsleighSite.Sample(),RoutedBobsleighSite.Sample(),ObjectConstancy.Sample()]));
+        return Site.Main(List.ofArray([SimpleTextBox.Sample(),InputTransform.Sample(),TodoList.Sample(),PhoneExample.Sample(),EditablePersonList.Sample(),CheckBoxTest.Sample(),MouseChase.Sample(),Calculator.Sample(),ContactFlow.Sample(),MessageBoard.Sample(),BobsleighSite.Sample(),RoutedBobsleighSite.Sample(),ObjectConstancy.Sample()]));
        })
       },
       Common:{
@@ -19186,16 +19197,27 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          Description:Doc.get_Empty(),
          Meta:meta,
          Router:undefined,
-         RouteId:undefined
+         RouteId:undefined,
+         SamplePage:undefined
         };
         sample.Router=Router.Prefix(meta.Uri,Router.Route(router,init,function(id)
         {
          return function(cur)
          {
+          var page;
           sample.RouteId=id;
           sample.Body=vis.Main.call(null,cur);
           sample.Description=vis.Desc.call(null,cur);
-          return sample;
+          page=SiteCommon.mkPage(sample.Meta.Title,id,{
+           $:2
+          });
+          page.PageSample={
+           $:1,
+           $0:sample
+          };
+          page.PageRouteId=id;
+          sample.SamplePage=page;
+          return page;
          };
         }));
         return sample;
@@ -19217,17 +19239,43 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          Description:vis.Desc.call(null,null),
          Meta:meta,
          Router:undefined,
-         RouteId:undefined
+         RouteId:undefined,
+         SamplePage:undefined
         };
         sample.Router=Router.Prefix(meta.Uri,Router.Route(unitRouter,null,function(id)
         {
          return function()
          {
+          var page;
+          page=SiteCommon.mkPage(sample.Meta.Title,id,{
+           $:2
+          });
           sample.RouteId=id;
-          return sample;
+          page.PageSample={
+           $:1,
+           $0:sample
+          };
+          page.PageRouteId=id;
+          sample.SamplePage=page;
+          return page;
          };
         }));
         return sample;
+       },
+       InitialSamplePage:function(samples)
+       {
+        return samples.$0.SamplePage;
+       },
+       Render:function(vPage,pg,samples)
+       {
+        var matchValue,sample;
+        matchValue=pg.PageSample;
+        sample=matchValue.$==0?Operators.FailWith("Attempted to render non-sample on samples page"):matchValue.$0;
+        return Elements.Section(List.ofArray([Utilities.cls("block-small")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("container")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("row")]),List.ofArray([Samples.Sidebar(vPage,samples),Samples.RenderContent(sample)]))]))]));
+       },
+       RenderContent:function(sample)
+       {
+        return Html.Div(List.ofArray([Utilities.cls("samples"),Utilities.cls("col-9")]),List.ofArray([Html.Div0(List.ofArray([Html.Div(List.ofArray([Utilities.cls("row")]),List.ofArray([Html.H10(List.ofArray([Utilities.txt(sample.Meta.Title)])),Html.Div0(List.ofArray([sample.Description]))])),Html.Div(List.ofArray([Utilities.cls("row")]),List.ofArray([sample.Body]))]))]));
        },
        Routed:function(router,init)
        {
@@ -19239,55 +19287,51 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          };
         });
        },
-       Show:function(samples)
+       SamplesRouter:function(samples)
        {
-        var mainSite,current,arg00,arg10,x,main,navs,side,x2;
-        mainSite=Router.Merge(Seq.toList(Seq.delay(function()
-        {
-         return Seq.map(function(sample)
-         {
-          return sample.Router;
-         },samples);
-        })));
-        current=Router.Install(function(samp)
-        {
-         return samp.RouteId;
-        },mainSite);
-        arg00=function(info)
-        {
-         return info.Body;
-        };
-        arg10=current.get_View();
-        x=View1.Map(arg00,arg10);
-        main=Doc.EmbedView(x);
-        navs=Html.UL(List.ofArray([Utilities.cls("nav"),Utilities.cls("nav-pills")]),Seq.toList(Seq.delay(function()
+        return Router.Prefix("samples",Router.Merge(Seq.toList(Seq.delay(function()
         {
          return Seq.map(function(s)
          {
-          var arg20;
-          arg20=function(x1)
-          {
-           return Unchecked.Equals(x1.RouteId,s.RouteId);
-          };
-          return Html.LI(List.ofArray([Attr.DynamicClass("active",current.get_View(),arg20)]),List.ofArray([Utilities.link(s.Meta.Title,Runtime.New(T,{
-           $:0
-          }),function()
-          {
-           return current.set_Value(s);
-          })]));
+          return s.Router;
          },samples);
-        })));
-        x2=current.get_View();
-        side=Html.Div0(List.ofArray([Doc.EmbedView(View1.Map(function(s)
+        }))));
+       },
+       Sidebar:function(vPage,samples)
+       {
+        var renderItem;
+        renderItem=function(sample)
         {
-         var sample;
-         sample=s.Meta;
-         return Doc.Concat(List.ofArray([Html.P0(List.ofArray([s.Description])),Html.A(List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-primary"),Utilities.cls("btn-lg"),Utilities.op_EqualsEqualsGreater("href","http://github.com/intellifactory/websharper.ui.next/blob/master/src/"+sample.FileName)]),List.ofArray([Utilities.txt("Source")]))]));
-        },x2))]));
-        Doc.RunById("sample-navs",navs);
-        Doc.RunById("sample-main",main);
-        return Doc.RunById("sample-side",side);
-       }
+         var arg20,activeAttr,arg201;
+         arg20=function(s)
+         {
+          return Option.exists(function(smp)
+          {
+           return sample.Meta.FileName===smp.Meta.FileName;
+          },s);
+         };
+         activeAttr=Attr.DynamicClass("active",View1.Map(function(pg)
+         {
+          return pg.PageSample;
+         },View1.FromVar(vPage)),arg20);
+         arg201=function()
+         {
+          return Var.Set(vPage,sample.SamplePage);
+         };
+         return Doc.Link(sample.Meta.Title,List.ofArray([Utilities.cls("list-group-item"),activeAttr]),arg201);
+        };
+        return Html.Div(List.ofArray([Utilities.cls("col-3")]),List.ofArray([Html.H40(List.ofArray([Utilities.txt("Samples")])),Doc.Concat(List.map(renderItem,samples))]));
+       },
+       nav:Runtime.Field(function()
+       {
+        return function(ats)
+        {
+         return function(ch)
+         {
+          return Elements.Nav(ats,ch);
+         };
+        };
+       })
       },
       Server:{
        AddPost:function(thread,post)
@@ -19427,6 +19471,228 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          return SimpleTextBox.Description();
         }).Create();
        })
+      },
+      Site:{
+       AboutPage:function()
+       {
+        var oddEntry,evenEntry;
+        oddEntry=function(lnk)
+        {
+         return function(desc)
+         {
+          return function(img)
+          {
+           return Elements.Section(List.ofArray([Utilities.cls("block-large")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("container")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("row")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("col-lg-3")]),List.ofArray([Elements.Img(List.ofArray([Utilities.op_EqualsEqualsGreater("src",img),Utilities.sty("width","100%")]),Runtime.New(T,{
+            $:0
+           }))])),Html.Div(List.ofArray([Utilities.cls("col-lg-1")]),Runtime.New(T,{
+            $:0
+           })),Html.Div(List.ofArray([Utilities.cls("col-lg-8")]),List.ofArray([Html.H10(List.ofArray([lnk])),Html.P(List.ofArray([Utilities.cls("lead")]),List.ofArray([Utilities.txt(desc)]))]))]))]))]));
+          };
+         };
+        };
+        evenEntry=function(lnk)
+        {
+         return function(desc)
+         {
+          return function(img)
+          {
+           return Elements.Section(List.ofArray([Utilities.cls("block-large"),Utilities.cls("bg-alt")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("container")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("row")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("col-lg-8")]),List.ofArray([Html.H10(List.ofArray([lnk])),Html.P(List.ofArray([Utilities.cls("lead")]),List.ofArray([Utilities.txt(desc)]))])),Html.Div(List.ofArray([Utilities.cls("col-lg-1")]),Runtime.New(T,{
+            $:0
+           })),Html.Div(List.ofArray([Utilities.cls("col-lg-3")]),List.ofArray([Elements.Img(List.ofArray([Utilities.op_EqualsEqualsGreater("src",img),Utilities.sty("width","100%")]),Runtime.New(T,{
+            $:0
+           }))]))]))]))]));
+          };
+         };
+        };
+        return Html.Div(List.ofArray([Utilities.cls("extensions")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("container")]),List.ofArray([Elements.Section(List.ofArray([Utilities.cls("block-huge")]),List.ofArray([Html.H10(List.ofArray([Utilities.txt("WebSharper UI.Next: "),Html.Span(List.ofArray([Utilities.cls("text-muted")]),List.ofArray([Utilities.txt("Everything you need to know.")]))])),Html.P(List.ofArray([Utilities.cls("lead")]),List.ofArray([Utilities.txt("A selection of resources about UI.Next.")]))]))])),Doc.Concat(List.mapi(function(i)
+        {
+         return function(entry)
+         {
+          return(((i%2===1?oddEntry:evenEntry)(Utilities.href(entry.Name,entry.URL)))(entry.Description))(entry.ImgURL);
+         };
+        },Site.Entries()))]));
+       },
+       Entries:Runtime.Field(function()
+       {
+        return List.ofArray([Site.mkEntry("WebSharper UI.Next: An Introduction","http://www.websharper.com/blog-entry/3954","files/uinext-screen.png","WebSharper UI.Next is a new library for constructing reactive interfaces, backed by data. This post introduces the basics, and shows how to construct some simple examples."),Site.mkEntry("The WebSharper UI.Next Tutorial","https://github.com/intellifactory/websharper.ui.next/blob/master/docs/Tutorial.md","files/TodoApp.png","A tutorial to take you through the basics of UI.Next,by developing some simple applications."),Site.mkEntry("API Reference","http://www.websharper.com/blog-entry/3964","files/gear.png","The definitive UI.Next API Reference."),Site.mkEntry("Presentation: Tackle UI with Reactive DOM in F# and WebSharper","https://www.youtube.com/watch?v=wEkS09s3KBc","files/anton-pres.png","In this recorded Community for FSharp event, Anton Tayanovskyy presents the basics of the library and the motivations for the dataflow design."),Site.mkEntry("WebSharper UI.Next: Declarative Animation","http://www.websharper.com/blog-entry/3964","files/home-banner.jpg","Inspired by the success of libraries such as D3, this post shows how the animation features of UI.Next may be used to construct data-driven animations in a declarative style."),Site.mkEntry("Structuring Applications with WebSharper UI.Next","http://www.websharper.com/blog-entry/3965","files/blog2-screen.png","One of the big advantages of using F# is that we can take advantage of its static type system to help us structure applications. This post explains some of the abstractions available to structure single-page applications.")]);
+       }),
+       HomePage:function()
+       {
+        return Html.Div(List.ofArray([Utilities.cls("container")]),List.ofArray([Elements.Section(List.ofArray([Utilities.cls("block-huge"),Utilities.cls("teaser-home"),Utilities.sty("height","700px"),Utilities.sty("padding-top","40px"),Utilities.sty("padding-bottom","30px"),Utilities.sty("margin-bottom","40px")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("container")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("row")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("col-12")]),List.ofArray([Elements.Br(Runtime.New(T,{
+         $:0
+        }),Runtime.New(T,{
+         $:0
+        })),Html.H10(List.ofArray([Utilities.txt("WebSharper UI.Next: "),Html.Span(List.ofArray([Utilities.cls("text-muted")]),List.ofArray([Utilities.txt("A new generation of reactive web applications.")]))])),Html.H30(List.ofArray([Utilities.txt("Write powerful, data-backed applications"),Elements.Br(Runtime.New(T,{
+         $:0
+        }),Runtime.New(T,{
+         $:0
+        })),Utilities.txt(" using F# and WebSharper.")])),Html.P(List.ofArray([Utilities.cls("lead")]),List.ofArray([Utilities.txt("Get it free on NuGet today!")]))]))]))]))]))]));
+       },
+       Main:function(samples)
+       {
+        var arg00,arg10,router,x;
+        arg00=function(pg)
+        {
+         return pg.PageRouteId;
+        };
+        arg10=Site.SiteRouter(samples);
+        router=Router.Install(arg00,arg10);
+        x=View1.FromVar(router);
+        Doc.RunById("main",Doc.EmbedView(View1.Map(function(pg)
+        {
+         var matchValue;
+         JavaScript.Log("view fn triggered");
+         matchValue=pg.PageType;
+         return matchValue.$==1?Site.AboutPage(function(ty)
+         {
+          return Var.Set(router,Site.pageFor(ty,samples));
+         }):matchValue.$==2?Samples.Render(router,pg,samples):Site.HomePage(function(ty)
+         {
+          return Var.Set(router,Site.pageFor(ty,samples));
+         });
+        },x)));
+        return Doc.RunById("navigation",Site.NavBar(router,samples));
+       },
+       NavBar:function(v,samples)
+       {
+        var renderLink,renderExternal;
+        renderLink=function(pg)
+        {
+         return Doc.EmbedView(View1.Map(function(page)
+         {
+          var liAttr;
+          liAttr=Unchecked.Equals(page.PageType,pg)?Attr.Class("active"):Attr.get_Empty();
+          return Html.LI(List.ofArray([Utilities.cls("nav-item"),liAttr]),List.ofArray([Utilities.link(Site.showPgTy(pg),Runtime.New(T,{
+           $:0
+          }),function()
+          {
+           return Var.Set(v,Site.pageFor(pg,samples));
+          })]));
+         },View1.FromVar(v)));
+        };
+        renderExternal=Runtime.Tupled(function(tupledArg)
+        {
+         var title,lnk;
+         title=tupledArg[0];
+         lnk=tupledArg[1];
+         return Html.LI(List.ofArray([Utilities.cls("nav-item")]),List.ofArray([Utilities.href(title,lnk)]));
+        });
+        return Elements.Nav(List.ofArray([Utilities.cls("container")]),List.ofArray([Html.Div(List.ofArray([Utilities.sty("float","left")]),List.ofArray([Html.A(List.ofArray([Utilities.op_EqualsEqualsGreater("href","http://www.websharper.com/home"),Utilities.sty("text-decoration","none"),Utilities.cls("first")]),List.ofArray([Elements.Img(List.ofArray([Utilities.op_EqualsEqualsGreater("src","files/logo-websharper-icon.png"),Utilities.op_EqualsEqualsGreater("alt","[logo]"),Utilities.sty("margin-top","0"),Utilities.sty("border-right","1px"),Utilities.sty("solid","#eee")]),Runtime.New(T,{
+         $:0
+        })),Elements.Img(List.ofArray([Utilities.op_EqualsEqualsGreater("src","files/logo-websharper-text-dark.png"),Utilities.op_EqualsEqualsGreater("alt","WebSharper"),Utilities.sty("height","32px")]),Runtime.New(T,{
+         $:0
+        }))]))])),Elements.Nav(List.ofArray([Utilities.cls("nav"),Utilities.cls("nav-collapsible"),Utilities.cls("right"),Utilities.sty("float","right")]),List.ofArray([Html.UL(List.ofArray([Utilities.cls("nav-list")]),List.ofArray([Doc.Concat(List.map(renderLink,Site.NavPages())),Doc.Concat(List.map(renderExternal,Site.NavExternalLinks()))]))]))]));
+       },
+       NavExternalLinks:Runtime.Field(function()
+       {
+        return List.ofArray([["GitHub","http://www.github.com/IntelliFactory/websharper.ui.next"],["API Reference","https://github.com/intellifactory/websharper.ui.next/blob/master/docs/API.md"]]);
+       }),
+       NavPages:Runtime.Field(function()
+       {
+        return List.ofArray([{
+         $:0
+        },{
+         $:1
+        },{
+         $:2
+        }]);
+       }),
+       SiteRouter:function(samples)
+       {
+        return Router.Merge(List.ofArray([Router.Prefix("home",Site.homeRouter(samples)),Router.Prefix("about",Site.aboutRouter(samples)),Router.Prefix("samples",Samples.SamplesRouter(samples))]));
+       },
+       aboutPage:Runtime.Field(function()
+       {
+        return SiteCommon.mkPage(Site.showPgTy({
+         $:1
+        }),undefined,{
+         $:1
+        });
+       }),
+       aboutRouter:function(samples)
+       {
+        var arg20;
+        arg20=function(id)
+        {
+         return function()
+         {
+          var aboutPg;
+          aboutPg=Site.pageFor({
+           $:1
+          },samples);
+          aboutPg.PageRouteId=id;
+          return aboutPg;
+         };
+        };
+        return Router.Route(Site.unitRouteMap(),null,arg20);
+       },
+       homePage:Runtime.Field(function()
+       {
+        return SiteCommon.mkPage(Site.showPgTy({
+         $:0
+        }),undefined,{
+         $:0
+        });
+       }),
+       homeRouter:function(samples)
+       {
+        var arg20;
+        arg20=function(id)
+        {
+         return function()
+         {
+          var homePg;
+          homePg=Site.pageFor({
+           $:0
+          },samples);
+          homePg.PageRouteId=id;
+          return homePg;
+         };
+        };
+        return Router.Route(Site.unitRouteMap(),null,arg20);
+       },
+       mkEntry:function(name,blog,img,desc)
+       {
+        return{
+         Name:name,
+         URL:blog,
+         ImgURL:img,
+         Description:desc
+        };
+       },
+       pageFor:function(pty,samples)
+       {
+        return pty.$==1?Site.aboutPage():pty.$==2?Samples.InitialSamplePage(samples):Site.homePage();
+       },
+       showPgTy:function(_arg1)
+       {
+        return _arg1.$==1?"About":_arg1.$==2?"Samples":"Home";
+       },
+       unitRouteMap:Runtime.Field(function()
+       {
+        return RouteMap.Create(function()
+        {
+         return Runtime.New(T,{
+          $:0
+         });
+        },function()
+        {
+         return null;
+        });
+       })
+      },
+      SiteCommon:{
+       mkPage:function(name,routeId,ty)
+       {
+        return{
+         PageName:name,
+         PageRouteId:routeId,
+         PageType:ty,
+         PageSample:{
+          $:0
+         }
+        };
+       }
       },
       TodoList:{
        CreateModel:function()
@@ -19579,6 +19845,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   CheckBoxTest=Runtime.Safe(Next.CheckBoxTest);
   Seq=Runtime.Safe(WebSharper.Seq);
   Person=Runtime.Safe(CheckBoxTest.Person);
+  Site=Runtime.Safe(Next.Site);
   SimpleTextBox=Runtime.Safe(Next.SimpleTextBox);
   InputTransform=Runtime.Safe(Next.InputTransform);
   TodoList=Runtime.Safe(Next.TodoList);
@@ -19617,9 +19884,13 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   RouteMap=Runtime.Safe(Next.RouteMap);
   Builder=Runtime.Safe(Samples.Builder);
   Router=Runtime.Safe(Next.Router);
+  SiteCommon=Runtime.Safe(Next.SiteCommon);
+  Elements=Runtime.Safe(Html.Elements);
+  Option=Runtime.Safe(WebSharper.Option);
   Collections=Runtime.Safe(WebSharper.Collections);
   MapModule=Runtime.Safe(Collections.MapModule);
   FSharpMap=Runtime.Safe(Collections.FSharpMap);
+  JavaScript=Runtime.Safe(WebSharper.JavaScript);
   ListModel=Runtime.Safe(Next.ListModel);
   Util=Runtime.Safe(TodoList.Util);
   TodoItem=Runtime.Safe(TodoList.TodoItem);
@@ -19629,10 +19900,17 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
  Runtime.OnLoad(function()
  {
   TodoList.Sample();
+  Site.unitRouteMap();
+  Site.homePage();
+  Site.aboutPage();
+  Site.NavPages();
+  Site.NavExternalLinks();
+  Site.Entries();
   SimpleTextBox.Sample();
   Server.threads();
   Server.posts();
   Server.DELAY();
+  Samples.nav();
   RoutedBobsleighSite.TheRouteMap();
   RoutedBobsleighSite.Sample();
   PhoneExample.Sample();

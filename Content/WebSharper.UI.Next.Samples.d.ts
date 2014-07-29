@@ -5153,6 +5153,10 @@ declare module IntelliFactory {
                 interface View {
                 }
                 interface ViewBuilder {
+                    Bind<_M1, _M2>(x: __ABBREV.__Next.View1<_M1>, f: {
+                        (x: _M1): __ABBREV.__Next.View1<_M2>;
+                    }): __ABBREV.__Next.View1<_M2>;
+                    Return<_M1>(x: _M1): __ABBREV.__Next.View1<_M1>;
                 }
                 interface Key {
                 }
@@ -5768,7 +5772,65 @@ declare module IntelliFactory {
                         (): any;
                     };
                 }
-                module Samples {
+                module Site {
+                    interface AboutEntry {
+                        Name: string;
+                        URL: string;
+                        ImgURL: string;
+                        Description: string;
+                    }
+                    var mkEntry : {
+                        (name: string, blog: string, img: string, desc: string): any;
+                    };
+                    var showPgTy : {
+                        (_arg1: __ABBREV.__SiteCommon.PageTy): string;
+                    };
+                    var pageFor : {
+                        (pty: __ABBREV.__SiteCommon.PageTy, samples: __ABBREV.__List.T<any>): any;
+                    };
+                    var HomePage : {
+                        <_M1>(go: _M1): __ABBREV.__Next.Doc;
+                    };
+                    var AboutPage : {
+                        <_M1>(go: _M1): __ABBREV.__Next.Doc;
+                    };
+                    var NavBar : {
+                        (v: __ABBREV.__Next.Var1<any>, samples: __ABBREV.__List.T<any>): __ABBREV.__Next.Doc;
+                    };
+                    var homeRouter : {
+                        (samples: __ABBREV.__List.T<any>): __ABBREV.__Next.Router1<any>;
+                    };
+                    var aboutRouter : {
+                        (samples: __ABBREV.__List.T<any>): __ABBREV.__Next.Router1<any>;
+                    };
+                    var SiteRouter : {
+                        (samples: __ABBREV.__List.T<any>): __ABBREV.__Next.Router1<any>;
+                    };
+                    var Main : {
+                        (samples: __ABBREV.__List.T<any>): void;
+                    };
+                    var Entries : {
+                        (): __ABBREV.__List.T<any>;
+                    };
+                    var NavExternalLinks : {
+                        (): __ABBREV.__List.T<any>;
+                    };
+                    var homePage : {
+                        (): any;
+                    };
+                    var aboutPage : {
+                        (): any;
+                    };
+                    var NavPages : {
+                        (): __ABBREV.__List.T<__ABBREV.__SiteCommon.PageTy>;
+                    };
+                    var unitRouteMap : {
+                        (): any;
+                    };
+                }
+                module SiteCommon {
+                    interface PageTy {
+                    }
                     interface Meta {
                         FileName: string;
                         Keywords: __ABBREV.__List.T<string>;
@@ -5781,7 +5843,19 @@ declare module IntelliFactory {
                         Meta: any;
                         Router: __ABBREV.__Next.Router1<any>;
                         RouteId: __ABBREV.__Next.RouteId;
+                        SamplePage: any;
                     }
+                    interface Page {
+                        PageName: string;
+                        PageRouteId: __ABBREV.__Next.RouteId;
+                        PageType: __ABBREV.__SiteCommon.PageTy;
+                        PageSample: __ABBREV.__WebSharper.OptionProxy<any>;
+                    }
+                    var mkPage : {
+                        (name: string, routeId: __ABBREV.__Next.RouteId, ty: __ABBREV.__SiteCommon.PageTy): any;
+                    };
+                }
+                module Samples {
                     interface Visuals<_T1> {
                         Desc: {
                             (x: _T1): __ABBREV.__Next.Doc;
@@ -5804,20 +5878,39 @@ declare module IntelliFactory {
                         Title(x: string): __ABBREV.__Samples.Builder<_T1>;
                         Uri(x: string): __ABBREV.__Samples.Builder<_T1>;
                     }
+                    var Sidebar : {
+                        (vPage: __ABBREV.__Next.Var1<any>, samples: __ABBREV.__List.T<any>): __ABBREV.__Next.Doc;
+                    };
+                    var RenderContent : {
+                        (sample: any): __ABBREV.__Next.Doc;
+                    };
+                    var Render : {
+                        (vPage: __ABBREV.__Next.Var1<any>, pg: any, samples: __ABBREV.__List.T<any>): __ABBREV.__Next.Doc;
+                    };
                     var CreateRouted : {
                         <_M1>(router: any, init: _M1, vis: any, meta: any): any;
                     };
                     var CreateSimple : {
                         (vis: any, meta: any): any;
                     };
-                    var Show : {
-                        (samples: __ABBREV.__WebSharper.seq<any>): void;
-                    };
                     var Build : {
                         (): __ABBREV.__Samples.Builder<void>;
                     };
                     var Routed : {
                         <_M1>(router: any, init: _M1): __ABBREV.__Samples.Builder<__ABBREV.__Next.Var1<_M1>>;
+                    };
+                    var InitialSamplePage : {
+                        (samples: __ABBREV.__List.T<any>): any;
+                    };
+                    var SamplesRouter : {
+                        (samples: __ABBREV.__WebSharper.seq<any>): __ABBREV.__Next.Router1<any>;
+                    };
+                    var nav : {
+                        (): {
+                            (x: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>): {
+                                (x: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                            };
+                        };
                     };
                 }
             }
@@ -5838,6 +5931,7 @@ declare module __ABBREV {
     export import __TodoList = IntelliFactory.WebSharper.UI.Next.TodoList;
     export import __PhoneExample = IntelliFactory.WebSharper.UI.Next.PhoneExample;
     export import __CheckBoxTest = IntelliFactory.WebSharper.UI.Next.CheckBoxTest;
+    export import __SiteCommon = IntelliFactory.WebSharper.UI.Next.SiteCommon;
     export import __Samples = IntelliFactory.WebSharper.UI.Next.Samples;
 }
 
