@@ -5775,12 +5775,12 @@ declare module IntelliFactory {
                 module Site {
                     interface AboutEntry {
                         Name: string;
-                        URL: string;
                         ImgURL: string;
                         Description: string;
+                        URLs: __ABBREV.__List.T<__ABBREV.__Next.Doc>;
                     }
                     var mkEntry : {
-                        (name: string, blog: string, img: string, desc: string): any;
+                        (name: string, desc: string, img: string, urls: __ABBREV.__List.T<__ABBREV.__Next.Doc>): any;
                     };
                     var showPgTy : {
                         (_arg1: __ABBREV.__SiteCommon.PageTy): string;
@@ -5788,11 +5788,16 @@ declare module IntelliFactory {
                     var pageFor : {
                         (pty: __ABBREV.__SiteCommon.PageTy, samples: __ABBREV.__List.T<any>): any;
                     };
+                    var linkBtn : {
+                        (caption: string, href: string): __ABBREV.__Next.Doc;
+                    };
                     var HomePage : {
                         <_M1>(go: _M1): __ABBREV.__Next.Doc;
                     };
                     var AboutPage : {
-                        <_M1>(go: _M1): __ABBREV.__Next.Doc;
+                        (go: {
+                            (x: __ABBREV.__SiteCommon.PageTy): void;
+                        }): __ABBREV.__Next.Doc;
                     };
                     var NavBar : {
                         (v: __ABBREV.__Next.Var1<any>, samples: __ABBREV.__List.T<any>): __ABBREV.__Next.Doc;

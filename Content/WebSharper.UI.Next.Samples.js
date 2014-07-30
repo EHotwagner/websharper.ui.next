@@ -17666,7 +17666,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
 
 (function()
 {
- var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,UI,Next,Var,Doc,List,Html,Utilities,T,Var1,BobsleighSite,View1,Unchecked,Attr,Samples,Calculator,CheckBoxTest,Seq,Person,Site,SimpleTextBox,InputTransform,TodoList,PhoneExample,EditablePersonList,MouseChase,ContactFlow,MessageBoard,RoutedBobsleighSite,ObjectConstancy,Common,Fresh,Flow1,Flow,String,Strings,IntrinsicFunctionProxy,Auth,Concurrency,Server,document,jQuery,DataSet,Arrays,OperatorIntrinsics,Trans,SvgElements,Math,View,An,Interpolation,Easing,Phone,Operators,Order,RouteMap,Builder,Router,SiteCommon,Elements,Option,Collections,MapModule,FSharpMap,JavaScript,ListModel,Util,TodoItem,Key,Client;
+ var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,UI,Next,Var,Doc,List,Html,Utilities,T,Var1,BobsleighSite,View1,Unchecked,Attr,Samples,Calculator,CheckBoxTest,Seq,Person,Site,SimpleTextBox,InputTransform,TodoList,PhoneExample,EditablePersonList,ContactFlow,MessageBoard,RoutedBobsleighSite,ObjectConstancy,Common,Fresh,Flow1,Flow,String,Strings,IntrinsicFunctionProxy,Auth,Concurrency,Server,document,MouseChase,jQuery,DataSet,Arrays,OperatorIntrinsics,Trans,SvgElements,Math,View,An,Interpolation,Easing,Phone,Operators,Order,RouteMap,Builder,Router,SiteCommon,Elements,Option,Collections,MapModule,FSharpMap,JavaScript,ListModel,Util,TodoItem,Key,Client;
  Runtime.Define(Global,{
   IntelliFactory:{
    WebSharper:{
@@ -18015,7 +18015,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
       Client:{
        Main:Runtime.Field(function()
        {
-        return Site.Main(List.ofArray([SimpleTextBox.Sample(),InputTransform.Sample(),TodoList.Sample(),PhoneExample.Sample(),EditablePersonList.Sample(),CheckBoxTest.Sample(),MouseChase.Sample(),Calculator.Sample(),ContactFlow.Sample(),MessageBoard.Sample(),BobsleighSite.Sample(),RoutedBobsleighSite.Sample(),ObjectConstancy.Sample()]));
+        return Site.Main(List.ofArray([SimpleTextBox.Sample(),InputTransform.Sample(),TodoList.Sample(),PhoneExample.Sample(),EditablePersonList.Sample(),CheckBoxTest.Sample(),Calculator.Sample(),ContactFlow.Sample(),MessageBoard.Sample(),BobsleighSite.Sample(),RoutedBobsleighSite.Sample(),ObjectConstancy.Sample()]));
        })
       },
       Common:{
@@ -19275,7 +19275,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        RenderContent:function(sample)
        {
-        return Html.Div(List.ofArray([Utilities.cls("samples"),Utilities.cls("col-9")]),List.ofArray([Html.Div0(List.ofArray([Html.Div(List.ofArray([Utilities.cls("row")]),List.ofArray([Html.H10(List.ofArray([Utilities.txt(sample.Meta.Title)])),Html.Div0(List.ofArray([sample.Description]))])),Html.Div(List.ofArray([Utilities.cls("row")]),List.ofArray([sample.Body]))]))]));
+        return Html.Div(List.ofArray([Utilities.cls("samples"),Utilities.cls("col-9")]),List.ofArray([Html.Div0(List.ofArray([Html.Div(List.ofArray([Utilities.cls("row")]),List.ofArray([Html.H10(List.ofArray([Utilities.txt(sample.Meta.Title)])),Html.Div0(List.ofArray([Html.P0(List.ofArray([sample.Description])),Html.P0(List.ofArray([Elements.A(List.ofArray([Utilities.op_EqualsEqualsGreater("href","https://github.com/intellifactory/websharper.ui.next/blob/master/src/"+sample.Meta.Uri),Utilities.cls("btn"),Utilities.cls("btn-default")]),List.ofArray([Utilities.txt("View Source")]))]))]))])),Html.Div(List.ofArray([Utilities.cls("row")]),List.ofArray([Html.P0(List.ofArray([sample.Body]))]))]))]));
        },
        Routed:function(router,init)
        {
@@ -19473,48 +19473,55 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        })
       },
       Site:{
-       AboutPage:function()
+       AboutPage:function(go)
        {
-        var oddEntry,evenEntry;
-        oddEntry=function(lnk)
+        var renderBody,oddEntry,evenEntry,ico,arg20;
+        renderBody=function(entry)
         {
-         return function(desc)
+         return Doc.Concat(List.ofArray([Html.H10(List.ofArray([Utilities.txt(entry.Name)])),Html.P(List.ofArray([Utilities.cls("lead")]),List.ofArray([Utilities.txt(entry.Description)])),Html.P0(List.ofArray([Html.UL(List.ofArray([Utilities.cls("list-unstyled")]),List.ofArray([Doc.Concat(List.map(function(lnk)
          {
-          return function(img)
-          {
-           return Elements.Section(List.ofArray([Utilities.cls("block-large")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("container")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("row")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("col-lg-3")]),List.ofArray([Elements.Img(List.ofArray([Utilities.op_EqualsEqualsGreater("src",img),Utilities.sty("width","100%")]),Runtime.New(T,{
-            $:0
-           }))])),Html.Div(List.ofArray([Utilities.cls("col-lg-1")]),Runtime.New(T,{
-            $:0
-           })),Html.Div(List.ofArray([Utilities.cls("col-lg-8")]),List.ofArray([Html.H10(List.ofArray([lnk])),Html.P(List.ofArray([Utilities.cls("lead")]),List.ofArray([Utilities.txt(desc)]))]))]))]))]));
-          };
-         };
+          return Html.LI0(List.ofArray([lnk]));
+         },entry.URLs))]))]))]));
         };
-        evenEntry=function(lnk)
+        oddEntry=function(entry)
         {
-         return function(desc)
-         {
-          return function(img)
-          {
-           return Elements.Section(List.ofArray([Utilities.cls("block-large"),Utilities.cls("bg-alt")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("container")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("row")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("col-lg-8")]),List.ofArray([Html.H10(List.ofArray([lnk])),Html.P(List.ofArray([Utilities.cls("lead")]),List.ofArray([Utilities.txt(desc)]))])),Html.Div(List.ofArray([Utilities.cls("col-lg-1")]),Runtime.New(T,{
-            $:0
-           })),Html.Div(List.ofArray([Utilities.cls("col-lg-3")]),List.ofArray([Elements.Img(List.ofArray([Utilities.op_EqualsEqualsGreater("src",img),Utilities.sty("width","100%")]),Runtime.New(T,{
-            $:0
-           }))]))]))]))]));
-          };
-         };
+         return Elements.Section(List.ofArray([Utilities.cls("block-large")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("container")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("row")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("col-lg-3")]),List.ofArray([Elements.Img(List.ofArray([Utilities.op_EqualsEqualsGreater("src",entry.ImgURL),Utilities.sty("width","100%")]),Runtime.New(T,{
+          $:0
+         }))])),Html.Div(List.ofArray([Utilities.cls("col-lg-1")]),Runtime.New(T,{
+          $:0
+         })),Html.Div(List.ofArray([Utilities.cls("col-lg-8")]),List.ofArray([renderBody(entry)]))]))]))]));
         };
-        return Html.Div(List.ofArray([Utilities.cls("extensions")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("container")]),List.ofArray([Elements.Section(List.ofArray([Utilities.cls("block-huge")]),List.ofArray([Html.H10(List.ofArray([Utilities.txt("WebSharper UI.Next: "),Html.Span(List.ofArray([Utilities.cls("text-muted")]),List.ofArray([Utilities.txt("Everything you need to know.")]))])),Html.P(List.ofArray([Utilities.cls("lead")]),List.ofArray([Utilities.txt("A selection of resources about UI.Next.")]))]))])),Doc.Concat(List.mapi(function(i)
+        evenEntry=function(entry)
+        {
+         return Elements.Section(List.ofArray([Utilities.cls("block-large"),Utilities.cls("bg-alt")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("container")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("row")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("col-lg-8")]),List.ofArray([renderBody(entry)])),Html.Div(List.ofArray([Utilities.cls("col-lg-1")]),Runtime.New(T,{
+          $:0
+         })),Html.Div(List.ofArray([Utilities.cls("col-lg-3")]),List.ofArray([Elements.Img(List.ofArray([Utilities.op_EqualsEqualsGreater("src",entry.ImgURL),Utilities.sty("width","100%")]),Runtime.New(T,{
+          $:0
+         }))]))]))]))]));
+        };
+        ico=function(name)
+        {
+         return Html.Span(List.ofArray([Utilities.cls("fa"),Utilities.cls(name),Utilities.cls("fa-3x"),Utilities.sty("font-size","400%"),Utilities.sty("color","#aaa")]),Runtime.New(T,{
+          $:0
+         }));
+        };
+        arg20=function()
+        {
+         return go({
+          $:2
+         });
+        };
+        return Html.Div(List.ofArray([Utilities.cls("extensions")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("container")]),List.ofArray([Elements.Section(List.ofArray([Utilities.cls("block-huge")]),List.ofArray([Html.H10(List.ofArray([Utilities.txt("WebSharper UI.Next: "),Html.Span(List.ofArray([Utilities.cls("text-muted")]),List.ofArray([Utilities.txt("Everything you need to know.")]))])),Html.P(List.ofArray([Utilities.cls("lead")]),List.ofArray([Utilities.txt("A selection of resources about UI.Next.")]))]))])),Html.Div(List.ofArray([Utilities.cls("block-large"),Utilities.cls("bg-alt")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("container")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("row"),Utilities.cls("text-center")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("col-lg-4")]),List.ofArray([ico("fa-graduation-cap"),Html.H30(List.ofArray([Utilities.txt("Get Started")])),Html.P0(List.ofArray([Utilities.txt("Take the tutorial, and you'll be writing reactive applications in no time!")])),Site.linkBtn("Tutorial","https://github.com/intellifactory/websharper.ui.next/blob/master/docs/Tutorial.md")])),Html.Div(List.ofArray([Utilities.cls("col-lg-4")]),List.ofArray([ico("fa-book"),Html.H30(List.ofArray([Utilities.txt("Dive Right In")])),Html.P0(List.ofArray([Utilities.txt("Comprehensive documentation on the UI.Next API.")])),Site.linkBtn("API Reference","https://github.com/intellifactory/websharper.ui.next/blob/master/docs/API.md")])),Html.Div(List.ofArray([Utilities.cls("col-lg-4")]),List.ofArray([ico("fa-send"),Html.H30(List.ofArray([Utilities.txt("See it in Action")])),Html.P0(List.ofArray([Utilities.txt("A variety of samples using UI.Next, and their associated source code!")])),Doc.Button("Samples",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-default")]),arg20)]))]))]))])),Doc.Concat(List.mapi(function(i)
         {
          return function(entry)
          {
-          return(((i%2===1?oddEntry:evenEntry)(Utilities.href(entry.Name,entry.URL)))(entry.Description))(entry.ImgURL);
+          return(i%2===0?oddEntry:evenEntry)(entry);
          };
         },Site.Entries()))]));
        },
        Entries:Runtime.Field(function()
        {
-        return List.ofArray([Site.mkEntry("WebSharper UI.Next: An Introduction","http://www.websharper.com/blog-entry/3954","files/uinext-screen.png","WebSharper UI.Next is a new library for constructing reactive interfaces, backed by data. This post introduces the basics, and shows how to construct some simple examples."),Site.mkEntry("The WebSharper UI.Next Tutorial","https://github.com/intellifactory/websharper.ui.next/blob/master/docs/Tutorial.md","files/TodoApp.png","A tutorial to take you through the basics of UI.Next,by developing some simple applications."),Site.mkEntry("API Reference","http://www.websharper.com/blog-entry/3964","files/gear.png","The definitive UI.Next API Reference."),Site.mkEntry("Presentation: Tackle UI with Reactive DOM in F# and WebSharper","https://www.youtube.com/watch?v=wEkS09s3KBc","files/anton-pres.png","In this recorded Community for FSharp event, Anton Tayanovskyy presents the basics of the library and the motivations for the dataflow design."),Site.mkEntry("WebSharper UI.Next: Declarative Animation","http://www.websharper.com/blog-entry/3964","files/home-banner.jpg","Inspired by the success of libraries such as D3, this post shows how the animation features of UI.Next may be used to construct data-driven animations in a declarative style."),Site.mkEntry("Structuring Applications with WebSharper UI.Next","http://www.websharper.com/blog-entry/3965","files/blog2-screen.png","One of the big advantages of using F# is that we can take advantage of its static type system to help us structure applications. This post explains some of the abstractions available to structure single-page applications.")]);
+        return List.ofArray([Site.mkEntry("Documentation","Official documentation on WebSharper UI.Next, including the API reference and some discussion about the design decisions we made","files/gear.png",List.ofArray([Utilities.href("Tutorial","https://github.com/intellifactory/websharper.ui.next/blob/master/docs/Tutorial.md"),Utilities.href("API Reference","https://github.com/intellifactory/websharper.ui.next/blob/master/docs/API.md"),Utilities.href("Full Documentation","https://github.com/intellifactory/websharper.ui.next/blob/master/README.md")])),Site.mkEntry("Articles","Articles written about UI.Next, which provide more detailed discussions about various aspects of the library.","files/uinext-screen.png",List.ofArray([Utilities.href("WebSharper UI.Next: An Introduction","http://www.websharper.com/blog-entry/3954"),Utilities.href("WebSharper UI.Next: Declarative Animation","http://www.websharper.com/blog-entry/3964"),Utilities.href("Structuring Applications with WebSharper UI.Next","http://www.websharper.com/blog-entry/3965")])),Site.mkEntry("Presentations","Presentations about UI.Next, providing an overview of the library and deeper insights into the thinking behind it.","files/anton-pres.png",List.ofArray([Utilities.href("Presentation: Tackle UI with Reactive DOM in F# and WebSharper","https://www.youtube.com/watch?v=wEkS09s3KBc")]))]);
        }),
        HomePage:function()
        {
@@ -19651,13 +19658,17 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         };
         return Router.Route(Site.unitRouteMap(),null,arg20);
        },
-       mkEntry:function(name,blog,img,desc)
+       linkBtn:function(caption,href)
+       {
+        return Elements.A(List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-default"),Utilities.op_EqualsEqualsGreater("href",href)]),List.ofArray([Utilities.txt(caption)]));
+       },
+       mkEntry:function(name,desc,img,urls)
        {
         return{
          Name:name,
-         URL:blog,
          ImgURL:img,
-         Description:desc
+         Description:desc,
+         URLs:urls
         };
        },
        pageFor:function(pty,samples)
@@ -19851,7 +19862,6 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   TodoList=Runtime.Safe(Next.TodoList);
   PhoneExample=Runtime.Safe(Next.PhoneExample);
   EditablePersonList=Runtime.Safe(Next.EditablePersonList);
-  MouseChase=Runtime.Safe(Next.MouseChase);
   ContactFlow=Runtime.Safe(Next.ContactFlow);
   MessageBoard=Runtime.Safe(Next.MessageBoard);
   RoutedBobsleighSite=Runtime.Safe(Next.RoutedBobsleighSite);
@@ -19867,6 +19877,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   Concurrency=Runtime.Safe(WebSharper.Concurrency);
   Server=Runtime.Safe(Next.Server);
   document=Runtime.Safe(Global.document);
+  MouseChase=Runtime.Safe(Next.MouseChase);
   jQuery=Runtime.Safe(Global.jQuery);
   DataSet=Runtime.Safe(ObjectConstancy.DataSet);
   Arrays=Runtime.Safe(WebSharper.Arrays);
