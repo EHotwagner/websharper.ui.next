@@ -12502,7 +12502,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          {
           if(matchValue===1)
            {
-            return xs1[1];
+            return xs1[0];
            }
           else
            {
@@ -17666,12 +17666,336 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
 
 (function()
 {
- var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,UI,Next,Var,Doc,List,Html,Utilities,T,Var1,BobsleighSite,View1,Unchecked,Attr,Samples,Calculator,CheckBoxTest,Seq,Person,Site,SimpleTextBox,InputTransform,TodoList,PhoneExample,EditablePersonList,ContactFlow,MessageBoard,RoutedBobsleighSite,ObjectConstancy,Common,Fresh,Flow1,Flow,String,Strings,IntrinsicFunctionProxy,Auth,Concurrency,Server,document,MouseChase,jQuery,DataSet,Arrays,OperatorIntrinsics,Trans,SvgElements,Math,View,An,Interpolation,Easing,Phone,Operators,Order,RouteMap,Builder,Router,SiteCommon,Elements,Option,Collections,MapModule,FSharpMap,JavaScript,ListModel,Util,TodoItem,Key,Client;
+ var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,UI,Next,Interpolation,Easing,AnimatedBobsleighSite,An,Trans,Var,Doc,List,Html,Utilities,T,Var1,View1,Attr,View,Unchecked,Samples,AnimatedContactFlow,Flow1,Flow,BobsleighSite,Calculator,CheckBoxTest,Seq,Person,Site,SimpleTextBox,InputTransform,TodoList,PhoneExample,EditablePersonList,ContactFlow,MessageBoard,RoutedBobsleighSite,ObjectConstancy,Common,Fresh,String,Strings,IntrinsicFunctionProxy,Auth,Concurrency,Server,document,MouseChase,jQuery,DataSet,Arrays,OperatorIntrinsics,SvgElements,Math,Phone,Operators,Order,RouteMap,Builder,Router,SiteCommon,Elements,Option,Collections,MapModule,FSharpMap,ListModel,Util,TodoItem,Key,Client;
  Runtime.Define(Global,{
   IntelliFactory:{
    WebSharper:{
     UI:{
      Next:{
+      AnimatedBobsleighSite:{
+       Fade:Runtime.Field(function()
+       {
+        var _arg00_45_5,_arg10_45_5,arg20;
+        _arg00_45_5=Interpolation.get_Double();
+        _arg10_45_5=Easing.get_CubicInOut();
+        arg20=AnimatedBobsleighSite.fadeTime();
+        return function(arg30)
+        {
+         return function(arg40)
+         {
+          return An.Simple(_arg00_45_5,_arg10_45_5,arg20,arg30,arg40);
+         };
+        };
+       }),
+       FadeTransition:Runtime.Field(function()
+       {
+        return Trans.Exit(function()
+        {
+         return((AnimatedBobsleighSite.Fade())(1))(0);
+        },Trans.Enter(function()
+        {
+         return((AnimatedBobsleighSite.Fade())(0))(1);
+        },Trans.Create(AnimatedBobsleighSite.Fade())));
+       }),
+       GlobalGo:function(_var,act)
+       {
+        return Var.Set(_var,act);
+       },
+       Governance:function()
+       {
+        return Doc.Concat(List.ofArray([Html.Div0(List.ofArray([Html.H10(List.ofArray([Utilities.txt("Governance")])),Html.P0(List.ofArray([Utilities.txt("The sport is overseen by the "),Utilities.href("International Bobsleigh and Skeleton Federation","http://www.fibt.com/"),Utilities.txt(", an organisation founded in 1923. The organisation governs all international competitions, acting as a body to regulate athletes' conduct, as well as providing funding for training and education.")]))]))]));
+       },
+       History:function()
+       {
+        return Doc.Concat(List.ofArray([Html.Div0(List.ofArray([Html.H10(List.ofArray([Utilities.txt("History")])),Html.P0(List.ofArray([Utilities.txt("According to "),Utilities.href("Wikipedia","http://en.wikipedia.org/wiki/Bobsleigh"),Utilities.txt(", the beginnings of bobsleigh came about due to a hotelier becoming increasingly frustrated about having entire seasons where he could not rent out his properties. In response, he got a few people interested, and the Swiss town of St Moritz became the home of the first bobsleigh races.")])),Html.P0(List.ofArray([Utilities.txt("Bobsleigh races have been a regular event at the Winter Olympics since the very first competition in 1924.")]))]))]));
+       },
+       HomePage:function(ctx)
+       {
+        return Doc.Concat(List.ofArray([Html.Div0(List.ofArray([Html.H10(List.ofArray([Utilities.txt("Welcome!")])),Html.P0(List.ofArray([Utilities.txt("Welcome to the IntelliFactory Bobsleigh MiniSite!")])),Html.P0(List.ofArray([Utilities.txt("Here you can find out about the "),Utilities.link("history",Runtime.New(T,{
+         $:0
+        }),function()
+        {
+         return ctx.Go.call(null,{
+          $:1
+         });
+        }),Utilities.txt(" of bobsleighs, the "),Utilities.link("International Bobsleigh and Skeleton Federation",Runtime.New(T,{
+         $:0
+        }),function()
+        {
+         return ctx.Go.call(null,{
+          $:2
+         });
+        }),Utilities.txt(", which serve as the governing body for the sport, and finally the world-famous "),Utilities.link("IntelliFactory Bobsleigh Team.",Runtime.New(T,{
+         $:0
+        }),function()
+        {
+         return ctx.Go.call(null,{
+          $:3
+         });
+        })]))]))]));
+       },
+       Main:function()
+       {
+        var m,ctx;
+        m=Var1.Create({
+         $:0
+        });
+        ctx={
+         Go:function(arg10)
+         {
+          return Var.Set(m,arg10);
+         }
+        };
+        return Doc.EmbedView(View1.Map(function(pg)
+        {
+         return AnimatedBobsleighSite.MakePage(m,pg.$==1?AnimatedBobsleighSite.History(ctx):pg.$==2?AnimatedBobsleighSite.Governance(ctx):pg.$==3?AnimatedBobsleighSite.Team(ctx):AnimatedBobsleighSite.HomePage(ctx));
+        },View1.FromVar(m)));
+       },
+       MakePage:function(_var,pg)
+       {
+        var arg30;
+        arg30=function(value)
+        {
+         return Global.String(value);
+        };
+        return Doc.Concat(List.ofArray([AnimatedBobsleighSite.NavBar(_var),Html.Div(List.ofArray([Attr.AnimatedStyle("opacity",AnimatedBobsleighSite.FadeTransition(),View.Const(1),arg30)]),List.ofArray([pg]))]));
+       },
+       NavBar:function(_var)
+       {
+        var x;
+        x=View1.FromVar(_var);
+        return Doc.EmbedView(View1.Map(function(active)
+        {
+         var renderLink;
+         renderLink=function(action)
+         {
+          return Html.LI(List.ofArray([Unchecked.Equals(action,active)?Utilities.cls("active"):Attr.get_Empty()]),List.ofArray([Utilities.link(AnimatedBobsleighSite.showAct(action),Runtime.New(T,{
+           $:0
+          }),function()
+          {
+           return AnimatedBobsleighSite.GlobalGo(_var,action);
+          })]));
+         };
+         return Html.Nav(List.ofArray([Utilities.cls("navbar"),Utilities.cls("navbar-default"),Attr.Create("role","navigation")]),List.ofArray([Html.UL(List.ofArray([Utilities.cls("nav"),Utilities.cls("navbar-nav")]),List.ofArray([Doc.Concat(List.map(renderLink,AnimatedBobsleighSite.pages()))]))]));
+        },x));
+       },
+       Sample:Runtime.Field(function()
+       {
+        return Samples.Build().Id("AnimatedBobsleighSite").FileName("AnimatedBobsleighSite.fs").Keywords(List.ofArray(["text"])).Render(function()
+        {
+         return AnimatedBobsleighSite.Main();
+        }).RenderDescription(function()
+        {
+         return AnimatedBobsleighSite.description();
+        }).Create();
+       }),
+       Team:function()
+       {
+        var teamMembers;
+        teamMembers=List.ofArray([["Adam","granicz"],["András","AndrasJanko"],["Anton","t0yv0"],["István","inchester23"],["Loic","tarmil_"],["Sándor","sandorrakonczai"],["Simon","Simon_JF"]]);
+        return Doc.Concat(List.ofArray([Html.Div0(List.ofArray([Html.H10(List.ofArray([Utilities.txt("The IntelliFactory Bobsleigh Team")])),Html.P0(List.ofArray([Utilities.txt("The world-famous IntelliFactory Bobsleigh Team was founded in 2004, and currently consists of:")])),Html.UL0(List.ofArray([Doc.Concat(List.map(Runtime.Tupled(function(tupledArg)
+        {
+         return Html.LI0(List.ofArray([Utilities.href(tupledArg[0],"http://www.twitter.com/"+tupledArg[1])]));
+        }),teamMembers))]))]))]));
+       },
+       description:function()
+       {
+        return Html.Div0(List.ofArray([Utilities.txt("A small website about bobsleighs, demonstrating how UI.Next may be used to structure single-page applications.")]));
+       },
+       fadeTime:Runtime.Field(function()
+       {
+        return 300;
+       }),
+       pages:Runtime.Field(function()
+       {
+        return List.ofArray([{
+         $:0
+        },{
+         $:1
+        },{
+         $:2
+        },{
+         $:3
+        }]);
+       }),
+       showAct:function(_arg1)
+       {
+        return _arg1.$==1?"History":_arg1.$==2?"Governance":_arg1.$==3?"The IntelliFactory Bobsleigh Team":"Home";
+       }
+      },
+      AnimatedContactFlow:{
+       AnimateFlow:function(pg)
+       {
+        var arg30,arg301;
+        arg30=function(value)
+        {
+         return Global.String(value);
+        };
+        arg301=function(x)
+        {
+         return Global.String(x)+"px";
+        };
+        return Html.Div(List.ofArray([Attr.Style("position","relative"),Attr.AnimatedStyle("opacity",AnimatedContactFlow.FadeTransition(),View.Const(1),arg30),Attr.AnimatedStyle("left",AnimatedContactFlow.SwipeTransition(),View.Const(0),arg301)]),List.ofArray([pg]));
+       },
+       Description:function()
+       {
+        return Html.Div0(List.ofArray([Doc.TextNode("A WS.UI.Next flowlet implementation.")]));
+       },
+       ExampleFlow:function()
+       {
+        var _builder_;
+        _builder_=Flow1.get_Do();
+        return Flow1.Embed(_builder_.Bind(AnimatedContactFlow.personFlowlet(),function(_arg1)
+        {
+         return _builder_.Bind(AnimatedContactFlow.contactTypeFlowlet(),function(_arg2)
+         {
+          return _builder_.Bind(AnimatedContactFlow.contactFlowlet(_arg2),function(_arg3)
+          {
+           return _builder_.ReturnFrom(Flow.Static(AnimatedContactFlow.finalPage(_arg1,_arg3)));
+          });
+         });
+        }));
+       },
+       Fade:Runtime.Field(function()
+       {
+        var _arg00_58_10,_arg10_58_10,arg20;
+        _arg00_58_10=Interpolation.get_Double();
+        _arg10_58_10=Easing.get_CubicInOut();
+        arg20=AnimatedContactFlow.fadeTime();
+        return function(arg30)
+        {
+         return function(arg40)
+         {
+          return An.Simple(_arg00_58_10,_arg10_58_10,arg20,arg30,arg40);
+         };
+        };
+       }),
+       FadeTransition:Runtime.Field(function()
+       {
+        return Trans.Exit(function()
+        {
+         return((AnimatedContactFlow.Fade())(1))(0);
+        },Trans.Enter(function()
+        {
+         return((AnimatedContactFlow.Fade())(0))(1);
+        },Trans.Create(AnimatedContactFlow.Fade())));
+       }),
+       Sample:Runtime.Field(function()
+       {
+        return Samples.Build().Id("AnimatedContactFlow").FileName("AnimatedContactFlow.fs").Keywords(List.ofArray(["flowlet"])).Render(function()
+        {
+         return AnimatedContactFlow.ExampleFlow();
+        }).RenderDescription(function()
+        {
+         return AnimatedContactFlow.Description();
+        }).Create();
+       }),
+       Swipe:Runtime.Field(function()
+       {
+        var _arg00_73_8,_arg10_73_8,arg20;
+        _arg00_73_8=Interpolation.get_Double();
+        _arg10_73_8=Easing.get_CubicInOut();
+        arg20=AnimatedContactFlow.swipeTime();
+        return function(arg30)
+        {
+         return function(arg40)
+         {
+          return An.Simple(_arg00_73_8,_arg10_73_8,arg20,arg30,arg40);
+         };
+        };
+       }),
+       SwipeTransition:Runtime.Field(function()
+       {
+        return Trans.Exit(function()
+        {
+         return((AnimatedContactFlow.Swipe())(0))(400);
+        },Trans.Create(AnimatedContactFlow.Swipe()));
+       }),
+       contactFlowlet:function(contactTy)
+       {
+        var patternInput,label,constr;
+        patternInput=contactTy.$==1?["Phone Number",function(arg0)
+        {
+         return{
+          $:1,
+          $0:arg0
+         };
+        }]:["E-Mail Address",function(arg0)
+        {
+         return{
+          $:0,
+          $0:arg0
+         };
+        }];
+        label=patternInput[0];
+        constr=patternInput[1];
+        return Flow.Define(function(cont)
+        {
+         var rvContact,arg20;
+         rvContact=Var1.Create("");
+         arg20=function()
+         {
+          return cont(constr(Var1.Get(rvContact)));
+         };
+         return AnimatedContactFlow.AnimateFlow(Html.Form(List.ofArray([Utilities.cls("form-horizontal"),Utilities.op_EqualsEqualsGreater("role","form")]),List.ofArray([AnimatedContactFlow.inputRow(rvContact,"contact",label),Html.Div(List.ofArray([Utilities.cls("form-group")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("col-sm-offset-2"),Utilities.cls("col-sm-10")]),List.ofArray([Doc.Button("Finish",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-default")]),arg20)]))]))])));
+        });
+       },
+       contactTypeFlowlet:Runtime.Field(function()
+       {
+        return Flow.Define(function(cont)
+        {
+         var arg20,arg201;
+         arg20=function()
+         {
+          return cont({
+           $:0
+          });
+         };
+         arg201=function()
+         {
+          return cont({
+           $:1
+          });
+         };
+         return AnimatedContactFlow.AnimateFlow(Html.Form(List.ofArray([Utilities.cls("form-horizontal"),Utilities.op_EqualsEqualsGreater("role","form")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("form-group")]),List.ofArray([Html.Div0(List.ofArray([Doc.Button("E-Mail Address",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-default")]),arg20)])),Html.Div0(List.ofArray([Doc.Button("Phone Number",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-default")]),arg201)]))]))])));
+        });
+       }),
+       fadeTime:Runtime.Field(function()
+       {
+        return 300;
+       }),
+       finalPage:function(person,details)
+       {
+        var detailsStr;
+        detailsStr=details.$==1?"the phone number "+details.$0:"the e-mail address "+details.$0;
+        return AnimatedContactFlow.AnimateFlow(Html.Div0(List.ofArray([Doc.TextNode("You said your name was "+person.Name+", your address was "+person.Address+", "),Doc.TextNode(" and you provided "+detailsStr+".")])));
+       },
+       inputRow:function(rv,id,lblText)
+       {
+        return Html.Div(List.ofArray([Utilities.cls("form-group")]),List.ofArray([Html.Label(List.ofArray([Utilities.op_EqualsEqualsGreater("for",id),Utilities.cls("col-sm-2"),Utilities.cls("control-label")]),List.ofArray([Doc.TextNode(lblText)])),Html.Div(List.ofArray([Utilities.cls("col-sm-10")]),List.ofArray([Doc.Input(List.ofArray([Utilities.op_EqualsEqualsGreater("type","text"),Utilities.cls("form-control"),Utilities.op_EqualsEqualsGreater("id",id),Utilities.op_EqualsEqualsGreater("placeholder",lblText)]),rv)]))]));
+       },
+       personFlowlet:Runtime.Field(function()
+       {
+        return Flow.Define(function(cont)
+        {
+         var rvName,rvAddress,arg20;
+         rvName=Var1.Create("");
+         rvAddress=Var1.Create("");
+         arg20=function()
+         {
+          return cont({
+           Name:Var1.Get(rvName),
+           Address:Var1.Get(rvAddress)
+          });
+         };
+         return AnimatedContactFlow.AnimateFlow(Html.Form(List.ofArray([Utilities.cls("form-horizontal"),Utilities.op_EqualsEqualsGreater("role","form")]),List.ofArray([AnimatedContactFlow.inputRow(rvName,"lblName","Name"),AnimatedContactFlow.inputRow(rvAddress,"lblAddr","Address"),Html.Div(List.ofArray([Utilities.cls("form-group")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("col-sm-offset-2"),Utilities.cls("col-sm-10")]),List.ofArray([Doc.Button("Next",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-default")]),arg20)]))]))])));
+        });
+       }),
+       swipeTime:Runtime.Field(function()
+       {
+        return 300;
+       })
+      },
       BobsleighSite:{
        GlobalGo:function(_var,act)
        {
@@ -18015,7 +18339,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
       Client:{
        Main:Runtime.Field(function()
        {
-        return Site.Main(List.ofArray([SimpleTextBox.Sample(),InputTransform.Sample(),TodoList.Sample(),PhoneExample.Sample(),EditablePersonList.Sample(),CheckBoxTest.Sample(),Calculator.Sample(),ContactFlow.Sample(),MessageBoard.Sample(),BobsleighSite.Sample(),RoutedBobsleighSite.Sample(),ObjectConstancy.Sample()]));
+        return Site.Main(List.ofArray([SimpleTextBox.Sample(),InputTransform.Sample(),TodoList.Sample(),PhoneExample.Sample(),EditablePersonList.Sample(),CheckBoxTest.Sample(),Calculator.Sample(),ContactFlow.Sample(),AnimatedContactFlow.Sample(),MessageBoard.Sample(),BobsleighSite.Sample(),RoutedBobsleighSite.Sample(),AnimatedBobsleighSite.Sample(),ObjectConstancy.Sample()]));
        })
       },
       Common:{
@@ -19523,6 +19847,30 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        {
         return List.ofArray([Site.mkEntry("Documentation","Official documentation on WebSharper UI.Next, including the API reference and some discussion about the design decisions we made","files/gear.png",List.ofArray([Utilities.href("Tutorial","https://github.com/intellifactory/websharper.ui.next/blob/master/docs/Tutorial.md"),Utilities.href("API Reference","https://github.com/intellifactory/websharper.ui.next/blob/master/docs/API.md"),Utilities.href("Full Documentation","https://github.com/intellifactory/websharper.ui.next/blob/master/README.md")])),Site.mkEntry("Articles","Articles written about UI.Next, which provide more detailed discussions about various aspects of the library.","files/uinext-screen.png",List.ofArray([Utilities.href("WebSharper UI.Next: An Introduction","http://www.websharper.com/blog-entry/3954"),Utilities.href("WebSharper UI.Next: Declarative Animation","http://www.websharper.com/blog-entry/3964"),Utilities.href("Structuring Applications with WebSharper UI.Next","http://www.websharper.com/blog-entry/3965")])),Site.mkEntry("Presentations","Presentations about UI.Next, providing an overview of the library and deeper insights into the thinking behind it.","files/anton-pres.png",List.ofArray([Utilities.href("Presentation: Tackle UI with Reactive DOM in F# and WebSharper","https://www.youtube.com/watch?v=wEkS09s3KBc")]))]);
        }),
+       Fade:Runtime.Field(function()
+       {
+        var _arg00_312_12,_arg10_312_12,arg20;
+        _arg00_312_12=Interpolation.get_Double();
+        _arg10_312_12=Easing.get_CubicInOut();
+        arg20=Site.fadeTime();
+        return function(arg30)
+        {
+         return function(arg40)
+         {
+          return An.Simple(_arg00_312_12,_arg10_312_12,arg20,arg30,arg40);
+         };
+        };
+       }),
+       FadeTransition:Runtime.Field(function()
+       {
+        return Trans.Exit(function()
+        {
+         return((Site.Fade())(1))(0);
+        },Trans.Enter(function()
+        {
+         return((Site.Fade())(0))(1);
+        },Trans.Create(Site.Fade())));
+       }),
        HomePage:function()
        {
         return Html.Div(List.ofArray([Utilities.cls("container")]),List.ofArray([Elements.Section(List.ofArray([Utilities.cls("block-huge"),Utilities.cls("teaser-home"),Utilities.sty("height","700px"),Utilities.sty("padding-top","40px"),Utilities.sty("padding-bottom","30px"),Utilities.sty("margin-bottom","40px")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("container")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("row")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("col-12")]),List.ofArray([Elements.Br(Runtime.New(T,{
@@ -19537,18 +19885,16 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        Main:function(samples)
        {
-        var arg00,arg10,router,x;
+        var arg00,arg10,router;
         arg00=function(pg)
         {
          return pg.PageRouteId;
         };
         arg10=Site.SiteRouter(samples);
         router=Router.Install(arg00,arg10);
-        x=View1.FromVar(router);
         Doc.RunById("main",Doc.EmbedView(View1.Map(function(pg)
         {
          var matchValue;
-         JavaScript.Log("view fn triggered");
          matchValue=pg.PageType;
          return matchValue.$==1?Site.AboutPage(function(ty)
          {
@@ -19557,8 +19903,17 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          {
           return Var.Set(router,Site.pageFor(ty,samples));
          });
-        },x)));
+        },View1.FromVar(router))));
         return Doc.RunById("navigation",Site.NavBar(router,samples));
+       },
+       MakePage:function(pg)
+       {
+        var arg30;
+        arg30=function(value)
+        {
+         return Global.String(value);
+        };
+        return Html.Div(List.ofArray([Attr.AnimatedStyle("opacity",Site.FadeTransition(),View.Const(1),arg30)]),List.ofArray([pg]));
        },
        NavBar:function(v,samples)
        {
@@ -19633,6 +19988,10 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         };
         return Router.Route(Site.unitRouteMap(),null,arg20);
        },
+       fadeTime:Runtime.Field(function()
+       {
+        return 300;
+       }),
        homePage:Runtime.Field(function()
        {
         return SiteCommon.mkPage(Site.showPgTy({
@@ -19840,6 +20199,11 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   WebSharper=Runtime.Safe(Global.IntelliFactory.WebSharper);
   UI=Runtime.Safe(WebSharper.UI);
   Next=Runtime.Safe(UI.Next);
+  Interpolation=Runtime.Safe(Next.Interpolation);
+  Easing=Runtime.Safe(Next.Easing);
+  AnimatedBobsleighSite=Runtime.Safe(Next.AnimatedBobsleighSite);
+  An=Runtime.Safe(Next.An);
+  Trans=Runtime.Safe(Next.Trans);
   Var=Runtime.Safe(Next.Var);
   Doc=Runtime.Safe(Next.Doc);
   List=Runtime.Safe(WebSharper.List);
@@ -19847,11 +20211,15 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   Utilities=Runtime.Safe(Next.Utilities);
   T=Runtime.Safe(List.T);
   Var1=Runtime.Safe(Next.Var1);
-  BobsleighSite=Runtime.Safe(Next.BobsleighSite);
   View1=Runtime.Safe(Next.View1);
-  Unchecked=Runtime.Safe(WebSharper.Unchecked);
   Attr=Runtime.Safe(Next.Attr);
+  View=Runtime.Safe(Next.View);
+  Unchecked=Runtime.Safe(WebSharper.Unchecked);
   Samples=Runtime.Safe(Next.Samples);
+  AnimatedContactFlow=Runtime.Safe(Next.AnimatedContactFlow);
+  Flow1=Runtime.Safe(Next.Flow1);
+  Flow=Runtime.Safe(Next.Flow);
+  BobsleighSite=Runtime.Safe(Next.BobsleighSite);
   Calculator=Runtime.Safe(Next.Calculator);
   CheckBoxTest=Runtime.Safe(Next.CheckBoxTest);
   Seq=Runtime.Safe(WebSharper.Seq);
@@ -19868,8 +20236,6 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   ObjectConstancy=Runtime.Safe(Next.ObjectConstancy);
   Common=Runtime.Safe(Next.Common);
   Fresh=Runtime.Safe(Common.Fresh);
-  Flow1=Runtime.Safe(Next.Flow1);
-  Flow=Runtime.Safe(Next.Flow);
   String=Runtime.Safe(Global.String);
   Strings=Runtime.Safe(WebSharper.Strings);
   IntrinsicFunctionProxy=Runtime.Safe(WebSharper.IntrinsicFunctionProxy);
@@ -19882,13 +20248,8 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   DataSet=Runtime.Safe(ObjectConstancy.DataSet);
   Arrays=Runtime.Safe(WebSharper.Arrays);
   OperatorIntrinsics=Runtime.Safe(WebSharper.OperatorIntrinsics);
-  Trans=Runtime.Safe(Next.Trans);
   SvgElements=Runtime.Safe(Html.SvgElements);
   Math=Runtime.Safe(Global.Math);
-  View=Runtime.Safe(Next.View);
-  An=Runtime.Safe(Next.An);
-  Interpolation=Runtime.Safe(Next.Interpolation);
-  Easing=Runtime.Safe(Next.Easing);
   Phone=Runtime.Safe(PhoneExample.Phone);
   Operators=Runtime.Safe(WebSharper.Operators);
   Order=Runtime.Safe(PhoneExample.Order);
@@ -19901,7 +20262,6 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   Collections=Runtime.Safe(WebSharper.Collections);
   MapModule=Runtime.Safe(Collections.MapModule);
   FSharpMap=Runtime.Safe(Collections.FSharpMap);
-  JavaScript=Runtime.Safe(WebSharper.JavaScript);
   ListModel=Runtime.Safe(Next.ListModel);
   Util=Runtime.Safe(TodoList.Util);
   TodoItem=Runtime.Safe(TodoList.TodoItem);
@@ -19913,9 +20273,12 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   TodoList.Sample();
   Site.unitRouteMap();
   Site.homePage();
+  Site.fadeTime();
   Site.aboutPage();
   Site.NavPages();
   Site.NavExternalLinks();
+  Site.FadeTransition();
+  Site.Fade();
   Site.Entries();
   SimpleTextBox.Sample();
   Server.threads();
@@ -19948,6 +20311,20 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   Calculator.Sample();
   BobsleighSite.pages();
   BobsleighSite.Sample();
+  AnimatedContactFlow.swipeTime();
+  AnimatedContactFlow.personFlowlet();
+  AnimatedContactFlow.fadeTime();
+  AnimatedContactFlow.contactTypeFlowlet();
+  AnimatedContactFlow.SwipeTransition();
+  AnimatedContactFlow.Swipe();
+  AnimatedContactFlow.Sample();
+  AnimatedContactFlow.FadeTransition();
+  AnimatedContactFlow.Fade();
+  AnimatedBobsleighSite.pages();
+  AnimatedBobsleighSite.fadeTime();
+  AnimatedBobsleighSite.Sample();
+  AnimatedBobsleighSite.FadeTransition();
+  AnimatedBobsleighSite.Fade();
   return;
  });
 }());

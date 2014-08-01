@@ -5356,6 +5356,64 @@ declare module IntelliFactory {
                         (): any;
                     };
                 }
+                module AnimatedBobsleighSite {
+                    interface Page {
+                    }
+                    interface Context {
+                        Go: {
+                            (x: __ABBREV.__AnimatedBobsleighSite.Page): void;
+                        };
+                    }
+                    var GlobalGo : {
+                        (_var: __ABBREV.__Next.Var1<__ABBREV.__AnimatedBobsleighSite.Page>, act: __ABBREV.__AnimatedBobsleighSite.Page): void;
+                    };
+                    var showAct : {
+                        (_arg1: __ABBREV.__AnimatedBobsleighSite.Page): string;
+                    };
+                    var NavBar : {
+                        (_var: __ABBREV.__Next.Var1<__ABBREV.__AnimatedBobsleighSite.Page>): __ABBREV.__Next.Doc;
+                    };
+                    var MakePage : {
+                        (_var: __ABBREV.__Next.Var1<__ABBREV.__AnimatedBobsleighSite.Page>, pg: __ABBREV.__Next.Doc): __ABBREV.__Next.Doc;
+                    };
+                    var HomePage : {
+                        (ctx: any): __ABBREV.__Next.Doc;
+                    };
+                    var History : {
+                        <_M1>(ctx: _M1): __ABBREV.__Next.Doc;
+                    };
+                    var Governance : {
+                        <_M1>(ctx: _M1): __ABBREV.__Next.Doc;
+                    };
+                    var Team : {
+                        <_M1>(ctx: _M1): __ABBREV.__Next.Doc;
+                    };
+                    var Main : {
+                        (): __ABBREV.__Next.Doc;
+                    };
+                    var description : {
+                        (): __ABBREV.__Next.Doc;
+                    };
+                    var pages : {
+                        (): __ABBREV.__List.T<__ABBREV.__AnimatedBobsleighSite.Page>;
+                    };
+                    var fadeTime : {
+                        (): number;
+                    };
+                    var Fade : {
+                        (): {
+                            (x: number): {
+                                (x: number): any;
+                            };
+                        };
+                    };
+                    var FadeTransition : {
+                        (): any;
+                    };
+                    var Sample : {
+                        (): any;
+                    };
+                }
                 module ObjectConstancy {
                     module DataSet {
                         var Ratio : {
@@ -5557,6 +5615,69 @@ declare module IntelliFactory {
                     };
                     var Description : {
                         (): __ABBREV.__Next.Doc;
+                    };
+                    var Sample : {
+                        (): any;
+                    };
+                }
+                module AnimatedContactFlow {
+                    interface ContactType {
+                    }
+                    interface ContactDetails {
+                    }
+                    interface Person {
+                        Name: string;
+                        Address: string;
+                    }
+                    var inputRow : {
+                        (rv: __ABBREV.__Next.Var1<string>, id: string, lblText: string): __ABBREV.__Next.Doc;
+                    };
+                    var AnimateFlow : {
+                        (pg: __ABBREV.__Next.Doc): __ABBREV.__Next.Doc;
+                    };
+                    var contactFlowlet : {
+                        (contactTy: __ABBREV.__AnimatedContactFlow.ContactType): any;
+                    };
+                    var finalPage : {
+                        (person: any, details: __ABBREV.__AnimatedContactFlow.ContactDetails): __ABBREV.__Next.Doc;
+                    };
+                    var ExampleFlow : {
+                        (): __ABBREV.__Next.Doc;
+                    };
+                    var Description : {
+                        (): __ABBREV.__Next.Doc;
+                    };
+                    var fadeTime : {
+                        (): number;
+                    };
+                    var Fade : {
+                        (): {
+                            (x: number): {
+                                (x: number): any;
+                            };
+                        };
+                    };
+                    var FadeTransition : {
+                        (): any;
+                    };
+                    var swipeTime : {
+                        (): number;
+                    };
+                    var Swipe : {
+                        (): {
+                            (x: number): {
+                                (x: number): any;
+                            };
+                        };
+                    };
+                    var SwipeTransition : {
+                        (): any;
+                    };
+                    var personFlowlet : {
+                        (): any;
+                    };
+                    var contactTypeFlowlet : {
+                        (): any;
                     };
                     var Sample : {
                         (): any;
@@ -5811,6 +5932,9 @@ declare module IntelliFactory {
                     var SiteRouter : {
                         (samples: __ABBREV.__List.T<any>): __ABBREV.__Next.Router1<any>;
                     };
+                    var MakePage : {
+                        (pg: __ABBREV.__Next.Doc): __ABBREV.__Next.Doc;
+                    };
                     var Main : {
                         (samples: __ABBREV.__List.T<any>): void;
                     };
@@ -5830,6 +5954,19 @@ declare module IntelliFactory {
                         (): __ABBREV.__List.T<__ABBREV.__SiteCommon.PageTy>;
                     };
                     var unitRouteMap : {
+                        (): any;
+                    };
+                    var fadeTime : {
+                        (): number;
+                    };
+                    var Fade : {
+                        (): {
+                            (x: number): {
+                                (x: number): any;
+                            };
+                        };
+                    };
+                    var FadeTransition : {
                         (): any;
                     };
                 }
@@ -5927,10 +6064,12 @@ declare module __ABBREV {
     export import __Next = IntelliFactory.WebSharper.UI.Next;
     export import __List = IntelliFactory.WebSharper.List;
     export import __BobsleighSite = IntelliFactory.WebSharper.UI.Next.BobsleighSite;
+    export import __AnimatedBobsleighSite = IntelliFactory.WebSharper.UI.Next.AnimatedBobsleighSite;
     export import __ObjectConstancy = IntelliFactory.WebSharper.UI.Next.ObjectConstancy;
     export import __WebSharper = IntelliFactory.WebSharper;
     export import __MessageBoard = IntelliFactory.WebSharper.UI.Next.MessageBoard;
     export import __Collections = IntelliFactory.WebSharper.Collections;
+    export import __AnimatedContactFlow = IntelliFactory.WebSharper.UI.Next.AnimatedContactFlow;
     export import __ContactFlow = IntelliFactory.WebSharper.UI.Next.ContactFlow;
     export import __Calculator = IntelliFactory.WebSharper.UI.Next.Calculator;
     export import __TodoList = IntelliFactory.WebSharper.UI.Next.TodoList;
