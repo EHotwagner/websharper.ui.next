@@ -3241,16 +3241,16 @@ declare module IntelliFactory {
                     var Join : {
                         <_M1>(_arg5: __ABBREV.__Next.View1<__ABBREV.__Next.View1<_M1>>): __ABBREV.__Next.View1<_M1>;
                     };
-                    var get_Do : {
-                        (): __ABBREV.__Next.ViewBuilder;
-                    };
-                }
-                module View {
                     var Bind : {
                         <_M1, _M2>(fn: {
                             (x: _M1): __ABBREV.__Next.View1<_M2>;
                         }, view: __ABBREV.__Next.View1<_M1>): __ABBREV.__Next.View1<_M2>;
                     };
+                    var get_Do : {
+                        (): __ABBREV.__Next.ViewBuilder;
+                    };
+                }
+                module View {
                     var Const : {
                         <_M1>(x: _M1): __ABBREV.__Next.View1<_M1>;
                     };
@@ -3281,18 +3281,18 @@ declare module IntelliFactory {
                             (x: _M1): void;
                         }, _arg1: __ABBREV.__Next.Model1<_M2, _M1>): void;
                     };
-                }
-                module Model {
                     var View : {
                         <_M1, _M2>(_arg2: __ABBREV.__Next.Model1<_M1, _M2>): __ABBREV.__Next.View1<_M1>;
                     };
                 }
-                module ListModel {
+                module ListModel1 {
                     var Create : {
                         <_M1, _M2>(key: {
                             (x: _M2): _M1;
                         }, init: __ABBREV.__WebSharper.seq<_M2>): __ABBREV.__Next.ListModel1<_M1, _M2>;
                     };
+                }
+                module ListModel {
                     var FromSeq : {
                         <_M1>(xs: __ABBREV.__WebSharper.seq<_M1>): __ABBREV.__Next.ListModel1<_M1, _M1>;
                     };
@@ -3300,7 +3300,7 @@ declare module IntelliFactory {
                         <_M1, _M2>(m: __ABBREV.__Next.ListModel1<_M1, _M2>): __ABBREV.__Next.View1<__ABBREV.__WebSharper.seq<_M2>>;
                     };
                 }
-                module Interpolation {
+                module Interpolation1 {
                     var get_Double : {
                         (): __ABBREV.__Next.Interpolation1<number>;
                     };
@@ -3357,6 +3357,8 @@ declare module IntelliFactory {
                     var AnimateChange : {
                         <_M1>(tr: any, x: _M1, y: _M1): any;
                     };
+                }
+                module Trans {
                     var AnimateEnter : {
                         <_M1>(tr: any, x: _M1): any;
                     };
@@ -3372,8 +3374,6 @@ declare module IntelliFactory {
                     var CanAnimateExit : {
                         <_M1>(tr: any): boolean;
                     };
-                }
-                module Trans {
                     var Trivial : {
                         <_M1>(): any;
                     };
@@ -3563,6 +3563,11 @@ declare module IntelliFactory {
                             (x: _M1): _M2;
                         }, x: any): any;
                     };
+                    var get_Do : {
+                        (): __ABBREV.__Next.FlowBuilder;
+                    };
+                }
+                module Flow {
                     var Bind : {
                         <_M1, _M2>(m: any, k: {
                             (x: _M1): any;
@@ -3574,11 +3579,6 @@ declare module IntelliFactory {
                     var Embed : {
                         <_M1>(fl: any): __ABBREV.__Next.Doc;
                     };
-                    var get_Do : {
-                        (): __ABBREV.__Next.FlowBuilder;
-                    };
-                }
-                module Flow {
                     var Define : {
                         <_M1>(f: {
                             (x: {
@@ -3623,6 +3623,55 @@ declare module IntelliFactory {
                                 (x: __ABBREV.__Next.Var1<_M1>): _M2;
                             };
                         }): __ABBREV.__Next.Router1<_M2>;
+                    };
+                }
+                module Input {
+                    module Mouse {
+                        var get_Position : {
+                            (): __ABBREV.__Next.View1<any>;
+                        };
+                        var get_LeftPressed : {
+                            (): __ABBREV.__Next.View1<boolean>;
+                        };
+                        var get_MiddlePressed : {
+                            (): __ABBREV.__Next.View1<boolean>;
+                        };
+                        var get_RightPressed : {
+                            (): __ABBREV.__Next.View1<boolean>;
+                        };
+                        var get_MousePressed : {
+                            (): __ABBREV.__Next.View1<boolean>;
+                        };
+                    }
+                    module Keyboard {
+                        var IsPressed : {
+                            (key: number): __ABBREV.__Next.View1<boolean>;
+                        };
+                        var get_KeysPressed : {
+                            (): __ABBREV.__Next.View1<__ABBREV.__List.T<number>>;
+                        };
+                        var get_LastPressed : {
+                            (): __ABBREV.__Next.View1<number>;
+                        };
+                    }
+                    interface Mouse {
+                    }
+                    interface Keyboard {
+                    }
+                    var MousePosSt1 : {
+                        (): any;
+                    };
+                    var MouseBtnSt1 : {
+                        (): any;
+                    };
+                    var ActivateButtonListener : {
+                        (): void;
+                    };
+                    var KeyListenerState : {
+                        (): any;
+                    };
+                    var ActivateKeyListener : {
+                        (): void;
                     };
                 }
                 module Html {
@@ -5273,6 +5322,23 @@ declare module IntelliFactory {
                         (): void;
                     };
                 }
+                module KeyboardInfo {
+                    var commaList : {
+                        (xs: __ABBREV.__List.T<string>): string;
+                    };
+                    var Main : {
+                        (): __ABBREV.__Next.Doc;
+                    };
+                    var Description : {
+                        (): __ABBREV.__Next.Doc;
+                    };
+                    var keys : {
+                        (): __ABBREV.__Next.View1<__ABBREV.__List.T<number>>;
+                    };
+                    var Sample : {
+                        (): any;
+                    };
+                }
                 module EditablePersonList {
                     interface Person {
                         FirstName: __ABBREV.__Next.Var1<string>;
@@ -5786,7 +5852,7 @@ declare module IntelliFactory {
                         (): any;
                     };
                 }
-                module MouseChase {
+                module MouseInfo {
                     var Main : {
                         (): __ABBREV.__Next.Doc;
                     };
@@ -6061,8 +6127,8 @@ declare module IntelliFactory {
 }
 declare module __ABBREV {
     
-    export import __Next = IntelliFactory.WebSharper.UI.Next;
     export import __List = IntelliFactory.WebSharper.List;
+    export import __Next = IntelliFactory.WebSharper.UI.Next;
     export import __BobsleighSite = IntelliFactory.WebSharper.UI.Next.BobsleighSite;
     export import __AnimatedBobsleighSite = IntelliFactory.WebSharper.UI.Next.AnimatedBobsleighSite;
     export import __ObjectConstancy = IntelliFactory.WebSharper.UI.Next.ObjectConstancy;

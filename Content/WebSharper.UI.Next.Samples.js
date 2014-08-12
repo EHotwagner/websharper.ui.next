@@ -12004,7 +12004,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
 
 (function()
 {
- var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,IntrinsicFunctionProxy,Concurrency,Array,Seq,UI,Next,Abbrev,Fresh,Collections,HashSet,HashSet1,HashSet2,Arrays,JQueue,Unchecked,Slot,An,AppendList,Anims,window,Trans1,Option,View1,Lazy,Array1,Attrs,DomUtility,Attr,AnimatedAttrNode,DynamicAttrNode,View,Docs,Doc,List,Var,T,Mailbox,Operators,NodeSet,DocElemNode,DomNodes,jQuery,document,Easing,Easings,Var1,FlowBuilder,Flow1,Html,Elements,DoubleInterpolation,Key,ListModel1,ListModel,ListModels,Model,Model1,Strings,encodeURIComponent,decodeURIComponent,Route,Routing,Router,Trie,Dictionary,Snap,Async,Enumerator,ResizeArray,ResizeArrayProxy,MapModule,FSharpMap,ViewBuilder,Attributes,SvgAttributes;
+ var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,IntrinsicFunctionProxy,Concurrency,Array,Seq,UI,Next,Abbrev,Fresh,Collections,HashSet,HashSet1,HashSet2,Arrays,JQueue,Unchecked,Slot,An,AppendList,Anims,window,Trans1,Trans,Option,View1,Lazy,Array1,Attrs,DomUtility,Attr,AnimatedAttrNode,DynamicAttrNode,View,Docs,Doc,List,Var,T,Mailbox,Operators,NodeSet,DocElemNode,DomNodes,jQuery,document,Easing,Easings,Var1,FlowBuilder,Flow,Html,Elements,Input,DoubleInterpolation,Key,ListModel1,ListModels,Model1,Strings,encodeURIComponent,decodeURIComponent,Route,Routing,Router,Trie,Dictionary,Snap,Async,Enumerator,ResizeArray,ResizeArrayProxy,MapModule,FSharpMap,ViewBuilder,Attributes,SvgAttributes;
  Runtime.Define(Global,{
   IntelliFactory:{
    WebSharper:{
@@ -12395,13 +12395,13 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         },Trans1.AnimateChange(a.tr,matchValue[0].$0,matchValue[1].$0))):matchValue[0].$==0?matchValue[1].$==1?An.Pack(An.Map(function(v)
         {
          return a.pushVisible(parent,v);
-        },Trans1.AnimateEnter(a.tr,matchValue[1].$0))):An.get_Empty():An.get_Empty():matchValue[0].$==0?matchValue[1].$==1?An.Pack(An.Map(function(v)
+        },Trans.AnimateEnter(a.tr,matchValue[1].$0))):An.get_Empty():An.get_Empty():matchValue[0].$==0?matchValue[1].$==1?An.Pack(An.Map(function(v)
         {
          return a.pushVisible(parent,v);
-        },Trans1.AnimateEnter(a.tr,matchValue[1].$0))):An.get_Empty():An.get_Empty():matchValue[0].$==0?matchValue[1].$==1?An.Pack(An.Map(function(v)
+        },Trans.AnimateEnter(a.tr,matchValue[1].$0))):An.get_Empty():An.get_Empty():matchValue[0].$==0?matchValue[1].$==1?An.Pack(An.Map(function(v)
         {
          return a.pushVisible(parent,v);
-        },Trans1.AnimateEnter(a.tr,matchValue[1].$0))):An.get_Empty():An.get_Empty());
+        },Trans.AnimateEnter(a.tr,matchValue[1].$0))):An.get_Empty():An.get_Empty());
        },
        GetExitAnim:function(parent)
        {
@@ -12417,7 +12417,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         },matchValue.$==1?An.Pack(An.Map(function(v)
         {
          return a.pushVisible(parent,v);
-        },Trans1.AnimateExit(a.tr,matchValue.$0))):An.get_Empty());
+        },Trans.AnimateExit(a.tr,matchValue.$0))):An.get_Empty());
        },
        Sync:function()
        {
@@ -12767,11 +12767,11 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         var node,flags;
         node=AnimatedAttrNode.New(tr,view,set);
         flags=4;
-        if(Trans1.CanAnimateEnter(tr))
+        if(Trans.CanAnimateEnter(tr))
          {
           flags=flags|1;
          }
-        if(Trans1.CanAnimateExit(tr))
+        if(Trans.CanAnimateExit(tr))
          {
           flags=flags|2;
          }
@@ -13056,7 +13056,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         node=Docs.CreateEmbedNode();
         x=View1.Map(function()
         {
-        },View.Bind(function(doc)
+        },View1.Bind(function(doc)
         {
          Docs.UpdateEmbedNode(node,doc.DocNode);
          return doc.Updates;
@@ -13809,6 +13809,21 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        })
       },
       Flow:Runtime.Class({},{
+       Bind:function(m,k)
+       {
+        return{
+         Render:function(_var)
+         {
+          return function(cont)
+          {
+           return(m.Render.call(null,_var))(function(r)
+           {
+            return(k(r).Render.call(null,_var))(cont);
+           });
+          };
+         }
+        };
+       },
        Define:function(f)
        {
         return{
@@ -13817,6 +13832,27 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
           return function(cont)
           {
            return Var.Set(_var,f(cont));
+          };
+         }
+        };
+       },
+       Embed:function(fl)
+       {
+        var _var;
+        _var=Var1.Create(Doc.get_Empty());
+        (fl.Render.call(null,_var))(function()
+        {
+        });
+        return Doc.EmbedView(_var.get_View());
+       },
+       Return:function(x)
+       {
+        return{
+         Render:function()
+         {
+          return function(cont)
+          {
+           return cont(x);
           };
          }
         };
@@ -13836,30 +13872,6 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        }
       }),
       Flow1:Runtime.Class({},{
-       Bind:function(m,k)
-       {
-        return{
-         Render:function(_var)
-         {
-          return function(cont)
-          {
-           return(m.Render.call(null,_var))(function(r)
-           {
-            return(k(r).Render.call(null,_var))(cont);
-           });
-          };
-         }
-        };
-       },
-       Embed:function(fl)
-       {
-        var _var;
-        _var=Var1.Create(Doc.get_Empty());
-        (fl.Render.call(null,_var))(function()
-        {
-        });
-        return Doc.EmbedView(_var.get_View());
-       },
        Map:function(f,x)
        {
         return{
@@ -13875,18 +13887,6 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          }
         };
        },
-       Return:function(x)
-       {
-        return{
-         Render:function()
-         {
-          return function(cont)
-          {
-           return cont(x);
-          };
-         }
-        };
-       },
        get_Do:function()
        {
         return FlowBuilder.New();
@@ -13895,11 +13895,11 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
       FlowBuilder:Runtime.Class({
        Bind:function(comp,func)
        {
-        return Flow1.Bind(comp,func);
+        return Flow.Bind(comp,func);
        },
        Return:function(value)
        {
-        return Flow1.Return(value);
+        return Flow.Return(value);
        },
        ReturnFrom:function(inner)
        {
@@ -15969,7 +15969,175 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         }),ch);
        }
       },
-      Interpolation:Runtime.Class({},{
+      Input:{
+       ActivateButtonListener:Runtime.Field(function()
+       {
+        var _buttonListener_39_1;
+        _buttonListener_39_1=function(evt,down)
+        {
+         var matchValue;
+         matchValue=evt.button;
+         return matchValue===0?Var.Set(Input.MouseBtnSt1().Left,down):matchValue===1?Var.Set(Input.MouseBtnSt1().Middle,down):matchValue===2?Var.Set(Input.MouseBtnSt1().Right,down):null;
+        };
+        if(!Input.MouseBtnSt1().Active)
+         {
+          Input.MouseBtnSt1().Active=true;
+          document.addEventListener("mousedown",function(evt)
+          {
+           return _buttonListener_39_1(evt,true);
+          },false);
+          return document.addEventListener("mouseup",function(evt)
+          {
+           return _buttonListener_39_1(evt,false);
+          },false);
+         }
+        else
+         {
+          return null;
+         }
+       }),
+       ActivateKeyListener:Runtime.Field(function()
+       {
+        if(!Input.KeyListenerState().KeyListenerActive)
+         {
+          jQuery(document).keydown(function(evt)
+          {
+           var keyCode,arg10;
+           keyCode=evt.which;
+           Var.Set(Input.KeyListenerState().LastPressed,keyCode);
+           arg10=function(xs)
+           {
+            return!Seq.exists(function(x)
+            {
+             return x===keyCode;
+            },xs)?List.append(xs,List.ofArray([keyCode])):xs;
+           };
+           return Var.Update(Input.KeyListenerState().KeysPressed,arg10);
+          });
+          jQuery(document).keyup(function(evt)
+          {
+           var keyCode,predicate,arg10;
+           keyCode=evt.which;
+           predicate=function(x)
+           {
+            return x!==keyCode;
+           };
+           arg10=function(list)
+           {
+            return List.filter(predicate,list);
+           };
+           return Var.Update(Input.KeyListenerState().KeysPressed,arg10);
+          });
+          return;
+         }
+        else
+         {
+          return null;
+         }
+       }),
+       KeyListenerState:Runtime.Field(function()
+       {
+        return{
+         KeysPressed:Var1.Create(Runtime.New(T,{
+          $:0
+         })),
+         KeyListenerActive:false,
+         LastPressed:Var1.Create(-1)
+        };
+       }),
+       Keyboard:Runtime.Class({},{
+        IsPressed:function(key)
+        {
+         var predicate;
+         Input.ActivateKeyListener();
+         predicate=function(x)
+         {
+          return x===key;
+         };
+         return View1.Map(function(list)
+         {
+          return Seq.exists(predicate,list);
+         },Input.KeyListenerState().KeysPressed.get_View());
+        },
+        get_KeysPressed:function()
+        {
+         Input.ActivateKeyListener();
+         return Input.KeyListenerState().KeysPressed.get_View();
+        },
+        get_LastPressed:function()
+        {
+         Input.ActivateKeyListener();
+         return Input.KeyListenerState().LastPressed.get_View();
+        }
+       }),
+       Mouse:Runtime.Class({},{
+        get_LeftPressed:function()
+        {
+         Input.ActivateButtonListener();
+         return Input.MouseBtnSt1().Left.get_View();
+        },
+        get_MiddlePressed:function()
+        {
+         Input.ActivateButtonListener();
+         return Input.MouseBtnSt1().Middle.get_View();
+        },
+        get_MousePressed:function()
+        {
+         Input.ActivateButtonListener();
+         return View.Apply(View.Apply(View.Apply(View.Const(function(l)
+         {
+          return function(m)
+          {
+           return function(r)
+           {
+            return(l?true:m)?true:r;
+           };
+          };
+         }),Input.MouseBtnSt1().Left.get_View()),Input.MouseBtnSt1().Middle.get_View()),Input.MouseBtnSt1().Right.get_View());
+        },
+        get_Position:function()
+        {
+         var onMouseMove;
+         onMouseMove=function(evt)
+         {
+          var arg00;
+          arg00=Input.MousePosSt1().PosV;
+          return(Runtime.Tupled(function(arg10)
+          {
+           return Var.Set(arg00,arg10);
+          }))([evt.clientX,evt.clientY]);
+         };
+         if(!Input.MousePosSt1().Active)
+          {
+           document.addEventListener("mousemove",onMouseMove,false);
+           Input.MousePosSt1().Active=true;
+          }
+         return View1.FromVar(Input.MousePosSt1().PosV);
+        },
+        get_RightPressed:function()
+        {
+         Input.ActivateButtonListener();
+         return Input.MouseBtnSt1().Right.get_View();
+        }
+       }),
+       MouseBtnSt1:Runtime.Field(function()
+       {
+        return{
+         Active:false,
+         Left:Var1.Create(false),
+         Middle:Var1.Create(false),
+         Right:Var1.Create(false)
+        };
+       }),
+       MousePosSt1:Runtime.Field(function()
+       {
+        return{
+         Active:false,
+         PosV:Var1.Create([0,0])
+        };
+       })
+      },
+      Interpolation1:Runtime.Class({},{
        get_Double:function()
        {
         return Runtime.New(DoubleInterpolation,{
@@ -15987,22 +16155,9 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        }
       }),
       ListModel:Runtime.Class({},{
-       Create:function(key,init)
-       {
-        var _var;
-        _var=Var1.Create(Seq.toArray(Seq.distinctBy(key,init)));
-        return Runtime.New(ListModel1,{
-         Key:key,
-         Var:_var,
-         View:View1.Map(function(x)
-         {
-          return x.slice();
-         },_var.get_View())
-        });
-       },
        FromSeq:function(xs)
        {
-        return ListModel.Create(function(x)
+        return ListModel1.Create(function(x)
         {
          return x;
         },xs);
@@ -16045,6 +16200,20 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
           return null;
          }
        }
+      },{
+       Create:function(key,init)
+       {
+        var _var;
+        _var=Var1.Create(Seq.toArray(Seq.distinctBy(key,init)));
+        return Runtime.New(ListModel1,{
+         Key:key,
+         Var:_var,
+         View:View1.Map(function(x)
+         {
+          return x.slice();
+         },_var.get_View())
+        });
+       }
       }),
       ListModels:{
        Contains:function(keyFn,item,xs)
@@ -16057,16 +16226,10 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         },xs);
        }
       },
-      Model:Runtime.Class({},{
-       View:function(_arg2)
-       {
-        return _arg2.$1;
-       }
-      }),
       Model1:Runtime.Class({
        get_View:function()
        {
-        return Model.View(this);
+        return Model1.View(this);
        }
       },{
        Create:function(proj,init)
@@ -16086,6 +16249,10 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          update(x);
          return x;
         });
+       },
+       View:function(_arg2)
+       {
+        return _arg2.$1;
        }
       }),
       Route:{
@@ -16678,6 +16845,26 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        }
       },
       Trans:Runtime.Class({},{
+       AnimateEnter:function(tr,x)
+       {
+        return tr.TEnter.call(null,x);
+       },
+       AnimateExit:function(tr,x)
+       {
+        return tr.TExit.call(null,x);
+       },
+       CanAnimateChange:function(tr)
+       {
+        return(tr.TFlags&1)!==0;
+       },
+       CanAnimateEnter:function(tr)
+       {
+        return(tr.TFlags&2)!==0;
+       },
+       CanAnimateExit:function(tr)
+       {
+        return(tr.TFlags&4)!==0;
+       },
        Change:function(ch,tr)
        {
         return{
@@ -16746,26 +16933,6 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        AnimateChange:function(tr,x,y)
        {
         return(tr.TChange.call(null,x))(y);
-       },
-       AnimateEnter:function(tr,x)
-       {
-        return tr.TEnter.call(null,x);
-       },
-       AnimateExit:function(tr,x)
-       {
-        return tr.TExit.call(null,x);
-       },
-       CanAnimateChange:function(tr)
-       {
-        return(tr.TFlags&1)!==0;
-       },
-       CanAnimateEnter:function(tr)
-       {
-        return(tr.TFlags&2)!==0;
-       },
-       CanAnimateExit:function(tr)
-       {
-        return(tr.TFlags&4)!==0;
        }
       }),
       Trie:{
@@ -17083,10 +17250,6 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          };
         },fn,view);
        },
-       Bind:function(fn,view)
-       {
-        return View1.Join(View1.Map(fn,view));
-       },
        Const:function(x)
        {
         var o;
@@ -17114,6 +17277,10 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        }
       }),
       View1:Runtime.Class({},{
+       Bind:function(fn,view)
+       {
+        return View1.Join(View1.Map(fn,view));
+       },
        Convert:function(conv,view)
        {
         return View1.ConvertBy(function(x)
@@ -17296,7 +17463,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
       ViewBuilder:Runtime.Class({
        Bind:function(x,f)
        {
-        return View.Bind(f,x);
+        return View1.Bind(f,x);
        },
        Return:function(x)
        {
@@ -17332,6 +17499,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   Anims=Runtime.Safe(Next.Anims);
   window=Runtime.Safe(Global.window);
   Trans1=Runtime.Safe(Next.Trans1);
+  Trans=Runtime.Safe(Next.Trans);
   Option=Runtime.Safe(WebSharper.Option);
   View1=Runtime.Safe(Next.View1);
   Lazy=Runtime.Safe(WebSharper.Lazy);
@@ -17358,15 +17526,14 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   Easings=Runtime.Safe(Next.Easings);
   Var1=Runtime.Safe(Next.Var1);
   FlowBuilder=Runtime.Safe(Next.FlowBuilder);
-  Flow1=Runtime.Safe(Next.Flow1);
+  Flow=Runtime.Safe(Next.Flow);
   Html=Runtime.Safe(Next.Html);
   Elements=Runtime.Safe(Html.Elements);
+  Input=Runtime.Safe(Next.Input);
   DoubleInterpolation=Runtime.Safe(Next.DoubleInterpolation);
   Key=Runtime.Safe(Next.Key);
   ListModel1=Runtime.Safe(Next.ListModel1);
-  ListModel=Runtime.Safe(Next.ListModel);
   ListModels=Runtime.Safe(Next.ListModels);
-  Model=Runtime.Safe(Next.Model);
   Model1=Runtime.Safe(Next.Model1);
   Strings=Runtime.Safe(WebSharper.Strings);
   encodeURIComponent=Runtime.Safe(Global.encodeURIComponent);
@@ -17389,6 +17556,11 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
  });
  Runtime.OnLoad(function()
  {
+  Input.MousePosSt1();
+  Input.MouseBtnSt1();
+  Input.KeyListenerState();
+  Input.ActivateKeyListener();
+  Input.ActivateButtonListener();
   SvgAttributes.Z();
   SvgAttributes.YChannelSelector();
   SvgAttributes.Y2();
@@ -17666,7 +17838,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
 
 (function()
 {
- var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,UI,Next,Interpolation,Easing,AnimatedBobsleighSite,An,Trans,Var,Doc,List,Html,Utilities,T,Var1,View1,Attr,View,Unchecked,Samples,AnimatedContactFlow,Flow1,Flow,BobsleighSite,Calculator,CheckBoxTest,Seq,Person,Site,SimpleTextBox,InputTransform,TodoList,PhoneExample,EditablePersonList,ContactFlow,MessageBoard,RoutedBobsleighSite,ObjectConstancy,Common,Fresh,String,Strings,IntrinsicFunctionProxy,Auth,Concurrency,Server,document,MouseChase,jQuery,DataSet,Arrays,OperatorIntrinsics,SvgElements,Math,Phone,Operators,Order,RouteMap,Builder,Router,SiteCommon,Elements,Option,Collections,MapModule,FSharpMap,ListModel,Util,TodoItem,Key,Client;
+ var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,UI,Next,Interpolation1,Easing,AnimatedBobsleighSite,An,Trans,Var,Doc,List,Html,Utilities,T,Var1,View1,Attr,View,Unchecked,Samples,AnimatedContactFlow,Flow1,Flow,BobsleighSite,Calculator,CheckBoxTest,Seq,Person,Site,SimpleTextBox,InputTransform,TodoList,PhoneExample,EditablePersonList,ContactFlow,MessageBoard,RoutedBobsleighSite,ObjectConstancy,MouseInfo,KeyboardInfo,Common,Fresh,String,Strings,IntrinsicFunctionProxy,Input,Keyboard,Auth,Concurrency,Server,Mouse,jQuery,DataSet,Arrays,OperatorIntrinsics,SvgElements,Math,Phone,Operators,Order,RouteMap,Builder,Router,SiteCommon,Elements,Option,Collections,MapModule,FSharpMap,ListModel1,Util,TodoItem,Key,ListModel,Client;
  Runtime.Define(Global,{
   IntelliFactory:{
    WebSharper:{
@@ -17676,7 +17848,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        Fade:Runtime.Field(function()
        {
         var _arg00_45_5,_arg10_45_5,arg20;
-        _arg00_45_5=Interpolation.get_Double();
+        _arg00_45_5=Interpolation1.get_Double();
         _arg10_45_5=Easing.get_CubicInOut();
         arg20=AnimatedBobsleighSite.fadeTime();
         return function(arg30)
@@ -17845,7 +18017,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        {
         var _builder_;
         _builder_=Flow1.get_Do();
-        return Flow1.Embed(_builder_.Bind(AnimatedContactFlow.personFlowlet(),function(_arg1)
+        return Flow.Embed(_builder_.Bind(AnimatedContactFlow.personFlowlet(),function(_arg1)
         {
          return _builder_.Bind(AnimatedContactFlow.contactTypeFlowlet(),function(_arg2)
          {
@@ -17859,7 +18031,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        Fade:Runtime.Field(function()
        {
         var _arg00_58_10,_arg10_58_10,arg20;
-        _arg00_58_10=Interpolation.get_Double();
+        _arg00_58_10=Interpolation1.get_Double();
         _arg10_58_10=Easing.get_CubicInOut();
         arg20=AnimatedContactFlow.fadeTime();
         return function(arg30)
@@ -17893,7 +18065,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        Swipe:Runtime.Field(function()
        {
         var _arg00_73_8,_arg10_73_8,arg20;
-        _arg00_73_8=Interpolation.get_Double();
+        _arg00_73_8=Interpolation1.get_Double();
         _arg10_73_8=Easing.get_CubicInOut();
         arg20=AnimatedContactFlow.swipeTime();
         return function(arg30)
@@ -18339,7 +18511,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
       Client:{
        Main:Runtime.Field(function()
        {
-        return Site.Main(List.ofArray([SimpleTextBox.Sample(),InputTransform.Sample(),TodoList.Sample(),PhoneExample.Sample(),EditablePersonList.Sample(),CheckBoxTest.Sample(),Calculator.Sample(),ContactFlow.Sample(),AnimatedContactFlow.Sample(),MessageBoard.Sample(),BobsleighSite.Sample(),RoutedBobsleighSite.Sample(),AnimatedBobsleighSite.Sample(),ObjectConstancy.Sample()]));
+        return Site.Main(List.ofArray([SimpleTextBox.Sample(),InputTransform.Sample(),TodoList.Sample(),PhoneExample.Sample(),EditablePersonList.Sample(),CheckBoxTest.Sample(),Calculator.Sample(),ContactFlow.Sample(),AnimatedContactFlow.Sample(),MessageBoard.Sample(),BobsleighSite.Sample(),RoutedBobsleighSite.Sample(),AnimatedBobsleighSite.Sample(),ObjectConstancy.Sample(),MouseInfo.Sample(),KeyboardInfo.Sample()]));
        })
       },
       Common:{
@@ -18388,7 +18560,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        {
         var _builder_;
         _builder_=Flow1.get_Do();
-        return Flow1.Embed(_builder_.Bind(ContactFlow.personFlowlet(),function(_arg1)
+        return Flow.Embed(_builder_.Bind(ContactFlow.personFlowlet(),function(_arg1)
         {
          return _builder_.Bind(ContactFlow.contactTypeFlowlet(),function(_arg2)
          {
@@ -18593,6 +18765,83 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         {
          return InputTransform.Description();
         }).Create();
+       })
+      },
+      KeyboardInfo:{
+       Description:function()
+       {
+        return Html.Div0(List.ofArray([Doc.TextNode("Information about the current keyboard state")]));
+       },
+       Main:function()
+       {
+        return Html.Div0(List.ofArray([Html.P0(List.ofArray([Doc.TextNode("Keys pressed (key codes): "),Doc.TextView(View1.Map(function(xs)
+        {
+         return KeyboardInfo.commaList(List.map(function(value)
+         {
+          return Global.String(value);
+         },xs));
+        },KeyboardInfo.keys()))])),Html.P0(List.ofArray([Doc.TextNode("Keys pressed: "),Doc.TextView(View1.Map(function(xs)
+        {
+         return KeyboardInfo.commaList(List.map(function(c)
+         {
+          return KeyboardInfo.ToChar(c);
+         },xs));
+        },KeyboardInfo.keys()))])),Html.P0(List.ofArray([Doc.TextNode("Last pressed key: "),Doc.TextView(View1.Map(function(value)
+        {
+         return Global.String(value);
+        },Keyboard.get_LastPressed()))])),Html.P0(List.ofArray([Doc.TextNode("Is 'A' pressed? "),Doc.TextView(View1.Map(function(x)
+        {
+         return x?"Yes":"No";
+        },Keyboard.IsPressed(KeyboardInfo.ToKey("A"))))]))]));
+       },
+       Sample:Runtime.Field(function()
+       {
+        return Samples.Build().Id("KeyboardInfo").FileName("KeyboardInfo.fs").Keywords(List.ofArray(["text"])).Render(function()
+        {
+         return KeyboardInfo.Main();
+        }).RenderDescription(function()
+        {
+         return KeyboardInfo.Description();
+        }).Create();
+       }),
+       ToChar:function($c)
+       {
+        var $0=this,$this=this;
+        return Global.String.fromCharCode($c);
+       },
+       ToKey:function($c)
+       {
+        var $0=this,$this=this;
+        return $c.charCodeAt(0);
+       },
+       commaList:function(xs)
+       {
+        var addCommas;
+        addCommas=function(_arg1)
+        {
+         var xs1;
+         if(_arg1.$==1)
+          {
+           if(_arg1.$1.$==0)
+            {
+             return Global.String(_arg1.$0);
+            }
+           else
+            {
+             xs1=_arg1.$1;
+             return Global.String(_arg1.$0)+", "+addCommas(xs1);
+            }
+          }
+         else
+          {
+           return"";
+          }
+        };
+        return"["+addCommas(xs)+"]";
+       },
+       keys:Runtime.Field(function()
+       {
+        return Keyboard.get_KeysPressed();
        })
       },
       MessageBoard:{
@@ -18924,52 +19173,51 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         },View1.FromVar(st.Threads)))]))]));
        }
       },
-      MouseChase:{
+      MouseInfo:{
        Description:function()
        {
-        return Html.Div0(List.ofArray([Doc.TextNode("A box which follows the mouse, containing the co-ordinates.")]));
+        return Html.Div0(List.ofArray([Doc.TextNode("Shows information about the mouse")]));
        },
        Main:function()
        {
-        var rvX,rvY,widthAttr,heightAttr,arg10,xView,arg101,yView,bgAttr;
-        rvX=Var1.Create(0);
-        rvY=Var1.Create(0);
-        document.addEventListener("mousemove",function(evt)
+        var arg00,arg10,xView,arg001,arg101,yView;
+        arg00=Runtime.Tupled(function(tuple)
         {
-         var py;
-         py=evt.pageY;
-         Var.Set(rvX,evt.pageX);
-         return Var.Set(rvY,py);
-        },false);
-        widthAttr=Attr.Create("width","200");
-        heightAttr=Attr.Create("height","100");
-        arg10=View1.Map(function(x)
+         return tuple[0];
+        });
+        arg10=Mouse.get_Position();
+        xView=View1.Map(arg00,arg10);
+        arg001=Runtime.Tupled(function(tuple)
         {
-         return Global.String(x)+"px";
-        },rvX.get_View());
-        xView=Attr.DynamicStyle("left",arg10);
-        arg101=View1.Map(function(y)
-        {
-         return Global.String(y)+"px";
-        },rvY.get_View());
-        yView=Attr.DynamicStyle("top",arg101);
-        bgAttr=Attr.Style("background-color","#b0c4de");
-        return Html.Div(List.ofArray([xView,yView,bgAttr,Attr.Style("position","absolute")]),List.ofArray([Html.Div0(List.ofArray([Doc.TextView(View1.Map(function(x)
+         return tuple[1];
+        });
+        arg101=Mouse.get_Position();
+        yView=View1.Map(arg001,arg101);
+        return Html.Div0(List.ofArray([Html.P0(List.ofArray([Doc.TextView(View1.Map(function(x)
         {
          return"X: "+Global.String(x);
-        },rvX.get_View()))])),Html.Div0(List.ofArray([Doc.TextView(View1.Map(function(y)
+        },xView)),Doc.TextView(View1.Map(function(y)
         {
          return"Y: "+Global.String(y);
-        },rvY.get_View()))]))]));
+        },yView))])),Html.P0(List.ofArray([Doc.TextView(View1.Map(function(l)
+        {
+         return"Left button pressed: "+Global.String(l);
+        },Mouse.get_LeftPressed()))])),Html.P0(List.ofArray([Doc.TextView(View1.Map(function(m)
+        {
+         return"Middle button pressed: "+Global.String(m);
+        },Mouse.get_MiddlePressed()))])),Html.P0(List.ofArray([Doc.TextView(View1.Map(function(r)
+        {
+         return"Right button pressed: "+Global.String(r);
+        },Mouse.get_RightPressed()))]))]));
        },
        Sample:Runtime.Field(function()
        {
-        return Samples.Build().Id("MouseChase").FileName("MouseChase.fs").Keywords(List.ofArray(["todo"])).Render(function()
+        return Samples.Build().Id("MouseInfo").FileName("MouseInfo.fs").Keywords(List.ofArray(["mouse"])).Render(function()
         {
-         return MouseChase.Main();
+         return MouseInfo.Main();
         }).RenderDescription(function()
         {
-         return MouseChase.Description();
+         return MouseInfo.Description();
         }).Create();
        })
       },
@@ -19223,7 +19471,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        SimpleAnimation:function(x,y)
        {
-        return An.Simple(Interpolation.get_Double(),Easing.get_CubicInOut(),300,x,y);
+        return An.Simple(Interpolation1.get_Double(),Easing.get_CubicInOut(),300,x,y);
        },
        SimpleTransition:Runtime.Field(function()
        {
@@ -19850,7 +20098,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        Fade:Runtime.Field(function()
        {
         var _arg00_312_12,_arg10_312_12,arg20;
-        _arg00_312_12=Interpolation.get_Double();
+        _arg00_312_12=Interpolation1.get_Double();
         _arg10_312_12=Easing.get_CubicInOut();
         arg20=Site.fadeTime();
         return function(arg30)
@@ -20068,7 +20316,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        CreateModel:function()
        {
         return{
-         Items:ListModel.Create(function(item)
+         Items:ListModel1.Create(function(item)
          {
           return item.Key;
          },Runtime.New(T,{
@@ -20199,7 +20447,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   WebSharper=Runtime.Safe(Global.IntelliFactory.WebSharper);
   UI=Runtime.Safe(WebSharper.UI);
   Next=Runtime.Safe(UI.Next);
-  Interpolation=Runtime.Safe(Next.Interpolation);
+  Interpolation1=Runtime.Safe(Next.Interpolation1);
   Easing=Runtime.Safe(Next.Easing);
   AnimatedBobsleighSite=Runtime.Safe(Next.AnimatedBobsleighSite);
   An=Runtime.Safe(Next.An);
@@ -20234,16 +20482,19 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   MessageBoard=Runtime.Safe(Next.MessageBoard);
   RoutedBobsleighSite=Runtime.Safe(Next.RoutedBobsleighSite);
   ObjectConstancy=Runtime.Safe(Next.ObjectConstancy);
+  MouseInfo=Runtime.Safe(Next.MouseInfo);
+  KeyboardInfo=Runtime.Safe(Next.KeyboardInfo);
   Common=Runtime.Safe(Next.Common);
   Fresh=Runtime.Safe(Common.Fresh);
   String=Runtime.Safe(Global.String);
   Strings=Runtime.Safe(WebSharper.Strings);
   IntrinsicFunctionProxy=Runtime.Safe(WebSharper.IntrinsicFunctionProxy);
+  Input=Runtime.Safe(Next.Input);
+  Keyboard=Runtime.Safe(Input.Keyboard);
   Auth=Runtime.Safe(MessageBoard.Auth);
   Concurrency=Runtime.Safe(WebSharper.Concurrency);
   Server=Runtime.Safe(Next.Server);
-  document=Runtime.Safe(Global.document);
-  MouseChase=Runtime.Safe(Next.MouseChase);
+  Mouse=Runtime.Safe(Input.Mouse);
   jQuery=Runtime.Safe(Global.jQuery);
   DataSet=Runtime.Safe(ObjectConstancy.DataSet);
   Arrays=Runtime.Safe(WebSharper.Arrays);
@@ -20262,10 +20513,11 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   Collections=Runtime.Safe(WebSharper.Collections);
   MapModule=Runtime.Safe(Collections.MapModule);
   FSharpMap=Runtime.Safe(Collections.FSharpMap);
-  ListModel=Runtime.Safe(Next.ListModel);
+  ListModel1=Runtime.Safe(Next.ListModel1);
   Util=Runtime.Safe(TodoList.Util);
   TodoItem=Runtime.Safe(TodoList.TodoItem);
   Key=Runtime.Safe(Next.Key);
+  ListModel=Runtime.Safe(Next.ListModel);
   return Client=Runtime.Safe(Next.Client);
  });
  Runtime.OnLoad(function()
@@ -20293,8 +20545,10 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   ObjectConstancy.Sample();
   ObjectConstancy.InOutTransition();
   ObjectConstancy.Height();
-  MouseChase.Sample();
+  MouseInfo.Sample();
   MessageBoard.Sample();
+  KeyboardInfo.keys();
+  KeyboardInfo.Sample();
   InputTransform.Sample();
   EditablePersonList.peopleList();
   EditablePersonList.peopleBoxes();
