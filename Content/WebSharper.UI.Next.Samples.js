@@ -12004,7 +12004,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
 
 (function()
 {
- var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,IntrinsicFunctionProxy,Concurrency,Array,Seq,UI,Next,Abbrev,Fresh,Collections,HashSet,HashSet1,HashSet2,Arrays,JQueue,Unchecked,Slot,An,AppendList,Anims,window,Trans,Option,View1,Lazy,Array1,Attrs,DomUtility,Attr,AnimatedAttrNode,DynamicAttrNode,View,Docs,Doc,List,Var,T,Mailbox,Operators,NodeSet,DocElemNode,DomNodes,jQuery,document,Easing,Easings,Var1,FlowBuilder,Flow,Html,Elements,Input,DoubleInterpolation,Key,ListModel1,ListModels,Model1,Strings,encodeURIComponent,decodeURIComponent,Route,Routing,Trie,Router,Router1,Dictionary,Snap,Async,Enumerator,ResizeArray,ResizeArrayProxy,MapModule,FSharpMap,ViewBuilder,Attributes,SvgAttributes;
+ var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,IntrinsicFunctionProxy,Concurrency,Array,Seq,UI,Next,Abbrev,Fresh,Collections,HashSet,HashSet1,HashSet2,Arrays,JQueue,Unchecked,Slot,An,AppendList,Anims,window,Trans1,Trans,Option,View1,Lazy,Array1,Attrs,DomUtility,Attr,AnimatedAttrNode,DynamicAttrNode,View,Docs,Doc,List,Var,T,Mailbox,Operators,NodeSet,DocElemNode,DomNodes,jQuery,document,Easing,Easings,Var1,FlowBuilder,Flow,Html,Elements,Input,DoubleInterpolation,Key,ListModel1,ListModels,Model1,Strings,encodeURIComponent,decodeURIComponent,Route,Routing,Router,Trie,Dictionary,Snap,Async,Enumerator,ResizeArray,ResizeArrayProxy,MapModule,FSharpMap,ViewBuilder,Attributes,SvgAttributes;
  Runtime.Define(Global,{
   IntelliFactory:{
    WebSharper:{
@@ -12273,16 +12273,6 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        {
         return Anims.Const(v);
        },
-       Delayed:function(inter,easing,dur,delay,x,y)
-       {
-        return{
-         Compute:function(t)
-         {
-          return t<=delay?x:inter.Interpolate(easing.TransformTime.call(null,(t-delay)/dur),x,y);
-         },
-         Duration:dur+delay
-        };
-       },
        Map:function(f,anim)
        {
         var f1;
@@ -12390,7 +12380,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         },matchValue[0].$==1?matchValue[1].$==1?a.dirty?An.Pack(An.Map(function(v)
         {
          return a.pushVisible(parent,v);
-        },Trans.AnimateChange(a.tr,matchValue[0].$0,matchValue[1].$0))):An.get_Empty():An.get_Empty():An.get_Empty());
+        },Trans1.AnimateChange(a.tr,matchValue[0].$0,matchValue[1].$0))):An.get_Empty():An.get_Empty():An.get_Empty());
        },
        GetEnterAnim:function(parent)
        {
@@ -12402,7 +12392,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         },matchValue[0].$==1?matchValue[1].$==1?a.dirty?An.Pack(An.Map(function(v)
         {
          return a.pushVisible(parent,v);
-        },Trans.AnimateChange(a.tr,matchValue[0].$0,matchValue[1].$0))):matchValue[0].$==0?matchValue[1].$==1?An.Pack(An.Map(function(v)
+        },Trans1.AnimateChange(a.tr,matchValue[0].$0,matchValue[1].$0))):matchValue[0].$==0?matchValue[1].$==1?An.Pack(An.Map(function(v)
         {
          return a.pushVisible(parent,v);
         },Trans.AnimateEnter(a.tr,matchValue[1].$0))):An.get_Empty():An.get_Empty():matchValue[0].$==0?matchValue[1].$==1?An.Pack(An.Map(function(v)
@@ -13855,21 +13845,6 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         });
         return Doc.EmbedView(_var.get_View());
        },
-       Map:function(f,x)
-       {
-        return{
-         Render:function(_var)
-         {
-          return function(cont)
-          {
-           return(x.Render.call(null,_var))(function(r)
-           {
-            return cont(f(r));
-           });
-          };
-         }
-        };
-       },
        Return:function(x)
        {
         return{
@@ -13897,6 +13872,21 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        }
       }),
       Flow1:Runtime.Class({},{
+       Map:function(f,x)
+       {
+        return{
+         Render:function(_var)
+         {
+          return function(cont)
+          {
+           return(x.Render.call(null,_var))(function(r)
+           {
+            return cont(f(r));
+           });
+          };
+         }
+        };
+       },
        get_Do:function()
        {
         return FlowBuilder.New();
@@ -16180,7 +16170,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
       ListModel1:Runtime.Class({
        Add:function(item)
        {
-        var v,m=this;
+        var v;
         v=this.Var.get_Value();
         if(!ListModels.Contains(this.Key,item,v))
          {
@@ -16189,16 +16179,8 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          }
         else
          {
-          v[Arrays.FindIndex(function(it)
-          {
-           return Unchecked.Equals(m.Key.call(null,it),m.Key.call(null,item));
-          },v)]=item;
-          return m.Var.set_Value(v);
+          return null;
          }
-       },
-       Iter:function(fn)
-       {
-        return Arrays.iter(fn,this.Var.get_Value());
        },
        Remove:function(item)
        {
@@ -16332,6 +16314,18 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        }
       }),
       Router:Runtime.Class({},{
+       Dir:function(prefix,sites)
+       {
+        return Router.Prefix(prefix,Router.Merge(sites));
+       },
+       Install:function(key,site)
+       {
+        return Routing.Install(key,site);
+       },
+       Merge:function(sites)
+       {
+        return Routing.MergeRouters(sites);
+       },
        Prefix:function(prefix,_arg1)
        {
         return{
@@ -16343,20 +16337,6 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        Route:function(r,init,render)
        {
         return Routing.DefineRoute(r,init,render);
-       }
-      }),
-      Router1:Runtime.Class({},{
-       Dir:function(prefix,sites)
-       {
-        return Router.Prefix(prefix,Router1.Merge(sites));
-       },
-       Install:function(key,site)
-       {
-        return Routing.Install(key,site);
-       },
-       Merge:function(sites)
-       {
-        return Routing.MergeRouters(sites);
        }
       }),
       Routing:{
@@ -16865,10 +16845,6 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        }
       },
       Trans:Runtime.Class({},{
-       AnimateChange:function(tr,x,y)
-       {
-        return(tr.TChange.call(null,x))(y);
-       },
        AnimateEnter:function(tr,x)
        {
         return tr.TEnter.call(null,x);
@@ -16951,6 +16927,12 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          },
          TFlags:0
         };
+       }
+      }),
+      Trans1:Runtime.Class({},{
+       AnimateChange:function(tr,x,y)
+       {
+        return(tr.TChange.call(null,x))(y);
        }
       }),
       Trie:{
@@ -17516,6 +17498,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   AppendList=Runtime.Safe(Next.AppendList);
   Anims=Runtime.Safe(Next.Anims);
   window=Runtime.Safe(Global.window);
+  Trans1=Runtime.Safe(Next.Trans1);
   Trans=Runtime.Safe(Next.Trans);
   Option=Runtime.Safe(WebSharper.Option);
   View1=Runtime.Safe(Next.View1);
@@ -17557,9 +17540,8 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   decodeURIComponent=Runtime.Safe(Global.decodeURIComponent);
   Route=Runtime.Safe(Next.Route);
   Routing=Runtime.Safe(Next.Routing);
-  Trie=Runtime.Safe(Next.Trie);
   Router=Runtime.Safe(Next.Router);
-  Router1=Runtime.Safe(Next.Router1);
+  Trie=Runtime.Safe(Next.Trie);
   Dictionary=Runtime.Safe(Collections.Dictionary);
   Snap=Runtime.Safe(Next.Snap);
   Async=Runtime.Safe(Abbrev.Async);
@@ -17856,248 +17838,2606 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
 
 (function()
 {
- var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,List,PrettyTodo,Client,UI,Next,Doc,Var,ListModel,Var1,View1,Html,Attr,Elements,T,ListModel1,Seq,View;
+ var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,UI,Next,Interpolation1,Easing,AnimatedBobsleighSite,An,Trans,Var,Doc,List,Html,Utilities,T,Var1,View1,Attr,View,Unchecked,Samples,AnimatedContactFlow,Flow1,Flow,BobsleighSite,Calculator,CheckBoxTest,Seq,Person,Site,SimpleTextBox,InputTransform,TodoList,PhoneExample,EditablePersonList,ContactFlow,MessageBoard,RoutedBobsleighSite,ObjectConstancy,MouseInfo,KeyboardInfo,Common,Fresh,String,Strings,IntrinsicFunctionProxy,Input,Keyboard,Auth,Concurrency,Server,Mouse,jQuery,DataSet,Arrays,OperatorIntrinsics,SvgElements,Math,Phone,Operators,Order,RouteMap,Builder,Router,SiteCommon,Elements,Option,Collections,MapModule,FSharpMap,ListModel1,Util,TodoItem,Key,ListModel,Client;
  Runtime.Define(Global,{
-  PrettyTodo:{
-   Client:{
-    FilterList:function(filter,xs)
-    {
-     return List.filter(function(x)
-     {
-      return filter.$==1?!Client.isDone(x):filter.$==2?Client.isDone(x):true;
-     },List.ofSeq(xs));
-    },
-    Main:Runtime.Field(function()
-    {
-     return Doc.RunById("main",Client.TodoApp());
-    }),
-    MarkAllDone:function(model)
-    {
-     return model.Iter(function(x)
-     {
-      return Var.Set(x.TodoState,{
-       $:1
-      });
-     });
-    },
-    RemoveCompleted:function(model)
-    {
-     return model.Iter(function(x)
-     {
-      return Client.isDone(x.TodoState.get_Value())?model.Remove(x):null;
-     });
-    },
-    RenderList:function(model,filter)
-    {
-     return Doc.ConvertBy(function(x)
-     {
-      return x.Id;
-     },function(item)
-     {
-      return Client.RenderTodo(model,filter,item);
-     },ListModel.View(model));
-    },
-    RenderTodo:function(model,filterView,item)
-    {
-     var updateVar;
-     updateVar=Var1.Create("");
-     return Doc.EmbedView(View1.Map2(function(st)
-     {
-      return function(filter)
-      {
-       var matchValue,arg20;
-       matchValue=[filter,st];
-       if(matchValue[0].$==1?!Client.isDone(matchValue[1]):matchValue[0].$==2?Client.isDone(matchValue[1]):true)
+  IntelliFactory:{
+   WebSharper:{
+    UI:{
+     Next:{
+      AnimatedBobsleighSite:{
+       Fade:Runtime.Field(function()
+       {
+        var _arg00_45_5,_arg10_45_5,arg20;
+        _arg00_45_5=Interpolation1.get_Double();
+        _arg10_45_5=Easing.get_CubicInOut();
+        arg20=AnimatedBobsleighSite.fadeTime();
+        return function(arg30)
         {
+         return function(arg40)
+         {
+          return An.Simple(_arg00_45_5,_arg10_45_5,arg20,arg30,arg40);
+         };
+        };
+       }),
+       FadeTransition:Runtime.Field(function()
+       {
+        return Trans.Exit(function()
+        {
+         return((AnimatedBobsleighSite.Fade())(1))(0);
+        },Trans.Enter(function()
+        {
+         return((AnimatedBobsleighSite.Fade())(0))(1);
+        },Trans.Create(AnimatedBobsleighSite.Fade())));
+       }),
+       GlobalGo:function(_var,act)
+       {
+        return Var.Set(_var,act);
+       },
+       Governance:function()
+       {
+        return Doc.Concat(List.ofArray([Html.Div0(List.ofArray([Html.H10(List.ofArray([Utilities.txt("Governance")])),Html.P0(List.ofArray([Utilities.txt("The sport is overseen by the "),Utilities.href("International Bobsleigh and Skeleton Federation","http://www.fibt.com/"),Utilities.txt(", an organisation founded in 1923. The organisation governs all international competitions, acting as a body to regulate athletes' conduct, as well as providing funding for training and education.")]))]))]));
+       },
+       History:function()
+       {
+        return Doc.Concat(List.ofArray([Html.Div0(List.ofArray([Html.H10(List.ofArray([Utilities.txt("History")])),Html.P0(List.ofArray([Utilities.txt("According to "),Utilities.href("Wikipedia","http://en.wikipedia.org/wiki/Bobsleigh"),Utilities.txt(", the beginnings of bobsleigh came about due to a hotelier becoming increasingly frustrated about having entire seasons where he could not rent out his properties. In response, he got a few people interested, and the Swiss town of St Moritz became the home of the first bobsleigh races.")])),Html.P0(List.ofArray([Utilities.txt("Bobsleigh races have been a regular event at the Winter Olympics since the very first competition in 1924.")]))]))]));
+       },
+       HomePage:function(ctx)
+       {
+        return Doc.Concat(List.ofArray([Html.Div0(List.ofArray([Html.H10(List.ofArray([Utilities.txt("Welcome!")])),Html.P0(List.ofArray([Utilities.txt("Welcome to the IntelliFactory Bobsleigh MiniSite!")])),Html.P0(List.ofArray([Utilities.txt("Here you can find out about the "),Utilities.link("history",Runtime.New(T,{
+         $:0
+        }),function()
+        {
+         return ctx.Go.call(null,{
+          $:1
+         });
+        }),Utilities.txt(" of bobsleighs, the "),Utilities.link("International Bobsleigh and Skeleton Federation",Runtime.New(T,{
+         $:0
+        }),function()
+        {
+         return ctx.Go.call(null,{
+          $:2
+         });
+        }),Utilities.txt(", which serve as the governing body for the sport, and finally the world-famous "),Utilities.link("IntelliFactory Bobsleigh Team.",Runtime.New(T,{
+         $:0
+        }),function()
+        {
+         return ctx.Go.call(null,{
+          $:3
+         });
+        })]))]))]));
+       },
+       Main:function()
+       {
+        var m,ctx;
+        m=Var1.Create({
+         $:0
+        });
+        ctx={
+         Go:function(arg10)
+         {
+          return Var.Set(m,arg10);
+         }
+        };
+        return Doc.EmbedView(View1.Map(function(pg)
+        {
+         return AnimatedBobsleighSite.MakePage(m,pg.$==1?AnimatedBobsleighSite.History(ctx):pg.$==2?AnimatedBobsleighSite.Governance(ctx):pg.$==3?AnimatedBobsleighSite.Team(ctx):AnimatedBobsleighSite.HomePage(ctx));
+        },View1.FromVar(m)));
+       },
+       MakePage:function(_var,pg)
+       {
+        var arg30;
+        arg30=function(value)
+        {
+         return Global.String(value);
+        };
+        return Doc.Concat(List.ofArray([AnimatedBobsleighSite.NavBar(_var),Html.Div(List.ofArray([Attr.AnimatedStyle("opacity",AnimatedBobsleighSite.FadeTransition(),View.Const(1),arg30)]),List.ofArray([pg]))]));
+       },
+       NavBar:function(_var)
+       {
+        var x;
+        x=View1.FromVar(_var);
+        return Doc.EmbedView(View1.Map(function(active)
+        {
+         var renderLink;
+         renderLink=function(action)
+         {
+          return Html.LI(List.ofArray([Unchecked.Equals(action,active)?Utilities.cls("active"):Attr.get_Empty()]),List.ofArray([Utilities.link(AnimatedBobsleighSite.showAct(action),Runtime.New(T,{
+           $:0
+          }),function()
+          {
+           return AnimatedBobsleighSite.GlobalGo(_var,action);
+          })]));
+         };
+         return Html.Nav(List.ofArray([Utilities.cls("navbar"),Utilities.cls("navbar-default"),Attr.Create("role","navigation")]),List.ofArray([Html.UL(List.ofArray([Utilities.cls("nav"),Utilities.cls("navbar-nav")]),List.ofArray([Doc.Concat(List.map(renderLink,AnimatedBobsleighSite.pages()))]))]));
+        },x));
+       },
+       Sample:Runtime.Field(function()
+       {
+        return Samples.Build().Id("AnimatedBobsleighSite").FileName("AnimatedBobsleighSite.fs").Keywords(List.ofArray(["text"])).Render(function()
+        {
+         return AnimatedBobsleighSite.Main();
+        }).RenderDescription(function()
+        {
+         return AnimatedBobsleighSite.description();
+        }).Create();
+       }),
+       Team:function()
+       {
+        var teamMembers;
+        teamMembers=List.ofArray([["Adam","granicz"],["András","AndrasJanko"],["Anton","t0yv0"],["István","inchester23"],["Loic","tarmil_"],["Sándor","sandorrakonczai"],["Simon","Simon_JF"]]);
+        return Doc.Concat(List.ofArray([Html.Div0(List.ofArray([Html.H10(List.ofArray([Utilities.txt("The IntelliFactory Bobsleigh Team")])),Html.P0(List.ofArray([Utilities.txt("The world-famous IntelliFactory Bobsleigh Team was founded in 2004, and currently consists of:")])),Html.UL0(List.ofArray([Doc.Concat(List.map(Runtime.Tupled(function(tupledArg)
+        {
+         return Html.LI0(List.ofArray([Utilities.href(tupledArg[0],"http://www.twitter.com/"+tupledArg[1])]));
+        }),teamMembers))]))]))]));
+       },
+       description:function()
+       {
+        return Html.Div0(List.ofArray([Utilities.txt("A small website about bobsleighs, demonstrating how UI.Next may be used to structure single-page applications.")]));
+       },
+       fadeTime:Runtime.Field(function()
+       {
+        return 300;
+       }),
+       pages:Runtime.Field(function()
+       {
+        return List.ofArray([{
+         $:0
+        },{
+         $:1
+        },{
+         $:2
+        },{
+         $:3
+        }]);
+       }),
+       showAct:function(_arg1)
+       {
+        return _arg1.$==1?"History":_arg1.$==2?"Governance":_arg1.$==3?"The IntelliFactory Bobsleigh Team":"Home";
+       }
+      },
+      AnimatedContactFlow:{
+       AnimateFlow:function(pg)
+       {
+        var arg30,arg301;
+        arg30=function(value)
+        {
+         return Global.String(value);
+        };
+        arg301=function(x)
+        {
+         return Global.String(x)+"px";
+        };
+        return Html.Div(List.ofArray([Attr.Style("position","relative"),Attr.AnimatedStyle("opacity",AnimatedContactFlow.FadeTransition(),View.Const(1),arg30),Attr.AnimatedStyle("left",AnimatedContactFlow.SwipeTransition(),View.Const(0),arg301)]),List.ofArray([pg]));
+       },
+       Description:function()
+       {
+        return Html.Div0(List.ofArray([Doc.TextNode("A WS.UI.Next flowlet implementation.")]));
+       },
+       ExampleFlow:function()
+       {
+        var _builder_;
+        _builder_=Flow1.get_Do();
+        return Flow.Embed(_builder_.Bind(AnimatedContactFlow.personFlowlet(),function(_arg1)
+        {
+         return _builder_.Bind(AnimatedContactFlow.contactTypeFlowlet(),function(_arg2)
+         {
+          return _builder_.Bind(AnimatedContactFlow.contactFlowlet(_arg2),function(_arg3)
+          {
+           return _builder_.ReturnFrom(Flow.Static(AnimatedContactFlow.finalPage(_arg1,_arg3)));
+          });
+         });
+        }));
+       },
+       Fade:Runtime.Field(function()
+       {
+        var _arg00_58_10,_arg10_58_10,arg20;
+        _arg00_58_10=Interpolation1.get_Double();
+        _arg10_58_10=Easing.get_CubicInOut();
+        arg20=AnimatedContactFlow.fadeTime();
+        return function(arg30)
+        {
+         return function(arg40)
+         {
+          return An.Simple(_arg00_58_10,_arg10_58_10,arg20,arg30,arg40);
+         };
+        };
+       }),
+       FadeTransition:Runtime.Field(function()
+       {
+        return Trans.Exit(function()
+        {
+         return((AnimatedContactFlow.Fade())(1))(0);
+        },Trans.Enter(function()
+        {
+         return((AnimatedContactFlow.Fade())(0))(1);
+        },Trans.Create(AnimatedContactFlow.Fade())));
+       }),
+       Sample:Runtime.Field(function()
+       {
+        return Samples.Build().Id("AnimatedContactFlow").FileName("AnimatedContactFlow.fs").Keywords(List.ofArray(["flowlet"])).Render(function()
+        {
+         return AnimatedContactFlow.ExampleFlow();
+        }).RenderDescription(function()
+        {
+         return AnimatedContactFlow.Description();
+        }).Create();
+       }),
+       Swipe:Runtime.Field(function()
+       {
+        var _arg00_73_8,_arg10_73_8,arg20;
+        _arg00_73_8=Interpolation1.get_Double();
+        _arg10_73_8=Easing.get_CubicInOut();
+        arg20=AnimatedContactFlow.swipeTime();
+        return function(arg30)
+        {
+         return function(arg40)
+         {
+          return An.Simple(_arg00_73_8,_arg10_73_8,arg20,arg30,arg40);
+         };
+        };
+       }),
+       SwipeTransition:Runtime.Field(function()
+       {
+        return Trans.Exit(function()
+        {
+         return((AnimatedContactFlow.Swipe())(0))(400);
+        },Trans.Create(AnimatedContactFlow.Swipe()));
+       }),
+       contactFlowlet:function(contactTy)
+       {
+        var patternInput,label,constr;
+        patternInput=contactTy.$==1?["Phone Number",function(arg0)
+        {
+         return{
+          $:1,
+          $0:arg0
+         };
+        }]:["E-Mail Address",function(arg0)
+        {
+         return{
+          $:0,
+          $0:arg0
+         };
+        }];
+        label=patternInput[0];
+        constr=patternInput[1];
+        return Flow.Define(function(cont)
+        {
+         var rvContact,arg20;
+         rvContact=Var1.Create("");
          arg20=function()
          {
-          return model.Remove(item);
+          return cont(constr(Var1.Get(rvContact)));
          };
-         return Html.LI(List.ofArray([st.$==2?Attr.Class("editing"):st.$==1?Attr.Class("completed"):st.$==3?Attr.Concat(List.ofArray([Attr.Class("editing"),Attr.Class("completed")])):Attr.get_Empty()]),List.ofArray([Html.Div(List.ofArray([Attr.Class("view")]),List.ofArray([Elements.Input(List.ofArray([Attr.Class("toggle"),Client.op_EqualsEqualsGreater("type","checkbox"),Client.isDone(st)?Attr.Create("checked",""):Attr.get_Empty(),Attr.Handler("click",function()
+         return AnimatedContactFlow.AnimateFlow(Html.Form(List.ofArray([Utilities.cls("form-horizontal"),Utilities.op_EqualsEqualsGreater("role","form")]),List.ofArray([AnimatedContactFlow.inputRow(rvContact,"contact",label),Html.Div(List.ofArray([Utilities.cls("form-group")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("col-sm-offset-2"),Utilities.cls("col-sm-10")]),List.ofArray([Doc.Button("Finish",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-default")]),arg20)]))]))])));
+        });
+       },
+       contactTypeFlowlet:Runtime.Field(function()
+       {
+        return Flow.Define(function(cont)
+        {
+         var arg20,arg201;
+         arg20=function()
          {
-          return Var.Set(item.TodoState,st.$==2?{
-           $:1
-          }:st.$==1?{
+          return cont({
            $:0
-          }:st.$==3?{
-           $:0
-          }:{
+          });
+         };
+         arg201=function()
+         {
+          return cont({
            $:1
           });
-         })]),Runtime.New(T,{
-          $:0
-         })),Elements.Label(List.ofArray([Attr.Handler("dblclick",function()
+         };
+         return AnimatedContactFlow.AnimateFlow(Html.Form(List.ofArray([Utilities.cls("form-horizontal"),Utilities.op_EqualsEqualsGreater("role","form")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("form-group")]),List.ofArray([Html.Div0(List.ofArray([Doc.Button("E-Mail Address",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-default")]),arg20)])),Html.Div0(List.ofArray([Doc.Button("Phone Number",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-default")]),arg201)]))]))])));
+        });
+       }),
+       fadeTime:Runtime.Field(function()
+       {
+        return 300;
+       }),
+       finalPage:function(person,details)
+       {
+        var detailsStr;
+        detailsStr=details.$==1?"the phone number "+details.$0:"the e-mail address "+details.$0;
+        return AnimatedContactFlow.AnimateFlow(Html.Div0(List.ofArray([Doc.TextNode("You said your name was "+person.Name+", your address was "+person.Address+", "),Doc.TextNode(" and you provided "+detailsStr+".")])));
+       },
+       inputRow:function(rv,id,lblText)
+       {
+        return Html.Div(List.ofArray([Utilities.cls("form-group")]),List.ofArray([Html.Label(List.ofArray([Utilities.op_EqualsEqualsGreater("for",id),Utilities.cls("col-sm-2"),Utilities.cls("control-label")]),List.ofArray([Doc.TextNode(lblText)])),Html.Div(List.ofArray([Utilities.cls("col-sm-10")]),List.ofArray([Doc.Input(List.ofArray([Utilities.op_EqualsEqualsGreater("type","text"),Utilities.cls("form-control"),Utilities.op_EqualsEqualsGreater("id",id),Utilities.op_EqualsEqualsGreater("placeholder",lblText)]),rv)]))]));
+       },
+       personFlowlet:Runtime.Field(function()
+       {
+        return Flow.Define(function(cont)
+        {
+         var rvName,rvAddress,arg20;
+         rvName=Var1.Create("");
+         rvAddress=Var1.Create("");
+         arg20=function()
          {
-          return Var.Set(item.TodoState,Client.isDone(st)?{
-           $:3
-          }:{
+          return cont({
+           Name:Var1.Get(rvName),
+           Address:Var1.Get(rvAddress)
+          });
+         };
+         return AnimatedContactFlow.AnimateFlow(Html.Form(List.ofArray([Utilities.cls("form-horizontal"),Utilities.op_EqualsEqualsGreater("role","form")]),List.ofArray([AnimatedContactFlow.inputRow(rvName,"lblName","Name"),AnimatedContactFlow.inputRow(rvAddress,"lblAddr","Address"),Html.Div(List.ofArray([Utilities.cls("form-group")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("col-sm-offset-2"),Utilities.cls("col-sm-10")]),List.ofArray([Doc.Button("Next",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-default")]),arg20)]))]))])));
+        });
+       }),
+       swipeTime:Runtime.Field(function()
+       {
+        return 300;
+       })
+      },
+      BobsleighSite:{
+       GlobalGo:function(_var,act)
+       {
+        return Var.Set(_var,act);
+       },
+       Governance:function()
+       {
+        return Doc.Concat(List.ofArray([Html.Div0(List.ofArray([Html.H10(List.ofArray([Utilities.txt("Governance")])),Html.P0(List.ofArray([Utilities.txt("The sport is overseen by the "),Utilities.href("International Bobsleigh and Skeleton Federation","http://www.fibt.com/"),Utilities.txt(", an organisation founded in 1923. The organisation governs all international competitions, acting as a body to regulate athletes' conduct, as well as providing funding for training and education.")]))]))]));
+       },
+       History:function()
+       {
+        return Doc.Concat(List.ofArray([Html.Div0(List.ofArray([Html.H10(List.ofArray([Utilities.txt("History")])),Html.P0(List.ofArray([Utilities.txt("According to "),Utilities.href("Wikipedia","http://en.wikipedia.org/wiki/Bobsleigh"),Utilities.txt(", the beginnings of bobsleigh came about due to a hotelier becoming increasingly frustrated about having entire seasons where he could not rent out his properties. In response, he got a few people interested, and the Swiss town of St Moritz became the home of the first bobsleigh races.")])),Html.P0(List.ofArray([Utilities.txt("Bobsleigh races have been a regular event at the Winter Olympics since the very first competition in 1924.")]))]))]));
+       },
+       HomePage:function(ctx)
+       {
+        return Doc.Concat(List.ofArray([Html.Div0(List.ofArray([Html.H10(List.ofArray([Utilities.txt("Welcome!")])),Html.P0(List.ofArray([Utilities.txt("Welcome to the IntelliFactory Bobsleigh MiniSite!")])),Html.P0(List.ofArray([Utilities.txt("Here you can find out about the "),Utilities.link("history",Runtime.New(T,{
+         $:0
+        }),function()
+        {
+         return ctx.Go.call(null,{
+          $:1
+         });
+        }),Utilities.txt(" of bobsleighs, the "),Utilities.link("International Bobsleigh and Skeleton Federation",Runtime.New(T,{
+         $:0
+        }),function()
+        {
+         return ctx.Go.call(null,{
+          $:2
+         });
+        }),Utilities.txt(", which serve as the governing body for the sport, and finally the world-famous "),Utilities.link("IntelliFactory Bobsleigh Team.",Runtime.New(T,{
+         $:0
+        }),function()
+        {
+         return ctx.Go.call(null,{
+          $:3
+         });
+        })]))]))]));
+       },
+       Main:function()
+       {
+        var m,arg00,withNavbar,ctx;
+        m=Var1.Create({
+         $:0
+        });
+        arg00=BobsleighSite.NavBar(m);
+        withNavbar=function(arg10)
+        {
+         return Doc.Append(arg00,arg10);
+        };
+        ctx={
+         Go:function(arg10)
+         {
+          return Var.Set(m,arg10);
+         }
+        };
+        return Doc.EmbedView(View1.Map(function(pg)
+        {
+         return pg.$==1?withNavbar(BobsleighSite.History(ctx)):pg.$==2?withNavbar(BobsleighSite.Governance(ctx)):pg.$==3?withNavbar(BobsleighSite.Team(ctx)):withNavbar(BobsleighSite.HomePage(ctx));
+        },View1.FromVar(m)));
+       },
+       NavBar:function(_var)
+       {
+        var x;
+        x=View1.FromVar(_var);
+        return Doc.EmbedView(View1.Map(function(active)
+        {
+         var renderLink;
+         renderLink=function(action)
+         {
+          return Html.LI(List.ofArray([Unchecked.Equals(action,active)?Utilities.cls("active"):Attr.get_Empty()]),List.ofArray([Utilities.link(BobsleighSite.showAct(action),Runtime.New(T,{
+           $:0
+          }),function()
+          {
+           return BobsleighSite.GlobalGo(_var,action);
+          })]));
+         };
+         return Html.Nav(List.ofArray([Utilities.cls("navbar"),Utilities.cls("navbar-default"),Attr.Create("role","navigation")]),List.ofArray([Html.UL(List.ofArray([Utilities.cls("nav"),Utilities.cls("navbar-nav")]),List.ofArray([Doc.Concat(List.map(renderLink,BobsleighSite.pages()))]))]));
+        },x));
+       },
+       Sample:Runtime.Field(function()
+       {
+        return Samples.Build().Id("BobsleighMiniSite").FileName("BobsleighSite.fs").Keywords(List.ofArray(["text"])).Render(function()
+        {
+         return BobsleighSite.Main();
+        }).RenderDescription(function()
+        {
+         return BobsleighSite.description();
+        }).Create();
+       }),
+       Team:function()
+       {
+        var teamMembers;
+        teamMembers=List.ofArray([["Adam","granicz"],["András","AndrasJanko"],["Anton","t0yv0"],["István","inchester23"],["Loic","tarmil_"],["Sándor","sandorrakonczai"],["Simon","Simon_JF"]]);
+        return Doc.Concat(List.ofArray([Html.Div0(List.ofArray([Html.H10(List.ofArray([Utilities.txt("The IntelliFactory Bobsleigh Team")])),Html.P0(List.ofArray([Utilities.txt("The world-famous IntelliFactory Bobsleigh Team was founded in 2004, and currently consists of:")])),Html.UL0(List.ofArray([Doc.Concat(List.map(Runtime.Tupled(function(tupledArg)
+        {
+         return Html.LI0(List.ofArray([Utilities.href(tupledArg[0],"http://www.twitter.com/"+tupledArg[1])]));
+        }),teamMembers))]))]))]));
+       },
+       description:function()
+       {
+        return Html.Div0(List.ofArray([Utilities.txt("A small website about bobsleighs, demonstrating how UI.Next may be used to structure single-page applications.")]));
+       },
+       pages:Runtime.Field(function()
+       {
+        return List.ofArray([{
+         $:0
+        },{
+         $:1
+        },{
+         $:2
+        },{
+         $:3
+        }]);
+       }),
+       showAct:function(_arg1)
+       {
+        return _arg1.$==1?"History":_arg1.$==2?"Governance":_arg1.$==3?"The IntelliFactory Bobsleigh Team":"Home";
+       }
+      },
+      Calculator:{
+       Description:function()
+       {
+        return Html.Div0(List.ofArray([Doc.TextNode("A calculator application")]));
+       },
+       Main:function()
+       {
+        return Calculator.calcView(Var1.Create(Calculator.initCalc()));
+       },
+       Sample:Runtime.Field(function()
+       {
+        return Samples.Build().Id("Calculator").FileName("Calculator.fs").Keywords(List.ofArray(["calculator"])).Render(function()
+        {
+         return Calculator.Main();
+        }).RenderDescription(function()
+        {
+         return Calculator.Description();
+        }).Create();
+       }),
+       cBtn:function(rvCalc)
+       {
+        var arg20;
+        arg20=function()
+        {
+         return Var.Set(rvCalc,Calculator.initCalc());
+        };
+        return Doc.Button("C",Runtime.New(T,{
+         $:0
+        }),arg20);
+       },
+       calcBtn:function(i,rvCalc)
+       {
+        var arg20;
+        arg20=function()
+        {
+         return Calculator.pushInt(i,rvCalc);
+        };
+        return Doc.Button(Global.String(i),Runtime.New(T,{
+         $:0
+        }),arg20);
+       },
+       calcView:function(rvCalc)
+       {
+        var rviCalc,btn,obtn,cbtn,eqbtn;
+        rviCalc=View1.FromVar(rvCalc);
+        btn=function(i)
+        {
+         return Calculator.calcBtn(i,rvCalc);
+        };
+        obtn=function(o)
+        {
+         return Calculator.opBtn(o,rvCalc);
+        };
+        cbtn=Calculator.cBtn(rvCalc);
+        eqbtn=Calculator.eqBtn(rvCalc);
+        return Html.Div0(List.ofArray([Doc.TextView(Calculator.displayCalc(rvCalc)),Html.Div0(List.ofArray([btn(1),btn(2),btn(3),obtn({
+         $:0
+        })])),Html.Div0(List.ofArray([btn(4),btn(5),btn(6),obtn({
+         $:1
+        })])),Html.Div0(List.ofArray([btn(7),btn(8),btn(9),obtn({
+         $:2
+        })])),Html.Div0(List.ofArray([btn(0),cbtn,eqbtn,obtn({
+         $:3
+        })]))]));
+       },
+       calculate:function(rvCalc)
+       {
+        return Var.Update(rvCalc,function(c)
+        {
+         return{
+          Memory:0,
+          Operand:((Calculator.opFn(c.Operation))(c.Memory))(c.Operand),
+          Operation:{
+           $:0
+          }
+         };
+        });
+       },
+       displayCalc:function(rvCalc)
+       {
+        return View1.Map(function(c)
+        {
+         return Global.String(c.Operand);
+        },View1.FromVar(rvCalc));
+       },
+       eqBtn:function(rvCalc)
+       {
+        var arg20;
+        arg20=function()
+        {
+         return Calculator.calculate(rvCalc);
+        };
+        return Doc.Button("=",Runtime.New(T,{
+         $:0
+        }),arg20);
+       },
+       initCalc:Runtime.Field(function()
+       {
+        return{
+         Memory:0,
+         Operand:0,
+         Operation:{
+          $:0
+         }
+        };
+       }),
+       opBtn:function(o,rvCalc)
+       {
+        var arg20;
+        arg20=function()
+        {
+         return Calculator.shiftToMem(o,rvCalc);
+        };
+        return Doc.Button(Calculator.showOp(o),Runtime.New(T,{
+         $:0
+        }),arg20);
+       },
+       opFn:function(op)
+       {
+        return op.$==1?function(x)
+        {
+         return function(y)
+         {
+          return x-y;
+         };
+        }:op.$==2?function(x)
+        {
+         return function(y)
+         {
+          return x*y;
+         };
+        }:op.$==3?function(x)
+        {
+         return function(y)
+         {
+          return x/y>>0;
+         };
+        }:function(x)
+        {
+         return function(y)
+         {
+          return x+y;
+         };
+        };
+       },
+       pushInt:function(x,rvCalc)
+       {
+        return Var.Update(rvCalc,function(c)
+        {
+         return{
+          Memory:c.Memory,
+          Operand:c.Operand*10+x,
+          Operation:c.Operation
+         };
+        });
+       },
+       shiftToMem:function(op,rvCalc)
+       {
+        return Var.Update(rvCalc,function(c)
+        {
+         return{
+          Memory:c.Operand,
+          Operand:0,
+          Operation:op
+         };
+        });
+       },
+       showOp:function(op)
+       {
+        return op.$==1?"-":op.$==2?"*":op.$==3?"/":"+";
+       }
+      },
+      CheckBoxTest:{
+       Description:function()
+       {
+        return Html.Div0(List.ofArray([Doc.TextNode("An application which shows the selected values.")]));
+       },
+       Main:function()
+       {
+        var selPeople;
+        selPeople=Var1.Create(Runtime.New(T,{
+         $:0
+        }));
+        return Doc.Concat(List.ofArray([Doc.CheckBox(function(p)
+        {
+         return p.Name;
+        },CheckBoxTest.People(),selPeople),Doc.TextView(View1.Map(function(xs)
+        {
+         return Seq.fold(function(acc)
+         {
+          return function(p)
+          {
+           return acc+p.Name+", ";
+          };
+         },"",xs);
+        },View1.FromVar(selPeople)))]));
+       },
+       People:Runtime.Field(function()
+       {
+        return List.ofArray([Person.Create("Simon",22),Person.Create("Peter",18),Person.Create("Clare",50),Person.Create("Andy",51)]);
+       }),
+       Person:Runtime.Class({},{
+        Create:function(n,a)
+        {
+         return Runtime.New(Person,{
+          Name:n,
+          Age:a
+         });
+        }
+       }),
+       Sample:Runtime.Field(function()
+       {
+        return Samples.Build().Id("CheckBoxesTest").FileName("CheckBoxTest.fs").Keywords(List.ofArray(["todo"])).Render(function()
+        {
+         return CheckBoxTest.Main();
+        }).RenderDescription(function()
+        {
+         return CheckBoxTest.Description();
+        }).Create();
+       })
+      },
+      Client:{
+       Main:Runtime.Field(function()
+       {
+        return Site.Main(List.ofArray([SimpleTextBox.Sample(),InputTransform.Sample(),TodoList.Sample(),PhoneExample.Sample(),EditablePersonList.Sample(),CheckBoxTest.Sample(),Calculator.Sample(),ContactFlow.Sample(),AnimatedContactFlow.Sample(),MessageBoard.Sample(),BobsleighSite.Sample(),RoutedBobsleighSite.Sample(),AnimatedBobsleighSite.Sample(),ObjectConstancy.Sample(),MouseInfo.Sample(),KeyboardInfo.Sample()]));
+       })
+      },
+      Common:{
+       CreatePost:function(user,content)
+       {
+        return{
+         PostId:Fresh.Int(),
+         PostAuthorName:user.Name,
+         Content:content
+        };
+       },
+       CreateThread:function(author,title)
+       {
+        return{
+         ThreadId:Fresh.Int(),
+         Title:title,
+         ThreadAuthorName:author,
+         Posts:Var1.Create(Runtime.New(T,{
+          $:0
+         }))
+        };
+       },
+       Fresh:{
+        Int:function()
+        {
+         var _;
+         _=Fresh.i()+1;
+         Fresh.i=function()
+         {
+          return _;
+         };
+         return Fresh.i();
+        },
+        i:Runtime.Field(function()
+        {
+         return 0;
+        })
+       }
+      },
+      ContactFlow:{
+       Description:function()
+       {
+        return Html.Div0(List.ofArray([Doc.TextNode("A WS.UI.Next flowlet implementation.")]));
+       },
+       ExampleFlow:function()
+       {
+        var _builder_;
+        _builder_=Flow1.get_Do();
+        return Flow.Embed(_builder_.Bind(ContactFlow.personFlowlet(),function(_arg1)
+        {
+         return _builder_.Bind(ContactFlow.contactTypeFlowlet(),function(_arg2)
+         {
+          return _builder_.Bind(ContactFlow.contactFlowlet(_arg2),function(_arg3)
+          {
+           return _builder_.ReturnFrom(Flow.Static(ContactFlow.finalPage(_arg1,_arg3)));
+          });
+         });
+        }));
+       },
+       Sample:Runtime.Field(function()
+       {
+        return Samples.Build().Id("ContactFlow").FileName("ContactFlow.fs").Keywords(List.ofArray(["flowlet"])).Render(function()
+        {
+         return ContactFlow.ExampleFlow();
+        }).RenderDescription(function()
+        {
+         return ContactFlow.Description();
+        }).Create();
+       }),
+       contactFlowlet:function(contactTy)
+       {
+        var patternInput,label,constr;
+        patternInput=contactTy.$==1?["Phone Number",function(arg0)
+        {
+         return{
+          $:1,
+          $0:arg0
+         };
+        }]:["E-Mail Address",function(arg0)
+        {
+         return{
+          $:0,
+          $0:arg0
+         };
+        }];
+        label=patternInput[0];
+        constr=patternInput[1];
+        return Flow.Define(function(cont)
+        {
+         var rvContact,arg20;
+         rvContact=Var1.Create("");
+         arg20=function()
+         {
+          return cont(constr(Var1.Get(rvContact)));
+         };
+         return Html.Form(List.ofArray([Utilities.cls("form-horizontal"),Utilities.op_EqualsEqualsGreater("role","form")]),List.ofArray([ContactFlow.inputRow(rvContact,"contact",label),Html.Div(List.ofArray([Utilities.cls("form-group")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("col-sm-offset-2"),Utilities.cls("col-sm-10")]),List.ofArray([Doc.Button("Finish",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-default")]),arg20)]))]))]));
+        });
+       },
+       contactTypeFlowlet:Runtime.Field(function()
+       {
+        return Flow.Define(function(cont)
+        {
+         var arg20,arg201;
+         arg20=function()
+         {
+          return cont({
+           $:0
+          });
+         };
+         arg201=function()
+         {
+          return cont({
+           $:1
+          });
+         };
+         return Html.Form(List.ofArray([Utilities.cls("form-horizontal"),Utilities.op_EqualsEqualsGreater("role","form")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("form-group")]),List.ofArray([Html.Div0(List.ofArray([Doc.Button("E-Mail Address",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-default")]),arg20)])),Html.Div0(List.ofArray([Doc.Button("Phone Number",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-default")]),arg201)]))]))]));
+        });
+       }),
+       finalPage:function(person,details)
+       {
+        var detailsStr;
+        detailsStr=details.$==1?"the phone number "+details.$0:"the e-mail address "+details.$0;
+        return Html.Div0(List.ofArray([Doc.TextNode("You said your name was "+person.Name+", your address was "+person.Address+", "),Doc.TextNode(" and you provided "+detailsStr+".")]));
+       },
+       inputRow:function(rv,id,lblText)
+       {
+        return Html.Div(List.ofArray([Utilities.cls("form-group")]),List.ofArray([Html.Label(List.ofArray([Utilities.op_EqualsEqualsGreater("for",id),Utilities.cls("col-sm-2"),Utilities.cls("control-label")]),List.ofArray([Doc.TextNode(lblText)])),Html.Div(List.ofArray([Utilities.cls("col-sm-10")]),List.ofArray([Doc.Input(List.ofArray([Utilities.op_EqualsEqualsGreater("type","text"),Utilities.cls("form-control"),Utilities.op_EqualsEqualsGreater("id",id),Utilities.op_EqualsEqualsGreater("placeholder",lblText)]),rv)]))]));
+       },
+       personFlowlet:Runtime.Field(function()
+       {
+        return Flow.Define(function(cont)
+        {
+         var rvName,rvAddress,arg20;
+         rvName=Var1.Create("");
+         rvAddress=Var1.Create("");
+         arg20=function()
+         {
+          return cont({
+           Name:Var1.Get(rvName),
+           Address:Var1.Get(rvAddress)
+          });
+         };
+         return Html.Form(List.ofArray([Utilities.cls("form-horizontal"),Utilities.op_EqualsEqualsGreater("role","form")]),List.ofArray([ContactFlow.inputRow(rvName,"lblName","Name"),ContactFlow.inputRow(rvAddress,"lblAddr","Address"),Html.Div(List.ofArray([Utilities.cls("form-group")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("col-sm-offset-2"),Utilities.cls("col-sm-10")]),List.ofArray([Doc.Button("Next",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-default")]),arg20)]))]))]));
+        });
+       })
+      },
+      EditablePersonList:{
+       Description:function()
+       {
+        return Html.Div0(List.ofArray([Utilities.txt("An example inspired by a "),Utilities.href("SAP OpenUI sample","http://jsbin.com/openui5-HTML-templates/1/edit"),Utilities.txt(".")]));
+       },
+       Main:function()
+       {
+        return Html.Div0(List.ofArray([Html.Div0(List.ofArray([Html.H10(List.ofArray([Utilities.txt("Member List")])),EditablePersonList.memberList()])),Html.Div0(List.ofArray([Html.H10(List.ofArray([Utilities.txt("Change Member Details")])),EditablePersonList.peopleBoxes()]))]));
+       },
+       Sample:Runtime.Field(function()
+       {
+        return Samples.Build().Id("EditablePersonList").FileName("EditablePersonList.fs").Keywords(List.ofArray(["text"])).Render(function()
+        {
+         return EditablePersonList.Main();
+        }).RenderDescription(function()
+        {
+         return EditablePersonList.Description();
+        }).Create();
+       }),
+       createPerson:function(first,last)
+       {
+        return{
+         FirstName:Var1.Create(first),
+         LastName:Var1.Create(last)
+        };
+       },
+       memberList:Runtime.Field(function()
+       {
+        return Html.Div0(List.ofArray([Html.UL0(List.ofArray([Doc.Concat(List.map(function(person)
+        {
+         return Html.LI0(List.ofArray([Doc.EmbedView(View1.Map2(function(f)
+         {
+          return function(l)
+          {
+           return Utilities.txt(f+" "+l);
+          };
+         },View1.FromVar(person.FirstName),View1.FromVar(person.LastName)))]));
+        },EditablePersonList.peopleList()))]))]));
+       }),
+       peopleBoxes:Runtime.Field(function()
+       {
+        return Html.Div0(List.ofArray([Html.UL0(List.ofArray([Doc.Concat(List.map(function(person)
+        {
+         var arg10,arg101;
+         arg10=person.FirstName;
+         arg101=person.LastName;
+         return Html.LI0(List.ofArray([Doc.Input(Runtime.New(T,{
+          $:0
+         }),arg10),Doc.Input(Runtime.New(T,{
+          $:0
+         }),arg101)]));
+        },EditablePersonList.peopleList()))]))]));
+       }),
+       peopleList:Runtime.Field(function()
+       {
+        return List.ofArray([EditablePersonList.createPerson("Alonzo","Church"),EditablePersonList.createPerson("Alan","Turing"),EditablePersonList.createPerson("Bertrand","Russell"),EditablePersonList.createPerson("Noam","Chomsky")]);
+       })
+      },
+      InputTransform:{
+       Description:function()
+       {
+        return Html.Div0(List.ofArray([Doc.TextNode("Transforming the data provided by a single data source.")]));
+       },
+       Main:function()
+       {
+        var rvText,inputField,view,viewCaps,viewReverse,viewWordCount,viewWordCountStr,viewWordOddEven,views,tableRow;
+        rvText=Var1.Create("");
+        inputField=Html.Div(List.ofArray([Utilities.cls("panel"),Utilities.cls("panel-default")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("panel-heading")]),List.ofArray([Html.H3(List.ofArray([Utilities.cls("panel-title")]),List.ofArray([Doc.TextNode("Input")]))])),Html.Div(List.ofArray([Utilities.cls("panel-body")]),List.ofArray([Html.Form(List.ofArray([Utilities.cls("form-horizontal"),Utilities.op_EqualsEqualsGreater("role","form")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("form-group")]),List.ofArray([Html.Label(List.ofArray([Utilities.cls("col-sm-2"),Utilities.cls("control-label"),Utilities.op_EqualsEqualsGreater("for","inputBox")]),List.ofArray([Doc.TextNode("Write something: ")])),Html.Div(List.ofArray([Utilities.cls("col-sm-10")]),List.ofArray([Doc.Input(List.ofArray([Utilities.op_EqualsEqualsGreater("class","form-control"),Utilities.op_EqualsEqualsGreater("id","inputBox")]),rvText)]))]))]))]))]));
+        view=View1.FromVar(rvText);
+        viewCaps=View1.Map(function(s)
+        {
+         return s.toUpperCase();
+        },view);
+        viewReverse=View1.Map(function(s)
+        {
+         return String.fromCharCode.apply(undefined,Strings.ToCharArray(s).slice().reverse());
+        },view);
+        viewWordCount=View1.Map(function(s)
+        {
+         return IntrinsicFunctionProxy.GetLength(Strings.SplitChars(s,[32],1));
+        },view);
+        viewWordCountStr=View1.Map(function(value)
+        {
+         return Global.String(value);
+        },viewWordCount);
+        viewWordOddEven=View1.Map(function(i)
+        {
+         return i%2===0?"Even":"Odd";
+        },viewWordCount);
+        views=List.ofArray([["Entered Text",view],["Capitalised",viewCaps],["Reversed",viewReverse],["Word Count",viewWordCountStr],["Is the word count odd or even?",viewWordOddEven]]);
+        tableRow=Runtime.Tupled(function(tupledArg)
+        {
+         var view1;
+         view1=tupledArg[1];
+         return Html.TR0(List.ofArray([Html.TD0(List.ofArray([Doc.TextNode(tupledArg[0])])),Html.TD0(List.ofArray([Doc.TextView(view1)]))]));
+        });
+        return Html.Div0(List.ofArray([inputField,Html.Div(List.ofArray([Utilities.cls("panel"),Utilities.cls("panel-default")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("panel-heading")]),List.ofArray([Html.H3(List.ofArray([Utilities.cls("panel-title")]),List.ofArray([Doc.TextNode("Output")]))])),Html.Div(List.ofArray([Utilities.cls("panel-body")]),List.ofArray([Html.Table(List.ofArray([Utilities.cls("table")]),List.ofArray([Html.TBody0(List.ofArray([Doc.Concat(List.map(tableRow,views))]))]))]))]))]));
+       },
+       Sample:Runtime.Field(function()
+       {
+        return Samples.Build().Id("InputTransform").FileName("InputTransform.fs").Keywords(List.ofArray(["text"])).Render(function()
+        {
+         return InputTransform.Main();
+        }).RenderDescription(function()
+        {
+         return InputTransform.Description();
+        }).Create();
+       })
+      },
+      KeyboardInfo:{
+       Description:function()
+       {
+        return Html.Div0(List.ofArray([Doc.TextNode("Information about the current keyboard state")]));
+       },
+       Main:function()
+       {
+        return Html.Div0(List.ofArray([Html.P0(List.ofArray([Doc.TextNode("Keys pressed (key codes): "),Doc.TextView(View1.Map(function(xs)
+        {
+         return KeyboardInfo.commaList(List.map(function(value)
+         {
+          return Global.String(value);
+         },xs));
+        },KeyboardInfo.keys()))])),Html.P0(List.ofArray([Doc.TextNode("Keys pressed: "),Doc.TextView(View1.Map(function(xs)
+        {
+         return KeyboardInfo.commaList(List.map(function(c)
+         {
+          return KeyboardInfo.ToChar(c);
+         },xs));
+        },KeyboardInfo.keys()))])),Html.P0(List.ofArray([Doc.TextNode("Last pressed key: "),Doc.TextView(View1.Map(function(value)
+        {
+         return Global.String(value);
+        },Keyboard.get_LastPressed()))])),Html.P0(List.ofArray([Doc.TextNode("Is 'A' pressed? "),Doc.TextView(View1.Map(function(x)
+        {
+         return x?"Yes":"No";
+        },Keyboard.IsPressed(KeyboardInfo.ToKey("A"))))]))]));
+       },
+       Sample:Runtime.Field(function()
+       {
+        return Samples.Build().Id("KeyboardInfo").FileName("KeyboardInfo.fs").Keywords(List.ofArray(["text"])).Render(function()
+        {
+         return KeyboardInfo.Main();
+        }).RenderDescription(function()
+        {
+         return KeyboardInfo.Description();
+        }).Create();
+       }),
+       ToChar:function($c)
+       {
+        var $0=this,$this=this;
+        return Global.String.fromCharCode($c);
+       },
+       ToKey:function($c)
+       {
+        var $0=this,$this=this;
+        return $c.charCodeAt(0);
+       },
+       commaList:function(xs)
+       {
+        var addCommas;
+        addCommas=function(_arg1)
+        {
+         var xs1;
+         if(_arg1.$==1)
+          {
+           if(_arg1.$1.$==0)
+            {
+             return Global.String(_arg1.$0);
+            }
+           else
+            {
+             xs1=_arg1.$1;
+             return Global.String(_arg1.$0)+", "+addCommas(xs1);
+            }
+          }
+         else
+          {
+           return"";
+          }
+        };
+        return"["+addCommas(xs)+"]";
+       },
+       keys:Runtime.Field(function()
+       {
+        return Keyboard.get_KeysPressed();
+       })
+      },
+      MessageBoard:{
+       Auth:{
+        Create:function()
+        {
+         var loggedIn,hidden,hide,show,x,loginForm,login,logout;
+         loggedIn=Var1.Create({
+          $:0
+         });
+         hidden=Var1.Create(true);
+         hide=function()
+         {
+          return hidden.set_Value(true);
+         };
+         show=function()
+         {
+          return hidden.set_Value(false);
+         };
+         x=hidden.get_View();
+         loginForm=Html.Div(List.ofArray([Attr.DynamicStyle("display",View1.Map(function(yes)
+         {
+          return yes?"none":"block";
+         },x))]),List.ofArray([Auth.LoginForm(function(user)
+         {
+          loggedIn.set_Value({
+           $:1,
+           $0:user
+          });
+          return hide(null);
+         })]));
+         login=function()
+         {
+          return show(null);
+         };
+         logout=function()
+         {
+          loggedIn.set_Value({
+           $:0
+          });
+          return hide(null);
+         };
+         return{
+          LoggedIn:loggedIn.get_View(),
+          LoginForm:loginForm,
+          StatusWidget:Auth.StatusWidget(login,logout,loggedIn.get_View()),
+          HideForm:hide,
+          ShowForm:show
+         };
+        },
+        LoginForm:function(onLogin)
+        {
+         var rvUser,rvPass,rvMsg,message,inputRow,arg101;
+         rvUser=Var1.Create("");
+         rvPass=Var1.Create("");
+         rvMsg=Var1.Create("");
+         message=Html.Div0(List.ofArray([Html.P(List.ofArray([Utilities.cls("bg-danger")]),List.ofArray([Doc.TextView(rvMsg.get_View())]))]));
+         inputRow=function(rv,id,lblText,isPass)
+         {
+          var control;
+          control=isPass?function(arg00)
+          {
+           return function(arg10)
+           {
+            return Doc.PasswordBox(arg00,arg10);
+           };
+          }:function(arg00)
+          {
+           return function(arg10)
+           {
+            return Doc.Input(arg00,arg10);
+           };
+          };
+          return Html.Div(List.ofArray([Utilities.cls("form-group")]),List.ofArray([Html.Label(List.ofArray([Utilities.op_EqualsEqualsGreater("for",id),Utilities.cls("col-sm-2"),Utilities.cls("control-label")]),List.ofArray([Doc.TextNode(lblText)])),Html.Div(List.ofArray([Utilities.cls("col-sm-2")]),List.ofArray([(control(List.ofArray([Utilities.cls("form-control"),Utilities.op_EqualsEqualsGreater("id",id),Utilities.op_EqualsEqualsGreater("placeholder",lblText)])))(rv)]))]));
+         };
+         arg101=List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-primary")]);
+         return Html.Div0(List.ofArray([Html.Div0(List.ofArray([Utilities.txt("Hint: TestUser/TestPass")])),message,Html.Form(List.ofArray([Utilities.cls("form-horizontal"),Utilities.op_EqualsEqualsGreater("role","form")]),List.ofArray([inputRow(rvUser,"user","Username",false),inputRow(rvPass,"pass","Password",true),Html.Div(List.ofArray([Utilities.cls("form-group")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("col-sm-offset-2"),Utilities.cls("col-sm-10")]),List.ofArray([Doc.Button("Log In",arg101,function()
+         {
+          return Concurrency.Start(Concurrency.Delay(function()
+          {
+           return Concurrency.Bind(Server.CheckLogin(rvUser.get_Value(),rvPass.get_Value()),function(arg102)
+           {
+            var user;
+            if(arg102.$==0)
+             {
+              Var.Set(rvMsg,"Invalid credentials.");
+              return Concurrency.Return(null);
+             }
+            else
+             {
+              user=arg102.$0;
+              Var.Set(rvUser,"");
+              Var.Set(rvPass,"");
+              onLogin(user);
+              return Concurrency.Return(null);
+             }
+           });
+          }));
+         })]))]))]))]));
+        },
+        StatusWidget:function(login,logout,view)
+        {
+         return Doc.EmbedView(View1.Map(function(_arg1)
+         {
+          return _arg1.$==0?Doc.Concat(List.ofArray([Html.LI0(List.ofArray([Utilities.link("You are not logged in.",Runtime.New(T,{
+           $:0
+          }),function()
+          {
+          })])),Html.LI0(List.ofArray([Utilities.link("Login",Runtime.New(T,{
+           $:0
+          }),login)]))])):Doc.Concat(List.ofArray([Html.LI0(List.ofArray([Utilities.link("Welcome, "+_arg1.$0.Name+"!",Runtime.New(T,{
+           $:0
+          }),function()
+          {
+          })])),Html.LI0(List.ofArray([Utilities.link("Logout",Runtime.New(T,{
+           $:0
+          }),logout)]))]));
+         },view));
+        }
+       },
+       Description:function()
+       {
+        return Html.Div0(List.ofArray([Doc.TextNode("A message board application built using MiniSitelets.")]));
+       },
+       Initialise:function()
+       {
+        var thread,post;
+        thread=Common.CreateThread("SimonJF","Hello, World! This is a topic.");
+        post=Common.CreatePost({
+         Name:"SimonJF",
+         Password:""
+        },"Hello, world! This is a post.");
+        return Concurrency.Start(Concurrency.Delay(function()
+        {
+         return Concurrency.Bind(Server.AddThread(thread),function()
+         {
+          return Concurrency.Bind(Server.AddPost(thread,post),function()
+          {
+           return Concurrency.Return(null);
+          });
+         });
+        }));
+       },
+       Main:function()
+       {
+        var actVar,auth,Go,st,navbar;
+        MessageBoard.Initialise();
+        actVar=Var1.Create({
+         $:2
+        });
+        auth=Auth.Create();
+        Go=function(arg10)
+        {
+         return Var.Set(actVar,arg10);
+        };
+        st={
+         Auth:auth,
+         Threads:Var1.Create(Runtime.New(T,{
+          $:0
+         })),
+         Go:Go
+        };
+        navbar=MessageBoard.NavBar(auth,actVar,st);
+        return Doc.EmbedView(View1.Map(function(act)
+        {
+         auth.HideForm.call(null,null);
+         return Doc.Concat(List.ofArray([navbar,auth.LoginForm,act.$==2?MessageBoard.ThreadListPage(st):act.$==1?MessageBoard.ShowThreadPage(st,act.$0):MessageBoard.NewThreadPage(st)]));
+        },View1.FromVar(actVar)));
+       },
+       NavBar:function(auth,_var,st)
+       {
+        var actions,renderLink;
+        actions=List.ofArray([{
+         $:2
+        },{
+         $:0
+        }]);
+        renderLink=function(action)
+        {
+         return Doc.EmbedView(View1.Map(function(active)
+         {
+          return Html.LI(List.ofArray([MessageBoard.ShowAction(action)===MessageBoard.ShowAction(active)?Utilities.cls("active"):Attr.get_Empty()]),List.ofArray([Utilities.link(MessageBoard.ShowAction(action),Runtime.New(T,{
+           $:0
+          }),function()
+          {
+           return st.Go.call(null,action);
+          })]));
+         },View1.FromVar(_var)));
+        };
+        return Html.Nav(List.ofArray([Utilities.cls("navbar"),Utilities.cls("navbar-default"),Attr.Create("role","navigation")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("container-fluid")]),List.ofArray([Html.UL(List.ofArray([Utilities.cls("nav"),Utilities.cls("navbar-nav")]),List.ofArray([Doc.Concat(List.map(renderLink,actions))])),Html.UL(List.ofArray([Utilities.cls("nav"),Utilities.cls("navbar-nav"),Utilities.cls("navbar-right")]),List.ofArray([auth.StatusWidget]))]))]));
+       },
+       NewThreadPage:function(st)
+       {
+        var x;
+        x=st.Auth.LoggedIn;
+        return Doc.EmbedView(View1.Map(function(_arg3)
+        {
+         var user,rvTitle,rvPost,add;
+         if(_arg3.$==0)
+          {
+           st.Auth.ShowForm.call(null,null);
+           return Doc.get_Empty();
+          }
+         else
+          {
+           user=_arg3.$0;
+           rvTitle=Var1.Create("");
+           rvPost=Var1.Create("");
+           add=function()
+           {
+            var newThread,post;
+            newThread=Common.CreateThread(user.Name,Var1.Get(rvTitle));
+            post=Common.CreatePost(user,Var1.Get(rvPost));
+            Concurrency.Start(Concurrency.Delay(function()
+            {
+             return Concurrency.Bind(Server.AddThread(newThread),function()
+             {
+              return Concurrency.Bind(Server.AddPost(newThread,post),function()
+              {
+               return Concurrency.Return(null);
+              });
+             });
+            }));
+            return st.Go.call(null,{
+             $:1,
+             $0:newThread
+            });
+           };
+           return Html.Div(List.ofArray([Utilities.cls("panel"),Utilities.cls("panel-default")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("panel-heading")]),List.ofArray([Html.H3(List.ofArray([Utilities.cls("panel-title")]),List.ofArray([Doc.TextNode("New Thread")]))])),Html.Div(List.ofArray([Utilities.cls("panel-body")]),List.ofArray([Html.Form(List.ofArray([Utilities.cls("form-horizontal"),Utilities.op_EqualsEqualsGreater("role","form")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("form-group")]),List.ofArray([Html.Label(List.ofArray([Utilities.op_EqualsEqualsGreater("for","threadTitle"),Utilities.cls("col-sm-2 control-label")]),List.ofArray([Doc.TextNode("Title")])),Html.Div(List.ofArray([Utilities.cls("col-sm-10")]),List.ofArray([Doc.Input(List.ofArray([Utilities.op_EqualsEqualsGreater("id","threadTitle"),Utilities.sty("width","100%"),Utilities.cls("form-control")]),rvTitle)]))])),Html.Div(List.ofArray([Utilities.cls("form-group")]),List.ofArray([Html.Label(List.ofArray([Utilities.op_EqualsEqualsGreater("for","postContent"),Utilities.cls("col-sm-2 control-label")]),List.ofArray([Doc.TextNode("Content")])),Html.Div(List.ofArray([Utilities.cls("col-sm-10")]),List.ofArray([Doc.InputArea(List.ofArray([Utilities.op_EqualsEqualsGreater("id","postContent"),Utilities.op_EqualsEqualsGreater("rows","5"),Utilities.cls("form-control"),Utilities.sty("width","100%")]),rvPost)]))])),Html.Div(List.ofArray([Utilities.cls("form-group")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("col-sm-offset-2"),Utilities.cls("col-sm-10")]),List.ofArray([Doc.Button("Submit",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-primary")]),add)]))]))]))]))]));
+          }
+        },x));
+       },
+       Sample:Runtime.Field(function()
+       {
+        return Samples.Build().Id("MessageBoard").FileName("MessageBoard.fs").Keywords(List.ofArray(["text"])).Render(function()
+        {
+         return MessageBoard.Main();
+        }).RenderDescription(function()
+        {
+         return MessageBoard.Description();
+        }).Create();
+       }),
+       ShowAction:function(act)
+       {
+        return act.$==1?"Thread "+act.$0.Title:act.$==2?"Show All Threads":"Create New Thread";
+       },
+       ShowThreadPage:function(st,thread)
+       {
+        var rvPosts,getPosts,renderPost,postList,x;
+        rvPosts=Var1.Create(Runtime.New(T,{
+         $:0
+        }));
+        getPosts=function()
+        {
+         return Concurrency.Start(Concurrency.Delay(function()
+         {
+          return Concurrency.Bind(Server.GetPosts(thread),function(arg101)
+          {
+           Var.Set(rvPosts,arg101);
+           return Concurrency.Return(null);
+          });
+         }));
+        };
+        renderPost=function(post)
+        {
+         return Html.TR0(List.ofArray([Html.TD0(List.ofArray([Doc.TextNode(post.PostAuthorName)])),Html.TD0(List.ofArray([Doc.TextNode(post.Content)]))]));
+        };
+        postList=Html.Div(List.ofArray([Utilities.cls("panel"),Utilities.cls("panel-default")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("panel-heading")]),List.ofArray([Html.H3(List.ofArray([Utilities.cls("panel-title")]),List.ofArray([Doc.TextNode("Posts in thread \""+thread.Title+"\"")]))])),Html.Div(List.ofArray([Utilities.cls("panel-body")]),List.ofArray([Html.Table(List.ofArray([Utilities.cls("table"),Utilities.cls("table-hover")]),List.ofArray([Html.TBody0(List.ofArray([Doc.EmbedView(View1.Map(function(posts)
+        {
+         return Doc.Concat(List.map(renderPost,posts));
+        },View1.FromVar(rvPosts)))]))]))]))]));
+        getPosts(null);
+        x=st.Auth.LoggedIn;
+        return Html.Div0(List.ofArray([postList,Doc.EmbedView(View1.Map(function(_arg3)
+        {
+         var user,rvPost,add;
+         if(_arg3.$==1)
+          {
+           user=_arg3.$0;
+           rvPost=Var1.Create("");
+           add=function()
+           {
+            var post;
+            post=Common.CreatePost(user,rvPost.get_Value());
+            return Concurrency.Start(Concurrency.Delay(function()
+            {
+             return Concurrency.Bind(Server.AddPost(thread,post),function()
+             {
+              getPosts(null);
+              return Concurrency.Return(null);
+             });
+            }));
+           };
+           return Html.Div(List.ofArray([Utilities.cls("panel"),Utilities.cls("panel-default")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("panel-heading")]),List.ofArray([Html.H3(List.ofArray([Utilities.cls("panel-title")]),List.ofArray([Doc.TextNode("New Post")]))])),Html.Div(List.ofArray([Utilities.cls("panel-body")]),List.ofArray([Html.Form(List.ofArray([Utilities.cls("form-horizontal"),Utilities.op_EqualsEqualsGreater("role","form")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("form-group")]),List.ofArray([Html.Label(List.ofArray([Utilities.op_EqualsEqualsGreater("for","postContent"),Utilities.cls("col-sm-2 control-label")]),List.ofArray([Doc.TextNode("Content")])),Html.Div(List.ofArray([Utilities.cls("col-sm-10")]),List.ofArray([Doc.InputArea(List.ofArray([Utilities.op_EqualsEqualsGreater("id","postContent"),Utilities.op_EqualsEqualsGreater("rows","5"),Utilities.cls("form-control"),Utilities.sty("width","100%")]),rvPost)]))])),Html.Div(List.ofArray([Utilities.cls("form-group")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("col-sm-offset-2"),Utilities.cls("col-sm-10")]),List.ofArray([Doc.Button("Submit",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-primary")]),add)]))]))]))]))]));
+          }
+         else
+          {
+           return Doc.get_Empty();
+          }
+        },x))]));
+       },
+       ThreadListPage:function(st)
+       {
+        var renderThread,threads;
+        renderThread=function(thread)
+        {
+         return Html.TR0(List.ofArray([Html.TD0(List.ofArray([Doc.TextNode(thread.ThreadAuthorName)])),Html.TD0(List.ofArray([Utilities.link(thread.Title,Runtime.New(T,{
+          $:0
+         }),function()
+         {
+          return st.Go.call(null,{
+           $:1,
+           $0:thread
+          });
+         })]))]));
+        };
+        threads=st.Threads;
+        Concurrency.Start(Concurrency.Delay(function()
+        {
+         return Concurrency.Bind(Server.GetThreads(),function(arg101)
+         {
+          Var.Set(threads,arg101);
+          return Concurrency.Return(null);
+         });
+        }));
+        return Html.Table(List.ofArray([Utilities.cls("table"),Utilities.cls("table-hover")]),List.ofArray([Html.TBody0(List.ofArray([Doc.EmbedView(View1.Map(function(threads1)
+        {
+         return Doc.Concat(List.map(renderThread,threads1));
+        },View1.FromVar(st.Threads)))]))]));
+       }
+      },
+      MouseInfo:{
+       Description:function()
+       {
+        return Html.Div0(List.ofArray([Doc.TextNode("Shows information about the mouse")]));
+       },
+       Main:function()
+       {
+        var arg00,arg10,xView,arg001,arg101,yView;
+        arg00=Runtime.Tupled(function(tuple)
+        {
+         return tuple[0];
+        });
+        arg10=Mouse.get_Position();
+        xView=View1.Map(arg00,arg10);
+        arg001=Runtime.Tupled(function(tuple)
+        {
+         return tuple[1];
+        });
+        arg101=Mouse.get_Position();
+        yView=View1.Map(arg001,arg101);
+        return Html.Div0(List.ofArray([Html.P0(List.ofArray([Doc.TextView(View1.Map(function(x)
+        {
+         return"X: "+Global.String(x);
+        },xView)),Doc.TextView(View1.Map(function(y)
+        {
+         return"Y: "+Global.String(y);
+        },yView))])),Html.P0(List.ofArray([Doc.TextView(View1.Map(function(l)
+        {
+         return"Left button pressed: "+Global.String(l);
+        },Mouse.get_LeftPressed()))])),Html.P0(List.ofArray([Doc.TextView(View1.Map(function(m)
+        {
+         return"Middle button pressed: "+Global.String(m);
+        },Mouse.get_MiddlePressed()))])),Html.P0(List.ofArray([Doc.TextView(View1.Map(function(r)
+        {
+         return"Right button pressed: "+Global.String(r);
+        },Mouse.get_RightPressed()))]))]));
+       },
+       Sample:Runtime.Field(function()
+       {
+        return Samples.Build().Id("MouseInfo").FileName("MouseInfo.fs").Keywords(List.ofArray(["mouse"])).Render(function()
+        {
+         return MouseInfo.Main();
+        }).RenderDescription(function()
+        {
+         return MouseInfo.Description();
+        }).Create();
+       })
+      },
+      ObjectConstancy:{
+       DataSet:Runtime.Class({},{
+        LoadFromCSV:function(url)
+        {
+         var callback;
+         callback=Runtime.Tupled(function(tupledArg)
+         {
+          var ok;
+          ok=tupledArg[0];
+          jQuery.get(url,{},Runtime.Tupled(function(tupledArg1)
+          {
+           return ok(DataSet.ParseCSV(tupledArg1[0]));
+          }));
+          return;
+         });
+         return Concurrency.FromContinuations(function(ok)
+         {
+          return function(no)
+          {
+           return callback([ok,no,function()
+           {
+           }]);
+          };
+         });
+        },
+        ParseCSV:function(data)
+        {
+         var x,all,brackets,data1;
+         x=Strings.SplitChars(data,[13,10],1);
+         all=Arrays.filter(function(s)
+         {
+          return s!=="";
+         },x);
+         brackets=Arrays.map(function(arg0)
+         {
+          return{
+           $:0,
+           $0:arg0
+          };
+         },OperatorIntrinsics.GetArraySlice(Strings.SplitChars(all[0],[44],1),{
+          $:1,
+          $0:1
+         },{
+          $:0
+         }));
+         data1=Arrays.map(function(s)
+         {
+          return Strings.SplitChars(s,[44],1);
+         },Arrays.sub(all,1,IntrinsicFunctionProxy.GetLength(all)-1));
+         return Runtime.New(DataSet,{
+          Brackets:brackets,
+          Population:function(bracket)
+          {
+           return function(_arg1)
+           {
+            var st;
+            st=_arg1.$0;
+            return data1[Arrays.FindIndex(function(d)
+            {
+             return d[0]===st;
+            },data1)][1+Arrays.FindIndex(function(y)
+            {
+             return Unchecked.Equals(bracket,y);
+            },brackets)]<<0;
+           };
+          },
+          States:Arrays.map(function(d)
+          {
+           return{
+            $:0,
+            $0:d[0]
+           };
+          },data1)
+         });
+        },
+        Ratio:function(ds,br,st)
+        {
+         var total;
+         total={
+          $:0,
+          $0:"Total"
+         };
+         return+(ds.Population.call(null,br))(st)/+(ds.Population.call(null,total))(st);
+        },
+        TopStatesByRatio:function(ds,bracket)
+        {
+         var x;
+         x=Arrays.map(function(st)
+         {
+          return[st,DataSet.Ratio(ds,bracket,st)];
+         },ds.States);
+         return OperatorIntrinsics.GetArraySlice(Arrays.sortBy(Runtime.Tupled(function(tupledArg)
+         {
+          return-tupledArg[1];
+         }),x),{
+          $:1,
+          $0:0
+         },{
+          $:1,
+          $0:9
+         });
+        }
+       }),
+       Description:function()
+       {
+        return Html.Div0(List.ofArray([Utilities.txt("This sample show-cases declarative animation and interpolation (tweening)")]));
+       },
+       Height:Runtime.Field(function()
+       {
+        return 250;
+       }),
+       InOutTransition:Runtime.Field(function()
+       {
+        return Trans.Exit(function(x)
+        {
+         return ObjectConstancy.SimpleAnimation(x,ObjectConstancy.Height());
+        },Trans.Enter(function(x)
+        {
+         return ObjectConstancy.SimpleAnimation(ObjectConstancy.Height(),x);
+        },ObjectConstancy.SimpleTransition()));
+       }),
+       Main:function()
+       {
+        var patternInput,shownData,dataSet,bracket;
+        patternInput=ObjectConstancy.SetupDataModel();
+        shownData=patternInput[2];
+        dataSet=patternInput[0];
+        bracket=patternInput[1];
+        return Html.Div0(List.ofArray([Html.H20(List.ofArray([Utilities.txt("Top States by Age Bracket, 2008")])),Doc.EmbedView(View1.Map(function(dS)
+        {
+         return Doc.Select(List.ofArray([Utilities.cls("form-control")]),function(_arg1)
+         {
+          return _arg1.$0;
+         },List.ofArray(OperatorIntrinsics.GetArraySlice(dS.Brackets,{
+          $:1,
+          $0:1
+         },{
+          $:0
+         })),bracket);
+        },dataSet)),Html.Div(List.ofArray([Utilities.cls("skip")]),Runtime.New(T,{
+         $:0
+        })),SvgElements.Svg(List.ofArray([Utilities.op_EqualsEqualsGreater("width",Global.String(ObjectConstancy.Width())),Utilities.op_EqualsEqualsGreater("height",Global.String(ObjectConstancy.Height()))]),List.ofArray([Doc.EmbedView(View1.Map(function(arg00)
+        {
+         return Doc.Concat(arg00);
+        },View1.ConvertSeqBy(function(s)
+        {
+         return s.State;
+        },function(state)
+        {
+         return ObjectConstancy.Render(state);
+        },shownData)))])),Html.P0(List.ofArray([Utilities.txt("Source: "),Utilities.href("Census Bureau","http://www.census.gov/popest/data/historical/2000s/vintage_2008/")])),Html.P0(List.ofArray([Utilities.txt("Original Sample by Mike Bostock: "),Utilities.href("Object Constancy","http://bost.ocks.org/mike/constancy/")]))]));
+       },
+       Percent:function(x)
+       {
+        return Global.String(Math.floor(100*x))+"."+Global.String((Math.floor(1000*x)<<0)%10)+"%";
+       },
+       Render:function(state)
+       {
+        var anim,x,y,h,txt;
+        anim=function(name,kind,proj)
+        {
+         var arg30;
+         arg30=function(value)
+         {
+          return Global.String(value);
+         };
+         return Attr.Animated(name,kind,View1.Map(proj,state),arg30);
+        };
+        x=function(st)
+        {
+         return ObjectConstancy.Width()*st.Value/st.MaxValue;
+        };
+        y=function(st)
+        {
+         return ObjectConstancy.Height()*+st.Position/+st.Total;
+        };
+        h=function(st)
+        {
+         return ObjectConstancy.Height()/+st.Total-2;
+        };
+        txt=function(f)
+        {
+         return function(attr)
+         {
+          return SvgElements.Text(attr,List.ofArray([Doc.TextView(View1.Map(f,state))]));
+         };
+        };
+        return Doc.Concat(List.ofArray([SvgElements.G(List.ofArray([Attr.Style("fill","steelblue")]),List.ofArray([SvgElements.Rect(List.ofArray([Utilities.op_EqualsEqualsGreater("x","0"),anim("y",ObjectConstancy.InOutTransition(),y),anim("width",ObjectConstancy.SimpleTransition(),x),anim("height",ObjectConstancy.SimpleTransition(),h)]),Runtime.New(T,{
+         $:0
+        }))])),(txt(function(s)
+        {
+         return ObjectConstancy.Percent(s.Value);
+        }))(List.ofArray([Utilities.op_EqualsEqualsGreater("text-anchor","end"),anim("x",ObjectConstancy.SimpleTransition(),x),anim("y",ObjectConstancy.InOutTransition(),y),Utilities.op_EqualsEqualsGreater("dx","-2"),Utilities.op_EqualsEqualsGreater("dy","14"),Utilities.sty("fill","white"),Utilities.sty("font","12px sans-serif")])),(txt(function(s)
+        {
+         return s.State;
+        }))(List.ofArray([Utilities.op_EqualsEqualsGreater("x","0"),anim("y",ObjectConstancy.InOutTransition(),y),Utilities.op_EqualsEqualsGreater("dx","2"),Utilities.op_EqualsEqualsGreater("dy","16"),Utilities.sty("fill","white"),Utilities.sty("font","14px sans-serif"),Utilities.sty("font-weight","bold")]))]));
+       },
+       Sample:Runtime.Field(function()
+       {
+        return Samples.Build().Id("ObjectConstancy").FileName("ObjectConstancy.fs").Keywords(List.ofArray(["animation"])).Render(function()
+        {
+         return ObjectConstancy.Main();
+        }).RenderDescription(function()
+        {
+         return ObjectConstancy.Description();
+        }).Create();
+       }),
+       SetupDataModel:function()
+       {
+        var x,dataSet,bracket;
+        x=View.Const(null);
+        dataSet=View1.MapAsync(function()
+        {
+         return DataSet.LoadFromCSV("ObjectConstancy.csv");
+        },x);
+        bracket=Var1.Create({
+         $:0,
+         $0:"Under 5 Years"
+        });
+        return[dataSet,bracket,View1.Map(function(xs)
+        {
+         var n,m;
+         n=IntrinsicFunctionProxy.GetLength(xs);
+         m=Arrays.max(Arrays.map(Runtime.Tupled(function(tuple)
+         {
+          return tuple[1];
+         }),xs));
+         return Arrays.mapi(function(i)
+         {
+          return Runtime.Tupled(function(tupledArg)
+          {
+           return{
+            MaxValue:m,
+            Position:i,
+            State:tupledArg[0].$0,
+            Total:n,
+            Value:tupledArg[1]
+           };
+          });
+         },xs);
+        },View1.Map2(function(arg00)
+        {
+         return function(arg10)
+         {
+          return DataSet.TopStatesByRatio(arg00,arg10);
+         };
+        },dataSet,bracket.get_View()))];
+       },
+       SimpleAnimation:function(x,y)
+       {
+        return An.Simple(Interpolation1.get_Double(),Easing.get_CubicInOut(),300,x,y);
+       },
+       SimpleTransition:Runtime.Field(function()
+       {
+        return Trans.Create(function(x)
+        {
+         return function(y)
+         {
+          return ObjectConstancy.SimpleAnimation(x,y);
+         };
+        });
+       }),
+       Width:Runtime.Field(function()
+       {
+        return 960;
+       })
+      },
+      PhoneExample:{
+       Description:function()
+       {
+        return Html.Div0(List.ofArray([Doc.TextNode("Taken from the "),Utilities.href("AngularJS Tutorial","https://docs.angularjs.org/tutorial/"),Doc.TextNode(", a list filtering and sorting application for phones.")]));
+       },
+       Main:function()
+       {
+        var defPhone;
+        defPhone=function(name,snip,age)
+        {
+         return Runtime.New(Phone,{
+          Name:name,
+          Snippet:snip,
+          Age:age
+         });
+        };
+        return PhoneExample.PhonesWidget(List.ofArray([defPhone("Nexus S","Fast just got faster with Nexus S.",1),defPhone("Motorola XOOM","The Next, Next generation tablet",2),defPhone("Motorola XOOM with Wi-Fi","The Next, Next generation tablet",3),defPhone("Samsung Galaxy","The Ultimate Phone",4)]));
+       },
+       Order:Runtime.Class({},{
+        Show:function(order)
+        {
+         return order.$==1?"Newest":"Alphabetical";
+        }
+       }),
+       Phone:Runtime.Class({},{
+        Compare:function(order,p1,p2)
+        {
+         return order.$==1?Operators.Compare(p1.Age,p2.Age):Operators.Compare(p1.Name,p2.Name);
+        },
+        MatchesQuery:function(q,ph)
+        {
+         return ph.Name.indexOf(q)!=-1?true:ph.Snippet.indexOf(q)!=-1;
+        }
+       }),
+       PhonesWidget:function(phones)
+       {
+        var allPhones,query,order,arg00,arg101,arg201,visiblePhones,showPhone,showPhones;
+        allPhones=Var1.Create(phones);
+        query=Var1.Create("");
+        order=Var1.Create(Runtime.New(Order,{
+         $:1
+        }));
+        arg00=function(query1)
+        {
+         return function(order1)
+         {
+          return List.sortWith(function(arg10)
+          {
+           return function(arg20)
+           {
+            return Phone.Compare(order1,arg10,arg20);
+           };
+          },List.filter(function(arg10)
+          {
+           return Phone.MatchesQuery(query1,arg10);
+          },phones));
+         };
+        };
+        arg101=View1.FromVar(query);
+        arg201=View1.FromVar(order);
+        visiblePhones=View1.Map2(arg00,arg101,arg201);
+        showPhone=function(ph)
+        {
+         return Html.LI0(List.ofArray([Html.Span0(List.ofArray([Utilities.txt(ph.Name)])),Html.P0(List.ofArray([Utilities.txt(ph.Snippet)]))]));
+        };
+        showPhones=function(phones1)
+        {
+         return Doc.Concat(List.map(showPhone,phones1));
+        };
+        return Html.Div(List.ofArray([Utilities.cls("row")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("col-sm-6")]),List.ofArray([Utilities.txt("Search: "),Doc.Input(List.ofArray([Attr.Create("class","form-control")]),query),Utilities.txt("Sort by: "),Doc.Select(List.ofArray([Attr.Create("class","form-control")]),function(arg001)
+        {
+         return Order.Show(arg001);
+        },List.ofArray([Runtime.New(Order,{
+         $:1
+        }),Runtime.New(Order,{
+         $:0
+        })]),order)])),Html.Div(List.ofArray([Utilities.cls("col-sm-6")]),List.ofArray([Html.UL0(List.ofArray([Doc.EmbedView(View1.Map(showPhones,visiblePhones))]))]))]));
+       },
+       Sample:Runtime.Field(function()
+       {
+        return Samples.Build().Id("PhoneExample").FileName("PhoneExample.fs").Keywords(List.ofArray(["todo"])).Render(function()
+        {
+         return PhoneExample.Main();
+        }).RenderDescription(function()
+        {
+         return PhoneExample.Description();
+        }).Create();
+       })
+      },
+      RoutedBobsleighSite:{
+       Main:function(current)
+       {
+        var arg00,withNavbar,ctx;
+        arg00=BobsleighSite.NavBar(current);
+        withNavbar=function(arg10)
+        {
+         return Doc.Append(arg00,arg10);
+        };
+        ctx={
+         Go:function(arg10)
+         {
+          return Var.Set(current,arg10);
+         }
+        };
+        return Doc.EmbedView(View1.Map(function(pg)
+        {
+         return pg.$==1?withNavbar(BobsleighSite.History(ctx)):pg.$==2?withNavbar(BobsleighSite.Governance(ctx)):pg.$==3?withNavbar(BobsleighSite.Team(ctx)):withNavbar(BobsleighSite.HomePage(ctx));
+        },View1.FromVar(current)));
+       },
+       Sample:Runtime.Field(function()
+       {
+        return Samples.Routed(RoutedBobsleighSite.TheRouteMap(),{
+         $:0
+        }).Id("RoutedBobsleighMiniSite").FileName("RoutedBobsleighSite.fs").Keywords(List.ofArray(["text"])).Render(function(current)
+        {
+         return RoutedBobsleighSite.Main(current);
+        }).RenderDescription(function(v)
+        {
+         return RoutedBobsleighSite.description(v);
+        }).Create();
+       }),
+       TheRouteMap:Runtime.Field(function()
+       {
+        return RouteMap.Create(function(_arg1)
+        {
+         return _arg1.$==1?List.ofArray(["history"]):_arg1.$==2?List.ofArray(["governance"]):_arg1.$==3?List.ofArray(["team"]):Runtime.New(T,{
+          $:0
+         });
+        },function(_arg2)
+        {
+         return _arg2.$==1?_arg2.$0==="history"?_arg2.$1.$==0?{
+          $:1
+         }:{
+          $:0
+         }:_arg2.$0==="governance"?_arg2.$1.$==0?{
+          $:2
+         }:{
+          $:0
+         }:_arg2.$0==="team"?_arg2.$1.$==0?{
+          $:3
+         }:{
+          $:0
+         }:{
+          $:0
+         }:{
+          $:0
+         };
+        });
+       }),
+       description:function()
+       {
+        return Html.Div0(List.ofArray([Utilities.txt("A small website about bobsleighs, demonstrating how UI.Next may be used to structure single-page applications. Routed using the URL.")]));
+       }
+      },
+      Samples:{
+       Build:function()
+       {
+        return Builder.New(function(vis)
+        {
+         return function(meta)
+         {
+          return Samples.CreateSimple(vis,meta);
+         };
+        });
+       },
+       Builder:Runtime.Class({
+        Create:function()
+        {
+         return(this.create.call(null,this.vis))(this.meta);
+        },
+        FileName:function(x)
+        {
+         var inputRecord;
+         inputRecord=this.meta;
+         this.meta={
+          FileName:x,
+          Keywords:inputRecord.Keywords,
+          Title:inputRecord.Title,
+          Uri:inputRecord.Uri
+         };
+         return this;
+        },
+        Id:function(x)
+        {
+         var inputRecord;
+         inputRecord=this.meta;
+         this.meta={
+          FileName:inputRecord.FileName,
+          Keywords:inputRecord.Keywords,
+          Title:x,
+          Uri:x
+         };
+         return this;
+        },
+        Keywords:function(x)
+        {
+         var inputRecord;
+         inputRecord=this.meta;
+         this.meta={
+          FileName:inputRecord.FileName,
+          Keywords:x,
+          Title:inputRecord.Title,
+          Uri:inputRecord.Uri
+         };
+         return this;
+        },
+        Render:function(f)
+        {
+         this.vis={
+          Desc:this.vis.Desc,
+          Main:f
+         };
+         return this;
+        },
+        RenderDescription:function(x)
+        {
+         this.vis={
+          Desc:x,
+          Main:this.vis.Main
+         };
+         return this;
+        },
+        Title:function(x)
+        {
+         var inputRecord;
+         inputRecord=this.meta;
+         this.meta={
+          FileName:inputRecord.FileName,
+          Keywords:inputRecord.Keywords,
+          Title:x,
+          Uri:inputRecord.Uri
+         };
+         return this;
+        },
+        Uri:function(x)
+        {
+         var inputRecord;
+         inputRecord=this.meta;
+         this.meta={
+          FileName:inputRecord.FileName,
+          Keywords:inputRecord.Keywords,
+          Title:inputRecord.Title,
+          Uri:x
+         };
+         return this;
+        }
+       },{
+        New:function(create)
+        {
+         var r;
+         r=Runtime.New(this,{});
+         r.create=create;
+         r.meta={
+          FileName:"Unknown.fs",
+          Keywords:Runtime.New(T,{
+           $:0
+          }),
+          Title:"Unknown",
+          Uri:"unknown"
+         };
+         r.vis={
+          Desc:function()
+          {
+           return Doc.get_Empty();
+          },
+          Main:function()
+          {
+           return Doc.get_Empty();
+          }
+         };
+         return r;
+        }
+       }),
+       CreateRouted:function(router,init,vis,meta)
+       {
+        var sample;
+        sample={
+         Body:Doc.get_Empty(),
+         Description:Doc.get_Empty(),
+         Meta:meta,
+         Router:undefined,
+         RouteId:undefined,
+         SamplePage:undefined
+        };
+        sample.Router=Router.Prefix(meta.Uri,Router.Route(router,init,function(id)
+        {
+         return function(cur)
+         {
+          var page;
+          sample.RouteId=id;
+          sample.Body=vis.Main.call(null,cur);
+          sample.Description=vis.Desc.call(null,cur);
+          page=SiteCommon.mkPage(sample.Meta.Title,id,{
            $:2
           });
-         })]),List.ofArray([Doc.TextView(item.Text.get_View())])),Doc.Button("",List.ofArray([Attr.Class("destroy")]),arg20)])),Doc.Input(List.ofArray([Attr.Handler("keypress",function(evt)
-         {
-          var ke,wh,newState;
-          ke=evt.keyCode;
-          wh=evt.which;
-          newState=st.$==3?{
-           $:1
-          }:{
-           $:0
+          page.PageSample={
+           $:1,
+           $0:sample
           };
-          if(ke===13?true:wh===13)
-           {
-            Var.Set(item.Text,updateVar.get_Value());
-            Var.Set(item.TodoState,newState);
-            return Var.Set(updateVar,"");
-           }
-          else
-           {
-            return null;
-           }
-         }),Attr.Class("edit")]),updateVar)]));
-        }
-       else
-        {
-         return Doc.get_Empty();
-        }
-      };
-     },item.TodoState.get_View(),filterView));
-    },
-    Section:Runtime.Field(function()
-    {
-     return function(ats)
-     {
-      return function(ch)
-      {
-       return Elements.Section(ats,ch);
-      };
-     };
-    }),
-    TodoApp:Runtime.Field(function()
-    {
-     var _arg00_174_2,_arg10_174_5,_model_174_2,_filterVar_177_1,_todoVar_179_1,_submitFn_182_3,arg00,clo1,arg001,clo11,_arg20_231_4,_arg20_232_5,_arg20_233_6,_arg20_237_7;
-     _arg00_174_2=function(todo)
-     {
-      return todo.Id;
-     };
-     _arg10_174_5=Runtime.New(T,{
-      $:0
-     });
-     _model_174_2=ListModel1.Create(_arg00_174_2,_arg10_174_5);
-     _filterVar_177_1=Var1.Create({
-      $:0
-     });
-     _todoVar_179_1=Var1.Create("");
-     _submitFn_182_3=function(evt)
-     {
-      var wh;
-      wh=evt.which;
-      if(evt.keyCode===13?true:wh===13)
-       {
-        _model_174_2.Add(Client.mkTodo(Var1.Get(_todoVar_179_1)));
-        return Var.Set(_todoVar_179_1,"");
-       }
-      else
-       {
-        return null;
-       }
-     };
-     arg00=List.ofArray([Client.op_EqualsEqualsGreater("id","todoapp")]);
-     clo1=(Client.Section())(arg00);
-     arg001=List.ofArray([Client.op_EqualsEqualsGreater("id","main")]);
-     clo11=(Client.Section())(arg001);
-     _arg20_231_4=function()
-     {
-      return Var.Set(_filterVar_177_1,{
-       $:0
-      });
-     };
-     _arg20_232_5=function()
-     {
-      return Var.Set(_filterVar_177_1,{
-       $:1
-      });
-     };
-     _arg20_233_6=function()
-     {
-      return Var.Set(_filterVar_177_1,{
-       $:2
-      });
-     };
-     _arg20_237_7=function()
-     {
-      return Client.RemoveCompleted(_model_174_2);
-     };
-     return Doc.Concat(List.ofArray([clo1(List.ofArray([Elements.Header(List.ofArray([Client.op_EqualsEqualsGreater("id","header")]),List.ofArray([Html.H10(List.ofArray([Client.txt("todos")])),Doc.Input(List.ofArray([Client.op_EqualsEqualsGreater("id","new-todo"),Client.op_EqualsEqualsGreater("placeholder","What needs to be done?"),Client.op_EqualsEqualsGreater("autofocus",""),Attr.Handler("keypress",_submitFn_182_3)]),_todoVar_179_1)])),clo11(List.ofArray([Elements.Input(List.ofArray([Client.op_EqualsEqualsGreater("id","toggle-all"),Client.op_EqualsEqualsGreater("type","checkbox"),Attr.Handler("click",function()
-     {
-      return Client.MarkAllDone(_model_174_2);
-     })]),Runtime.New(T,{
-      $:0
-     })),Elements.Label(List.ofArray([Client.op_EqualsEqualsGreater("for","toggle-all")]),List.ofArray([Client.txt("Mark all as complete")])),Html.UL(List.ofArray([Client.op_EqualsEqualsGreater("id","todo-list")]),List.ofArray([Client.RenderList(_model_174_2,_filterVar_177_1.get_View())]))])),Elements.Footer(List.ofArray([Client.op_EqualsEqualsGreater("id","footer")]),List.ofArray([Html.Span(List.ofArray([Client.op_EqualsEqualsGreater("id","todo-count")]),List.ofArray([Doc.EmbedView(View1.Map(function(num)
-     {
-      return Doc.TextNode(Global.String(num)+" items remaining");
-     },Client.notDoneItems(_model_174_2)))])),Html.UL(List.ofArray([Client.op_EqualsEqualsGreater("id","filters")]),List.ofArray([Html.LI0(List.ofArray([Doc.Link("All",Runtime.New(T,{
-      $:0
-     }),_arg20_231_4)])),Html.LI0(List.ofArray([Doc.Link("Active",Runtime.New(T,{
-      $:0
-     }),_arg20_232_5)])),Html.LI0(List.ofArray([Doc.Link("Completed",Runtime.New(T,{
-      $:0
-     }),_arg20_233_6)]))])),Doc.Button("Clear Completed",List.ofArray([Client.op_EqualsEqualsGreater("id","clear-completed")]),_arg20_237_7)]))])),Elements.Footer(List.ofArray([Client.op_EqualsEqualsGreater("id","info")]),List.ofArray([Html.P0(List.ofArray([Client.txt("Double-click to edit a todo")]))]))]));
-    }),
-    fresh:function()
-    {
-     var res,_;
-     res=Client.runningId();
-     _=Client.runningId()+1;
-     Client.runningId=function()
-     {
-      return _;
-     };
-     return res;
-    },
-    isDone:function(st)
-    {
-     return st.$==2?false:st.$==1?true:st.$==3?true:false;
-    },
-    mkTodo:function(text)
-    {
-     return{
-      Id:Client.fresh(),
-      Text:Var1.Create(text),
-      TodoState:Var1.Create({
-       $:0
-      })
-     };
-    },
-    notDoneItems:function(model)
-    {
-     return View1.Bind(function(xs)
-     {
-      return Seq.fold(function(acc)
-      {
-       return function(x)
-       {
-        return View1.Map2(function(acc1)
-        {
-         return function(vst)
-         {
-          return acc1+(Client.isDone(vst)?0:1);
+          page.PageRouteId=id;
+          sample.SamplePage=page;
+          return page;
          };
-        },acc,x.TodoState.get_View());
-       };
-      },View.Const(0),xs);
-     },ListModel.View(model));
-    },
-    op_EqualsEqualsGreater:function(arg00,arg10)
-    {
-     return Attr.Create(arg00,arg10);
-    },
-    runningId:Runtime.Field(function()
-    {
-     return 0;
-    }),
-    txt:function(arg00)
-    {
-     return Doc.TextNode(arg00);
+        }));
+        return sample;
+       },
+       CreateSimple:function(vis,meta)
+       {
+        var unitRouter,sample;
+        unitRouter=RouteMap.Create(function()
+        {
+         return Runtime.New(T,{
+          $:0
+         });
+        },function()
+        {
+         return null;
+        });
+        sample={
+         Body:vis.Main.call(null,null),
+         Description:vis.Desc.call(null,null),
+         Meta:meta,
+         Router:undefined,
+         RouteId:undefined,
+         SamplePage:undefined
+        };
+        sample.Router=Router.Prefix(meta.Uri,Router.Route(unitRouter,null,function(id)
+        {
+         return function()
+         {
+          var page;
+          page=SiteCommon.mkPage(sample.Meta.Title,id,{
+           $:2
+          });
+          sample.RouteId=id;
+          page.PageSample={
+           $:1,
+           $0:sample
+          };
+          page.PageRouteId=id;
+          sample.SamplePage=page;
+          return page;
+         };
+        }));
+        return sample;
+       },
+       InitialSamplePage:function(samples)
+       {
+        return samples.$0.SamplePage;
+       },
+       Render:function(vPage,pg,samples)
+       {
+        var matchValue,sample;
+        matchValue=pg.PageSample;
+        sample=matchValue.$==0?Operators.FailWith("Attempted to render non-sample on samples page"):matchValue.$0;
+        return Elements.Section(List.ofArray([Utilities.cls("block-small")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("container")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("row")]),List.ofArray([Samples.Sidebar(vPage,samples),Samples.RenderContent(sample)]))]))]));
+       },
+       RenderContent:function(sample)
+       {
+        return Html.Div(List.ofArray([Utilities.cls("samples"),Utilities.cls("col-9")]),List.ofArray([Html.Div0(List.ofArray([Html.Div(List.ofArray([Utilities.cls("row")]),List.ofArray([Html.H10(List.ofArray([Utilities.txt(sample.Meta.Title)])),Html.Div0(List.ofArray([Html.P0(List.ofArray([sample.Description])),Html.P0(List.ofArray([Elements.A(List.ofArray([Utilities.op_EqualsEqualsGreater("href","https://github.com/intellifactory/websharper.ui.next/blob/master/src/"+sample.Meta.Uri+".fs"),Utilities.cls("btn"),Utilities.cls("btn-default")]),List.ofArray([Utilities.txt("View Source")]))]))]))])),Html.Div(List.ofArray([Utilities.cls("row")]),List.ofArray([Html.P0(List.ofArray([sample.Body]))]))]))]));
+       },
+       Routed:function(router,init)
+       {
+        return Builder.New(function(vis)
+        {
+         return function(meta)
+         {
+          return Samples.CreateRouted(router,init,vis,meta);
+         };
+        });
+       },
+       SamplesRouter:function(samples)
+       {
+        return Router.Prefix("samples",Router.Merge(Seq.toList(Seq.delay(function()
+        {
+         return Seq.map(function(s)
+         {
+          return s.Router;
+         },samples);
+        }))));
+       },
+       Sidebar:function(vPage,samples)
+       {
+        var renderItem;
+        renderItem=function(sample)
+        {
+         var arg20,activeAttr,arg201;
+         arg20=function(s)
+         {
+          return Option.exists(function(smp)
+          {
+           return sample.Meta.FileName===smp.Meta.FileName;
+          },s);
+         };
+         activeAttr=Attr.DynamicClass("active",View1.Map(function(pg)
+         {
+          return pg.PageSample;
+         },View1.FromVar(vPage)),arg20);
+         arg201=function()
+         {
+          return Var.Set(vPage,sample.SamplePage);
+         };
+         return Doc.Link(sample.Meta.Title,List.ofArray([Utilities.cls("list-group-item"),activeAttr]),arg201);
+        };
+        return Html.Div(List.ofArray([Utilities.cls("col-3")]),List.ofArray([Html.H40(List.ofArray([Utilities.txt("Samples")])),Doc.Concat(List.map(renderItem,samples))]));
+       },
+       nav:Runtime.Field(function()
+       {
+        return function(ats)
+        {
+         return function(ch)
+         {
+          return Elements.Nav(ats,ch);
+         };
+        };
+       })
+      },
+      Server:{
+       AddPost:function(thread,post)
+       {
+        return Concurrency.Delay(function()
+        {
+         var matchValue,k,v,_,k1,v1,_1;
+         matchValue=MapModule.TryFind(thread.ThreadId,Server.posts());
+         if(matchValue.$==0)
+          {
+           k=thread.ThreadId;
+           v=List.ofArray([post]);
+           _=Server.posts().Add(k,v);
+           Server.posts=function()
+           {
+            return _;
+           };
+           return Concurrency.Return(null);
+          }
+         else
+          {
+           k1=thread.ThreadId;
+           v1=List.append(matchValue.$0,List.ofArray([post]));
+           _1=Server.posts().Add(k1,v1);
+           Server.posts=function()
+           {
+            return _1;
+           };
+           return Concurrency.Return(null);
+          }
+        });
+       },
+       AddThread:function(thread)
+       {
+        return Concurrency.Delay(function()
+        {
+         var _,k,v,_1;
+         _=List.append(Server.threads(),List.ofArray([thread]));
+         Server.threads=function()
+         {
+          return _;
+         };
+         k=thread.ThreadId;
+         v=Runtime.New(T,{
+          $:0
+         });
+         _1=Server.posts().Add(k,v);
+         Server.posts=function()
+         {
+          return _1;
+         };
+         return Concurrency.Return(null);
+        });
+       },
+       CheckCredentials:function(name,pass)
+       {
+        var matchValue;
+        matchValue=[name,pass];
+        return matchValue[0]==="TestUser"?matchValue[1]==="TestPass"?{
+         $:1,
+         $0:{
+          Name:name,
+          Password:pass
+         }
+        }:{
+         $:0
+        }:{
+         $:0
+        };
+       },
+       CheckLogin:function(user,pass)
+       {
+        return Concurrency.Delay(function()
+        {
+         return Concurrency.Bind(Concurrency.Sleep(Server.DELAY()),function()
+         {
+          return Concurrency.Return(Server.CheckCredentials(user,pass));
+         });
+        });
+       },
+       DELAY:Runtime.Field(function()
+       {
+        return 200;
+       }),
+       GetPosts:function(thread)
+       {
+        return Concurrency.Delay(function()
+        {
+         var matchValue;
+         matchValue=MapModule.TryFind(thread.ThreadId,Server.posts());
+         return matchValue.$==0?Concurrency.Return(Runtime.New(T,{
+          $:0
+         })):Concurrency.Return(matchValue.$0);
+        });
+       },
+       GetThreads:function()
+       {
+        return Concurrency.Delay(function()
+        {
+         return Concurrency.Bind(Concurrency.Sleep(Server.DELAY()),function()
+         {
+          return Concurrency.Return(Server.threads());
+         });
+        });
+       },
+       posts:Runtime.Field(function()
+       {
+        return FSharpMap.New([]);
+       }),
+       threads:Runtime.Field(function()
+       {
+        return Runtime.New(T,{
+         $:0
+        });
+       })
+      },
+      SimpleTextBox:{
+       Description:function()
+       {
+        return Html.Div0(List.ofArray([Doc.TextNode("A label which copies the contents of a text box.")]));
+       },
+       Main:function()
+       {
+        var rvText,inputField,label;
+        rvText=Var1.Create("");
+        inputField=Doc.Input(List.ofArray([Attr.Create("class","form-control")]),rvText);
+        label=Doc.TextView(rvText.get_View());
+        return Utilities.divc("panel-default",List.ofArray([Utilities.divc("panel-body",List.ofArray([Html.Div0(List.ofArray([inputField])),Html.Div0(List.ofArray([label]))]))]));
+       },
+       Sample:Runtime.Field(function()
+       {
+        return Samples.Build().Id("SimpleTextBox").FileName("SimpleTextBox.fs").Keywords(List.ofArray(["text"])).Render(function()
+        {
+         return SimpleTextBox.Main();
+        }).RenderDescription(function()
+        {
+         return SimpleTextBox.Description();
+        }).Create();
+       })
+      },
+      Site:{
+       AboutPage:function(go)
+       {
+        var renderBody,oddEntry,evenEntry,ico,arg20;
+        renderBody=function(entry)
+        {
+         return Doc.Concat(List.ofArray([Html.H10(List.ofArray([Utilities.txt(entry.Name)])),Html.P(List.ofArray([Utilities.cls("lead")]),List.ofArray([Utilities.txt(entry.Description)])),Html.P0(List.ofArray([Html.UL(List.ofArray([Utilities.cls("list-unstyled")]),List.ofArray([Doc.Concat(List.map(function(lnk)
+         {
+          return Html.LI0(List.ofArray([lnk]));
+         },entry.URLs))]))]))]));
+        };
+        oddEntry=function(entry)
+        {
+         return Elements.Section(List.ofArray([Utilities.cls("block-large")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("container")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("row")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("col-lg-3")]),List.ofArray([Elements.Img(List.ofArray([Utilities.op_EqualsEqualsGreater("src",entry.ImgURL),Utilities.sty("width","100%")]),Runtime.New(T,{
+          $:0
+         }))])),Html.Div(List.ofArray([Utilities.cls("col-lg-1")]),Runtime.New(T,{
+          $:0
+         })),Html.Div(List.ofArray([Utilities.cls("col-lg-8")]),List.ofArray([renderBody(entry)]))]))]))]));
+        };
+        evenEntry=function(entry)
+        {
+         return Elements.Section(List.ofArray([Utilities.cls("block-large"),Utilities.cls("bg-alt")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("container")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("row")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("col-lg-8")]),List.ofArray([renderBody(entry)])),Html.Div(List.ofArray([Utilities.cls("col-lg-1")]),Runtime.New(T,{
+          $:0
+         })),Html.Div(List.ofArray([Utilities.cls("col-lg-3")]),List.ofArray([Elements.Img(List.ofArray([Utilities.op_EqualsEqualsGreater("src",entry.ImgURL),Utilities.sty("width","100%")]),Runtime.New(T,{
+          $:0
+         }))]))]))]))]));
+        };
+        ico=function(name)
+        {
+         return Html.Span(List.ofArray([Utilities.cls("fa"),Utilities.cls(name),Utilities.cls("fa-3x"),Utilities.sty("font-size","400%"),Utilities.sty("color","#aaa")]),Runtime.New(T,{
+          $:0
+         }));
+        };
+        arg20=function()
+        {
+         return go({
+          $:2
+         });
+        };
+        return Html.Div(List.ofArray([Utilities.cls("extensions")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("container")]),List.ofArray([Elements.Section(List.ofArray([Utilities.cls("block-huge")]),List.ofArray([Html.H10(List.ofArray([Utilities.txt("WebSharper UI.Next: "),Html.Span(List.ofArray([Utilities.cls("text-muted")]),List.ofArray([Utilities.txt("Everything you need to know.")]))])),Html.P(List.ofArray([Utilities.cls("lead")]),List.ofArray([Utilities.txt("A selection of resources about UI.Next.")]))]))])),Html.Div(List.ofArray([Utilities.cls("block-large"),Utilities.cls("bg-alt")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("container")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("row"),Utilities.cls("text-center")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("col-lg-4")]),List.ofArray([ico("fa-graduation-cap"),Html.H30(List.ofArray([Utilities.txt("Get Started")])),Html.P0(List.ofArray([Utilities.txt("Take the tutorial, and you'll be writing reactive applications in no time!")])),Site.linkBtn("Tutorial","https://github.com/intellifactory/websharper.ui.next/blob/master/docs/Tutorial.md")])),Html.Div(List.ofArray([Utilities.cls("col-lg-4")]),List.ofArray([ico("fa-book"),Html.H30(List.ofArray([Utilities.txt("Dive Right In")])),Html.P0(List.ofArray([Utilities.txt("Comprehensive documentation on the UI.Next API.")])),Site.linkBtn("API Reference","https://github.com/intellifactory/websharper.ui.next/blob/master/docs/API.md")])),Html.Div(List.ofArray([Utilities.cls("col-lg-4")]),List.ofArray([ico("fa-send"),Html.H30(List.ofArray([Utilities.txt("See it in Action")])),Html.P0(List.ofArray([Utilities.txt("A variety of samples using UI.Next, and their associated source code!")])),Doc.Button("Samples",List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-default")]),arg20)]))]))]))])),Doc.Concat(List.mapi(function(i)
+        {
+         return function(entry)
+         {
+          return(i%2===0?oddEntry:evenEntry)(entry);
+         };
+        },Site.Entries()))]));
+       },
+       Entries:Runtime.Field(function()
+       {
+        return List.ofArray([Site.mkEntry("Documentation","Official documentation on WebSharper UI.Next, including the API reference and some discussion about the design decisions we made","files/gear.png",List.ofArray([Utilities.href("Tutorial","https://github.com/intellifactory/websharper.ui.next/blob/master/docs/Tutorial.md"),Utilities.href("API Reference","https://github.com/intellifactory/websharper.ui.next/blob/master/docs/API.md"),Utilities.href("Full Documentation","https://github.com/intellifactory/websharper.ui.next/blob/master/README.md")])),Site.mkEntry("Articles","Articles written about UI.Next, which provide more detailed discussions about various aspects of the library.","files/uinext-screen.png",List.ofArray([Utilities.href("WebSharper UI.Next: An Introduction","http://www.websharper.com/blog-entry/3954"),Utilities.href("WebSharper UI.Next: Declarative Animation","http://www.websharper.com/blog-entry/3964"),Utilities.href("Structuring Applications with WebSharper UI.Next","http://www.websharper.com/blog-entry/3965")])),Site.mkEntry("Presentations","Presentations about UI.Next, providing an overview of the library and deeper insights into the thinking behind it.","files/anton-pres.png",List.ofArray([Utilities.href("Presentation: Tackle UI with Reactive DOM in F# and WebSharper","https://www.youtube.com/watch?v=wEkS09s3KBc")]))]);
+       }),
+       Fade:Runtime.Field(function()
+       {
+        var _arg00_312_12,_arg10_312_12,arg20;
+        _arg00_312_12=Interpolation1.get_Double();
+        _arg10_312_12=Easing.get_CubicInOut();
+        arg20=Site.fadeTime();
+        return function(arg30)
+        {
+         return function(arg40)
+         {
+          return An.Simple(_arg00_312_12,_arg10_312_12,arg20,arg30,arg40);
+         };
+        };
+       }),
+       FadeTransition:Runtime.Field(function()
+       {
+        return Trans.Exit(function()
+        {
+         return((Site.Fade())(1))(0);
+        },Trans.Enter(function()
+        {
+         return((Site.Fade())(0))(1);
+        },Trans.Create(Site.Fade())));
+       }),
+       HomePage:function()
+       {
+        return Html.Div(List.ofArray([Utilities.cls("container")]),List.ofArray([Elements.Section(List.ofArray([Utilities.cls("block-huge"),Utilities.cls("teaser-home"),Utilities.sty("height","700px"),Utilities.sty("padding-top","40px"),Utilities.sty("padding-bottom","30px"),Utilities.sty("margin-bottom","40px")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("container")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("row")]),List.ofArray([Html.Div(List.ofArray([Utilities.cls("col-12")]),List.ofArray([Elements.Br(Runtime.New(T,{
+         $:0
+        }),Runtime.New(T,{
+         $:0
+        })),Html.H10(List.ofArray([Utilities.txt("WebSharper UI.Next: "),Html.Span(List.ofArray([Utilities.cls("text-muted")]),List.ofArray([Utilities.txt("A new generation of reactive web applications.")]))])),Html.H30(List.ofArray([Utilities.txt("Write powerful, data-backed applications"),Elements.Br(Runtime.New(T,{
+         $:0
+        }),Runtime.New(T,{
+         $:0
+        })),Utilities.txt(" using F# and WebSharper.")])),Html.P(List.ofArray([Utilities.cls("lead")]),List.ofArray([Utilities.txt("Get it free on NuGet today!")]))]))]))]))]))]));
+       },
+       Main:function(samples)
+       {
+        var arg00,arg10,router;
+        arg00=function(pg)
+        {
+         return pg.PageRouteId;
+        };
+        arg10=Site.SiteRouter(samples);
+        router=Router.Install(arg00,arg10);
+        Doc.RunById("main",Doc.EmbedView(View1.Map(function(pg)
+        {
+         var matchValue;
+         matchValue=pg.PageType;
+         return matchValue.$==1?Site.AboutPage(function(ty)
+         {
+          return Var.Set(router,Site.pageFor(ty,samples));
+         }):matchValue.$==2?Samples.Render(router,pg,samples):Site.HomePage(function(ty)
+         {
+          return Var.Set(router,Site.pageFor(ty,samples));
+         });
+        },View1.FromVar(router))));
+        return Doc.RunById("navigation",Site.NavBar(router,samples));
+       },
+       MakePage:function(pg)
+       {
+        var arg30;
+        arg30=function(value)
+        {
+         return Global.String(value);
+        };
+        return Html.Div(List.ofArray([Attr.AnimatedStyle("opacity",Site.FadeTransition(),View.Const(1),arg30)]),List.ofArray([pg]));
+       },
+       NavBar:function(v,samples)
+       {
+        var renderLink,renderExternal;
+        renderLink=function(pg)
+        {
+         return Doc.EmbedView(View1.Map(function(page)
+         {
+          var liAttr;
+          liAttr=Unchecked.Equals(page.PageType,pg)?Attr.Class("active"):Attr.get_Empty();
+          return Html.LI(List.ofArray([Utilities.cls("nav-item"),liAttr]),List.ofArray([Utilities.link(Site.showPgTy(pg),Runtime.New(T,{
+           $:0
+          }),function()
+          {
+           return Var.Set(v,Site.pageFor(pg,samples));
+          })]));
+         },View1.FromVar(v)));
+        };
+        renderExternal=Runtime.Tupled(function(tupledArg)
+        {
+         var title,lnk;
+         title=tupledArg[0];
+         lnk=tupledArg[1];
+         return Html.LI(List.ofArray([Utilities.cls("nav-item")]),List.ofArray([Utilities.href(title,lnk)]));
+        });
+        return Elements.Nav(List.ofArray([Utilities.cls("container")]),List.ofArray([Html.Div(List.ofArray([Utilities.sty("float","left")]),List.ofArray([Html.A(List.ofArray([Utilities.op_EqualsEqualsGreater("href","http://www.websharper.com/home"),Utilities.sty("text-decoration","none"),Utilities.cls("first")]),List.ofArray([Elements.Img(List.ofArray([Utilities.op_EqualsEqualsGreater("src","files/logo-websharper-icon.png"),Utilities.op_EqualsEqualsGreater("alt","[logo]"),Utilities.sty("margin-top","0"),Utilities.sty("border-right","1px"),Utilities.sty("solid","#eee")]),Runtime.New(T,{
+         $:0
+        })),Elements.Img(List.ofArray([Utilities.op_EqualsEqualsGreater("src","files/logo-websharper-text-dark.png"),Utilities.op_EqualsEqualsGreater("alt","WebSharper"),Utilities.sty("height","32px")]),Runtime.New(T,{
+         $:0
+        }))]))])),Elements.Nav(List.ofArray([Utilities.cls("nav"),Utilities.cls("nav-collapsible"),Utilities.cls("right"),Utilities.sty("float","right")]),List.ofArray([Html.UL(List.ofArray([Utilities.cls("nav-list")]),List.ofArray([Doc.Concat(List.map(renderLink,Site.NavPages())),Doc.Concat(List.map(renderExternal,Site.NavExternalLinks()))]))]))]));
+       },
+       NavExternalLinks:Runtime.Field(function()
+       {
+        return List.ofArray([["GitHub","http://www.github.com/IntelliFactory/websharper.ui.next"],["API Reference","https://github.com/intellifactory/websharper.ui.next/blob/master/docs/API.md"]]);
+       }),
+       NavPages:Runtime.Field(function()
+       {
+        return List.ofArray([{
+         $:0
+        },{
+         $:1
+        },{
+         $:2
+        }]);
+       }),
+       SiteRouter:function(samples)
+       {
+        return Router.Merge(List.ofArray([Router.Prefix("home",Site.homeRouter(samples)),Router.Prefix("about",Site.aboutRouter(samples)),Router.Prefix("samples",Samples.SamplesRouter(samples))]));
+       },
+       aboutPage:Runtime.Field(function()
+       {
+        return SiteCommon.mkPage(Site.showPgTy({
+         $:1
+        }),undefined,{
+         $:1
+        });
+       }),
+       aboutRouter:function(samples)
+       {
+        var arg20;
+        arg20=function(id)
+        {
+         return function()
+         {
+          var aboutPg;
+          aboutPg=Site.pageFor({
+           $:1
+          },samples);
+          aboutPg.PageRouteId=id;
+          return aboutPg;
+         };
+        };
+        return Router.Route(Site.unitRouteMap(),null,arg20);
+       },
+       fadeTime:Runtime.Field(function()
+       {
+        return 300;
+       }),
+       homePage:Runtime.Field(function()
+       {
+        return SiteCommon.mkPage(Site.showPgTy({
+         $:0
+        }),undefined,{
+         $:0
+        });
+       }),
+       homeRouter:function(samples)
+       {
+        var arg20;
+        arg20=function(id)
+        {
+         return function()
+         {
+          var homePg;
+          homePg=Site.pageFor({
+           $:0
+          },samples);
+          homePg.PageRouteId=id;
+          return homePg;
+         };
+        };
+        return Router.Route(Site.unitRouteMap(),null,arg20);
+       },
+       linkBtn:function(caption,href)
+       {
+        return Elements.A(List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-default"),Utilities.op_EqualsEqualsGreater("href",href)]),List.ofArray([Utilities.txt(caption)]));
+       },
+       mkEntry:function(name,desc,img,urls)
+       {
+        return{
+         Name:name,
+         ImgURL:img,
+         Description:desc,
+         URLs:urls
+        };
+       },
+       pageFor:function(pty,samples)
+       {
+        return pty.$==1?Site.aboutPage():pty.$==2?Samples.InitialSamplePage(samples):Site.homePage();
+       },
+       showPgTy:function(_arg1)
+       {
+        return _arg1.$==1?"About":_arg1.$==2?"Samples":"Home";
+       },
+       unitRouteMap:Runtime.Field(function()
+       {
+        return RouteMap.Create(function()
+        {
+         return Runtime.New(T,{
+          $:0
+         });
+        },function()
+        {
+         return null;
+        });
+       })
+      },
+      SiteCommon:{
+       mkPage:function(name,routeId,ty)
+       {
+        return{
+         PageName:name,
+         PageRouteId:routeId,
+         PageType:ty,
+         PageSample:{
+          $:0
+         }
+        };
+       }
+      },
+      TodoList:{
+       CreateModel:function()
+       {
+        return{
+         Items:ListModel1.Create(function(item)
+         {
+          return item.Key;
+         },Runtime.New(T,{
+          $:0
+         }))
+        };
+       },
+       Description:function()
+       {
+        return Html.Div0(List.ofArray([Doc.TextNode("A to-do list application.")]));
+       },
+       Main:function()
+       {
+        return TodoList.TodoExample();
+       },
+       RenderItem:function(m,todo)
+       {
+        return Html.TR0(List.ofArray([Html.TD0(List.ofArray([Doc.EmbedView(View1.Map(function(isDone)
+        {
+         return isDone?Html.Del0(List.ofArray([Utilities.txt(todo.TodoText)])):Utilities.txt(todo.TodoText);
+        },View1.FromVar(todo.Done)))])),Html.TD0(List.ofArray([Util.button("Done",function()
+        {
+         return Var.Set(todo.Done,true);
+        })])),Html.TD0(List.ofArray([Util.button("Remove",function()
+        {
+         return m.Items.Remove(todo);
+        })]))]));
+       },
+       Sample:Runtime.Field(function()
+       {
+        return Samples.Build().Id("TodoList").FileName("TodoList.fs").Keywords(List.ofArray(["todo"])).Render(function()
+        {
+         return TodoList.Main();
+        }).RenderDescription(function()
+        {
+         return TodoList.Description();
+        }).Create();
+       }),
+       TodoExample:function()
+       {
+        var m;
+        m=TodoList.CreateModel();
+        return Html.Table(List.ofArray([Utilities.op_EqualsEqualsGreater("class","table table-hover")]),List.ofArray([Html.TBody0(List.ofArray([TodoList.TodoList(m),TodoList.TodoForm(m)]))]));
+       },
+       TodoForm:function(m)
+       {
+        var rvInput;
+        rvInput=Var1.Create("");
+        return Html.Form0(List.ofArray([Utilities.divc("form-group",List.ofArray([Html.Label0(List.ofArray([Utilities.txt("New entry: ")])),Util.input(rvInput)])),Util.button("Submit",function()
+        {
+         return m.Items.Add(TodoItem.Create(Var1.Get(rvInput)));
+        })]));
+       },
+       TodoItem:Runtime.Class({},{
+        Create:function(s)
+        {
+         var Key1;
+         Key1=Key.Fresh();
+         return Runtime.New(TodoItem,{
+          Done:Var1.Create(false),
+          Key:Key1,
+          TodoText:s
+         });
+        }
+       }),
+       TodoList:function(m)
+       {
+        return Doc.ConvertBy(function(m1)
+        {
+         return m1.Key;
+        },function(todo)
+        {
+         return TodoList.RenderItem(m,todo);
+        },ListModel.View(m.Items));
+       },
+       Util:{
+        button:function(name,handler)
+        {
+         return Doc.Button(name,List.ofArray([Utilities.op_EqualsEqualsGreater("class","btn btn-default")]),handler);
+        },
+        input:function(x)
+        {
+         return Doc.Input(List.ofArray([Utilities.op_EqualsEqualsGreater("class","form-control")]),x);
+        }
+       }
+      },
+      Utilities:{
+       btn:function(caption,act)
+       {
+        return Doc.Button(caption,List.ofArray([Utilities.cls("btn"),Utilities.cls("btn-default")]),act);
+       },
+       cls:function(n)
+       {
+        return Attr.Class(n);
+       },
+       divc:function(c,docs)
+       {
+        return Doc.Element("div",List.ofArray([Utilities.cls(c)]),docs);
+       },
+       href:function(text,url)
+       {
+        return Doc.Element("a",List.ofArray([Utilities.op_EqualsEqualsGreater("href",url)]),List.ofArray([Utilities.txt(text)]));
+       },
+       link:function(cap,attr,act)
+       {
+        return Doc.Link(cap,attr,act);
+       },
+       op_EqualsEqualsGreater:function(k,v)
+       {
+        return Attr.Create(k,v);
+       },
+       sty:function(n,v)
+       {
+        return Attr.Style(n,v);
+       },
+       txt:function(t)
+       {
+        return Doc.TextNode(t);
+       }
+      }
+     }
     }
    }
   }
@@ -18105,30 +20445,140 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
  Runtime.OnInit(function()
  {
   WebSharper=Runtime.Safe(Global.IntelliFactory.WebSharper);
-  List=Runtime.Safe(WebSharper.List);
-  PrettyTodo=Runtime.Safe(Global.PrettyTodo);
-  Client=Runtime.Safe(PrettyTodo.Client);
   UI=Runtime.Safe(WebSharper.UI);
   Next=Runtime.Safe(UI.Next);
-  Doc=Runtime.Safe(Next.Doc);
+  Interpolation1=Runtime.Safe(Next.Interpolation1);
+  Easing=Runtime.Safe(Next.Easing);
+  AnimatedBobsleighSite=Runtime.Safe(Next.AnimatedBobsleighSite);
+  An=Runtime.Safe(Next.An);
+  Trans=Runtime.Safe(Next.Trans);
   Var=Runtime.Safe(Next.Var);
-  ListModel=Runtime.Safe(Next.ListModel);
+  Doc=Runtime.Safe(Next.Doc);
+  List=Runtime.Safe(WebSharper.List);
+  Html=Runtime.Safe(Next.Html);
+  Utilities=Runtime.Safe(Next.Utilities);
+  T=Runtime.Safe(List.T);
   Var1=Runtime.Safe(Next.Var1);
   View1=Runtime.Safe(Next.View1);
-  Html=Runtime.Safe(Next.Html);
   Attr=Runtime.Safe(Next.Attr);
-  Elements=Runtime.Safe(Html.Elements);
-  T=Runtime.Safe(List.T);
-  ListModel1=Runtime.Safe(Next.ListModel1);
+  View=Runtime.Safe(Next.View);
+  Unchecked=Runtime.Safe(WebSharper.Unchecked);
+  Samples=Runtime.Safe(Next.Samples);
+  AnimatedContactFlow=Runtime.Safe(Next.AnimatedContactFlow);
+  Flow1=Runtime.Safe(Next.Flow1);
+  Flow=Runtime.Safe(Next.Flow);
+  BobsleighSite=Runtime.Safe(Next.BobsleighSite);
+  Calculator=Runtime.Safe(Next.Calculator);
+  CheckBoxTest=Runtime.Safe(Next.CheckBoxTest);
   Seq=Runtime.Safe(WebSharper.Seq);
-  return View=Runtime.Safe(Next.View);
+  Person=Runtime.Safe(CheckBoxTest.Person);
+  Site=Runtime.Safe(Next.Site);
+  SimpleTextBox=Runtime.Safe(Next.SimpleTextBox);
+  InputTransform=Runtime.Safe(Next.InputTransform);
+  TodoList=Runtime.Safe(Next.TodoList);
+  PhoneExample=Runtime.Safe(Next.PhoneExample);
+  EditablePersonList=Runtime.Safe(Next.EditablePersonList);
+  ContactFlow=Runtime.Safe(Next.ContactFlow);
+  MessageBoard=Runtime.Safe(Next.MessageBoard);
+  RoutedBobsleighSite=Runtime.Safe(Next.RoutedBobsleighSite);
+  ObjectConstancy=Runtime.Safe(Next.ObjectConstancy);
+  MouseInfo=Runtime.Safe(Next.MouseInfo);
+  KeyboardInfo=Runtime.Safe(Next.KeyboardInfo);
+  Common=Runtime.Safe(Next.Common);
+  Fresh=Runtime.Safe(Common.Fresh);
+  String=Runtime.Safe(Global.String);
+  Strings=Runtime.Safe(WebSharper.Strings);
+  IntrinsicFunctionProxy=Runtime.Safe(WebSharper.IntrinsicFunctionProxy);
+  Input=Runtime.Safe(Next.Input);
+  Keyboard=Runtime.Safe(Input.Keyboard);
+  Auth=Runtime.Safe(MessageBoard.Auth);
+  Concurrency=Runtime.Safe(WebSharper.Concurrency);
+  Server=Runtime.Safe(Next.Server);
+  Mouse=Runtime.Safe(Input.Mouse);
+  jQuery=Runtime.Safe(Global.jQuery);
+  DataSet=Runtime.Safe(ObjectConstancy.DataSet);
+  Arrays=Runtime.Safe(WebSharper.Arrays);
+  OperatorIntrinsics=Runtime.Safe(WebSharper.OperatorIntrinsics);
+  SvgElements=Runtime.Safe(Html.SvgElements);
+  Math=Runtime.Safe(Global.Math);
+  Phone=Runtime.Safe(PhoneExample.Phone);
+  Operators=Runtime.Safe(WebSharper.Operators);
+  Order=Runtime.Safe(PhoneExample.Order);
+  RouteMap=Runtime.Safe(Next.RouteMap);
+  Builder=Runtime.Safe(Samples.Builder);
+  Router=Runtime.Safe(Next.Router);
+  SiteCommon=Runtime.Safe(Next.SiteCommon);
+  Elements=Runtime.Safe(Html.Elements);
+  Option=Runtime.Safe(WebSharper.Option);
+  Collections=Runtime.Safe(WebSharper.Collections);
+  MapModule=Runtime.Safe(Collections.MapModule);
+  FSharpMap=Runtime.Safe(Collections.FSharpMap);
+  ListModel1=Runtime.Safe(Next.ListModel1);
+  Util=Runtime.Safe(TodoList.Util);
+  TodoItem=Runtime.Safe(TodoList.TodoItem);
+  Key=Runtime.Safe(Next.Key);
+  ListModel=Runtime.Safe(Next.ListModel);
+  return Client=Runtime.Safe(Next.Client);
  });
  Runtime.OnLoad(function()
  {
-  Client.runningId();
-  Client.TodoApp();
-  Client.Section();
+  TodoList.Sample();
+  Site.unitRouteMap();
+  Site.homePage();
+  Site.fadeTime();
+  Site.aboutPage();
+  Site.NavPages();
+  Site.NavExternalLinks();
+  Site.FadeTransition();
+  Site.Fade();
+  Site.Entries();
+  SimpleTextBox.Sample();
+  Server.threads();
+  Server.posts();
+  Server.DELAY();
+  Samples.nav();
+  RoutedBobsleighSite.TheRouteMap();
+  RoutedBobsleighSite.Sample();
+  PhoneExample.Sample();
+  ObjectConstancy.Width();
+  ObjectConstancy.SimpleTransition();
+  ObjectConstancy.Sample();
+  ObjectConstancy.InOutTransition();
+  ObjectConstancy.Height();
+  MouseInfo.Sample();
+  MessageBoard.Sample();
+  KeyboardInfo.keys();
+  KeyboardInfo.Sample();
+  InputTransform.Sample();
+  EditablePersonList.peopleList();
+  EditablePersonList.peopleBoxes();
+  EditablePersonList.memberList();
+  EditablePersonList.Sample();
+  ContactFlow.personFlowlet();
+  ContactFlow.contactTypeFlowlet();
+  ContactFlow.Sample();
+  Fresh.i();
   Client.Main();
+  CheckBoxTest.Sample();
+  CheckBoxTest.People();
+  Calculator.initCalc();
+  Calculator.Sample();
+  BobsleighSite.pages();
+  BobsleighSite.Sample();
+  AnimatedContactFlow.swipeTime();
+  AnimatedContactFlow.personFlowlet();
+  AnimatedContactFlow.fadeTime();
+  AnimatedContactFlow.contactTypeFlowlet();
+  AnimatedContactFlow.SwipeTransition();
+  AnimatedContactFlow.Swipe();
+  AnimatedContactFlow.Sample();
+  AnimatedContactFlow.FadeTransition();
+  AnimatedContactFlow.Fade();
+  AnimatedBobsleighSite.pages();
+  AnimatedBobsleighSite.fadeTime();
+  AnimatedBobsleighSite.Sample();
+  AnimatedBobsleighSite.FadeTransition();
+  AnimatedBobsleighSite.Fade();
   return;
  });
 }());
