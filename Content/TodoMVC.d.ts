@@ -3328,6 +3328,9 @@ declare module IntelliFactory {
                     var Simple : {
                         <_M1>(inter: __ABBREV.__Next.Interpolation1<_M1>, easing: __ABBREV.__Next.Easing, dur: number, startValue: _M1, endValue: _M1): any;
                     };
+                    var Delayed : {
+                        <_M1>(inter: __ABBREV.__Next.Interpolation1<_M1>, easing: __ABBREV.__Next.Easing, dur: number, delay: number, startValue: _M1, endValue: _M1): any;
+                    };
                     var Map : {
                         <_M1, _M2>(f: {
                             (x: _M1): _M2;
@@ -3353,12 +3356,10 @@ declare module IntelliFactory {
                         (): __ABBREV.__Next.An;
                     };
                 }
-                module Trans1 {
+                module Trans {
                     var AnimateChange : {
                         <_M1>(tr: any, x: _M1, y: _M1): any;
                     };
-                }
-                module Trans {
                     var AnimateEnter : {
                         <_M1>(tr: any, x: _M1): any;
                     };
@@ -3557,17 +3558,12 @@ declare module IntelliFactory {
                         (): __ABBREV.__Next.Doc;
                     };
                 }
-                module Flow1 {
+                module Flow {
                     var Map : {
                         <_M1, _M2>(f: {
                             (x: _M1): _M2;
                         }, x: any): any;
                     };
-                    var get_Do : {
-                        (): __ABBREV.__Next.FlowBuilder;
-                    };
-                }
-                module Flow {
                     var Bind : {
                         <_M1, _M2>(m: any, k: {
                             (x: _M1): any;
@@ -3590,6 +3586,11 @@ declare module IntelliFactory {
                         (doc: __ABBREV.__Next.Doc): any;
                     };
                 }
+                module Flow1 {
+                    var get_Do : {
+                        (): __ABBREV.__Next.FlowBuilder;
+                    };
+                }
                 module RouteMap {
                     var Create : {
                         <_M1>(ser: {
@@ -3602,7 +3603,7 @@ declare module IntelliFactory {
                         <_M1>(map: any): __ABBREV.__Next.Var1<_M1>;
                     };
                 }
-                module Router {
+                module Router1 {
                     var Dir : {
                         <_M1>(prefix: string, sites: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Router1<_M1>>): __ABBREV.__Next.Router1<_M1>;
                     };
@@ -3614,6 +3615,8 @@ declare module IntelliFactory {
                     var Merge : {
                         <_M1>(sites: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Router1<_M1>>): __ABBREV.__Next.Router1<_M1>;
                     };
+                }
+                module Router {
                     var Prefix : {
                         <_M1>(prefix: string, _arg1: __ABBREV.__Next.Router1<_M1>): __ABBREV.__Next.Router1<_M1>;
                     };
@@ -5217,6 +5220,9 @@ declare module IntelliFactory {
                 interface ListModel1<_T1, _T2> {
                     Add(item: _T2): void;
                     Remove(item: _T2): void;
+                    Iter(fn: {
+                        (x: _T2): void;
+                    }): void;
                     Key: {
                         (x: _T2): _T1;
                     };
@@ -5313,835 +5319,72 @@ declare module __ABBREV {
     export import __List = IntelliFactory.WebSharper.List;
 }
 
-declare module IntelliFactory {
-    module WebSharper {
-        module UI {
-            module Next {
-                module Client {
-                    var Main : {
-                        (): void;
-                    };
-                }
-                module KeyboardInfo {
-                    var commaList : {
-                        (xs: __ABBREV.__List.T<string>): string;
-                    };
-                    var Main : {
-                        (): __ABBREV.__Next.Doc;
-                    };
-                    var Description : {
-                        (): __ABBREV.__Next.Doc;
-                    };
-                    var keys : {
-                        (): __ABBREV.__Next.View1<__ABBREV.__List.T<number>>;
-                    };
-                    var Sample : {
-                        (): any;
-                    };
-                }
-                module EditablePersonList {
-                    interface Person {
-                        FirstName: __ABBREV.__Next.Var1<string>;
-                        LastName: __ABBREV.__Next.Var1<string>;
-                    }
-                    var createPerson : {
-                        (first: string, last: string): any;
-                    };
-                    var Main : {
-                        (): __ABBREV.__Next.Doc;
-                    };
-                    var Description : {
-                        (): __ABBREV.__Next.Doc;
-                    };
-                    var peopleList : {
-                        (): __ABBREV.__List.T<any>;
-                    };
-                    var memberList : {
-                        (): __ABBREV.__Next.Doc;
-                    };
-                    var peopleBoxes : {
-                        (): __ABBREV.__Next.Doc;
-                    };
-                    var Sample : {
-                        (): any;
-                    };
-                }
-                module RoutedBobsleighSite {
-                    var Main : {
-                        (current: __ABBREV.__Next.Var1<__ABBREV.__BobsleighSite.Page>): __ABBREV.__Next.Doc;
-                    };
-                    var description : {
-                        <_M1>(v: _M1): __ABBREV.__Next.Doc;
-                    };
-                    var TheRouteMap : {
-                        (): any;
-                    };
-                    var Sample : {
-                        (): any;
-                    };
-                }
-                module BobsleighSite {
-                    interface Page {
-                    }
-                    interface Context {
-                        Go: {
-                            (x: __ABBREV.__BobsleighSite.Page): void;
-                        };
-                    }
-                    var GlobalGo : {
-                        (_var: __ABBREV.__Next.Var1<__ABBREV.__BobsleighSite.Page>, act: __ABBREV.__BobsleighSite.Page): void;
-                    };
-                    var showAct : {
-                        (_arg1: __ABBREV.__BobsleighSite.Page): string;
-                    };
-                    var NavBar : {
-                        (_var: __ABBREV.__Next.Var1<__ABBREV.__BobsleighSite.Page>): __ABBREV.__Next.Doc;
-                    };
-                    var HomePage : {
-                        (ctx: any): __ABBREV.__Next.Doc;
-                    };
-                    var History : {
-                        <_M1>(ctx: _M1): __ABBREV.__Next.Doc;
-                    };
-                    var Governance : {
-                        <_M1>(ctx: _M1): __ABBREV.__Next.Doc;
-                    };
-                    var Team : {
-                        <_M1>(ctx: _M1): __ABBREV.__Next.Doc;
-                    };
-                    var Main : {
-                        (): __ABBREV.__Next.Doc;
-                    };
-                    var description : {
-                        (): __ABBREV.__Next.Doc;
-                    };
-                    var pages : {
-                        (): __ABBREV.__List.T<__ABBREV.__BobsleighSite.Page>;
-                    };
-                    var Sample : {
-                        (): any;
-                    };
-                }
-                module AnimatedBobsleighSite {
-                    interface Page {
-                    }
-                    interface Context {
-                        Go: {
-                            (x: __ABBREV.__AnimatedBobsleighSite.Page): void;
-                        };
-                    }
-                    var GlobalGo : {
-                        (_var: __ABBREV.__Next.Var1<__ABBREV.__AnimatedBobsleighSite.Page>, act: __ABBREV.__AnimatedBobsleighSite.Page): void;
-                    };
-                    var showAct : {
-                        (_arg1: __ABBREV.__AnimatedBobsleighSite.Page): string;
-                    };
-                    var NavBar : {
-                        (_var: __ABBREV.__Next.Var1<__ABBREV.__AnimatedBobsleighSite.Page>): __ABBREV.__Next.Doc;
-                    };
-                    var MakePage : {
-                        (_var: __ABBREV.__Next.Var1<__ABBREV.__AnimatedBobsleighSite.Page>, pg: __ABBREV.__Next.Doc): __ABBREV.__Next.Doc;
-                    };
-                    var HomePage : {
-                        (ctx: any): __ABBREV.__Next.Doc;
-                    };
-                    var History : {
-                        <_M1>(ctx: _M1): __ABBREV.__Next.Doc;
-                    };
-                    var Governance : {
-                        <_M1>(ctx: _M1): __ABBREV.__Next.Doc;
-                    };
-                    var Team : {
-                        <_M1>(ctx: _M1): __ABBREV.__Next.Doc;
-                    };
-                    var Main : {
-                        (): __ABBREV.__Next.Doc;
-                    };
-                    var description : {
-                        (): __ABBREV.__Next.Doc;
-                    };
-                    var pages : {
-                        (): __ABBREV.__List.T<__ABBREV.__AnimatedBobsleighSite.Page>;
-                    };
-                    var fadeTime : {
-                        (): number;
-                    };
-                    var Fade : {
-                        (): {
-                            (x: number): {
-                                (x: number): any;
-                            };
-                        };
-                    };
-                    var FadeTransition : {
-                        (): any;
-                    };
-                    var Sample : {
-                        (): any;
-                    };
-                }
-                module ObjectConstancy {
-                    module DataSet {
-                        var Ratio : {
-                            (ds: __ABBREV.__ObjectConstancy.DataSet, br: __ABBREV.__ObjectConstancy.AgeBracket, st: __ABBREV.__ObjectConstancy.State): number;
-                        };
-                        var TopStatesByRatio : {
-                            (ds: __ABBREV.__ObjectConstancy.DataSet, bracket: __ABBREV.__ObjectConstancy.AgeBracket): any[];
-                        };
-                        var ParseCSV : {
-                            (data: string): __ABBREV.__ObjectConstancy.DataSet;
-                        };
-                        var LoadFromCSV : {
-                            (url: string): any;
-                        };
-                    }
-                    interface AgeBracket {
-                    }
-                    interface State {
-                    }
-                    interface DataSet {
-                        Brackets: __ABBREV.__ObjectConstancy.AgeBracket[];
-                        Population: {
-                            (x: __ABBREV.__ObjectConstancy.AgeBracket): {
-                                (x: __ABBREV.__ObjectConstancy.State): number;
-                            };
-                        };
-                        States: __ABBREV.__ObjectConstancy.State[];
-                    }
-                    interface StateView {
-                        MaxValue: number;
-                        Position: number;
-                        State: string;
-                        Total: number;
-                        Value: number;
-                    }
-                    var SetupDataModel : {
-                        (): any;
-                    };
-                    var SimpleAnimation : {
-                        (x: number, y: number): any;
-                    };
-                    var Percent : {
-                        (x: number): string;
-                    };
-                    var Render : {
-                        (state: __ABBREV.__Next.View1<any>): __ABBREV.__Next.Doc;
-                    };
-                    var Main : {
-                        (): __ABBREV.__Next.Doc;
-                    };
-                    var Description : {
-                        (): __ABBREV.__Next.Doc;
-                    };
-                    var Width : {
-                        (): number;
-                    };
-                    var Height : {
-                        (): number;
-                    };
-                    var SimpleTransition : {
-                        (): any;
-                    };
-                    var InOutTransition : {
-                        (): any;
-                    };
-                    var Sample : {
-                        (): any;
-                    };
-                }
-                module MessageBoard {
-                    module Auth {
-                        interface Component {
-                            LoggedIn: __ABBREV.__Next.View1<__ABBREV.__WebSharper.OptionProxy<any>>;
-                            LoginForm: __ABBREV.__Next.Doc;
-                            StatusWidget: __ABBREV.__Next.Doc;
-                            HideForm: {
-                                (): void;
-                            };
-                            ShowForm: {
-                                (): void;
-                            };
-                        }
-                        var LoginForm : {
-                            (onLogin: {
-                                (x: any): void;
-                            }): __ABBREV.__Next.Doc;
-                        };
-                        var StatusWidget : {
-                            (login: {
-                                (): void;
-                            }, logout: {
-                                (): void;
-                            }, view: __ABBREV.__Next.View1<__ABBREV.__WebSharper.OptionProxy<any>>): __ABBREV.__Next.Doc;
-                        };
-                        var Create : {
-                            (): any;
-                        };
-                    }
-                    interface Action {
-                    }
-                    interface State {
-                        Auth: any;
-                        Threads: __ABBREV.__Next.Var1<__ABBREV.__List.T<any>>;
-                        Go: {
-                            (x: __ABBREV.__MessageBoard.Action): void;
-                        };
-                    }
-                    var ShowAction : {
-                        (act: __ABBREV.__MessageBoard.Action): string;
-                    };
-                    var NavBar : {
-                        (auth: any, _var: __ABBREV.__Next.Var1<__ABBREV.__MessageBoard.Action>, st: any): __ABBREV.__Next.Doc;
-                    };
-                    var NewThreadPage : {
-                        (st: any): __ABBREV.__Next.Doc;
-                    };
-                    var ThreadListPage : {
-                        (st: any): __ABBREV.__Next.Doc;
-                    };
-                    var ShowThreadPage : {
-                        (st: any, thread: any): __ABBREV.__Next.Doc;
-                    };
-                    var Initialise : {
-                        (): void;
-                    };
-                    var Main : {
-                        (): __ABBREV.__Next.Doc;
-                    };
-                    var Description : {
-                        (): __ABBREV.__Next.Doc;
-                    };
-                    var Sample : {
-                        (): any;
-                    };
-                }
-                module Server {
-                    var CheckCredentials : {
-                        (name: string, pass: string): __ABBREV.__WebSharper.OptionProxy<any>;
-                    };
-                    var CheckLogin : {
-                        (user: string, pass: string): any;
-                    };
-                    var GetThreads : {
-                        (): any;
-                    };
-                    var GetPosts : {
-                        (thread: any): any;
-                    };
-                    var AddThread : {
-                        (thread: any): any;
-                    };
-                    var AddPost : {
-                        (thread: any, post: any): any;
-                    };
-                    var DELAY : {
-                        (): number;
-                    };
-                    var threads : {
-                        (): __ABBREV.__List.T<any>;
-                    };
-                    var posts : {
-                        (): __ABBREV.__Collections.FSharpMap<number, __ABBREV.__List.T<any>>;
-                    };
-                }
-                module Common {
-                    module Fresh {
-                        var Int : {
-                            (): number;
-                        };
-                        var i : {
-                            (): number;
-                        };
-                    }
-                    interface User {
-                        Name: string;
-                        Password: string;
-                    }
-                    interface Post {
-                        PostId: number;
-                        PostAuthorName: string;
-                        Content: string;
-                    }
-                    interface Thread {
-                        ThreadId: number;
-                        Title: string;
-                        ThreadAuthorName: string;
-                        Posts: __ABBREV.__Next.Var1<__ABBREV.__List.T<any>>;
-                    }
-                    var CreateThread : {
-                        (author: string, title: string): any;
-                    };
-                    var CreatePost : {
-                        (user: any, content: string): any;
-                    };
-                }
-                module SimpleTextBox {
-                    var Main : {
-                        (): __ABBREV.__Next.Doc;
-                    };
-                    var Description : {
-                        (): __ABBREV.__Next.Doc;
-                    };
-                    var Sample : {
-                        (): any;
-                    };
-                }
-                module AnimatedContactFlow {
-                    interface ContactType {
-                    }
-                    interface ContactDetails {
-                    }
-                    interface Person {
-                        Name: string;
-                        Address: string;
-                    }
-                    var inputRow : {
-                        (rv: __ABBREV.__Next.Var1<string>, id: string, lblText: string): __ABBREV.__Next.Doc;
-                    };
-                    var AnimateFlow : {
-                        (pg: __ABBREV.__Next.Doc): __ABBREV.__Next.Doc;
-                    };
-                    var contactFlowlet : {
-                        (contactTy: __ABBREV.__AnimatedContactFlow.ContactType): any;
-                    };
-                    var finalPage : {
-                        (person: any, details: __ABBREV.__AnimatedContactFlow.ContactDetails): __ABBREV.__Next.Doc;
-                    };
-                    var ExampleFlow : {
-                        (): __ABBREV.__Next.Doc;
-                    };
-                    var Description : {
-                        (): __ABBREV.__Next.Doc;
-                    };
-                    var fadeTime : {
-                        (): number;
-                    };
-                    var Fade : {
-                        (): {
-                            (x: number): {
-                                (x: number): any;
-                            };
-                        };
-                    };
-                    var FadeTransition : {
-                        (): any;
-                    };
-                    var swipeTime : {
-                        (): number;
-                    };
-                    var Swipe : {
-                        (): {
-                            (x: number): {
-                                (x: number): any;
-                            };
-                        };
-                    };
-                    var SwipeTransition : {
-                        (): any;
-                    };
-                    var personFlowlet : {
-                        (): any;
-                    };
-                    var contactTypeFlowlet : {
-                        (): any;
-                    };
-                    var Sample : {
-                        (): any;
-                    };
-                }
-                module ContactFlow {
-                    interface ContactType {
-                    }
-                    interface ContactDetails {
-                    }
-                    interface Person {
-                        Name: string;
-                        Address: string;
-                    }
-                    var inputRow : {
-                        (rv: __ABBREV.__Next.Var1<string>, id: string, lblText: string): __ABBREV.__Next.Doc;
-                    };
-                    var contactFlowlet : {
-                        (contactTy: __ABBREV.__ContactFlow.ContactType): any;
-                    };
-                    var finalPage : {
-                        (person: any, details: __ABBREV.__ContactFlow.ContactDetails): __ABBREV.__Next.Doc;
-                    };
-                    var ExampleFlow : {
-                        (): __ABBREV.__Next.Doc;
-                    };
-                    var Description : {
-                        (): __ABBREV.__Next.Doc;
-                    };
-                    var personFlowlet : {
-                        (): any;
-                    };
-                    var contactTypeFlowlet : {
-                        (): any;
-                    };
-                    var Sample : {
-                        (): any;
-                    };
-                }
-                module InputTransform {
-                    var Main : {
-                        (): __ABBREV.__Next.Doc;
-                    };
-                    var Description : {
-                        (): __ABBREV.__Next.Doc;
-                    };
-                    var Sample : {
-                        (): any;
-                    };
-                }
-                module Calculator {
-                    interface Op {
-                    }
-                    interface Calculator {
-                        Memory: number;
-                        Operand: number;
-                        Operation: __ABBREV.__Calculator.Op;
-                    }
-                    var pushInt : {
-                        (x: number, rvCalc: __ABBREV.__Next.Var1<any>): void;
-                    };
-                    var shiftToMem : {
-                        (op: __ABBREV.__Calculator.Op, rvCalc: __ABBREV.__Next.Var1<any>): void;
-                    };
-                    var opFn : {
-                        (op: __ABBREV.__Calculator.Op): {
-                            (x: number): {
-                                (x: number): number;
-                            };
-                        };
-                    };
-                    var showOp : {
-                        (op: __ABBREV.__Calculator.Op): string;
-                    };
-                    var calculate : {
-                        (rvCalc: __ABBREV.__Next.Var1<any>): void;
-                    };
-                    var displayCalc : {
-                        (rvCalc: __ABBREV.__Next.Var1<any>): __ABBREV.__Next.View1<string>;
-                    };
-                    var calcBtn : {
-                        (i: number, rvCalc: __ABBREV.__Next.Var1<any>): __ABBREV.__Next.Doc;
-                    };
-                    var opBtn : {
-                        (o: __ABBREV.__Calculator.Op, rvCalc: __ABBREV.__Next.Var1<any>): __ABBREV.__Next.Doc;
-                    };
-                    var cBtn : {
-                        (rvCalc: __ABBREV.__Next.Var1<any>): __ABBREV.__Next.Doc;
-                    };
-                    var eqBtn : {
-                        (rvCalc: __ABBREV.__Next.Var1<any>): __ABBREV.__Next.Doc;
-                    };
-                    var calcView : {
-                        (rvCalc: __ABBREV.__Next.Var1<any>): __ABBREV.__Next.Doc;
-                    };
-                    var Main : {
-                        (): __ABBREV.__Next.Doc;
-                    };
-                    var Description : {
-                        (): __ABBREV.__Next.Doc;
-                    };
-                    var initCalc : {
-                        (): any;
-                    };
-                    var Sample : {
-                        (): any;
-                    };
-                }
-                module MouseInfo {
-                    var Main : {
-                        (): __ABBREV.__Next.Doc;
-                    };
-                    var Description : {
-                        (): __ABBREV.__Next.Doc;
-                    };
-                    var Sample : {
-                        (): any;
-                    };
-                }
-                module TodoList {
-                    module TodoItem {
-                        var Create : {
-                            (s: string): __ABBREV.__TodoList.TodoItem;
-                        };
-                    }
-                    interface TodoItem {
-                        Done: __ABBREV.__Next.Var1<boolean>;
-                        Key: __ABBREV.__Next.Key;
-                        TodoText: string;
-                    }
-                    interface Model {
-                        Items: __ABBREV.__Next.ListModel1<__ABBREV.__Next.Key, __ABBREV.__TodoList.TodoItem>;
-                    }
-                    var CreateModel : {
-                        (): any;
-                    };
-                    var RenderItem : {
-                        (m: any, todo: __ABBREV.__TodoList.TodoItem): __ABBREV.__Next.Doc;
-                    };
-                    var TodoForm : {
-                        (m: any): __ABBREV.__Next.Doc;
-                    };
-                    var TodoList : {
-                        (m: any): __ABBREV.__Next.Doc;
-                    };
-                    var TodoExample : {
-                        (): __ABBREV.__Next.Doc;
-                    };
-                    var Main : {
-                        (): __ABBREV.__Next.Doc;
-                    };
-                    var Description : {
-                        (): __ABBREV.__Next.Doc;
-                    };
-                    var Sample : {
-                        (): any;
-                    };
-                }
-                module PhoneExample {
-                    module Phone {
-                        var Compare : {
-                            (order: __ABBREV.__PhoneExample.Order, p1: __ABBREV.__PhoneExample.Phone, p2: __ABBREV.__PhoneExample.Phone): number;
-                        };
-                        var MatchesQuery : {
-                            (q: string, ph: __ABBREV.__PhoneExample.Phone): boolean;
-                        };
-                    }
-                    module Order {
-                        var Show : {
-                            (order: __ABBREV.__PhoneExample.Order): string;
-                        };
-                    }
-                    interface Phone {
-                        Name: string;
-                        Snippet: string;
-                        Age: number;
-                    }
-                    interface Order {
-                    }
-                    var PhonesWidget : {
-                        (phones: __ABBREV.__List.T<__ABBREV.__PhoneExample.Phone>): __ABBREV.__Next.Doc;
-                    };
-                    var Main : {
-                        (): __ABBREV.__Next.Doc;
-                    };
-                    var Description : {
-                        (): __ABBREV.__Next.Doc;
-                    };
-                    var Sample : {
-                        (): any;
-                    };
-                }
-                module CheckBoxTest {
-                    module Person {
-                        var Create : {
-                            (n: string, a: number): __ABBREV.__CheckBoxTest.Person;
-                        };
-                    }
-                    interface Person {
-                        Name: string;
-                        Age: number;
-                    }
-                    var Main : {
-                        (): __ABBREV.__Next.Doc;
-                    };
-                    var Description : {
-                        (): __ABBREV.__Next.Doc;
-                    };
-                    var People : {
-                        (): __ABBREV.__List.T<__ABBREV.__CheckBoxTest.Person>;
-                    };
-                    var Sample : {
-                        (): any;
-                    };
-                }
-                module Site {
-                    interface AboutEntry {
-                        Name: string;
-                        ImgURL: string;
-                        Description: string;
-                        URLs: __ABBREV.__List.T<__ABBREV.__Next.Doc>;
-                    }
-                    var mkEntry : {
-                        (name: string, desc: string, img: string, urls: __ABBREV.__List.T<__ABBREV.__Next.Doc>): any;
-                    };
-                    var showPgTy : {
-                        (_arg1: __ABBREV.__SiteCommon.PageTy): string;
-                    };
-                    var pageFor : {
-                        (pty: __ABBREV.__SiteCommon.PageTy, samples: __ABBREV.__List.T<any>): any;
-                    };
-                    var linkBtn : {
-                        (caption: string, href: string): __ABBREV.__Next.Doc;
-                    };
-                    var HomePage : {
-                        <_M1>(go: _M1): __ABBREV.__Next.Doc;
-                    };
-                    var AboutPage : {
-                        (go: {
-                            (x: __ABBREV.__SiteCommon.PageTy): void;
-                        }): __ABBREV.__Next.Doc;
-                    };
-                    var NavBar : {
-                        (v: __ABBREV.__Next.Var1<any>, samples: __ABBREV.__List.T<any>): __ABBREV.__Next.Doc;
-                    };
-                    var homeRouter : {
-                        (samples: __ABBREV.__List.T<any>): __ABBREV.__Next.Router1<any>;
-                    };
-                    var aboutRouter : {
-                        (samples: __ABBREV.__List.T<any>): __ABBREV.__Next.Router1<any>;
-                    };
-                    var SiteRouter : {
-                        (samples: __ABBREV.__List.T<any>): __ABBREV.__Next.Router1<any>;
-                    };
-                    var MakePage : {
-                        (pg: __ABBREV.__Next.Doc): __ABBREV.__Next.Doc;
-                    };
-                    var Main : {
-                        (samples: __ABBREV.__List.T<any>): void;
-                    };
-                    var Entries : {
-                        (): __ABBREV.__List.T<any>;
-                    };
-                    var NavExternalLinks : {
-                        (): __ABBREV.__List.T<any>;
-                    };
-                    var homePage : {
-                        (): any;
-                    };
-                    var aboutPage : {
-                        (): any;
-                    };
-                    var NavPages : {
-                        (): __ABBREV.__List.T<__ABBREV.__SiteCommon.PageTy>;
-                    };
-                    var unitRouteMap : {
-                        (): any;
-                    };
-                    var fadeTime : {
-                        (): number;
-                    };
-                    var Fade : {
-                        (): {
-                            (x: number): {
-                                (x: number): any;
-                            };
-                        };
-                    };
-                    var FadeTransition : {
-                        (): any;
-                    };
-                }
-                module SiteCommon {
-                    interface PageTy {
-                    }
-                    interface Meta {
-                        FileName: string;
-                        Keywords: __ABBREV.__List.T<string>;
-                        Title: string;
-                        Uri: string;
-                    }
-                    interface Sample {
-                        Body: __ABBREV.__Next.Doc;
-                        Description: __ABBREV.__Next.Doc;
-                        Meta: any;
-                        Router: __ABBREV.__Next.Router1<any>;
-                        RouteId: __ABBREV.__Next.RouteId;
-                        SamplePage: any;
-                    }
-                    interface Page {
-                        PageName: string;
-                        PageRouteId: __ABBREV.__Next.RouteId;
-                        PageType: __ABBREV.__SiteCommon.PageTy;
-                        PageSample: __ABBREV.__WebSharper.OptionProxy<any>;
-                    }
-                    var mkPage : {
-                        (name: string, routeId: __ABBREV.__Next.RouteId, ty: __ABBREV.__SiteCommon.PageTy): any;
-                    };
-                }
-                module Samples {
-                    interface Visuals<_T1> {
-                        Desc: {
-                            (x: _T1): __ABBREV.__Next.Doc;
-                        };
-                        Main: {
-                            (x: _T1): __ABBREV.__Next.Doc;
-                        };
-                    }
-                    interface Builder<_T1> {
-                        Create(): any;
-                        FileName(x: string): __ABBREV.__Samples.Builder<_T1>;
-                        Id(x: string): __ABBREV.__Samples.Builder<_T1>;
-                        Keywords(x: __ABBREV.__List.T<string>): __ABBREV.__Samples.Builder<_T1>;
-                        Render(f: {
-                            (x: _T1): __ABBREV.__Next.Doc;
-                        }): __ABBREV.__Samples.Builder<_T1>;
-                        RenderDescription(x: {
-                            (x: _T1): __ABBREV.__Next.Doc;
-                        }): __ABBREV.__Samples.Builder<_T1>;
-                        Title(x: string): __ABBREV.__Samples.Builder<_T1>;
-                        Uri(x: string): __ABBREV.__Samples.Builder<_T1>;
-                    }
-                    var Sidebar : {
-                        (vPage: __ABBREV.__Next.Var1<any>, samples: __ABBREV.__List.T<any>): __ABBREV.__Next.Doc;
-                    };
-                    var RenderContent : {
-                        (sample: any): __ABBREV.__Next.Doc;
-                    };
-                    var Render : {
-                        (vPage: __ABBREV.__Next.Var1<any>, pg: any, samples: __ABBREV.__List.T<any>): __ABBREV.__Next.Doc;
-                    };
-                    var CreateRouted : {
-                        <_M1>(router: any, init: _M1, vis: any, meta: any): any;
-                    };
-                    var CreateSimple : {
-                        (vis: any, meta: any): any;
-                    };
-                    var Build : {
-                        (): __ABBREV.__Samples.Builder<void>;
-                    };
-                    var Routed : {
-                        <_M1>(router: any, init: _M1): __ABBREV.__Samples.Builder<__ABBREV.__Next.Var1<_M1>>;
-                    };
-                    var InitialSamplePage : {
-                        (samples: __ABBREV.__List.T<any>): any;
-                    };
-                    var SamplesRouter : {
-                        (samples: __ABBREV.__WebSharper.seq<any>): __ABBREV.__Next.Router1<any>;
-                    };
-                    var nav : {
-                        (): {
-                            (x: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>): {
-                                (x: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
-                            };
-                        };
-                    };
-                }
-            }
+declare module PrettyTodo {
+    module Client {
+        interface Filter {
         }
+        interface State {
+        }
+        interface TodoItem {
+            Id: number;
+            Text: __ABBREV.__Next.Var1<string>;
+            TodoState: __ABBREV.__Next.Var1<__ABBREV.__Client.State>;
+        }
+        var op_EqualsEqualsGreater : {
+            (arg00: string, arg10: string): __ABBREV.__Next.Attr;
+        };
+        var txt : {
+            (arg00: string): __ABBREV.__Next.Doc;
+        };
+        var fresh : {
+            (): number;
+        };
+        var mkTodo : {
+            (text: string): any;
+        };
+        var isDone : {
+            (st: __ABBREV.__Client.State): boolean;
+        };
+        var FilterList : {
+            (filter: __ABBREV.__Client.Filter, xs: __ABBREV.__WebSharper.seq<__ABBREV.__Client.State>): __ABBREV.__WebSharper.seq<__ABBREV.__Client.State>;
+        };
+        var RemoveCompleted : {
+            (model: __ABBREV.__Next.ListModel1<number, any>): void;
+        };
+        var MarkAllDone : {
+            (model: __ABBREV.__Next.ListModel1<number, any>): void;
+        };
+        var notDoneItems : {
+            (model: __ABBREV.__Next.ListModel1<number, any>): __ABBREV.__Next.View1<number>;
+        };
+        var RenderTodo : {
+            (model: __ABBREV.__Next.ListModel1<number, any>, filterView: __ABBREV.__Next.View1<__ABBREV.__Client.Filter>, item: any): __ABBREV.__Next.Doc;
+        };
+        var RenderList : {
+            (model: __ABBREV.__Next.ListModel1<number, any>, filter: __ABBREV.__Next.View1<__ABBREV.__Client.Filter>): __ABBREV.__Next.Doc;
+        };
+        var Section : {
+            (): {
+                (x: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>): {
+                    (x: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Doc>): __ABBREV.__Next.Doc;
+                };
+            };
+        };
+        var runningId : {
+            (): number;
+        };
+        var TodoApp : {
+            (): __ABBREV.__Next.Doc;
+        };
+        var Main : {
+            (): void;
+        };
     }
 }
 declare module __ABBREV {
     
-    export import __List = IntelliFactory.WebSharper.List;
     export import __Next = IntelliFactory.WebSharper.UI.Next;
-    export import __BobsleighSite = IntelliFactory.WebSharper.UI.Next.BobsleighSite;
-    export import __AnimatedBobsleighSite = IntelliFactory.WebSharper.UI.Next.AnimatedBobsleighSite;
-    export import __ObjectConstancy = IntelliFactory.WebSharper.UI.Next.ObjectConstancy;
+    export import __Client = PrettyTodo.Client;
     export import __WebSharper = IntelliFactory.WebSharper;
-    export import __MessageBoard = IntelliFactory.WebSharper.UI.Next.MessageBoard;
-    export import __Collections = IntelliFactory.WebSharper.Collections;
-    export import __AnimatedContactFlow = IntelliFactory.WebSharper.UI.Next.AnimatedContactFlow;
-    export import __ContactFlow = IntelliFactory.WebSharper.UI.Next.ContactFlow;
-    export import __Calculator = IntelliFactory.WebSharper.UI.Next.Calculator;
-    export import __TodoList = IntelliFactory.WebSharper.UI.Next.TodoList;
-    export import __PhoneExample = IntelliFactory.WebSharper.UI.Next.PhoneExample;
-    export import __CheckBoxTest = IntelliFactory.WebSharper.UI.Next.CheckBoxTest;
-    export import __SiteCommon = IntelliFactory.WebSharper.UI.Next.SiteCommon;
-    export import __Samples = IntelliFactory.WebSharper.UI.Next.Samples;
 }
 
