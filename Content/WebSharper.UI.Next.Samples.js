@@ -12004,7 +12004,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
 
 (function()
 {
- var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,IntrinsicFunctionProxy,Concurrency,Array,Seq,UI,Next,Abbrev,Fresh,Collections,HashSet,HashSet1,HashSet2,Arrays,JQueue,Unchecked,Slot,An,AppendList,Anims,window,Trans1,Option,View1,Lazy,Array1,Attrs,DomUtility,Attr,AnimatedAttrNode,Trans,DynamicAttrNode,View,Docs,Doc,List,Var,T,Mailbox,Operators,NodeSet,DocElemNode,DomNodes,jQuery,document,Easing,Easings,Var1,FlowBuilder,Flow,Html,Elements,Input,DoubleInterpolation,Key,ListModels,ListModel1,Model,Model1,Strings,encodeURIComponent,decodeURIComponent,Route,Routing,Trie,Router,Dictionary,Snap,Async,Enumerator,ResizeArray,ResizeArrayProxy,MapModule,FSharpMap,ViewBuilder,Attributes,SvgAttributes;
+ var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,IntrinsicFunctionProxy,Concurrency,Array,Seq,UI,Next,Abbrev,Fresh,Collections,HashSet,HashSet1,HashSet2,Arrays,JQueue,Unchecked,Slot,An,AppendList,Anims,window,Trans1,Option,View1,Lazy,Array1,Attrs,DomUtility,Attr,AnimatedAttrNode,DynamicAttrNode,View,Docs,Doc,List,Var,T,Mailbox,Operators,NodeSet,DocElemNode,DomNodes,jQuery,document,Easing,Easings,Var1,FlowBuilder,Flow,Html,Elements,Input,DoubleInterpolation,Key,ListModels,ListModel1,Model1,Strings,encodeURIComponent,decodeURIComponent,Route,Routing,Trie,Router,Dictionary,Snap,Async,Enumerator,ResizeArray,ResizeArrayProxy,MapModule,FSharpMap,ViewBuilder,Attributes,SvgAttributes;
  Runtime.Define(Global,{
   IntelliFactory:{
    WebSharper:{
@@ -12781,7 +12781,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          {
           flags=flags|1;
          }
-        if(Trans.CanAnimateExit(tr))
+        if(Trans1.CanAnimateExit(tr))
          {
           flags=flags|2;
          }
@@ -13030,7 +13030,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        ConvertSeq:function(render,view)
        {
-        return Doc.Flatten(View1.ConvertSeq(render,view));
+        return Doc.Flatten(View.ConvertSeq(render,view));
        },
        ConvertSeqBy:function(key,render,view)
        {
@@ -16010,17 +16010,14 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          {
           jQuery(document).keydown(function(evt)
           {
-           var keyCode,arg10;
+           var keyCode,xs;
            keyCode=evt.which;
            Var.Set(Input.KeyListenerState().LastPressed,keyCode);
-           arg10=function(xs)
+           xs=Var1.Get(Input.KeyListenerState().KeysPressed);
+           return!Seq.exists(function(x)
            {
-            return!Seq.exists(function(x)
-            {
-             return x===keyCode;
-            },xs)?List.append(xs,List.ofArray([keyCode])):xs;
-           };
-           return Var.Update(Input.KeyListenerState().KeysPressed,arg10);
+            return x===keyCode;
+           },xs)?Input.KeyListenerState().KeysPressed.set_Value(List.append(xs,List.ofArray([keyCode]))):null;
           });
           jQuery(document).keyup(function(evt)
           {
@@ -16162,6 +16159,12 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         });
        }
       }),
+      ListModel:Runtime.Class({},{
+       View:function(m)
+       {
+        return m.View;
+       }
+      }),
       ListModel1:Runtime.Class({
        Add:function(item)
        {
@@ -16223,10 +16226,6 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         {
          return x;
         },xs);
-       },
-       View:function(m)
-       {
-        return m.View;
        }
       }),
       ListModels:{
@@ -16240,24 +16239,10 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         },xs);
        }
       },
-      Model:Runtime.Class({},{
-       Update:function(update,_arg1)
-       {
-        return Var.Update(_arg1.$0,function(x)
-        {
-         update(x);
-         return x;
-        });
-       },
-       View:function(_arg2)
-       {
-        return _arg2.$1;
-       }
-      }),
       Model1:Runtime.Class({
        get_View:function()
        {
-        return Model.View(this);
+        return Model1.View(this);
        }
       },{
        Create:function(proj,init)
@@ -16269,6 +16254,18 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          $0:_var,
          $1:View1.Map(proj,_var.get_View())
         });
+       },
+       Update:function(update,_arg1)
+       {
+        return Var.Update(_arg1.$0,function(x)
+        {
+         update(x);
+         return x;
+        });
+       },
+       View:function(_arg2)
+       {
+        return _arg2.$1;
        }
       }),
       Route:{
@@ -16330,6 +16327,10 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        }
       }),
       Router:Runtime.Class({},{
+       Install:function(key,site)
+       {
+        return Routing.Install(key,site);
+       },
        Merge:function(sites)
        {
         return Routing.MergeRouters(sites);
@@ -16351,10 +16352,6 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        Dir:function(prefix,sites)
        {
         return Router.Prefix(prefix,Router.Merge(sites));
-       },
-       Install:function(key,site)
-       {
-        return Routing.Install(key,site);
        }
       }),
       Routing:{
@@ -16832,7 +16829,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        SnapshotOn:function(sn1,sn2)
        {
-        var matchValue,res,v,isInitialised;
+        var matchValue,res,v,triggered,cont;
         matchValue=[sn1.State,sn2.State];
         if(matchValue[1].$==0)
          {
@@ -16846,14 +16843,26 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
             $:0
            }
           };
-          isInitialised={
+          triggered={
            contents:false
+          };
+          cont=function()
+          {
+           var matchValue1;
+           if(triggered.contents)
+            {
+             matchValue1=v.contents;
+             return matchValue1.$==1?Snap.IsForever(sn2)?Snap.MarkForever(res,matchValue1.$0):matchValue1.$==1?Snap.MarkReady(res,matchValue1.$0):null:matchValue1.$==1?Snap.MarkReady(res,matchValue1.$0):null;
+            }
+           else
+            {
+             return null;
+            }
           };
           Snap.When(sn1,function()
           {
-           var matchValue1;
-           matchValue1=v.contents;
-           return matchValue1.$==1?Snap.IsForever(sn2)?Snap.MarkForever(res,matchValue1.$0):matchValue1.$==1?Snap.MarkReady(res,matchValue1.$0):null:matchValue1.$==1?Snap.MarkReady(res,matchValue1.$0):null;
+           triggered.contents=true;
+           return cont(null);
           },function()
           {
            v.contents={
@@ -16867,211 +16876,11 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
             $:1,
             $0:y
            };
-           if(!isInitialised.contents)
-            {
-             isInitialised.contents=true;
-             return Snap.MarkReady(res,y);
-            }
-           else
-            {
-             return null;
-            }
+           return cont(null);
           },function()
           {
           });
           return res;
-         }
-       },
-       UpdateWhile:function(snPred,sn2)
-       {
-        var matchValue,res,v1,v2,isInitialised,obs,obsVal,cont,res1,v11,v21,isInitialised1,obs1,obsVal1,cont1;
-        matchValue=[snPred.State,sn2.State];
-        if(matchValue[0].$==0)
-         {
-          if(matchValue[0].$0)
-           {
-            return sn2;
-           }
-          else
-           {
-            if(matchValue[1].$==0)
-             {
-              return Snap.CreateForever(matchValue[1].$0);
-             }
-            else
-             {
-              res=Snap.Create();
-              v1={
-               contents:{
-                $:0
-               }
-              };
-              v2={
-               contents:{
-                $:0
-               }
-              };
-              isInitialised={
-               contents:false
-              };
-              obs=function()
-              {
-               v1.contents={
-                $:0
-               };
-               v2.contents={
-                $:0
-               };
-               return Snap.MarkObsolete(res);
-              };
-              obsVal=function()
-              {
-               var matchValue1;
-               matchValue1=v1.contents;
-               return matchValue1.$==1?matchValue1.$0?obs(null):null:null;
-              };
-              cont=function()
-              {
-               var matchValue1,y;
-               matchValue1=[v1.contents,v2.contents];
-               if(matchValue1[0].$==1)
-                {
-                 if(matchValue1[1].$==1)
-                  {
-                   if(matchValue1[0].$0)
-                    {
-                     y=matchValue1[1].$0;
-                     return Snap.IsForever(snPred)?Snap.MarkForever(res,y):Snap.MarkReady(res,y);
-                    }
-                   else
-                    {
-                     return null;
-                    }
-                  }
-                 else
-                  {
-                   return null;
-                  }
-                }
-               else
-                {
-                 return null;
-                }
-              };
-              Snap.When(snPred,function(x)
-              {
-               v1.contents={
-                $:1,
-                $0:x
-               };
-               return cont(null);
-              },obs);
-              Snap.When(sn2,function(y)
-              {
-               v2.contents={
-                $:1,
-                $0:y
-               };
-               if(!isInitialised.contents)
-                {
-                 isInitialised.contents=true;
-                 Snap.MarkReady(res,y);
-                }
-               return cont(null);
-              },obsVal);
-              return res;
-             }
-           }
-         }
-        else
-         {
-          if(matchValue[1].$==0)
-           {
-            return Snap.CreateForever(matchValue[1].$0);
-           }
-          else
-           {
-            res1=Snap.Create();
-            v11={
-             contents:{
-              $:0
-             }
-            };
-            v21={
-             contents:{
-              $:0
-             }
-            };
-            isInitialised1={
-             contents:false
-            };
-            obs1=function()
-            {
-             v11.contents={
-              $:0
-             };
-             v21.contents={
-              $:0
-             };
-             return Snap.MarkObsolete(res1);
-            };
-            obsVal1=function()
-            {
-             var matchValue1;
-             matchValue1=v11.contents;
-             return matchValue1.$==1?matchValue1.$0?obs1(null):null:null;
-            };
-            cont1=function()
-            {
-             var matchValue1,y;
-             matchValue1=[v11.contents,v21.contents];
-             if(matchValue1[0].$==1)
-              {
-               if(matchValue1[1].$==1)
-                {
-                 if(matchValue1[0].$0)
-                  {
-                   y=matchValue1[1].$0;
-                   return Snap.IsForever(snPred)?Snap.MarkForever(res1,y):Snap.MarkReady(res1,y);
-                  }
-                 else
-                  {
-                   return null;
-                  }
-                }
-               else
-                {
-                 return null;
-                }
-              }
-             else
-              {
-               return null;
-              }
-            };
-            Snap.When(snPred,function(x)
-            {
-             v11.contents={
-              $:1,
-              $0:x
-             };
-             return cont1(null);
-            },obs1);
-            Snap.When(sn2,function(y)
-            {
-             v21.contents={
-              $:1,
-              $0:y
-             };
-             if(!isInitialised1.contents)
-              {
-               isInitialised1.contents=true;
-               Snap.MarkReady(res1,y);
-              }
-             return cont1(null);
-            },obsVal1);
-            return res1;
-           }
          }
        },
        When:function(snap,avail,obsolete)
@@ -17106,7 +16915,27 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          }
        }
       },
-      Trans:Runtime.Class({},{
+      Trans1:Runtime.Class({},{
+       AnimateChange:function(tr,x,y)
+       {
+        return(tr.TChange.call(null,x))(y);
+       },
+       AnimateEnter:function(tr,x)
+       {
+        return tr.TEnter.call(null,x);
+       },
+       AnimateExit:function(tr,x)
+       {
+        return tr.TExit.call(null,x);
+       },
+       CanAnimateChange:function(tr)
+       {
+        return(tr.TFlags&1)!==0;
+       },
+       CanAnimateEnter:function(tr)
+       {
+        return(tr.TFlags&2)!==0;
+       },
        CanAnimateExit:function(tr)
        {
         return(tr.TFlags&4)!==0;
@@ -17173,28 +17002,6 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          },
          TFlags:0
         };
-       }
-      }),
-      Trans1:Runtime.Class({},{
-       AnimateChange:function(tr,x,y)
-       {
-        return(tr.TChange.call(null,x))(y);
-       },
-       AnimateEnter:function(tr,x)
-       {
-        return tr.TEnter.call(null,x);
-       },
-       AnimateExit:function(tr,x)
-       {
-        return tr.TExit.call(null,x);
-       },
-       CanAnimateChange:function(tr)
-       {
-        return(tr.TFlags&1)!==0;
-       },
-       CanAnimateEnter:function(tr)
-       {
-        return(tr.TFlags&2)!==0;
        }
       }),
       Trie:{
@@ -17528,10 +17335,17 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          }
         };
        },
-       Join:function(_arg9)
+       ConvertSeq:function(conv,view)
+       {
+        return View1.ConvertSeqBy(function(x)
+        {
+         return x;
+        },conv,view);
+       },
+       Join:function(_arg7)
        {
         var observe;
-        observe=_arg9.$0;
+        observe=_arg7.$0;
         return View1.CreateLazy(function()
         {
          return Snap.Bind(function(_arg1)
@@ -17540,10 +17354,10 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          },observe(null));
         });
        },
-       Sink:function(act,_arg10)
+       Sink:function(act,_arg8)
        {
         var observe,loop;
-        observe=_arg10.$0;
+        observe=_arg8.$0;
         loop=function()
         {
          return Snap.When(observe(null),act,function()
@@ -17584,13 +17398,6 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          state.contents=newState;
          return result;
         },view);
-       },
-       ConvertSeq:function(conv,view)
-       {
-        return View1.ConvertSeqBy(function(x)
-        {
-         return x;
-        },conv,view);
        },
        ConvertSeqBy:function(key,conv,view)
        {
@@ -17677,6 +17484,19 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          }
         };
        },
+       CreateLazy2:function(snapFn,_arg3,_arg2)
+       {
+        var o1,o2;
+        o1=_arg3.$0;
+        o2=_arg2.$0;
+        return View1.CreateLazy(function()
+        {
+         var s1,s2;
+         s1=o1(null);
+         s2=o2(null);
+         return(snapFn(s1))(s2);
+        });
+       },
        FromVar:function(_var)
        {
         return{
@@ -17696,15 +17516,15 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          return Snap.Map(fn,observe(null));
         });
        },
-       Map2:function(fn,_arg3,_arg2)
+       Map2:function(fn,v1,v2)
        {
-        var o1,o2;
-        o1=_arg3.$0;
-        o2=_arg2.$0;
-        return View1.CreateLazy(function()
+        return View1.CreateLazy2(function(_arg10_)
         {
-         return Snap.Map2(fn,o1(null),o2(null));
-        });
+         return function(_arg20_)
+         {
+          return Snap.Map2(fn,_arg10_,_arg20_);
+         };
+        },v1,v2);
        },
        MapAsync:function(fn,_arg4)
        {
@@ -17715,25 +17535,62 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          return Snap.MapAsync(fn,observe(null));
         });
        },
-       SnapshotOn:function(_arg6,_arg5)
+       SnapshotOn:function(def,_arg6,_arg5)
        {
-        var o1,o2;
+        var o1,o2,res,init;
         o1=_arg6.$0;
         o2=_arg5.$0;
+        res=Snap.CreateWithValue(def);
+        init={
+         contents:false
+        };
         return View1.CreateLazy(function()
         {
-         return Snap.SnapshotOn(o1(null),o2(null));
+         var s1,s2;
+         s1=o1(null);
+         s2=o2(null);
+         if(init.contents)
+          {
+           return Snap.SnapshotOn(s1,s2);
+          }
+         else
+          {
+           Snap.When(Snap.SnapshotOn(s1,s2),function()
+           {
+            return null;
+           },function()
+           {
+            if(!init.contents)
+             {
+              init.contents=true;
+              return Snap.MarkObsolete(res);
+             }
+            else
+             {
+              return null;
+             }
+           });
+           return res;
+          }
         });
        },
-       UpdateWhile:function(_arg8,_arg7)
+       UpdateWhile:function(def,v1,v2)
        {
-        var o1,o2;
-        o1=_arg8.$0;
-        o2=_arg7.$0;
-        return View1.CreateLazy(function()
+        var value;
+        value={
+         contents:def
+        };
+        return View1.Map2(function(pred)
         {
-         return Snap.UpdateWhile(o1(null),o2(null));
-        });
+         return function(v)
+         {
+          if(pred)
+           {
+            value.contents=v;
+           }
+          return value.contents;
+         };
+        },v1,v2);
        },
        get_Do:function()
        {
@@ -17789,7 +17646,6 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   DomUtility=Runtime.Safe(Next.DomUtility);
   Attr=Runtime.Safe(Next.Attr);
   AnimatedAttrNode=Runtime.Safe(Next.AnimatedAttrNode);
-  Trans=Runtime.Safe(Next.Trans);
   DynamicAttrNode=Runtime.Safe(Next.DynamicAttrNode);
   View=Runtime.Safe(Next.View);
   Docs=Runtime.Safe(Next.Docs);
@@ -17816,7 +17672,6 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   Key=Runtime.Safe(Next.Key);
   ListModels=Runtime.Safe(Next.ListModels);
   ListModel1=Runtime.Safe(Next.ListModel1);
-  Model=Runtime.Safe(Next.Model);
   Model1=Runtime.Safe(Next.Model1);
   Strings=Runtime.Safe(WebSharper.Strings);
   encodeURIComponent=Runtime.Safe(Global.encodeURIComponent);
@@ -18121,7 +17976,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
 
 (function()
 {
- var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,UI,Next,Interpolation,Easing,AnimatedBobsleighSite,An,Trans,Var,Doc,List,Html,Utilities,T,Var1,View1,Attr,View,Unchecked,Samples,AnimatedContactFlow,Flow,BobsleighSite,Calculator,CheckBoxTest,Seq,Person,Site,SimpleTextBox,InputTransform,TodoList,PhoneExample,EditablePersonList,ContactFlow,MessageBoard,RoutedBobsleighSite,ObjectConstancy,MouseInfo,KeyboardInfo,Common,Fresh,String,Strings,IntrinsicFunctionProxy,Input,Keyboard,Auth,Concurrency,Server,Mouse,jQuery,DataSet,Arrays,OperatorIntrinsics,SvgElements,Math,Phone,Operators,Order,RouteMap,Builder,Router,SiteCommon,Elements,Option,Collections,MapModule,FSharpMap,Router1,SortableBarChart,parseFloat,ListModel1,Util,TodoItem,Key,Client;
+ var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,UI,Next,Interpolation,Easing,AnimatedBobsleighSite,An,Trans1,Var,Doc,List,Html,Utilities,T,Var1,View1,Attr,View,Unchecked,Samples,AnimatedContactFlow,Flow,BobsleighSite,Calculator,CheckBoxTest,Seq,Person,Site,SimpleTextBox,InputTransform,TodoList,PhoneExample,EditablePersonList,ContactFlow,MessageBoard,RoutedBobsleighSite,ObjectConstancy,MouseInfo,KeyboardInfo,Common,Fresh,String,Strings,IntrinsicFunctionProxy,Input,Keyboard,Auth,Concurrency,Server,Mouse,jQuery,DataSet,Arrays,OperatorIntrinsics,SvgElements,Math,Phone,Operators,Order,RouteMap,Builder,Router,SiteCommon,Elements,Option,Collections,MapModule,FSharpMap,SortableBarChart,parseFloat,ListModel1,Util,TodoItem,Key,ListModel,Client;
  Runtime.Define(Global,{
   IntelliFactory:{
    WebSharper:{
@@ -18144,13 +17999,13 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        }),
        FadeTransition:Runtime.Field(function()
        {
-        return Trans.Exit(function()
+        return Trans1.Exit(function()
         {
          return((AnimatedBobsleighSite.Fade())(1))(0);
-        },Trans.Enter(function()
+        },Trans1.Enter(function()
         {
          return((AnimatedBobsleighSite.Fade())(0))(1);
-        },Trans.Create(AnimatedBobsleighSite.Fade())));
+        },Trans1.Create(AnimatedBobsleighSite.Fade())));
        }),
        GlobalGo:function(_var,act)
        {
@@ -18327,13 +18182,13 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        }),
        FadeTransition:Runtime.Field(function()
        {
-        return Trans.Exit(function()
+        return Trans1.Exit(function()
         {
          return((AnimatedContactFlow.Fade())(1))(0);
-        },Trans.Enter(function()
+        },Trans1.Enter(function()
         {
          return((AnimatedContactFlow.Fade())(0))(1);
-        },Trans.Create(AnimatedContactFlow.Fade())));
+        },Trans1.Create(AnimatedContactFlow.Fade())));
        }),
        Sample:Runtime.Field(function()
        {
@@ -18361,10 +18216,10 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        }),
        SwipeTransition:Runtime.Field(function()
        {
-        return Trans.Exit(function()
+        return Trans1.Exit(function()
         {
          return((AnimatedContactFlow.Swipe())(0))(400);
-        },Trans.Create(AnimatedContactFlow.Swipe()));
+        },Trans1.Create(AnimatedContactFlow.Swipe()));
        }),
        contactFlowlet:function(contactTy)
        {
@@ -19483,7 +19338,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        Main:function()
        {
-        var arg00,arg10,xView,arg001,arg101,yView,arg002,arg102,lastClickPos,arg003,arg103,lastHeldPos;
+        var arg00,arg10,xView,arg001,arg101,yView,lastHeldPos,lastClickPos;
         arg00=Runtime.Tupled(function(tuple)
         {
          return tuple[0];
@@ -19496,12 +19351,26 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         });
         arg101=Mouse.get_Position();
         yView=View1.Map(arg001,arg101);
-        arg002=Mouse.get_LeftPressed();
-        arg102=Mouse.get_Position();
-        lastClickPos=View1.SnapshotOn(arg002,arg102);
-        arg003=Mouse.get_LeftPressed();
-        arg103=Mouse.get_Position();
-        lastHeldPos=View1.UpdateWhile(arg003,arg103);
+        lastHeldPos=(((Runtime.Tupled(function(arg002)
+        {
+         return function(arg102)
+         {
+          return function(arg20)
+          {
+           return View1.UpdateWhile(arg002,arg102,arg20);
+          };
+         };
+        }))([0,0]))(Mouse.get_LeftPressed()))(Mouse.get_Position());
+        lastClickPos=(((Runtime.Tupled(function(arg002)
+        {
+         return function(arg102)
+         {
+          return function(arg20)
+          {
+           return View1.SnapshotOn(arg002,arg102,arg20);
+          };
+         };
+        }))([0,0]))(Mouse.get_LeftPressed()))(Mouse.get_Position());
         return Html.Div0(List.ofArray([Html.P0(List.ofArray([Doc.TextView(View1.Map(function(x)
         {
          return"X: "+Global.String(x);
@@ -19653,10 +19522,10 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        }),
        InOutTransition:Runtime.Field(function()
        {
-        return Trans.Exit(function(x)
+        return Trans1.Exit(function(x)
         {
          return ObjectConstancy.SimpleAnimation(x,ObjectConstancy.Height());
-        },Trans.Enter(function(x)
+        },Trans1.Enter(function(x)
         {
          return ObjectConstancy.SimpleAnimation(ObjectConstancy.Height(),x);
         },ObjectConstancy.SimpleTransition()));
@@ -19794,7 +19663,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        SimpleTransition:Runtime.Field(function()
        {
-        return Trans.Create(function(x)
+        return Trans1.Create(function(x)
         {
          return function(y)
          {
@@ -20430,13 +20299,13 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        }),
        FadeTransition:Runtime.Field(function()
        {
-        return Trans.Exit(function()
+        return Trans1.Exit(function()
         {
          return((Site.Fade())(1))(0);
-        },Trans.Enter(function()
+        },Trans1.Enter(function()
         {
          return((Site.Fade())(0))(1);
-        },Trans.Create(Site.Fade())));
+        },Trans1.Create(Site.Fade())));
        }),
        HomePage:function()
        {
@@ -20458,7 +20327,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          return pg.PageRouteId;
         };
         arg10=Site.SiteRouter(samples);
-        router=Router1.Install(arg00,arg10);
+        router=Router.Install(arg00,arg10);
         Doc.RunById("main",Doc.EmbedView(View1.Map(function(pg)
         {
          var matchValue;
@@ -20634,7 +20503,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
       SortableBarChart:{
        BarTransition:Runtime.Field(function()
        {
-        return Trans.Enter(function(x)
+        return Trans1.Enter(function(x)
         {
          return SortableBarChart.SimpleAnimation(0,x);
         },SortableBarChart.SimpleTransition());
@@ -20790,7 +20659,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        SimpleTransition:Runtime.Field(function()
        {
-        return Trans.Create(function(x)
+        return Trans1.Create(function(x)
         {
          return function(y)
          {
@@ -20929,7 +20798,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         },function(todo)
         {
          return TodoList.RenderItem(m,todo);
-        },ListModel1.View(m.Items));
+        },ListModel.View(m.Items));
        },
        Util:{
         button:function(name,handler)
@@ -20990,7 +20859,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   Easing=Runtime.Safe(Next.Easing);
   AnimatedBobsleighSite=Runtime.Safe(Next.AnimatedBobsleighSite);
   An=Runtime.Safe(Next.An);
-  Trans=Runtime.Safe(Next.Trans);
+  Trans1=Runtime.Safe(Next.Trans1);
   Var=Runtime.Safe(Next.Var);
   Doc=Runtime.Safe(Next.Doc);
   List=Runtime.Safe(WebSharper.List);
@@ -21051,13 +20920,13 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   Collections=Runtime.Safe(WebSharper.Collections);
   MapModule=Runtime.Safe(Collections.MapModule);
   FSharpMap=Runtime.Safe(Collections.FSharpMap);
-  Router1=Runtime.Safe(Next.Router1);
   SortableBarChart=Runtime.Safe(Next.SortableBarChart);
   parseFloat=Runtime.Safe(Global.parseFloat);
   ListModel1=Runtime.Safe(Next.ListModel1);
   Util=Runtime.Safe(TodoList.Util);
   TodoItem=Runtime.Safe(TodoList.TodoItem);
   Key=Runtime.Safe(Next.Key);
+  ListModel=Runtime.Safe(Next.ListModel);
   return Client=Runtime.Safe(Next.Client);
  });
  Runtime.OnLoad(function()

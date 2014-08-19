@@ -3197,12 +3197,19 @@ declare module IntelliFactory {
                             (x: _M1): _M2;
                         }, _arg1: __ABBREV.__Next.View1<_M1>): __ABBREV.__Next.View1<_M2>;
                     };
+                    var CreateLazy2 : {
+                        <_M1, _M2, _M3>(snapFn: {
+                            (x: any): {
+                                (x: any): any;
+                            };
+                        }, _arg3: __ABBREV.__Next.View1<_M1>, _arg2: __ABBREV.__Next.View1<_M2>): __ABBREV.__Next.View1<_M3>;
+                    };
                     var Map2 : {
                         <_M1, _M2, _M3>(fn: {
                             (x: _M1): {
                                 (x: _M2): _M3;
                             };
-                        }, _arg3: __ABBREV.__Next.View1<_M1>, _arg2: __ABBREV.__Next.View1<_M2>): __ABBREV.__Next.View1<_M3>;
+                        }, v1: __ABBREV.__Next.View1<_M1>, v2: __ABBREV.__Next.View1<_M2>): __ABBREV.__Next.View1<_M3>;
                     };
                     var MapAsync : {
                         <_M1, _M2>(fn: {
@@ -3210,10 +3217,10 @@ declare module IntelliFactory {
                         }, _arg4: __ABBREV.__Next.View1<_M1>): __ABBREV.__Next.View1<_M2>;
                     };
                     var SnapshotOn : {
-                        <_M1, _M2>(_arg6: __ABBREV.__Next.View1<_M1>, _arg5: __ABBREV.__Next.View1<_M2>): __ABBREV.__Next.View1<_M2>;
+                        <_M1, _M2>(def: _M1, _arg6: __ABBREV.__Next.View1<_M2>, _arg5: __ABBREV.__Next.View1<_M1>): __ABBREV.__Next.View1<_M1>;
                     };
                     var UpdateWhile : {
-                        <_M1>(_arg8: __ABBREV.__Next.View1<boolean>, _arg7: __ABBREV.__Next.View1<_M1>): __ABBREV.__Next.View1<_M1>;
+                        <_M1>(def: _M1, v1: __ABBREV.__Next.View1<boolean>, v2: __ABBREV.__Next.View1<_M1>): __ABBREV.__Next.View1<_M1>;
                     };
                     var ConvertBy : {
                         <_M1, _M2, _M3>(key: {
@@ -3239,18 +3246,18 @@ declare module IntelliFactory {
                             (x: __ABBREV.__Next.View1<_M1>): _M2;
                         }, view: __ABBREV.__Next.View1<__ABBREV.__WebSharper.seq<_M1>>): __ABBREV.__Next.View1<__ABBREV.__WebSharper.seq<_M2>>;
                     };
-                    var ConvertSeq : {
-                        <_M1, _M2>(conv: {
-                            (x: __ABBREV.__Next.View1<_M1>): _M2;
-                        }, view: __ABBREV.__Next.View1<__ABBREV.__WebSharper.seq<_M1>>): __ABBREV.__Next.View1<__ABBREV.__WebSharper.seq<_M2>>;
-                    };
                     var get_Do : {
                         (): __ABBREV.__Next.ViewBuilder;
                     };
                 }
                 module View {
+                    var ConvertSeq : {
+                        <_M1, _M2>(conv: {
+                            (x: __ABBREV.__Next.View1<_M1>): _M2;
+                        }, view: __ABBREV.__Next.View1<__ABBREV.__WebSharper.seq<_M1>>): __ABBREV.__Next.View1<__ABBREV.__WebSharper.seq<_M2>>;
+                    };
                     var Join : {
-                        <_M1>(_arg9: __ABBREV.__Next.View1<__ABBREV.__Next.View1<_M1>>): __ABBREV.__Next.View1<_M1>;
+                        <_M1>(_arg7: __ABBREV.__Next.View1<__ABBREV.__Next.View1<_M1>>): __ABBREV.__Next.View1<_M1>;
                     };
                     var Bind : {
                         <_M1, _M2>(fn: {
@@ -3263,7 +3270,7 @@ declare module IntelliFactory {
                     var Sink : {
                         <_M1>(act: {
                             (x: _M1): void;
-                        }, _arg10: __ABBREV.__Next.View1<_M1>): void;
+                        }, _arg8: __ABBREV.__Next.View1<_M1>): void;
                     };
                     var Apply : {
                         <_M1, _M2>(fn: __ABBREV.__Next.View1<{
@@ -3282,8 +3289,6 @@ declare module IntelliFactory {
                             (x: _M1): _M2;
                         }, init: _M1): __ABBREV.__Next.Model1<_M2, _M1>;
                     };
-                }
-                module Model {
                     var Update : {
                         <_M1, _M2>(update: {
                             (x: _M1): void;
@@ -3302,6 +3307,8 @@ declare module IntelliFactory {
                     var FromSeq : {
                         <_M1>(xs: __ABBREV.__WebSharper.seq<_M1>): __ABBREV.__Next.ListModel1<_M1, _M1>;
                     };
+                }
+                module ListModel {
                     var View : {
                         <_M1, _M2>(m: __ABBREV.__Next.ListModel1<_M1, _M2>): __ABBREV.__Next.View1<__ABBREV.__WebSharper.seq<_M2>>;
                     };
@@ -3378,8 +3385,6 @@ declare module IntelliFactory {
                     var CanAnimateEnter : {
                         <_M1>(tr: any): boolean;
                     };
-                }
-                module Trans {
                     var CanAnimateExit : {
                         <_M1>(tr: any): boolean;
                     };
@@ -3613,13 +3618,13 @@ declare module IntelliFactory {
                     var Dir : {
                         <_M1>(prefix: string, sites: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Router1<_M1>>): __ABBREV.__Next.Router1<_M1>;
                     };
+                }
+                module Router {
                     var Install : {
                         <_M1>(key: {
                             (x: _M1): __ABBREV.__Next.RouteId;
                         }, site: __ABBREV.__Next.Router1<_M1>): __ABBREV.__Next.Var1<_M1>;
                     };
-                }
-                module Router {
                     var Merge : {
                         <_M1>(sites: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Router1<_M1>>): __ABBREV.__Next.Router1<_M1>;
                     };
