@@ -12004,7 +12004,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
 
 (function()
 {
- var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,IntrinsicFunctionProxy,Concurrency,Array,Seq,UI,Next,Abbrev,Fresh,Collections,HashSet,HashSet1,HashSet2,Arrays,JQueue,Unchecked,Slot,An,AppendList,Anims,window,Trans1,Option,View1,Lazy,Array1,Attrs,DomUtility,Attr,AnimatedAttrNode,DynamicAttrNode,View,Docs,Doc,List,Var,T,Mailbox,Operators,NodeSet,DocElemNode,DomNodes,jQuery,document,Easing,Easings,Var1,FlowBuilder,Flow,Html,Elements,Input,DoubleInterpolation,Key,ListModels,ListModel1,Model1,Strings,encodeURIComponent,decodeURIComponent,Route,Routing,Trie,Router,Dictionary,Snap,Async,Enumerator,ResizeArray,ResizeArrayProxy,MapModule,FSharpMap,ViewBuilder,Attributes,SvgAttributes;
+ var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,IntrinsicFunctionProxy,Concurrency,Array,Seq,UI,Next,Abbrev,Fresh,Collections,HashSet,HashSet1,HashSet2,Arrays,JQueue,Unchecked,Slot,An,AppendList,Anims,window,Trans1,Option,View1,Lazy,Array1,Attrs,DomUtility,Attr,AnimatedAttrNode,DynamicAttrNode,View,Docs,UINextPagelet,Doc,List,Var,Var1,Mailbox,Operators,NodeSet,DocElemNode,DomNodes,jQuery,document,Easing,Easings,FlowBuilder,Flow,Html,Elements,T,Input,DoubleInterpolation,Key,ListModels,ListModel1,Model1,Strings,encodeURIComponent,decodeURIComponent,Route,Routing,Trie,Router,Router1,Dictionary,Snap,Async,Enumerator,ResizeArray,ResizeArrayProxy,MapModule,FSharpMap,Html1,Default,ViewBuilder,Attributes,SvgAttributes;
  Runtime.Define(Global,{
   IntelliFactory:{
    WebSharper:{
@@ -12233,10 +12233,6 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          return this.value;
         }
        },{
-        Create:function(key,value)
-        {
-         return Slot.New(key,value);
-        },
         New:function(key,value)
         {
          var r;
@@ -12244,6 +12240,12 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          r.key=key;
          r.value=value;
          return r;
+        }
+       }),
+       Slot1:Runtime.Class({},{
+        Create:function(key,value)
+        {
+         return Slot.New(key,value);
         }
        }),
        U:function()
@@ -12742,6 +12744,26 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        {
         return Attrs.Dynamic(view,set);
        },
+       DynamicPred:function(name,predView,valView)
+       {
+        var viewFn;
+        viewFn=function(el)
+        {
+         return Runtime.Tupled(function(tupledArg)
+         {
+          var v;
+          v=tupledArg[1];
+          return tupledArg[0]?DomUtility.SetAttr(el,name,v):DomUtility.RemoveAttr(el,name);
+         });
+        };
+        return Attrs.Dynamic(View1.Map2(function(pred)
+        {
+         return function(value)
+         {
+          return[pred,value];
+         };
+        },predView,valView),viewFn);
+       },
        DynamicStyle:function(name,view)
        {
         return Attrs.Dynamic(view,function(el)
@@ -12955,44 +12977,45 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          $1:b.DocNode
         },x);
        },
+       AsPagelet:function(doc)
+       {
+        return UINextPagelet.New(doc);
+       },
        Button:function(caption,attrs,action)
        {
         var attrs1;
         attrs1=Attr.Concat(attrs);
         return Doc.Elem(Doc.Clickable("button",action),attrs1,Doc.TextNode(caption));
        },
-       CheckBox:function(show,items,chk)
+       CheckBox:function(attrs,item,chk)
        {
-        var rvi,uid;
+        var rvi,predicate,checkedView,arg20,checkedAttr,attrs1,el;
         rvi=View1.FromVar(chk);
-        uid=Fresh.Id();
-        return Doc.Concat(List.mapi(function(i)
+        predicate=function(x)
         {
-         return function(o)
+         return Unchecked.Equals(x,item);
+        };
+        checkedView=View1.Map(function(list)
+        {
+         return Seq.exists(predicate,list);
+        },rvi);
+        arg20=View.Const("checked");
+        checkedAttr=Attr.DynamicPred("checked",checkedView,arg20);
+        attrs1=Attr.Concat(List.append(List.ofArray([Attr.Create("type","checkbox"),Attr.Create("name",Global.String(Var.GetId(chk))),Attr.Create("value",Fresh.Id()),checkedAttr]),List.ofSeq(attrs)));
+        el=DomUtility.CreateElement("input");
+        el.addEventListener("click",function()
+        {
+         var chkd;
+         chkd=el.checked;
+         return Var.Update(chk,function(obs)
          {
-          var t,attrs,el,chkElem;
-          t=Doc.TextNode(show(o));
-          attrs=List.ofArray([Attr.Create("type","checkbox"),Attr.Create("name",uid),Attr.Create("value",Global.String(i))]);
-          el=DomUtility.CreateElement("input");
-          el.addEventListener("click",function()
+          return Seq.toList(Seq.distinct(chkd?List.append(obs,List.ofArray([item])):List.filter(function(x1)
           {
-           var chkd,t1;
-           chkd=el.checked;
-           t1=Seq.nth(i,items);
-           return Var.Update(chk,function(obs)
-           {
-            return Seq.toList(Seq.distinct(chkd?List.append(obs,List.ofArray([t1])):List.filter(function(x1)
-            {
-             return!Unchecked.Equals(x1,t1);
-            },obs)));
-           });
-          },false);
-          chkElem=Doc.Elem(el,Attr.Concat(attrs),Doc.get_Empty());
-          return Doc.Element("div",Runtime.New(T,{
-           $:0
-          }),List.ofArray([chkElem,t]));
-         };
-        },items));
+           return!Unchecked.Equals(x1,item);
+          },obs)));
+         });
+        },false);
+        return Doc.Elem(el,attrs1,Doc.get_Empty());
        },
        Clickable:function(elem,action)
        {
@@ -13110,7 +13133,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         },View1.FromVar(_var));
         el.addEventListener("input",function()
         {
-         return Var.Set(_var,el.value);
+         return Var1.Set(_var,el.value);
         },false);
         return Doc.Elem(el,Attr.Append(attrN,valAttr),Doc.get_Empty());
        },
@@ -13126,6 +13149,24 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         return Doc.InputInternal(attr,_var,{
          $:1
         });
+       },
+       Radio:function(attrs,value,_var)
+       {
+        var el,valAttr,op_EqualsEqualsGreater;
+        el=DomUtility.CreateElement("input");
+        el.addEventListener("click",function()
+        {
+         return Var1.Set(_var,value);
+        },false);
+        valAttr=Attr.DynamicPred("checked",View1.Map(function(x)
+        {
+         return Unchecked.Equals(x,value);
+        },_var.get_View()),View.Const("checked"));
+        op_EqualsEqualsGreater=function(k,v)
+        {
+         return Attr.Create(k,v);
+        };
+        return Doc.Elem(el,Attr.Concat(List.append(List.ofArray([op_EqualsEqualsGreater("type","radio"),op_EqualsEqualsGreater("name",Global.String(Var.GetId(_var))),valAttr]),List.ofSeq(attrs))),Doc.get_Empty());
        },
        Run:function(parent,doc)
        {
@@ -13163,7 +13204,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         selectedItemAttr=Attr.DynamicCustom(setSelectedItem,x);
         el1.addEventListener("change",function()
         {
-         return Var.Set(current,options.get_Item(el1.selectedIndex));
+         return Var1.Set(current,options.get_Item(el1.selectedIndex));
         },false);
         optionElements=Doc.Concat(List.mapi(function(i)
         {
@@ -13718,6 +13759,10 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          }
         return!_?pos.$==1?void parent.insertBefore(node,pos.$0):void parent.appendChild(node):null;
        },
+       RemoveAttr:function(el,attrName)
+       {
+        return el.removeAttribute(attrName);
+       },
        RemoveClass:function(element,cl)
        {
         jQuery(element).removeClass(cl);
@@ -13841,7 +13886,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          {
           return function(cont)
           {
-           return Var.Set(_var,f(cont));
+           return Var1.Set(_var,f(cont));
           };
          }
         };
@@ -13889,12 +13934,14 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          {
           return function(cont)
           {
-           Var.Set(_var,doc);
+           Var1.Set(_var,doc);
            return cont(null);
           };
          }
         };
-       },
+       }
+      }),
+      Flow1:Runtime.Class({},{
        get_Do:function()
        {
         return FlowBuilder.New();
@@ -15985,11 +16032,11 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         {
          var matchValue;
          matchValue=evt.button;
-         return matchValue===0?Var.Set(Input.MouseBtnSt1().Left,down):matchValue===1?Var.Set(Input.MouseBtnSt1().Middle,down):matchValue===2?Var.Set(Input.MouseBtnSt1().Right,down):null;
+         return matchValue===0?Var1.Set(Input.MouseBtnSt().Left,down):matchValue===1?Var1.Set(Input.MouseBtnSt().Middle,down):matchValue===2?Var1.Set(Input.MouseBtnSt().Right,down):null;
         };
-        if(!Input.MouseBtnSt1().Active)
+        if(!Input.MouseBtnSt().Active)
          {
-          Input.MouseBtnSt1().Active=true;
+          Input.MouseBtnSt().Active=true;
           document.addEventListener("mousedown",function(evt)
           {
            return _buttonListener_39_1(evt,true);
@@ -16012,7 +16059,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
           {
            var keyCode,xs;
            keyCode=evt.which;
-           Var.Set(Input.KeyListenerState().LastPressed,keyCode);
+           Var1.Set(Input.KeyListenerState().LastPressed,keyCode);
            xs=Var1.Get(Input.KeyListenerState().KeysPressed);
            return!Seq.exists(function(x)
            {
@@ -16079,12 +16126,12 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         get_LeftPressed:function()
         {
          Input.ActivateButtonListener();
-         return Input.MouseBtnSt1().Left.get_View();
+         return Input.MouseBtnSt().Left.get_View();
         },
         get_MiddlePressed:function()
         {
          Input.ActivateButtonListener();
-         return Input.MouseBtnSt1().Middle.get_View();
+         return Input.MouseBtnSt().Middle.get_View();
         },
         get_MousePressed:function()
         {
@@ -16098,7 +16145,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
             return(l?true:m)?true:r;
            };
           };
-         }),Input.MouseBtnSt1().Left.get_View()),Input.MouseBtnSt1().Middle.get_View()),Input.MouseBtnSt1().Right.get_View());
+         }),Input.MouseBtnSt().Left.get_View()),Input.MouseBtnSt().Middle.get_View()),Input.MouseBtnSt().Right.get_View());
         },
         get_Position:function()
         {
@@ -16106,26 +16153,26 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          onMouseMove=function(evt)
          {
           var arg00;
-          arg00=Input.MousePosSt1().PosV;
+          arg00=Input.MousePosSt().PosV;
           return(Runtime.Tupled(function(arg10)
           {
-           return Var.Set(arg00,arg10);
+           return Var1.Set(arg00,arg10);
           }))([evt.clientX,evt.clientY]);
          };
-         if(!Input.MousePosSt1().Active)
+         if(!Input.MousePosSt().Active)
           {
            document.addEventListener("mousemove",onMouseMove,false);
-           Input.MousePosSt1().Active=true;
+           Input.MousePosSt().Active=true;
           }
-         return View1.FromVar(Input.MousePosSt1().PosV);
+         return View1.FromVar(Input.MousePosSt().PosV);
         },
         get_RightPressed:function()
         {
          Input.ActivateButtonListener();
-         return Input.MouseBtnSt1().Right.get_View();
+         return Input.MouseBtnSt().Right.get_View();
         }
        }),
-       MouseBtnSt1:Runtime.Field(function()
+       MouseBtnSt:Runtime.Field(function()
        {
         return{
          Active:false,
@@ -16134,7 +16181,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          Right:Var1.Create(false)
         };
        }),
-       MousePosSt1:Runtime.Field(function()
+       MousePosSt:Runtime.Field(function()
        {
         return{
          Active:false,
@@ -16327,14 +16374,6 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        }
       }),
       Router:Runtime.Class({},{
-       Install:function(key,site)
-       {
-        return Routing.Install(key,site);
-       },
-       Merge:function(sites)
-       {
-        return Routing.MergeRouters(sites);
-       },
        Prefix:function(prefix,_arg1)
        {
         return{
@@ -16351,7 +16390,15 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
       Router1:Runtime.Class({},{
        Dir:function(prefix,sites)
        {
-        return Router.Prefix(prefix,Router.Merge(sites));
+        return Router.Prefix(prefix,Router1.Merge(sites));
+       },
+       Install:function(key,site)
+       {
+        return Routing.Install(key,site);
+       },
+       Merge:function(sites)
+       {
+        return Routing.MergeRouters(sites);
        }
       }),
       Routing:{
@@ -17243,24 +17290,34 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         };
        }
       },
+      UINextPagelet:Runtime.Class({
+       Render:function()
+       {
+        return Doc.RunById(this.divId,this.doc);
+       },
+       get_Body:function()
+       {
+        return this.body;
+       }
+      },{
+       New:function(doc)
+       {
+        var r;
+        r=Runtime.New(this,{});
+        r.doc=doc;
+        r.divId=Fresh.Id();
+        r.body=Default.Div(List.ofArray([Default.Id(r.divId)])).Body;
+        return r;
+       }
+      }),
       Var:Runtime.Class({},{
+       GetId:function(_var)
+       {
+        return _var.Id;
+       },
        Observe:function(_var)
        {
         return _var.Snap;
-       },
-       Set:function(_var,value)
-       {
-        if(_var.Const)
-         {
-          return null;
-         }
-        else
-         {
-          Snap.MarkObsolete(_var.Snap);
-          _var.Current=value;
-          _var.Snap=Snap.CreateWithValue(value);
-          return;
-         }
        },
        SetFinal:function(_var,value)
        {
@@ -17278,7 +17335,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        Update:function(_var,fn)
        {
-        return Var.Set(_var,fn(Var1.Get(_var)));
+        return Var1.Set(_var,fn(Var1.Get(_var)));
        }
       }),
       Var1:Runtime.Class({
@@ -17292,7 +17349,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        set_Value:function(value)
        {
-        return Var.Set(this,value);
+        return Var1.Set(this,value);
        }
       },{
        Create:function(v)
@@ -17300,12 +17357,27 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         return Runtime.New(Var1,{
          Const:false,
          Current:v,
-         Snap:Snap.CreateWithValue(v)
+         Snap:Snap.CreateWithValue(v),
+         Id:Fresh.Int()
         });
        },
        Get:function(_var)
        {
         return _var.Current;
+       },
+       Set:function(_var,value)
+       {
+        if(_var.Const)
+         {
+          return null;
+         }
+        else
+         {
+          Snap.MarkObsolete(_var.Snap);
+          _var.Current=value;
+          _var.Snap=Snap.CreateWithValue(value);
+          return;
+         }
        }
       }),
       View:Runtime.Class({},{
@@ -17417,7 +17489,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
           if(prevState.ContainsKey(k))
            {
             n=prevState.get_Item(k);
-            Var.Set(n.NVar,x);
+            Var1.Set(n.NVar,x);
             node=n;
            }
           else
@@ -17649,10 +17721,11 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   DynamicAttrNode=Runtime.Safe(Next.DynamicAttrNode);
   View=Runtime.Safe(Next.View);
   Docs=Runtime.Safe(Next.Docs);
+  UINextPagelet=Runtime.Safe(Next.UINextPagelet);
   Doc=Runtime.Safe(Next.Doc);
   List=Runtime.Safe(WebSharper.List);
   Var=Runtime.Safe(Next.Var);
-  T=Runtime.Safe(List.T);
+  Var1=Runtime.Safe(Next.Var1);
   Mailbox=Runtime.Safe(Abbrev.Mailbox);
   Operators=Runtime.Safe(WebSharper.Operators);
   NodeSet=Runtime.Safe(Docs.NodeSet);
@@ -17662,11 +17735,11 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   document=Runtime.Safe(Global.document);
   Easing=Runtime.Safe(Next.Easing);
   Easings=Runtime.Safe(Next.Easings);
-  Var1=Runtime.Safe(Next.Var1);
   FlowBuilder=Runtime.Safe(Next.FlowBuilder);
   Flow=Runtime.Safe(Next.Flow);
   Html=Runtime.Safe(Next.Html);
   Elements=Runtime.Safe(Html.Elements);
+  T=Runtime.Safe(List.T);
   Input=Runtime.Safe(Next.Input);
   DoubleInterpolation=Runtime.Safe(Next.DoubleInterpolation);
   Key=Runtime.Safe(Next.Key);
@@ -17680,6 +17753,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   Routing=Runtime.Safe(Next.Routing);
   Trie=Runtime.Safe(Next.Trie);
   Router=Runtime.Safe(Next.Router);
+  Router1=Runtime.Safe(Next.Router1);
   Dictionary=Runtime.Safe(Collections.Dictionary);
   Snap=Runtime.Safe(Next.Snap);
   Async=Runtime.Safe(Abbrev.Async);
@@ -17688,14 +17762,16 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   ResizeArrayProxy=Runtime.Safe(ResizeArray.ResizeArrayProxy);
   MapModule=Runtime.Safe(Collections.MapModule);
   FSharpMap=Runtime.Safe(Collections.FSharpMap);
+  Html1=Runtime.Safe(WebSharper.Html);
+  Default=Runtime.Safe(Html1.Default);
   ViewBuilder=Runtime.Safe(Next.ViewBuilder);
   Attributes=Runtime.Safe(Html.Attributes);
   return SvgAttributes=Runtime.Safe(Html.SvgAttributes);
  });
  Runtime.OnLoad(function()
  {
-  Input.MousePosSt1();
-  Input.MouseBtnSt1();
+  Input.MousePosSt();
+  Input.MouseBtnSt();
   Input.KeyListenerState();
   Input.ActivateKeyListener();
   Input.ActivateButtonListener();
@@ -17976,7 +18052,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
 
 (function()
 {
- var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,UI,Next,Interpolation,Easing,AnimatedBobsleighSite,An,Trans1,Var,Doc,List,Html,Utilities,T,Var1,View1,Attr,View,Unchecked,Samples,AnimatedContactFlow,Flow,BobsleighSite,Calculator,CheckBoxTest,Seq,Person,Site,SimpleTextBox,InputTransform,TodoList,PhoneExample,EditablePersonList,ContactFlow,MessageBoard,RoutedBobsleighSite,ObjectConstancy,MouseInfo,KeyboardInfo,Common,Fresh,String,Strings,IntrinsicFunctionProxy,Input,Keyboard,Auth,Concurrency,Server,Mouse,jQuery,DataSet,Arrays,OperatorIntrinsics,SvgElements,Math,Phone,Operators,Order,RouteMap,Builder,Router,SiteCommon,Elements,Option,Collections,MapModule,FSharpMap,SortableBarChart,parseFloat,ListModel1,Util,TodoItem,Key,ListModel,Client;
+ var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,UI,Next,Interpolation,Easing,AnimatedBobsleighSite,An,Trans1,Var1,Doc,List,Html,Utilities,T,View1,Attr,View,Unchecked,Samples,AnimatedContactFlow,Flow1,Flow,BobsleighSite,Calculator,Var,CheckBoxTest,Seq,Person,Site,SimpleTextBox,InputTransform,TodoList,PhoneExample,EditablePersonList,ContactFlow,MessageBoard,RoutedBobsleighSite,ObjectConstancy,MouseInfo,KeyboardInfo,Common,Fresh,String,Strings,IntrinsicFunctionProxy,Input,Keyboard,Auth,Concurrency,Server,Mouse,jQuery,DataSet,Arrays,OperatorIntrinsics,SvgElements,Math,Phone,Operators,Order,RouteMap,Builder,Router,SiteCommon,Elements,Router1,Option,Collections,MapModule,FSharpMap,SortableBarChart,parseFloat,ListModel1,Util,TodoItem,Key,ListModel,Client;
  Runtime.Define(Global,{
   IntelliFactory:{
    WebSharper:{
@@ -18009,7 +18085,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        }),
        GlobalGo:function(_var,act)
        {
-        return Var.Set(_var,act);
+        return Var1.Set(_var,act);
        },
        Governance:function()
        {
@@ -18053,7 +18129,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         ctx={
          Go:function(arg10)
          {
-          return Var.Set(m,arg10);
+          return Var1.Set(m,arg10);
          }
         };
         return Doc.EmbedView(View1.Map(function(pg)
@@ -18154,7 +18230,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        ExampleFlow:function()
        {
         var _builder_;
-        _builder_=Flow.get_Do();
+        _builder_=Flow1.get_Do();
         return Flow.Embed(_builder_.Bind(AnimatedContactFlow.personFlowlet(),function(_arg1)
         {
          return _builder_.Bind(AnimatedContactFlow.contactTypeFlowlet(),function(_arg2)
@@ -18309,7 +18385,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
       BobsleighSite:{
        GlobalGo:function(_var,act)
        {
-        return Var.Set(_var,act);
+        return Var1.Set(_var,act);
        },
        Governance:function()
        {
@@ -18358,7 +18434,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         ctx={
          Go:function(arg10)
          {
-          return Var.Set(m,arg10);
+          return Var1.Set(m,arg10);
          }
         };
         return Doc.EmbedView(View1.Map(function(pg)
@@ -18449,7 +18525,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         var arg20;
         arg20=function()
         {
-         return Var.Set(rvCalc,Calculator.initCalc());
+         return Var1.Set(rvCalc,Calculator.initCalc());
         };
         return Doc.Button("C",Runtime.New(T,{
          $:0
@@ -18604,14 +18680,17 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        Main:function()
        {
-        var selPeople;
+        var selPeople,checkBoxes,showNames,arg10,x,label,checkBoxSection,radioBoxVar;
         selPeople=Var1.Create(Runtime.New(T,{
          $:0
         }));
-        return Doc.Concat(List.ofArray([Doc.CheckBox(function(p)
+        checkBoxes=Html.Div0(List.ofArray([Doc.Concat(List.map(function(person)
         {
-         return p.Name;
-        },CheckBoxTest.People(),selPeople),Doc.TextView(View1.Map(function(xs)
+         return Html.Div0(List.ofArray([Doc.CheckBox(Runtime.New(T,{
+          $:0
+         }),person,selPeople),Doc.TextNode(person.Name)]));
+        },CheckBoxTest.People()))]));
+        showNames=function(xs)
         {
          return Seq.fold(function(acc)
          {
@@ -18620,7 +18699,31 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
            return acc+p.Name+", ";
           };
          },"",xs);
-        },View1.FromVar(selPeople)))]));
+        };
+        arg10=View1.FromVar(selPeople);
+        x=View1.Map(showNames,arg10);
+        label=Doc.TextView(x);
+        checkBoxSection=Html.Div0(List.ofArray([checkBoxes,label]));
+        radioBoxVar=Var1.Create({
+         $:0
+        });
+        return Html.Div0(List.ofArray([checkBoxSection,Html.Div0(List.ofArray([Doc.Concat(List.map(function(restaurant)
+        {
+         return Html.Div0(List.ofArray([Doc.Radio(Runtime.New(T,{
+          $:0
+         }),restaurant,radioBoxVar),Doc.TextNode(CheckBoxTest.showRestaurant(restaurant))]));
+        },List.ofArray([{
+         $:2
+        },{
+         $:1
+        },{
+         $:0
+        },{
+         $:3
+        }]))),Doc.TextView(View1.Map(function(_arg1)
+        {
+         return CheckBoxTest.showRestaurant(_arg1);
+        },radioBoxVar.get_View()))]))]));
        },
        People:Runtime.Field(function()
        {
@@ -18644,7 +18747,11 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         {
          return CheckBoxTest.Description();
         }).Create();
-       })
+       }),
+       showRestaurant:function(_arg1)
+       {
+        return _arg1.$==1?"Suszterinas":_arg1.$==2?"Csiga":_arg1.$==3?"Stex":"Jelen";
+       }
       },
       Client:{
        Main:Runtime.Field(function()
@@ -18697,7 +18804,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        ExampleFlow:function()
        {
         var _builder_;
-        _builder_=Flow.get_Do();
+        _builder_=Flow1.get_Do();
         return Flow.Embed(_builder_.Bind(ContactFlow.personFlowlet(),function(_arg1)
         {
          return _builder_.Bind(ContactFlow.contactTypeFlowlet(),function(_arg2)
@@ -19085,14 +19192,14 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
             var user;
             if(arg102.$==0)
              {
-              Var.Set(rvMsg,"Invalid credentials.");
+              Var1.Set(rvMsg,"Invalid credentials.");
               return Concurrency.Return(null);
              }
             else
              {
               user=arg102.$0;
-              Var.Set(rvUser,"");
-              Var.Set(rvPass,"");
+              Var1.Set(rvUser,"");
+              Var1.Set(rvPass,"");
               onLogin(user);
               return Concurrency.Return(null);
              }
@@ -19153,7 +19260,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         auth=Auth.Create();
         Go=function(arg10)
         {
-         return Var.Set(actVar,arg10);
+         return Var1.Set(actVar,arg10);
         };
         st={
          Auth:auth,
@@ -19258,7 +19365,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          {
           return Concurrency.Bind(Server.GetPosts(thread),function(arg101)
           {
-           Var.Set(rvPosts,arg101);
+           Var1.Set(rvPosts,arg101);
            return Concurrency.Return(null);
           });
          }));
@@ -19321,7 +19428,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         {
          return Concurrency.Bind(Server.GetThreads(),function(arg101)
          {
-          Var.Set(threads,arg101);
+          Var1.Set(threads,arg101);
           return Concurrency.Return(null);
          });
         }));
@@ -19777,7 +19884,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         ctx={
          Go:function(arg10)
          {
-          return Var.Set(current,arg10);
+          return Var1.Set(current,arg10);
          }
         };
         return Doc.EmbedView(View1.Map(function(pg)
@@ -20049,7 +20156,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        SamplesRouter:function(samples)
        {
-        return Router.Prefix("samples",Router.Merge(Seq.toList(Seq.delay(function()
+        return Router.Prefix("samples",Router1.Merge(Seq.toList(Seq.delay(function()
         {
          return Seq.map(function(s)
          {
@@ -20076,7 +20183,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          },View1.FromVar(vPage)),arg20);
          arg201=function()
          {
-          return Var.Set(vPage,sample.SamplePage);
+          return Var1.Set(vPage,sample.SamplePage);
          };
          return Doc.Link(sample.Meta.Title,List.ofArray([Utilities.cls("list-group-item"),activeAttr]),arg201);
         };
@@ -20327,17 +20434,17 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          return pg.PageRouteId;
         };
         arg10=Site.SiteRouter(samples);
-        router=Router.Install(arg00,arg10);
+        router=Router1.Install(arg00,arg10);
         Doc.RunById("main",Doc.EmbedView(View1.Map(function(pg)
         {
          var matchValue;
          matchValue=pg.PageType;
          return matchValue.$==1?Site.AboutPage(function(ty)
          {
-          return Var.Set(router,Site.pageFor(ty,samples));
+          return Var1.Set(router,Site.pageFor(ty,samples));
          }):matchValue.$==2?Samples.Render(router,pg,samples):Site.HomePage(function(ty)
          {
-          return Var.Set(router,Site.pageFor(ty,samples));
+          return Var1.Set(router,Site.pageFor(ty,samples));
          });
         },View1.FromVar(router))));
         return Doc.RunById("navigation",Site.NavBar(router,samples));
@@ -20364,7 +20471,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
            $:0
           }),function()
           {
-           return Var.Set(v,Site.pageFor(pg,samples));
+           return Var1.Set(v,Site.pageFor(pg,samples));
           })]));
          },View1.FromVar(v)));
         };
@@ -20397,7 +20504,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        }),
        SiteRouter:function(samples)
        {
-        return Router.Merge(List.ofArray([Router.Prefix("home",Site.homeRouter(samples)),Router.Prefix("about",Site.aboutRouter(samples)),Router.Prefix("samples",Samples.SamplesRouter(samples))]));
+        return Router1.Merge(List.ofArray([Router.Prefix("home",Site.homeRouter(samples)),Router.Prefix("about",Site.aboutRouter(samples)),Router.Prefix("samples",Samples.SamplesRouter(samples))]));
        },
        aboutPage:Runtime.Field(function()
        {
@@ -20747,7 +20854,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
          return isDone?Html.Del0(List.ofArray([Utilities.txt(todo.TodoText)])):Utilities.txt(todo.TodoText);
         },View1.FromVar(todo.Done)))])),Html.TD0(List.ofArray([Util.button("Done",function()
         {
-         return Var.Set(todo.Done,true);
+         return Var1.Set(todo.Done,true);
         })])),Html.TD0(List.ofArray([Util.button("Remove",function()
         {
          return m.Items.Remove(todo);
@@ -20860,22 +20967,23 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   AnimatedBobsleighSite=Runtime.Safe(Next.AnimatedBobsleighSite);
   An=Runtime.Safe(Next.An);
   Trans1=Runtime.Safe(Next.Trans1);
-  Var=Runtime.Safe(Next.Var);
+  Var1=Runtime.Safe(Next.Var1);
   Doc=Runtime.Safe(Next.Doc);
   List=Runtime.Safe(WebSharper.List);
   Html=Runtime.Safe(Next.Html);
   Utilities=Runtime.Safe(Next.Utilities);
   T=Runtime.Safe(List.T);
-  Var1=Runtime.Safe(Next.Var1);
   View1=Runtime.Safe(Next.View1);
   Attr=Runtime.Safe(Next.Attr);
   View=Runtime.Safe(Next.View);
   Unchecked=Runtime.Safe(WebSharper.Unchecked);
   Samples=Runtime.Safe(Next.Samples);
   AnimatedContactFlow=Runtime.Safe(Next.AnimatedContactFlow);
+  Flow1=Runtime.Safe(Next.Flow1);
   Flow=Runtime.Safe(Next.Flow);
   BobsleighSite=Runtime.Safe(Next.BobsleighSite);
   Calculator=Runtime.Safe(Next.Calculator);
+  Var=Runtime.Safe(Next.Var);
   CheckBoxTest=Runtime.Safe(Next.CheckBoxTest);
   Seq=Runtime.Safe(WebSharper.Seq);
   Person=Runtime.Safe(CheckBoxTest.Person);
@@ -20916,6 +21024,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   Router=Runtime.Safe(Next.Router);
   SiteCommon=Runtime.Safe(Next.SiteCommon);
   Elements=Runtime.Safe(Html.Elements);
+  Router1=Runtime.Safe(Next.Router1);
   Option=Runtime.Safe(WebSharper.Option);
   Collections=Runtime.Safe(WebSharper.Collections);
   MapModule=Runtime.Safe(Collections.MapModule);

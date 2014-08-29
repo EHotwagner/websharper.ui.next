@@ -3166,11 +3166,11 @@ declare module IntelliFactory {
                     var Get : {
                         <_M1>(_var: __ABBREV.__Next.Var1<_M1>): _M1;
                     };
-                }
-                module Var {
                     var Set : {
                         <_M1>(_var: __ABBREV.__Next.Var1<_M1>, value: _M1): void;
                     };
+                }
+                module Var {
                     var SetFinal : {
                         <_M1>(_var: __ABBREV.__Next.Var1<_M1>, value: _M1): void;
                     };
@@ -3178,6 +3178,9 @@ declare module IntelliFactory {
                         <_M1>(_var: __ABBREV.__Next.Var1<_M1>, fn: {
                             (x: _M1): _M1;
                         }): void;
+                    };
+                    var GetId : {
+                        <_M1>(_var: __ABBREV.__Next.Var1<_M1>): number;
                     };
                     var Observe : {
                         <_M1>(_var: __ABBREV.__Next.Var1<_M1>): any;
@@ -3459,6 +3462,9 @@ declare module IntelliFactory {
                             (x: _M1): boolean;
                         }): __ABBREV.__Next.Attr;
                     };
+                    var DynamicPred : {
+                        (name: string, predView: __ABBREV.__Next.View1<boolean>, valView: __ABBREV.__Next.View1<string>): __ABBREV.__Next.Attr;
+                    };
                     var Append : {
                         (a: __ABBREV.__Next.Attr, b: __ABBREV.__Next.Attr): __ABBREV.__Next.Attr;
                     };
@@ -3502,6 +3508,9 @@ declare module IntelliFactory {
                     };
                     var RunById : {
                         (id: string, tr: __ABBREV.__Next.Doc): void;
+                    };
+                    var AsPagelet : {
+                        (doc: __ABBREV.__Next.Doc): __ABBREV.__Html.IPagelet;
                     };
                     var Flatten : {
                         <_M1>(view: __ABBREV.__Next.View1<_M1>): __ABBREV.__Next.Doc;
@@ -3548,9 +3557,7 @@ declare module IntelliFactory {
                         }, options: __ABBREV.__List.T<_M1>, current: __ABBREV.__Next.Var1<_M1>): __ABBREV.__Next.Doc;
                     };
                     var CheckBox : {
-                        <_M1>(show: {
-                            (x: _M1): string;
-                        }, items: __ABBREV.__List.T<_M1>, chk: __ABBREV.__Next.Var1<__ABBREV.__List.T<_M1>>): __ABBREV.__Next.Doc;
+                        <_M1>(attrs: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, item: _M1, chk: __ABBREV.__Next.Var1<__ABBREV.__List.T<_M1>>): __ABBREV.__Next.Doc;
                     };
                     var Clickable : {
                         (elem: string, action: {
@@ -3566,6 +3573,9 @@ declare module IntelliFactory {
                         (caption: string, attrs: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, action: {
                             (): void;
                         }): __ABBREV.__Next.Doc;
+                    };
+                    var Radio : {
+                        <_M1>(attrs: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Attr>, value: _M1, _var: __ABBREV.__Next.Var1<_M1>): __ABBREV.__Next.Doc;
                     };
                     var get_Empty : {
                         (): __ABBREV.__Next.Doc;
@@ -3598,6 +3608,8 @@ declare module IntelliFactory {
                     var Static : {
                         (doc: __ABBREV.__Next.Doc): any;
                     };
+                }
+                module Flow1 {
                     var get_Do : {
                         (): __ABBREV.__Next.FlowBuilder;
                     };
@@ -3618,8 +3630,6 @@ declare module IntelliFactory {
                     var Dir : {
                         <_M1>(prefix: string, sites: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Router1<_M1>>): __ABBREV.__Next.Router1<_M1>;
                     };
-                }
-                module Router {
                     var Install : {
                         <_M1>(key: {
                             (x: _M1): __ABBREV.__Next.RouteId;
@@ -3628,6 +3638,8 @@ declare module IntelliFactory {
                     var Merge : {
                         <_M1>(sites: __ABBREV.__WebSharper.seq<__ABBREV.__Next.Router1<_M1>>): __ABBREV.__Next.Router1<_M1>;
                     };
+                }
+                module Router {
                     var Prefix : {
                         <_M1>(prefix: string, _arg1: __ABBREV.__Next.Router1<_M1>): __ABBREV.__Next.Router1<_M1>;
                     };
@@ -3672,10 +3684,10 @@ declare module IntelliFactory {
                     }
                     interface Keyboard {
                     }
-                    var MousePosSt1 : {
+                    var MousePosSt : {
                         (): any;
                     };
-                    var MouseBtnSt1 : {
+                    var MouseBtnSt : {
                         (): any;
                     };
                     var ActivateButtonListener : {
@@ -5208,6 +5220,7 @@ declare module IntelliFactory {
                     Const: boolean;
                     Current: _T1;
                     Snap: any;
+                    Id: number;
                 }
                 interface View1<_T1> {
                 }
@@ -5327,6 +5340,7 @@ declare module __ABBREV {
     export import __Next = IntelliFactory.WebSharper.UI.Next;
     export import __WebSharper = IntelliFactory.WebSharper;
     export import __Dom = IntelliFactory.WebSharper.Dom;
+    export import __Html = IntelliFactory.WebSharper.Html;
     export import __List = IntelliFactory.WebSharper.List;
 }
 
@@ -6032,6 +6046,11 @@ declare module IntelliFactory {
                         Name: string;
                         Age: number;
                     }
+                    interface Restaurant {
+                    }
+                    var showRestaurant : {
+                        (_arg1: __ABBREV.__CheckBoxTest.Restaurant): string;
+                    };
                     var Main : {
                         (): __ABBREV.__Next.Doc;
                     };
