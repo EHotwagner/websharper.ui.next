@@ -18463,7 +18463,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        },
        Sample:Runtime.Field(function()
        {
-        return Samples.Build().Id("BobsleighMiniSite").FileName("BobsleighSite.fs").Keywords(List.ofArray(["text"])).Render(function()
+        return Samples.Build().Id("BobsleighSite").FileName("BobsleighSite.fs").Keywords(List.ofArray(["text"])).Render(function()
         {
          return BobsleighSite.Main();
         }).RenderDescription(function()
@@ -18740,7 +18740,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        }),
        Sample:Runtime.Field(function()
        {
-        return Samples.Build().Id("CheckBoxesTest").FileName("CheckBoxTest.fs").Keywords(List.ofArray(["todo"])).Render(function()
+        return Samples.Build().Id("CheckBoxTest").FileName("CheckBoxTest.fs").Keywords(List.ofArray(["todo"])).Render(function()
         {
          return CheckBoxTest.Main();
         }).RenderDescription(function()
@@ -19896,7 +19896,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        {
         return Samples.Routed(RoutedBobsleighSite.TheRouteMap(),{
          $:0
-        }).Id("RoutedBobsleighMiniSite").FileName("RoutedBobsleighSite.fs").Keywords(List.ofArray(["text"])).Render(function(current)
+        }).Id("RoutedBobsleighSite").FileName("RoutedBobsleighSite.fs").Keywords(List.ofArray(["text"])).Render(function(current)
         {
          return RoutedBobsleighSite.Main(current);
         }).RenderDescription(function(v)
