@@ -187,9 +187,10 @@ if (!Date.now) {
     };
 }
 ;
+var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n:n}function f(n){return o.lastIndex=0,o.test(n)?'"'+n.replace(o,function(n){var t=s[n];return typeof t=="string"?t:"\\u"+("0000"+n.charCodeAt(0).toString(16)).slice(-4)})+'"':'"'+n+'"'}function r(i,e){var s,l,h,a,v=n,c,o=e[i];o&&typeof o=="object"&&typeof o.toJSON=="function"&&(o=o.toJSON(i)),typeof t=="function"&&(o=t.call(e,i,o));switch(typeof o){case"string":return f(o);case"number":return isFinite(o)?String(o):"null";case"boolean":case"null":return String(o);case"object":if(!o)return"null";if(n+=u,c=[],Object.prototype.toString.apply(o)==="[object Array]"){for(a=o.length,s=0;s<a;s+=1)c[s]=r(s,o)||"null";return h=c.length===0?"[]":n?"[\n"+n+c.join(",\n"+n)+"\n"+v+"]":"["+c.join(",")+"]",n=v,h}if(t&&typeof t=="object")for(a=t.length,s=0;s<a;s+=1)typeof t[s]=="string"&&(l=t[s],h=r(l,o),h&&c.push(f(l)+(n?": ":":")+h));else for(l in o)Object.prototype.hasOwnProperty.call(o,l)&&(h=r(l,o),h&&c.push(f(l)+(n?": ":":")+h));return h=c.length===0?"{}":n?"{\n"+n+c.join(",\n"+n)+"\n"+v+"}":"{"+c.join(",")+"}",n=v,h}}typeof Date.prototype.toJSON!="function"&&(Date.prototype.toJSON=function(){return isFinite(this.valueOf())?this.getUTCFullYear()+"-"+i(this.getUTCMonth()+1)+"-"+i(this.getUTCDate())+"T"+i(this.getUTCHours())+":"+i(this.getUTCMinutes())+":"+i(this.getUTCSeconds())+"Z":null},String.prototype.toJSON=Number.prototype.toJSON=Boolean.prototype.toJSON=function(){return this.valueOf()});var e=/[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,o=/[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,n,u,s={"\b":"\\b","\t":"\\t","\n":"\\n","\f":"\\f","\r":"\\r",'"':'\\"',"\\":"\\\\"},t;typeof JSON.stringify!="function"&&(JSON.stringify=function(i,f,e){var o;if(n="",u="",typeof e=="number")for(o=0;o<e;o+=1)u+=" ";else typeof e=="string"&&(u=e);if(t=f,f&&typeof f!="function"&&(typeof f!="object"||typeof f.length!="number"))throw new Error("JSON.stringify");return r("",{"":i})}),typeof JSON.parse!="function"&&(JSON.parse=function(n,t){function r(n,i){var f,e,u=n[i];if(u&&typeof u=="object")for(f in u)Object.prototype.hasOwnProperty.call(u,f)&&(e=r(u,f),e!==undefined?u[f]=e:delete u[f]);return t.call(n,i,u)}var i;if(n=String(n),e.lastIndex=0,e.test(n)&&(n=n.replace(e,function(n){return"\\u"+("0000"+n.charCodeAt(0).toString(16)).slice(-4)})),/^[\],:{}\s]*$/.test(n.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g,"@").replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,"]").replace(/(?:^|:|,)(?:\s*\[)+/g,"")))return i=eval("("+n+")"),typeof t=="function"?r({"":i},""):i;throw new SyntaxError("JSON.parse");})}();;
 (function()
 {
- var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,Arrays,Operators,Number,IntrinsicFunctionProxy,Array,Seq,Unchecked,Enumerator,Arrays2D,Concurrency,AggregateException,Option,clearTimeout,setTimeout,CancellationTokenSource,Char,Util,Lazy,Error,Date,JavaScript,Scheduler,T,Json,List,T1,Math,Strings,PrintfHelpers,Remoting,XhrProvider,AsyncProxy,JSON,Enumerable,String,RegExp;
+ var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,Arrays,Operators,Number,IntrinsicFunctionProxy,Array,Seq,Unchecked,Enumerator,Arrays2D,Concurrency,AggregateException,Option,clearTimeout,setTimeout,CancellationTokenSource,Char,Util,Lazy,Error,Date,console,Scheduler,T,Html,Client,Activator,document,jQuery,Json,JSON,JavaScript,JS,HtmlContentExtensions,SingleNode,List,T1,Math,Strings,PrintfHelpers,Remoting,XhrProvider,AsyncProxy,Enumerable,String,RegExp;
  Runtime.Define(Global,{
   IntelliFactory:{
    WebSharper:{
@@ -1521,7 +1522,9 @@ if (!Date.now) {
       {
       },function(exn)
       {
-       return JavaScript.LogMore(["WebSharper: Uncaught asynchronous exception",exn]);
+       var ps;
+       ps=["WebSharper: Uncaught asynchronous exception",exn];
+       return console?console.log.apply(console,ps):undefined;
       },function()
       {
       },ctOpt);
@@ -1902,6 +1905,69 @@ if (!Date.now) {
       return x;
      }
     },
+    Html:{
+     Client:{
+      Activator:{
+       Activate:Runtime.Field(function()
+       {
+        var _,meta;
+        if(Activator.hasDocument())
+         {
+          meta=document.getElementById("websharper-data");
+          _=meta?jQuery(document).ready(function()
+          {
+           var text,obj,x,action;
+           text=meta.getAttribute("content");
+           obj=Json.Activate(JSON.parse(text));
+           x=JS.GetFields(obj);
+           action=Runtime.Tupled(function(tupledArg)
+           {
+            var k,v,p,old;
+            k=tupledArg[0];
+            v=tupledArg[1];
+            p=v.get_Body();
+            old=document.getElementById(k);
+            return p.ReplaceInDom(old);
+           });
+           return Arrays.iter(action,x);
+          }):null;
+         }
+        else
+         {
+          _=null;
+         }
+        return _;
+       }),
+       hasDocument:function()
+       {
+        var $0=this,$this=this;
+        return typeof Global.document!=="undefined";
+       }
+      },
+      HtmlContentExtensions:{
+       "IControlBody.SingleNode.Static":function(node)
+       {
+        return SingleNode.New(node);
+       },
+       SingleNode:Runtime.Class({
+        ReplaceInDom:function(old)
+        {
+         var value;
+         value=this.node.parentNode.replaceChild(this.node,old);
+         return;
+        }
+       },{
+        New:function(node)
+        {
+         var r;
+         r=Runtime.New(this,{});
+         r.node=node;
+         return r;
+        }
+       })
+      }
+     }
+    },
     IntrinsicFunctionProxy:{
      Array2DZeroCreate:function(n,m)
      {
@@ -1991,51 +2057,69 @@ if (!Date.now) {
      }
     },
     JavaScript:{
-     Delete:function($x,$field)
-     {
-      var $0=this,$this=this;
-      return delete $x[$field];
-     },
-     ForEach:function($x,$iter)
-     {
-      var $0=this,$this=this;
-      for(var k in $x){
-       if($iter(k))
-        break;
+     JS:{
+      Delete:function($x,$field)
+      {
+       var $0=this,$this=this;
+       return delete $x[$field];
+      },
+      ForEach:function($x,$iter)
+      {
+       var $0=this,$this=this;
+       for(var k in $x){
+        if($iter(k))
+         break;
+       }
+      },
+      GetFieldNames:function($o)
+      {
+       var $0=this,$this=this;
+       var r=[];
+       for(var k in $o)r.push(k);
+       return r;
+      },
+      GetFieldValues:function($o)
+      {
+       var $0=this,$this=this;
+       var r=[];
+       for(var k in $o)r.push($o[k]);
+       return r;
+      },
+      GetFields:function($o)
+      {
+       var $0=this,$this=this;
+       var r=[];
+       for(var k in $o)r.push([k,$o[k]]);
+       return r;
+      },
+      Log:function($x)
+      {
+       var $0=this,$this=this;
+       if(Global.console)
+        Global.console.log($x);
+      },
+      LogMore:function($args)
+      {
+       var $0=this,$this=this;
+       if(Global.console)
+        Global.console.log.apply(Global.console,$args);
       }
      },
-     GetFieldNames:function($o)
-     {
-      var $0=this,$this=this;
-      var r=[];
-      for(var k in $o)r.push(k);
-      return r;
-     },
-     GetFieldValues:function($o)
-     {
-      var $0=this,$this=this;
-      var r=[];
-      for(var k in $o)r.push($o[k]);
-      return r;
-     },
-     GetFields:function($o)
-     {
-      var $0=this,$this=this;
-      var r=[];
-      for(var k in $o)r.push([k,$o[k]]);
-      return r;
-     },
-     Log:function($x)
-     {
-      var $0=this,$this=this;
-      if(Global.console)
-       Global.console.log($x);
-     },
-     LogMore:function($args)
-     {
-      var $0=this,$this=this;
-      if(Global.console)
-       Global.console.log.apply(Global.console,$args);
+     Pervasives:{
+      NewFromList:function(fields)
+      {
+       var r,enumerator,forLoopVar,v,k;
+       r={};
+       enumerator=Enumerator.Get(fields);
+       while(enumerator.MoveNext())
+        {
+         forLoopVar=enumerator.get_Current();
+         v=forLoopVar[1];
+         k=forLoopVar[0];
+         r[k]=v;
+        }
+       return r;
+      }
      }
     },
     Json:{
@@ -2106,7 +2190,7 @@ if (!Date.now) {
      {
       var r;
       r=new ty();
-      JavaScript.ForEach(obj,function(k)
+      JS.ForEach(obj,function(k)
       {
        r[k]=obj[k];
        return false;
@@ -2126,7 +2210,7 @@ if (!Date.now) {
         if(matchValue==="object")
          {
           r={};
-          JavaScript.ForEach(x,function(y)
+          JS.ForEach(x,function(y)
           {
            r[y]=f(x[y]);
            return false;
@@ -3078,22 +3162,6 @@ if (!Date.now) {
       return _;
      }
     },
-    Pervasives:{
-     NewFromList:function(fields)
-     {
-      var r,enumerator,forLoopVar,v,k;
-      r={};
-      enumerator=Enumerator.Get(fields);
-      while(enumerator.MoveNext())
-       {
-        forLoopVar=enumerator.get_Current();
-        v=forLoopVar[1];
-        k=forLoopVar[0];
-        r[k]=v;
-       }
-      return r;
-     }
-    },
     PrintfHelpers:{
      padNumLeft:function(s,l)
      {
@@ -3128,7 +3196,7 @@ if (!Date.now) {
        s=Global.String(o1);
        if(s==="[object Object]")
         {
-         x=JavaScript.GetFields(o1);
+         x=JS.GetFields(o1);
          mapping=Runtime.Tupled(function(tupledArg)
          {
           var k,v;
@@ -4813,7 +4881,7 @@ if (!Date.now) {
          }
         else
          {
-          _1=matchValue==="function"?Operators.FailWith("Cannot compare function values."):matchValue==="boolean"?a<b?-1:1:matchValue==="number"?a<b?-1:1:matchValue==="string"?a<b?-1:1:a===null?-1:b===null?1:"CompareTo"in a?a.CompareTo(b):(a instanceof Array?b instanceof Array:false)?Unchecked.compareArrays(a,b):(a instanceof Date?b instanceof Date:false)?Unchecked.compareDates(a,b):Unchecked.compareArrays(JavaScript.GetFields(a),JavaScript.GetFields(b));
+          _1=matchValue==="function"?Operators.FailWith("Cannot compare function values."):matchValue==="boolean"?a<b?-1:1:matchValue==="number"?a<b?-1:1:matchValue==="string"?a<b?-1:1:a===null?-1:b===null?1:"CompareTo"in a?a.CompareTo(b):(a instanceof Array?b instanceof Array:false)?Unchecked.compareArrays(a,b):(a instanceof Date?b instanceof Date:false)?Unchecked.compareDates(a,b):Unchecked.compareArrays(JS.GetFields(a),JS.GetFields(b));
          }
         _=_1;
        }
@@ -4829,7 +4897,7 @@ if (!Date.now) {
       else
        {
         matchValue=typeof a;
-        _=matchValue==="object"?a===null?false:b===null?false:"Equals"in a?a.Equals(b):(a instanceof Array?b instanceof Array:false)?Unchecked.arrayEquals(a,b):(a instanceof Date?b instanceof Date:false)?Unchecked.dateEquals(a,b):Unchecked.arrayEquals(JavaScript.GetFields(a),JavaScript.GetFields(b)):false;
+        _=matchValue==="object"?a===null?false:b===null?false:"Equals"in a?a.Equals(b):(a instanceof Array?b instanceof Array:false)?Unchecked.arrayEquals(a,b):(a instanceof Date?b instanceof Date:false)?Unchecked.dateEquals(a,b):Unchecked.arrayEquals(JS.GetFields(a),JS.GetFields(b)):false;
        }
       return _;
      },
@@ -4924,7 +4992,7 @@ if (!Date.now) {
         h={
          contents:0
         };
-        JavaScript.ForEach(o,function(key)
+        JS.ForEach(o,function(key)
         {
          h.contents=op_PlusPlus(op_PlusPlus(h.contents,Unchecked.hashString(key)),Unchecked.Hash(o[key]));
          return false;
@@ -4999,10 +5067,20 @@ if (!Date.now) {
   Lazy=Runtime.Safe(WebSharper.Lazy);
   Error=Runtime.Safe(Global.Error);
   Date=Runtime.Safe(Global.Date);
-  JavaScript=Runtime.Safe(WebSharper.JavaScript);
+  console=Runtime.Safe(Global.console);
   Scheduler=Runtime.Safe(Concurrency.Scheduler);
   T=Runtime.Safe(Enumerator.T);
+  Html=Runtime.Safe(WebSharper.Html);
+  Client=Runtime.Safe(Html.Client);
+  Activator=Runtime.Safe(Client.Activator);
+  document=Runtime.Safe(Global.document);
+  jQuery=Runtime.Safe(Global.jQuery);
   Json=Runtime.Safe(WebSharper.Json);
+  JSON=Runtime.Safe(Global.JSON);
+  JavaScript=Runtime.Safe(WebSharper.JavaScript);
+  JS=Runtime.Safe(JavaScript.JS);
+  HtmlContentExtensions=Runtime.Safe(Client.HtmlContentExtensions);
+  SingleNode=Runtime.Safe(HtmlContentExtensions.SingleNode);
   List=Runtime.Safe(WebSharper.List);
   T1=Runtime.Safe(List.T);
   Math=Runtime.Safe(Global.Math);
@@ -5011,7 +5089,6 @@ if (!Date.now) {
   Remoting=Runtime.Safe(WebSharper.Remoting);
   XhrProvider=Runtime.Safe(Remoting.XhrProvider);
   AsyncProxy=Runtime.Safe(WebSharper.AsyncProxy);
-  JSON=Runtime.Safe(Global.JSON);
   Enumerable=Runtime.Safe(WebSharper.Enumerable);
   String=Runtime.Safe(Global.String);
   return RegExp=Runtime.Safe(Global.RegExp);
@@ -5020,6 +5097,7 @@ if (!Date.now) {
  {
   Remoting.EndPoint();
   Remoting.AjaxProvider();
+  Activator.Activate();
   Concurrency.scheduler();
   Concurrency.defCTS();
   Concurrency.GetCT();
@@ -5027,980 +5105,912 @@ if (!Date.now) {
  });
 }());
 
-var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n:n}function f(n){return o.lastIndex=0,o.test(n)?'"'+n.replace(o,function(n){var t=s[n];return typeof t=="string"?t:"\\u"+("0000"+n.charCodeAt(0).toString(16)).slice(-4)})+'"':'"'+n+'"'}function r(i,e){var s,l,h,a,v=n,c,o=e[i];o&&typeof o=="object"&&typeof o.toJSON=="function"&&(o=o.toJSON(i)),typeof t=="function"&&(o=t.call(e,i,o));switch(typeof o){case"string":return f(o);case"number":return isFinite(o)?String(o):"null";case"boolean":case"null":return String(o);case"object":if(!o)return"null";if(n+=u,c=[],Object.prototype.toString.apply(o)==="[object Array]"){for(a=o.length,s=0;s<a;s+=1)c[s]=r(s,o)||"null";return h=c.length===0?"[]":n?"[\n"+n+c.join(",\n"+n)+"\n"+v+"]":"["+c.join(",")+"]",n=v,h}if(t&&typeof t=="object")for(a=t.length,s=0;s<a;s+=1)typeof t[s]=="string"&&(l=t[s],h=r(l,o),h&&c.push(f(l)+(n?": ":":")+h));else for(l in o)Object.prototype.hasOwnProperty.call(o,l)&&(h=r(l,o),h&&c.push(f(l)+(n?": ":":")+h));return h=c.length===0?"{}":n?"{\n"+n+c.join(",\n"+n)+"\n"+v+"}":"{"+c.join(",")+"}",n=v,h}}typeof Date.prototype.toJSON!="function"&&(Date.prototype.toJSON=function(){return isFinite(this.valueOf())?this.getUTCFullYear()+"-"+i(this.getUTCMonth()+1)+"-"+i(this.getUTCDate())+"T"+i(this.getUTCHours())+":"+i(this.getUTCMinutes())+":"+i(this.getUTCSeconds())+"Z":null},String.prototype.toJSON=Number.prototype.toJSON=Boolean.prototype.toJSON=function(){return this.valueOf()});var e=/[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,o=/[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,n,u,s={"\b":"\\b","\t":"\\t","\n":"\\n","\f":"\\f","\r":"\\r",'"':'\\"',"\\":"\\\\"},t;typeof JSON.stringify!="function"&&(JSON.stringify=function(i,f,e){var o;if(n="",u="",typeof e=="number")for(o=0;o<e;o+=1)u+=" ";else typeof e=="string"&&(u=e);if(t=f,f&&typeof f!="function"&&(typeof f!="object"||typeof f.length!="number"))throw new Error("JSON.stringify");return r("",{"":i})}),typeof JSON.parse!="function"&&(JSON.parse=function(n,t){function r(n,i){var f,e,u=n[i];if(u&&typeof u=="object")for(f in u)Object.prototype.hasOwnProperty.call(u,f)&&(e=r(u,f),e!==undefined?u[f]=e:delete u[f]);return t.call(n,i,u)}var i;if(n=String(n),e.lastIndex=0,e.test(n)&&(n=n.replace(e,function(n){return"\\u"+("0000"+n.charCodeAt(0).toString(16)).slice(-4)})),/^[\],:{}\s]*$/.test(n.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g,"@").replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,"]").replace(/(?:^|:|,)(?:\s*\[)+/g,"")))return i=eval("("+n+")"),typeof t=="function"?r({"":i},""):i;throw new SyntaxError("JSON.parse");})}();;
 (function()
 {
- var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,Html,Activator,document,Default,Json,JSON,JavaScript,Arrays,Attribute,Implementation,HTML5,Element,Enumerator,Math,jQuery,Events,JQueryEventSupport,AttributeBuilder,DeprecatedTagBuilder,Html5AttributeBuilder,JQueryHtmlProvider,Html5TagBuilder,TagBuilder,Text,HTML51,EventsPervasives;
+ var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,Html,Client,Attribute,Pagelet,Default,Implementation,Element,Enumerator,Math,document,jQuery,Events,JQueryEventSupport,AttributeBuilder,DeprecatedTagBuilder,JQueryHtmlProvider,TagBuilder,Text,EventsPervasives;
  Runtime.Define(Global,{
   IntelliFactory:{
    WebSharper:{
     Html:{
-     Activator:{
-      Activate:Runtime.Field(function()
-      {
-       var _,meta;
-       if(Activator.hasDocument())
-        {
-         meta=document.getElementById("websharper-data");
-         _=meta?Default.OnLoad(function()
-         {
-          var text,obj,x,action;
-          text=meta.getAttribute("content");
-          obj=Json.Activate(JSON.parse(text));
-          x=JavaScript.GetFields(obj);
-          action=Runtime.Tupled(function(tupledArg)
-          {
-           var k,v,p,old;
-           k=tupledArg[0];
-           v=tupledArg[1];
-           p=v.get_Body();
-           old=document.getElementById(k);
-           old.parentNode.replaceChild(p.get_Body(),old);
-           return p.Render();
-          });
-          return Arrays.iter(action,x);
-         }):null;
-        }
-       else
-        {
-         _=null;
-        }
-       return _;
-      }),
-      hasDocument:function()
-      {
-       var $0=this,$this=this;
-       return typeof Global.document!=="undefined";
-      }
-     },
-     Attribute:Runtime.Class({
-      Render:function()
-      {
-       return null;
-      },
-      get_Body:function()
-      {
-       var attr;
-       attr=this.HtmlProvider.CreateAttribute(this.Name);
-       attr.value=this.Value;
-       return attr;
-      }
-     },{
-      New:function(htmlProvider,name,value)
-      {
-       var a;
-       a=Attribute.New1(htmlProvider);
-       a.Name=name;
-       a.Value=value;
-       return a;
-      },
-      New1:function(HtmlProvider)
-      {
-       var r;
-       r=Runtime.New(this,{});
-       r.HtmlProvider=HtmlProvider;
-       return r;
-      }
-     }),
-     AttributeBuilder:Runtime.Class({
-      Class:function(x)
-      {
-       return this.NewAttr("class",x);
-      },
-      NewAttr:function(name,value)
-      {
-       var a;
-       a=Attribute.New(this.HtmlProvider,name,value);
-       return a;
-      },
-      get_CheckBox:function()
-      {
-       return this.NewAttr("type","checkbox");
-      },
-      get_Hidden:function()
-      {
-       return this.NewAttr("type","hidden");
-      },
-      get_Password:function()
-      {
-       return this.NewAttr("type","password");
-      },
-      get_Radio:function()
-      {
-       return this.NewAttr("type","radio");
-      },
-      get_Reset:function()
-      {
-       return this.NewAttr("type","reset");
-      },
-      get_Submit:function()
-      {
-       return this.NewAttr("type","submit");
-      },
-      get_TextField:function()
-      {
-       return this.NewAttr("type","textfield");
-      }
-     },{
-      New:function(HtmlProvider)
-      {
-       var r;
-       r=Runtime.New(this,{});
-       r.HtmlProvider=HtmlProvider;
-       return r;
-      }
-     }),
-     Default:{
-      A:function(x)
-      {
-       var _this;
-       _this=Default.Tags();
-       return _this.NewTag("a",x);
-      },
-      Action:function(x)
-      {
-       var _this;
-       _this=Default.Attr();
-       return _this.NewAttr("action",x);
-      },
-      Align:function(x)
-      {
-       var _this;
-       _this=Default.Attr();
-       return _this.NewAttr("align",x);
-      },
-      Alt:function(x)
-      {
-       var _this;
-       _this=Default.Attr();
-       return _this.NewAttr("alt",x);
-      },
-      Attr:Runtime.Field(function()
-      {
-       return Implementation.Attr();
-      }),
-      B:function(x)
-      {
-       var _this;
-       _this=Default.Tags();
-       return _this.NewTag("b",x);
-      },
-      Body:function(x)
-      {
-       var _this;
-       _this=Default.Tags();
-       return _this.NewTag("body",x);
-      },
-      Br:function(x)
-      {
-       var _this;
-       _this=Default.Tags();
-       return _this.NewTag("br",x);
-      },
-      Button:function(x)
-      {
-       var _this;
-       _this=Default.Tags();
-       return _this.NewTag("button",x);
-      },
-      Code:function(x)
-      {
-       var _this;
-       _this=Default.Tags();
-       return _this.NewTag("code",x);
-      },
-      Deprecated:Runtime.Field(function()
-      {
-       return Implementation.DeprecatedHtml();
-      }),
-      Div:function(x)
-      {
-       return Default.Tags().Div(x);
-      },
-      Em:function(x)
-      {
-       var _this;
-       _this=Default.Tags();
-       return _this.NewTag("em",x);
-      },
-      Form:function(x)
-      {
-       var _this;
-       _this=Default.Tags();
-       return _this.NewTag("form",x);
-      },
-      H1:function(x)
-      {
-       var _this;
-       _this=Default.Tags();
-       return _this.NewTag("h1",x);
-      },
-      H2:function(x)
-      {
-       var _this;
-       _this=Default.Tags();
-       return _this.NewTag("h2",x);
-      },
-      H3:function(x)
-      {
-       var _this;
-       _this=Default.Tags();
-       return _this.NewTag("h3",x);
-      },
-      H4:function(x)
-      {
-       var _this;
-       _this=Default.Tags();
-       return _this.NewTag("h4",x);
-      },
-      HRef:function(x)
-      {
-       var _this;
-       _this=Default.Attr();
-       return _this.NewAttr("href",x);
-      },
-      HTML5:{
-       Attr:Runtime.Field(function()
+     Client:{
+      Attribute:Runtime.Class({
+       get_Body:function()
        {
-        return HTML5.Attr();
-       }),
-       Tags:Runtime.Field(function()
-       {
-        return HTML5.Tags();
-       })
-      },
-      Head:function(x)
-      {
-       var _this;
-       _this=Default.Tags();
-       return _this.NewTag("head",x);
-      },
-      Height:function(x)
-      {
-       var _this;
-       _this=Default.Attr();
-       return _this.NewAttr("height",x);
-      },
-      Hr:function(x)
-      {
-       var _this;
-       _this=Default.Tags();
-       return _this.NewTag("hr",x);
-      },
-      I:function(x)
-      {
-       var _this;
-       _this=Default.Tags();
-       return _this.NewTag("i",x);
-      },
-      IFrame:function(x)
-      {
-       var _this;
-       _this=Default.Tags();
-       return _this.NewTag("iframe",x);
-      },
-      Id:function(x)
-      {
-       var _this;
-       _this=Default.Attr();
-       return _this.NewAttr("id",x);
-      },
-      Img:function(x)
-      {
-       var _this;
-       _this=Default.Tags();
-       return _this.NewTag("img",x);
-      },
-      Input:function(x)
-      {
-       var _this;
-       _this=Default.Tags();
-       return _this.NewTag("input",x);
-      },
-      LI:function(x)
-      {
-       var _this;
-       _this=Default.Tags();
-       return _this.NewTag("li",x);
-      },
-      Name:function(x)
-      {
-       var _this;
-       _this=Default.Attr();
-       return _this.NewAttr("name",x);
-      },
-      NewAttr:function(x)
-      {
-       return function(arg10)
-       {
-        return Default.Attr().NewAttr(x,arg10);
-       };
-      },
-      OL:function(x)
-      {
-       var _this;
-       _this=Default.Tags();
-       return _this.NewTag("ol",x);
-      },
-      OnLoad:function(init)
-      {
-       return Implementation.HtmlProvider().OnDocumentReady(init);
-      },
-      P:function(x)
-      {
-       var _this;
-       _this=Default.Tags();
-       return _this.NewTag("p",x);
-      },
-      Pre:function(x)
-      {
-       var _this;
-       _this=Default.Tags();
-       return _this.NewTag("pre",x);
-      },
-      RowSpan:function(x)
-      {
-       var _this;
-       _this=Default.Attr();
-       return _this.NewAttr("rowspan",x);
-      },
-      Script:function(x)
-      {
-       var _this;
-       _this=Default.Tags();
-       return _this.NewTag("script",x);
-      },
-      Select:function(x)
-      {
-       var _this;
-       _this=Default.Tags();
-       return _this.NewTag("select",x);
-      },
-      Selected:function(x)
-      {
-       var _this;
-       _this=Default.Attr();
-       return _this.NewAttr("selected",x);
-      },
-      Span:function(x)
-      {
-       var _this;
-       _this=Default.Tags();
-       return _this.NewTag("span",x);
-      },
-      Src:function(x)
-      {
-       var _this;
-       _this=Default.Attr();
-       return _this.NewAttr("src",x);
-      },
-      TBody:function(x)
-      {
-       var _this;
-       _this=Default.Tags();
-       return _this.NewTag("tbody",x);
-      },
-      TD:function(x)
-      {
-       var _this;
-       _this=Default.Tags();
-       return _this.NewTag("td",x);
-      },
-      TFoot:function(x)
-      {
-       var _this;
-       _this=Default.Tags();
-       return _this.NewTag("tfoot",x);
-      },
-      TH:function(x)
-      {
-       var _this;
-       _this=Default.Tags();
-       return _this.NewTag("th",x);
-      },
-      THead:function(x)
-      {
-       var _this;
-       _this=Default.Tags();
-       return _this.NewTag("thead",x);
-      },
-      TR:function(x)
-      {
-       var _this;
-       _this=Default.Tags();
-       return _this.NewTag("tr",x);
-      },
-      Table:function(x)
-      {
-       var _this;
-       _this=Default.Tags();
-       return _this.NewTag("table",x);
-      },
-      Tags:Runtime.Field(function()
-      {
-       return Implementation.Tags();
-      }),
-      Text:function(x)
-      {
-       return Default.Tags().text(x);
-      },
-      TextArea:function(x)
-      {
-       var _this;
-       _this=Default.Tags();
-       return _this.NewTag("textarea",x);
-      },
-      UL:function(x)
-      {
-       var _this;
-       _this=Default.Tags();
-       return _this.NewTag("ul",x);
-      },
-      VAlign:function(x)
-      {
-       var _this;
-       _this=Default.Attr();
-       return _this.NewAttr("valign",x);
-      },
-      Width:function(x)
-      {
-       var _this;
-       _this=Default.Attr();
-       return _this.NewAttr("width",x);
-      }
-     },
-     DeprecatedAttributeBuilder:Runtime.Class({
-      NewAttr:function(name,value)
-      {
-       var a;
-       a=Attribute.New(this.HtmlProvider,name,value);
-       return a;
-      }
-     },{
-      New:function(HtmlProvider)
-      {
-       var r;
-       r=Runtime.New(this,{});
-       r.HtmlProvider=HtmlProvider;
-       return r;
-      }
-     }),
-     DeprecatedTagBuilder:Runtime.Class({
-      NewTag:function(name,children)
-      {
-       var el,enumerator,pl;
-       el=Element.New(this.HtmlProvider,name);
-       enumerator=Enumerator.Get(children);
-       while(enumerator.MoveNext())
-        {
-         pl=enumerator.get_Current();
-         el.AppendI(pl);
-        }
-       return el;
-      }
-     },{
-      New:function(HtmlProvider)
-      {
-       var r;
-       r=Runtime.New(this,{});
-       r.HtmlProvider=HtmlProvider;
-       return r;
-      }
-     }),
-     Element:Runtime.Class({
-      AppendI:function(pl)
-      {
-       var body,_,objectArg,arg00,objectArg1,arg001,arg10,_1,r;
-       body=pl.get_Body();
-       if(body.nodeType===2)
-        {
-         objectArg=this["HtmlProvider@31"];
-         arg00=this.Body;
-         _=objectArg.AppendAttribute(arg00,body);
-        }
-       else
-        {
-         objectArg1=this["HtmlProvider@31"];
-         arg001=this.Body;
-         arg10=pl.get_Body();
-         _=objectArg1.AppendNode(arg001,arg10);
-        }
-       if(this.IsRendered)
-        {
-         _1=pl.Render();
-        }
-       else
-        {
-         r=this.RenderInternal;
-         _1=void(this.RenderInternal=function()
-         {
-          r(null);
-          return pl.Render();
-         });
-        }
-       return _1;
-      },
-      AppendN:function(node)
-      {
-       var objectArg,arg00;
-       objectArg=this["HtmlProvider@31"];
-       arg00=this.Body;
-       return objectArg.AppendNode(arg00,node);
-      },
-      OnLoad:function(f)
-      {
-       var objectArg,arg00;
-       objectArg=this["HtmlProvider@31"];
-       arg00=this.Body;
-       return objectArg.OnLoad(arg00,f);
-      },
-      Render:function()
-      {
-       var _;
-       if(!this.IsRendered)
-        {
-         this.RenderInternal.call(null,null);
-         _=void(this.IsRendered=true);
-        }
-       else
-        {
-         _=null;
-        }
-       return _;
-      },
-      get_Body:function()
-      {
-       return this.Body;
-      },
-      get_Html:function()
-      {
-       return this["HtmlProvider@31"].GetHtml(this.Body);
-      },
-      get_HtmlProvider:function()
-      {
-       return this["HtmlProvider@31"];
-      },
-      get_Id:function()
-      {
-       var objectArg,arg00,id,_,newId,objectArg1,arg001;
-       objectArg=this["HtmlProvider@31"];
-       arg00=this.Body;
-       id=objectArg.GetProperty(arg00,"id");
-       if(id===undefined?true:id==="")
-        {
-         newId="id"+Math.round(Math.random()*100000000);
-         objectArg1=this["HtmlProvider@31"];
-         arg001=this.Body;
-         objectArg1.SetProperty(arg001,"id",newId);
-         _=newId;
-        }
-       else
-        {
-         _=id;
-        }
-       return _;
-      },
-      get_Item:function(name)
-      {
-       var objectArg,arg00,objectArg1,arg001;
-       objectArg=this["HtmlProvider@31"];
-       arg00=this.Body;
-       objectArg.GetAttribute(arg00,name);
-       objectArg1=this["HtmlProvider@31"];
-       arg001=this.Body;
-       return objectArg1.GetAttribute(arg001,name);
-      },
-      get_Text:function()
-      {
-       return this["HtmlProvider@31"].GetText(this.Body);
-      },
-      get_Value:function()
-      {
-       return this["HtmlProvider@31"].GetValue(this.Body);
-      },
-      set_Html:function(x)
-      {
-       var objectArg,arg00;
-       objectArg=this["HtmlProvider@31"];
-       arg00=this.Body;
-       return objectArg.SetHtml(arg00,x);
-      },
-      set_Item:function(name,value)
-      {
-       var objectArg,arg00;
-       objectArg=this["HtmlProvider@31"];
-       arg00=this.Body;
-       return objectArg.SetAttribute(arg00,name,value);
-      },
-      set_Text:function(x)
-      {
-       var objectArg,arg00;
-       objectArg=this["HtmlProvider@31"];
-       arg00=this.Body;
-       return objectArg.SetText(arg00,x);
-      },
-      set_Value:function(x)
-      {
-       var objectArg,arg00;
-       objectArg=this["HtmlProvider@31"];
-       arg00=this.Body;
-       return objectArg.SetValue(arg00,x);
-      }
-     },{
-      New:function(html,name)
-      {
-       var el,dom;
-       el=Element.New1(html);
-       dom=document.createElement(name);
-       el.RenderInternal=function()
-       {
-       };
-       el.Body=dom;
-       el.IsRendered=false;
-       return el;
-      },
-      New1:function(HtmlProvider)
-      {
-       var r;
-       r=Runtime.New(this,{});
-       r["HtmlProvider@31"]=HtmlProvider;
-       return r;
-      }
-     }),
-     Events:{
-      JQueryEventSupport:Runtime.Class({
-       OnBlur:function(f,el)
-       {
-        return jQuery(el.get_Body()).bind("blur",function()
-        {
-         return f(el);
-        });
-       },
-       OnChange:function(f,el)
-       {
-        return jQuery(el.get_Body()).bind("change",function()
-        {
-         return f(el);
-        });
-       },
-       OnClick:function(f,el)
-       {
-        return this.OnMouse("click",f,el);
-       },
-       OnDoubleClick:function(f,el)
-       {
-        return this.OnMouse("dblclick",f,el);
-       },
-       OnError:function(f,el)
-       {
-        return jQuery(el.get_Body()).bind("error",function()
-        {
-         return f(el);
-        });
-       },
-       OnFocus:function(f,el)
-       {
-        return jQuery(el.get_Body()).bind("focus",function()
-        {
-         return f(el);
-        });
-       },
-       OnKeyDown:function(f,el)
-       {
-        var h;
-        h=function(ev)
-        {
-         return(f(el))({
-          KeyCode:ev.keyCode
-         });
-        };
-        return jQuery(el.get_Body()).bind("keydown",h);
-       },
-       OnKeyPress:function(f,el)
-       {
-        return jQuery(el.get_Body()).keypress(function(arg)
-        {
-         return(f(el))({
-          CharacterCode:arg.which
-         });
-        });
-       },
-       OnKeyUp:function(f,el)
-       {
-        var h;
-        h=function(ev)
-        {
-         return(f(el))({
-          KeyCode:ev.keyCode
-         });
-        };
-        return jQuery(el.get_Body()).bind("keyup",h);
-       },
-       OnLoad:function(f,el)
-       {
-        return jQuery(el.get_Body()).bind("load",function()
-        {
-         return f(el);
-        });
-       },
-       OnMouse:function(name,f,el)
-       {
-        var h;
-        h=function(ev)
-        {
-         return(f(el))({
-          X:ev.pageX,
-          Y:ev.pageY
-         });
-        };
-        return jQuery(el.get_Body()).bind(name,h);
-       },
-       OnMouseDown:function(f,el)
-       {
-        return this.OnMouse("mousedown",f,el);
-       },
-       OnMouseEnter:function(f,el)
-       {
-        return this.OnMouse("mouseenter",f,el);
-       },
-       OnMouseLeave:function(f,el)
-       {
-        return this.OnMouse("mouseleave",f,el);
-       },
-       OnMouseMove:function(f,el)
-       {
-        return this.OnMouse("mousemove",f,el);
-       },
-       OnMouseOut:function(f,el)
-       {
-        return this.OnMouse("mouseout",f,el);
-       },
-       OnMouseUp:function(f,el)
-       {
-        return this.OnMouse("mouseup",f,el);
-       },
-       OnResize:function(f,el)
-       {
-        return jQuery(el.get_Body()).bind("resize",function()
-        {
-         return f(el);
-        });
-       },
-       OnScroll:function(f,el)
-       {
-        return jQuery(el.get_Body()).bind("scroll",function()
-        {
-         return f(el);
-        });
-       },
-       OnSelect:function(f,el)
-       {
-        return jQuery(el.get_Body()).bind("select",function()
-        {
-         return f(el);
-        });
-       },
-       OnSubmit:function(f,el)
-       {
-        return jQuery(el.get_Body()).bind("submit",function()
-        {
-         return f(el);
-        });
-       },
-       OnUnLoad:function(f,el)
-       {
-        return jQuery(el.get_Body()).bind("unload",function()
-        {
-         return f(el);
-        });
+        var attr;
+        attr=this.HtmlProvider.CreateAttribute(this.Name);
+        attr.value=this.Value;
+        return attr;
        }
       },{
-       New:function()
+       New:function(HtmlProvider)
        {
-        return Runtime.New(this,{});
+        var r;
+        r=Runtime.New(this,Pagelet.New());
+        r.HtmlProvider=HtmlProvider;
+        return r;
+       },
+       New1:function(htmlProvider,name,value)
+       {
+        var a;
+        a=Attribute.New(htmlProvider);
+        a.Name=name;
+        a.Value=value;
+        return a;
        }
-      })
-     },
-     EventsPervasives:{
-      Events:Runtime.Field(function()
-      {
-       return JQueryEventSupport.New();
-      })
-     },
-     Html5AttributeBuilder:Runtime.Class({
-      NewAttr:function(name,value)
-      {
-       var a;
-       a=Attribute.New(this.HtmlProvider,name,value);
-       return a;
-      }
-     },{
-      New:function(HtmlProvider)
-      {
-       var r;
-       r=Runtime.New(this,{});
-       r.HtmlProvider=HtmlProvider;
-       return r;
-      }
-     }),
-     Html5TagBuilder:Runtime.Class({
-      NewTag:function(name,children)
-      {
-       var el,enumerator,pl;
-       el=Element.New(this.HtmlProvider,name);
-       enumerator=Enumerator.Get(children);
-       while(enumerator.MoveNext())
-        {
-         pl=enumerator.get_Current();
-         el.AppendI(pl);
-        }
-       return el;
-      }
-     },{
-      New:function(HtmlProvider)
-      {
-       var r;
-       r=Runtime.New(this,{});
-       r.HtmlProvider=HtmlProvider;
-       return r;
-      }
-     }),
-     Implementation:{
-      Attr:Runtime.Field(function()
-      {
-       return AttributeBuilder.New(Implementation.HtmlProvider());
       }),
-      DeprecatedHtml:Runtime.Field(function()
-      {
-       return DeprecatedTagBuilder.New(Implementation.HtmlProvider());
+      AttributeBuilder:Runtime.Class({
+       Class:function(x)
+       {
+        return this.NewAttr("class",x);
+       },
+       NewAttr:function(name,value)
+       {
+        var a;
+        a=Attribute.New1(this.HtmlProvider,name,value);
+        return a;
+       }
+      },{
+       New:function(HtmlProvider)
+       {
+        var r;
+        r=Runtime.New(this,{});
+        r.HtmlProvider=HtmlProvider;
+        return r;
+       }
       }),
-      HTML5:{
+      Default:{
+       A:function(x)
+       {
+        var _this;
+        _this=Default.Tags();
+        return _this.NewTag("a",x);
+       },
+       Action:function(x)
+       {
+        var _this;
+        _this=Default.Attr();
+        return _this.NewAttr("action",x);
+       },
+       Align:function(x)
+       {
+        var _this;
+        _this=Default.Attr();
+        return _this.NewAttr("align",x);
+       },
+       Alt:function(x)
+       {
+        var _this;
+        _this=Default.Attr();
+        return _this.NewAttr("alt",x);
+       },
        Attr:Runtime.Field(function()
        {
-        return Html5AttributeBuilder.New(HTML5.Html5Provider());
+        return Implementation.Attr();
        }),
-       Html5Provider:Runtime.Field(function()
+       B:function(x)
+       {
+        var _this;
+        _this=Default.Tags();
+        return _this.NewTag("b",x);
+       },
+       Body:function(x)
+       {
+        var _this;
+        _this=Default.Tags();
+        return _this.NewTag("body",x);
+       },
+       Br:function(x)
+       {
+        var _this;
+        _this=Default.Tags();
+        return _this.NewTag("br",x);
+       },
+       Button:function(x)
+       {
+        var _this;
+        _this=Default.Tags();
+        return _this.NewTag("button",x);
+       },
+       Code:function(x)
+       {
+        var _this;
+        _this=Default.Tags();
+        return _this.NewTag("code",x);
+       },
+       Deprecated:Runtime.Field(function()
+       {
+        return Implementation.DeprecatedHtml();
+       }),
+       Div:function(x)
+       {
+        return Default.Tags().Div(x);
+       },
+       Em:function(x)
+       {
+        var _this;
+        _this=Default.Tags();
+        return _this.NewTag("em",x);
+       },
+       Form:function(x)
+       {
+        var _this;
+        _this=Default.Tags();
+        return _this.NewTag("form",x);
+       },
+       H1:function(x)
+       {
+        var _this;
+        _this=Default.Tags();
+        return _this.NewTag("h1",x);
+       },
+       H2:function(x)
+       {
+        var _this;
+        _this=Default.Tags();
+        return _this.NewTag("h2",x);
+       },
+       H3:function(x)
+       {
+        var _this;
+        _this=Default.Tags();
+        return _this.NewTag("h3",x);
+       },
+       H4:function(x)
+       {
+        var _this;
+        _this=Default.Tags();
+        return _this.NewTag("h4",x);
+       },
+       HRef:function(x)
+       {
+        var _this;
+        _this=Default.Attr();
+        return _this.NewAttr("href",x);
+       },
+       Head:function(x)
+       {
+        var _this;
+        _this=Default.Tags();
+        return _this.NewTag("head",x);
+       },
+       Height:function(x)
+       {
+        var _this;
+        _this=Default.Attr();
+        return _this.NewAttr("height",x);
+       },
+       Hr:function(x)
+       {
+        var _this;
+        _this=Default.Tags();
+        return _this.NewTag("hr",x);
+       },
+       I:function(x)
+       {
+        var _this;
+        _this=Default.Tags();
+        return _this.NewTag("i",x);
+       },
+       IFrame:function(x)
+       {
+        var _this;
+        _this=Default.Tags();
+        return _this.NewTag("iframe",x);
+       },
+       Id:function(x)
+       {
+        var _this;
+        _this=Default.Attr();
+        return _this.NewAttr("id",x);
+       },
+       Img:function(x)
+       {
+        var _this;
+        _this=Default.Tags();
+        return _this.NewTag("img",x);
+       },
+       Input:function(x)
+       {
+        var _this;
+        _this=Default.Tags();
+        return _this.NewTag("input",x);
+       },
+       LI:function(x)
+       {
+        var _this;
+        _this=Default.Tags();
+        return _this.NewTag("li",x);
+       },
+       Name:function(x)
+       {
+        var _this;
+        _this=Default.Attr();
+        return _this.NewAttr("name",x);
+       },
+       NewAttr:function(x)
+       {
+        return function(arg10)
+        {
+         return Default.Attr().NewAttr(x,arg10);
+        };
+       },
+       OL:function(x)
+       {
+        var _this;
+        _this=Default.Tags();
+        return _this.NewTag("ol",x);
+       },
+       OnLoad:function(init)
+       {
+        return Implementation.HtmlProvider().OnDocumentReady(init);
+       },
+       P:function(x)
+       {
+        var _this;
+        _this=Default.Tags();
+        return _this.NewTag("p",x);
+       },
+       Pre:function(x)
+       {
+        var _this;
+        _this=Default.Tags();
+        return _this.NewTag("pre",x);
+       },
+       RowSpan:function(x)
+       {
+        var _this;
+        _this=Default.Attr();
+        return _this.NewAttr("rowspan",x);
+       },
+       Script:function(x)
+       {
+        var _this;
+        _this=Default.Tags();
+        return _this.NewTag("script",x);
+       },
+       Select:function(x)
+       {
+        var _this;
+        _this=Default.Tags();
+        return _this.NewTag("select",x);
+       },
+       Selected:function(x)
+       {
+        var _this;
+        _this=Default.Attr();
+        return _this.NewAttr("selected",x);
+       },
+       Span:function(x)
+       {
+        var _this;
+        _this=Default.Tags();
+        return _this.NewTag("span",x);
+       },
+       Src:function(x)
+       {
+        var _this;
+        _this=Default.Attr();
+        return _this.NewAttr("src",x);
+       },
+       TBody:function(x)
+       {
+        var _this;
+        _this=Default.Tags();
+        return _this.NewTag("tbody",x);
+       },
+       TD:function(x)
+       {
+        var _this;
+        _this=Default.Tags();
+        return _this.NewTag("td",x);
+       },
+       TFoot:function(x)
+       {
+        var _this;
+        _this=Default.Tags();
+        return _this.NewTag("tfoot",x);
+       },
+       TH:function(x)
+       {
+        var _this;
+        _this=Default.Tags();
+        return _this.NewTag("th",x);
+       },
+       THead:function(x)
+       {
+        var _this;
+        _this=Default.Tags();
+        return _this.NewTag("thead",x);
+       },
+       TR:function(x)
+       {
+        var _this;
+        _this=Default.Tags();
+        return _this.NewTag("tr",x);
+       },
+       Table:function(x)
+       {
+        var _this;
+        _this=Default.Tags();
+        return _this.NewTag("table",x);
+       },
+       Tags:Runtime.Field(function()
+       {
+        return Implementation.Tags();
+       }),
+       Text:function(x)
+       {
+        return Default.Tags().text(x);
+       },
+       TextArea:function(x)
+       {
+        var _this;
+        _this=Default.Tags();
+        return _this.NewTag("textarea",x);
+       },
+       UL:function(x)
+       {
+        var _this;
+        _this=Default.Tags();
+        return _this.NewTag("ul",x);
+       },
+       VAlign:function(x)
+       {
+        var _this;
+        _this=Default.Attr();
+        return _this.NewAttr("valign",x);
+       },
+       Width:function(x)
+       {
+        var _this;
+        _this=Default.Attr();
+        return _this.NewAttr("width",x);
+       }
+      },
+      DeprecatedAttributeBuilder:Runtime.Class({
+       NewAttr:function(name,value)
+       {
+        var a;
+        a=Attribute.New1(this.HtmlProvider,name,value);
+        return a;
+       }
+      },{
+       New:function(HtmlProvider)
+       {
+        var r;
+        r=Runtime.New(this,{});
+        r.HtmlProvider=HtmlProvider;
+        return r;
+       }
+      }),
+      DeprecatedTagBuilder:Runtime.Class({
+       NewTag:function(name,children)
+       {
+        var el,enumerator,pl;
+        el=Element.New(this.HtmlProvider,name);
+        enumerator=Enumerator.Get(children);
+        while(enumerator.MoveNext())
+         {
+          pl=enumerator.get_Current();
+          el.AppendI(pl);
+         }
+        return el;
+       }
+      },{
+       New:function(HtmlProvider)
+       {
+        var r;
+        r=Runtime.New(this,{});
+        r.HtmlProvider=HtmlProvider;
+        return r;
+       }
+      }),
+      Element:Runtime.Class({
+       AppendI:function(pl)
+       {
+        var body,_,objectArg,arg00,objectArg1,arg001,arg10,_1,r;
+        body=pl.get_Body();
+        if(body.nodeType===2)
+         {
+          objectArg=this["HtmlProvider@33"];
+          arg00=this.get_Body();
+          _=objectArg.AppendAttribute(arg00,body);
+         }
+        else
+         {
+          objectArg1=this["HtmlProvider@33"];
+          arg001=this.get_Body();
+          arg10=pl.get_Body();
+          _=objectArg1.AppendNode(arg001,arg10);
+         }
+        if(this.IsRendered)
+         {
+          _1=pl.Render();
+         }
+        else
+         {
+          r=this.RenderInternal;
+          _1=void(this.RenderInternal=function()
+          {
+           r(null);
+           return pl.Render();
+          });
+         }
+        return _1;
+       },
+       AppendN:function(node)
+       {
+        var objectArg,arg00;
+        objectArg=this["HtmlProvider@33"];
+        arg00=this.get_Body();
+        return objectArg.AppendNode(arg00,node);
+       },
+       OnLoad:function(f)
+       {
+        var objectArg,arg00;
+        objectArg=this["HtmlProvider@33"];
+        arg00=this.get_Body();
+        return objectArg.OnLoad(arg00,f);
+       },
+       Render:function()
+       {
+        var _;
+        if(!this.IsRendered)
+         {
+          this.RenderInternal.call(null,null);
+          _=void(this.IsRendered=true);
+         }
+        else
+         {
+          _=null;
+         }
+        return _;
+       },
+       get_Body:function()
+       {
+        return this.Dom;
+       },
+       get_Html:function()
+       {
+        return this["HtmlProvider@33"].GetHtml(this.get_Body());
+       },
+       get_HtmlProvider:function()
+       {
+        return this["HtmlProvider@33"];
+       },
+       get_Id:function()
+       {
+        var objectArg,arg00,id,_,newId,objectArg1,arg001;
+        objectArg=this["HtmlProvider@33"];
+        arg00=this.get_Body();
+        id=objectArg.GetProperty(arg00,"id");
+        if(id===undefined?true:id==="")
+         {
+          newId="id"+Math.round(Math.random()*100000000);
+          objectArg1=this["HtmlProvider@33"];
+          arg001=this.get_Body();
+          objectArg1.SetProperty(arg001,"id",newId);
+          _=newId;
+         }
+        else
+         {
+          _=id;
+         }
+        return _;
+       },
+       get_Item:function(name)
+       {
+        var objectArg,arg00,objectArg1,arg001;
+        objectArg=this["HtmlProvider@33"];
+        arg00=this.get_Body();
+        objectArg.GetAttribute(arg00,name);
+        objectArg1=this["HtmlProvider@33"];
+        arg001=this.get_Body();
+        return objectArg1.GetAttribute(arg001,name);
+       },
+       get_Text:function()
+       {
+        return this["HtmlProvider@33"].GetText(this.get_Body());
+       },
+       get_Value:function()
+       {
+        return this["HtmlProvider@33"].GetValue(this.get_Body());
+       },
+       set_Html:function(x)
+       {
+        var objectArg,arg00;
+        objectArg=this["HtmlProvider@33"];
+        arg00=this.get_Body();
+        return objectArg.SetHtml(arg00,x);
+       },
+       set_Item:function(name,value)
+       {
+        var objectArg,arg00;
+        objectArg=this["HtmlProvider@33"];
+        arg00=this.get_Body();
+        return objectArg.SetAttribute(arg00,name,value);
+       },
+       set_Text:function(x)
+       {
+        var objectArg,arg00;
+        objectArg=this["HtmlProvider@33"];
+        arg00=this.get_Body();
+        return objectArg.SetText(arg00,x);
+       },
+       set_Value:function(x)
+       {
+        var objectArg,arg00;
+        objectArg=this["HtmlProvider@33"];
+        arg00=this.get_Body();
+        return objectArg.SetValue(arg00,x);
+       }
+      },{
+       New:function(html,name)
+       {
+        var el,dom;
+        el=Element.New1(html);
+        dom=document.createElement(name);
+        el.RenderInternal=function()
+        {
+        };
+        el.Dom=dom;
+        el.IsRendered=false;
+        return el;
+       },
+       New1:function(HtmlProvider)
+       {
+        var r;
+        r=Runtime.New(this,Pagelet.New());
+        r["HtmlProvider@33"]=HtmlProvider;
+        return r;
+       }
+      }),
+      Events:{
+       JQueryEventSupport:Runtime.Class({
+        OnBlur:function(f,el)
+        {
+         return jQuery(el.get_Body()).bind("blur",function()
+         {
+          return f(el);
+         });
+        },
+        OnChange:function(f,el)
+        {
+         return jQuery(el.get_Body()).bind("change",function()
+         {
+          return f(el);
+         });
+        },
+        OnClick:function(f,el)
+        {
+         return this.OnMouse("click",f,el);
+        },
+        OnDoubleClick:function(f,el)
+        {
+         return this.OnMouse("dblclick",f,el);
+        },
+        OnError:function(f,el)
+        {
+         return jQuery(el.get_Body()).bind("error",function()
+         {
+          return f(el);
+         });
+        },
+        OnFocus:function(f,el)
+        {
+         return jQuery(el.get_Body()).bind("focus",function()
+         {
+          return f(el);
+         });
+        },
+        OnKeyDown:function(f,el)
+        {
+         var h;
+         h=function(ev)
+         {
+          return(f(el))({
+           KeyCode:ev.keyCode
+          });
+         };
+         return jQuery(el.get_Body()).bind("keydown",h);
+        },
+        OnKeyPress:function(f,el)
+        {
+         return jQuery(el.get_Body()).keypress(function(arg)
+         {
+          return(f(el))({
+           CharacterCode:arg.which
+          });
+         });
+        },
+        OnKeyUp:function(f,el)
+        {
+         var h;
+         h=function(ev)
+         {
+          return(f(el))({
+           KeyCode:ev.keyCode
+          });
+         };
+         return jQuery(el.get_Body()).bind("keyup",h);
+        },
+        OnLoad:function(f,el)
+        {
+         return jQuery(el.get_Body()).bind("load",function()
+         {
+          return f(el);
+         });
+        },
+        OnMouse:function(name,f,el)
+        {
+         var h;
+         h=function(ev)
+         {
+          return(f(el))({
+           X:ev.pageX,
+           Y:ev.pageY
+          });
+         };
+         return jQuery(el.get_Body()).bind(name,h);
+        },
+        OnMouseDown:function(f,el)
+        {
+         return this.OnMouse("mousedown",f,el);
+        },
+        OnMouseEnter:function(f,el)
+        {
+         return this.OnMouse("mouseenter",f,el);
+        },
+        OnMouseLeave:function(f,el)
+        {
+         return this.OnMouse("mouseleave",f,el);
+        },
+        OnMouseMove:function(f,el)
+        {
+         return this.OnMouse("mousemove",f,el);
+        },
+        OnMouseOut:function(f,el)
+        {
+         return this.OnMouse("mouseout",f,el);
+        },
+        OnMouseUp:function(f,el)
+        {
+         return this.OnMouse("mouseup",f,el);
+        },
+        OnResize:function(f,el)
+        {
+         return jQuery(el.get_Body()).bind("resize",function()
+         {
+          return f(el);
+         });
+        },
+        OnScroll:function(f,el)
+        {
+         return jQuery(el.get_Body()).bind("scroll",function()
+         {
+          return f(el);
+         });
+        },
+        OnSelect:function(f,el)
+        {
+         return jQuery(el.get_Body()).bind("select",function()
+         {
+          return f(el);
+         });
+        },
+        OnSubmit:function(f,el)
+        {
+         return jQuery(el.get_Body()).bind("submit",function()
+         {
+          return f(el);
+         });
+        },
+        OnUnLoad:function(f,el)
+        {
+         return jQuery(el.get_Body()).bind("unload",function()
+         {
+          return f(el);
+         });
+        }
+       },{
+        New:function()
+        {
+         return Runtime.New(this,{});
+        }
+       })
+      },
+      EventsPervasives:{
+       Events:Runtime.Field(function()
+       {
+        return JQueryEventSupport.New();
+       })
+      },
+      Implementation:{
+       Attr:Runtime.Field(function()
+       {
+        return AttributeBuilder.New(Implementation.HtmlProvider());
+       }),
+       DeprecatedHtml:Runtime.Field(function()
+       {
+        return DeprecatedTagBuilder.New(Implementation.HtmlProvider());
+       }),
+       HtmlProvider:Runtime.Field(function()
        {
         return JQueryHtmlProvider.New();
        }),
+       JQueryHtmlProvider:Runtime.Class({
+        AddClass:function(node,cls)
+        {
+         return jQuery(node).addClass(cls);
+        },
+        AppendAttribute:function(node,attr)
+        {
+         var arg10,arg20;
+         arg10=attr.nodeName;
+         arg20=attr.value;
+         return this.SetAttribute(node,arg10,arg20);
+        },
+        AppendNode:function(node,el)
+        {
+         return jQuery(node).append(jQuery(el));
+        },
+        Clear:function(node)
+        {
+         return jQuery(node).contents().detach();
+        },
+        CreateAttribute:function(str)
+        {
+         return document.createAttribute(str);
+        },
+        CreateElement:function(name)
+        {
+         return document.createElement(name);
+        },
+        CreateTextNode:function(str)
+        {
+         return document.createTextNode(str);
+        },
+        GetAttribute:function(node,name)
+        {
+         return jQuery(node).attr(name);
+        },
+        GetHtml:function(node)
+        {
+         return jQuery(node).html();
+        },
+        GetProperty:function(node,name)
+        {
+         var x;
+         x=jQuery(node).attr(name);
+         return x;
+        },
+        GetText:function(node)
+        {
+         return node.textContent;
+        },
+        GetValue:function(node)
+        {
+         var x;
+         x=jQuery(node).val();
+         return x;
+        },
+        HasAttribute:function(node,name)
+        {
+         return jQuery(node).attr(name)!=null;
+        },
+        OnDocumentReady:function(f)
+        {
+         return jQuery(document).ready(f);
+        },
+        OnLoad:function(node,f)
+        {
+         return jQuery(node).ready(f);
+        },
+        Remove:function(node)
+        {
+         return jQuery(node).remove();
+        },
+        RemoveAttribute:function(node,name)
+        {
+         return jQuery(node).removeAttr(name);
+        },
+        RemoveClass:function(node,cls)
+        {
+         return jQuery(node).removeClass(cls);
+        },
+        SetAttribute:function(node,name,value)
+        {
+         return jQuery(node).attr(name,value);
+        },
+        SetCss:function(node,name,prop)
+        {
+         return jQuery(node).css(name,prop);
+        },
+        SetHtml:function(node,text)
+        {
+         return jQuery(node).html(text);
+        },
+        SetProperty:function(node,name,value)
+        {
+         var x;
+         x=jQuery(node).prop(name,value);
+         return x;
+        },
+        SetStyle:function(node,style)
+        {
+         return jQuery(node).attr("style",style);
+        },
+        SetText:function(node,text)
+        {
+         node.textContent=text;
+        },
+        SetValue:function(node,value)
+        {
+         return jQuery(node).val(value);
+        }
+       },{
+        New:function()
+        {
+         return Runtime.New(this,{});
+        }
+       }),
        Tags:Runtime.Field(function()
        {
-        return Html5TagBuilder.New(HTML5.Html5Provider());
+        return TagBuilder.New(Implementation.HtmlProvider());
        })
       },
-      HtmlProvider:Runtime.Field(function()
-      {
-       return JQueryHtmlProvider.New();
-      }),
-      JQueryHtmlProvider:Runtime.Class({
-       AddClass:function(node,cls)
+      Operators:{
+       OnAfterRender:function(f,w)
        {
-        return jQuery(node).addClass(cls);
+        var r;
+        r=w.Render;
+        w.Render=function()
+        {
+         r.apply(w);
+         return f(w);
+        };
+        return;
        },
-       AppendAttribute:function(node,attr)
+       OnBeforeRender:function(f,w)
        {
-        var arg10,arg20;
-        arg10=attr.nodeName;
-        arg20=attr.value;
-        return this.SetAttribute(node,arg10,arg20);
+        var r;
+        r=w.Render;
+        w.Render=function()
+        {
+         f(w);
+         return r.apply(w);
+        };
+        return;
        },
-       AppendNode:function(node,el)
+       add:function(el,inner)
        {
-        return jQuery(node).append(jQuery(el));
+        var enumerator,pl;
+        enumerator=Enumerator.Get(inner);
+        while(enumerator.MoveNext())
+         {
+          pl=enumerator.get_Current();
+          el.AppendI(pl);
+         }
+        return el;
+       }
+      },
+      Pagelet:Runtime.Class({
+       AppendTo:function(targetId)
+       {
+        var target,value;
+        target=document.getElementById(targetId);
+        value=target.appendChild(this.get_Body());
+        return this.Render();
        },
-       Clear:function(node)
+       Render:function()
        {
-        return jQuery(node).contents().detach();
+        return null;
        },
-       CreateAttribute:function(str)
+       ReplaceInDom:function(node)
        {
-        return document.createAttribute(str);
-       },
-       CreateElement:function(name)
-       {
-        return document.createElement(name);
-       },
-       CreateTextNode:function(str)
-       {
-        return document.createTextNode(str);
-       },
-       GetAttribute:function(node,name)
-       {
-        return jQuery(node).attr(name);
-       },
-       GetHtml:function(node)
-       {
-        return jQuery(node).html();
-       },
-       GetProperty:function(node,name)
-       {
-        var x;
-        x=jQuery(node).attr(name);
-        return x;
-       },
-       GetText:function(node)
-       {
-        return node.textContent;
-       },
-       GetValue:function(node)
-       {
-        var x;
-        x=jQuery(node).val();
-        return x;
-       },
-       HasAttribute:function(node,name)
-       {
-        return jQuery(node).attr(name)!=null;
-       },
-       OnDocumentReady:function(f)
-       {
-        return jQuery(document).ready(f);
-       },
-       OnLoad:function(node,f)
-       {
-        return jQuery(node).ready(f);
-       },
-       Remove:function(node)
-       {
-        return jQuery(node).remove();
-       },
-       RemoveAttribute:function(node,name)
-       {
-        return jQuery(node).removeAttr(name);
-       },
-       RemoveClass:function(node,cls)
-       {
-        return jQuery(node).removeClass(cls);
-       },
-       SetAttribute:function(node,name,value)
-       {
-        return jQuery(node).attr(name,value);
-       },
-       SetCss:function(node,name,prop)
-       {
-        return jQuery(node).css(name,prop);
-       },
-       SetHtml:function(node,text)
-       {
-        return jQuery(node).html(text);
-       },
-       SetProperty:function(node,name,value)
-       {
-        var x;
-        x=jQuery(node).prop(name,value);
-        return x;
-       },
-       SetStyle:function(node,style)
-       {
-        return jQuery(node).attr("style",style);
-       },
-       SetText:function(node,text)
-       {
-        node.textContent=text;
-       },
-       SetValue:function(node,value)
-       {
-        return jQuery(node).val(value);
+        var value;
+        value=node.parentNode.replaceChild(this.get_Body(),node);
+        return this.Render();
        }
       },{
        New:function()
@@ -6008,97 +6018,51 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
         return Runtime.New(this,{});
        }
       }),
-      Tags:Runtime.Field(function()
-      {
-       return TagBuilder.New(Implementation.HtmlProvider());
+      TagBuilder:Runtime.Class({
+       Div:function(x)
+       {
+        return this.NewTag("div",x);
+       },
+       NewTag:function(name,children)
+       {
+        var el,enumerator,pl;
+        el=Element.New(this.HtmlProvider,name);
+        enumerator=Enumerator.Get(children);
+        while(enumerator.MoveNext())
+         {
+          pl=enumerator.get_Current();
+          el.AppendI(pl);
+         }
+        return el;
+       },
+       text:function(data)
+       {
+        return Text.New(data);
+       }
+      },{
+       New:function(HtmlProvider)
+       {
+        var r;
+        r=Runtime.New(this,{});
+        r.HtmlProvider=HtmlProvider;
+        return r;
+       }
+      }),
+      Text:Runtime.Class({
+       get_Body:function()
+       {
+        return document.createTextNode(this.text);
+       }
+      },{
+       New:function(text)
+       {
+        var r;
+        r=Runtime.New(this,Pagelet.New());
+        r.text=text;
+        return r;
+       }
       })
-     },
-     Operators:{
-      OnAfterRender:function(f,w)
-      {
-       var r;
-       r=w.Render;
-       w.Render=function()
-       {
-        r.apply(w);
-        return f(w);
-       };
-       return;
-      },
-      OnBeforeRender:function(f,w)
-      {
-       var r;
-       r=w.Render;
-       w.Render=function()
-       {
-        f(w);
-        return r.apply(w);
-       };
-       return;
-      },
-      add:function(el,inner)
-      {
-       var enumerator,pl;
-       enumerator=Enumerator.Get(inner);
-       while(enumerator.MoveNext())
-        {
-         pl=enumerator.get_Current();
-         el.AppendI(pl);
-        }
-       return el;
-      }
-     },
-     PageletExtensions:{
-      "IPagelet.AppendTo":function(p,targetId)
-      {
-       var target,value;
-       target=document.getElementById(targetId);
-       value=target.appendChild(p.get_Body());
-       return p.Render();
-      }
-     },
-     TagBuilder:Runtime.Class({
-      Div:function(x)
-      {
-       return this.NewTag("div",x);
-      },
-      NewTag:function(name,children)
-      {
-       var el,enumerator,pl;
-       el=Element.New(this.HtmlProvider,name);
-       enumerator=Enumerator.Get(children);
-       while(enumerator.MoveNext())
-        {
-         pl=enumerator.get_Current();
-         el.AppendI(pl);
-        }
-       return el;
-      },
-      text:function(data)
-      {
-       return Runtime.New(Text,{
-        text:data
-       });
-      }
-     },{
-      New:function(HtmlProvider)
-      {
-       var r;
-       r=Runtime.New(this,{});
-       r.HtmlProvider=HtmlProvider;
-       return r;
-      }
-     }),
-     Text:Runtime.Class({
-      Render:function()
-      {
-       return null;
-      },
-      get_Body:function()
-      {
-       return document.createTextNode(this.text);
-      }
-     })
+     }
     }
    }
   }
@@ -6107,1990 +6071,45 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
  {
   WebSharper=Runtime.Safe(Global.IntelliFactory.WebSharper);
   Html=Runtime.Safe(WebSharper.Html);
-  Activator=Runtime.Safe(Html.Activator);
-  document=Runtime.Safe(Global.document);
-  Default=Runtime.Safe(Html.Default);
-  Json=Runtime.Safe(WebSharper.Json);
-  JSON=Runtime.Safe(Global.JSON);
-  JavaScript=Runtime.Safe(WebSharper.JavaScript);
-  Arrays=Runtime.Safe(WebSharper.Arrays);
-  Attribute=Runtime.Safe(Html.Attribute);
-  Implementation=Runtime.Safe(Html.Implementation);
-  HTML5=Runtime.Safe(Implementation.HTML5);
-  Element=Runtime.Safe(Html.Element);
+  Client=Runtime.Safe(Html.Client);
+  Attribute=Runtime.Safe(Client.Attribute);
+  Pagelet=Runtime.Safe(Client.Pagelet);
+  Default=Runtime.Safe(Client.Default);
+  Implementation=Runtime.Safe(Client.Implementation);
+  Element=Runtime.Safe(Client.Element);
   Enumerator=Runtime.Safe(WebSharper.Enumerator);
   Math=Runtime.Safe(Global.Math);
+  document=Runtime.Safe(Global.document);
   jQuery=Runtime.Safe(Global.jQuery);
-  Events=Runtime.Safe(Html.Events);
+  Events=Runtime.Safe(Client.Events);
   JQueryEventSupport=Runtime.Safe(Events.JQueryEventSupport);
-  AttributeBuilder=Runtime.Safe(Html.AttributeBuilder);
-  DeprecatedTagBuilder=Runtime.Safe(Html.DeprecatedTagBuilder);
-  Html5AttributeBuilder=Runtime.Safe(Html.Html5AttributeBuilder);
+  AttributeBuilder=Runtime.Safe(Client.AttributeBuilder);
+  DeprecatedTagBuilder=Runtime.Safe(Client.DeprecatedTagBuilder);
   JQueryHtmlProvider=Runtime.Safe(Implementation.JQueryHtmlProvider);
-  Html5TagBuilder=Runtime.Safe(Html.Html5TagBuilder);
-  TagBuilder=Runtime.Safe(Html.TagBuilder);
-  Text=Runtime.Safe(Html.Text);
-  HTML51=Runtime.Safe(Default.HTML5);
-  return EventsPervasives=Runtime.Safe(Html.EventsPervasives);
+  TagBuilder=Runtime.Safe(Client.TagBuilder);
+  Text=Runtime.Safe(Client.Text);
+  return EventsPervasives=Runtime.Safe(Client.EventsPervasives);
  });
  Runtime.OnLoad(function()
  {
+  Runtime.Inherit(Attribute,Pagelet);
+  Runtime.Inherit(Element,Pagelet);
+  Runtime.Inherit(Text,Pagelet);
   Implementation.Tags();
   Implementation.HtmlProvider();
-  HTML5.Tags();
-  HTML5.Html5Provider();
-  HTML5.Attr();
   Implementation.DeprecatedHtml();
   Implementation.Attr();
   EventsPervasives.Events();
   Default.Tags();
-  HTML51.Tags();
-  HTML51.Attr();
   Default.Deprecated();
   Default.Attr();
-  Activator.Activate();
   return;
  });
 }());
 
 (function()
 {
- var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,IntrinsicFunctionProxy,ok,Unchecked,JavaScript,Testing,Pervasives,TestBuilder,test,Random,Arrays,Math,NaN1,Infinity1,List,String,Seq;
- Runtime.Define(Global,{
-  IntelliFactory:{
-   WebSharper:{
-    Testing:{
-     Assert:{
-      For:function(times,gen,attempt)
-      {
-       var _this,i,i1;
-       _this=gen.Base;
-       for(i=0;i<=IntrinsicFunctionProxy.GetLength(_this)-1;i++){
-        attempt(IntrinsicFunctionProxy.GetArray(gen.Base,i));
-       }
-       for(i1=1;i1<=times;i1++){
-        attempt(gen.Next.call(null,null));
-       }
-       return;
-      },
-      Raises:function(f)
-      {
-       var _,matchValue;
-       try
-       {
-        f(null);
-        _=ok(false,"Assert raises exception test failed.");
-       }
-       catch(matchValue)
-       {
-        _=ok(true,"Pass.");
-       }
-       return _;
-      }
-     },
-     Pervasives:{
-      Is:function(a,b)
-      {
-       var _;
-       if(!Unchecked.Equals(a,b))
-        {
-         JavaScript.Log(["Equality test failed.",a,b]);
-         _=ok(false,"Equality test failed.");
-        }
-       else
-        {
-         _=ok(true,"Pass.");
-        }
-       return _;
-      },
-      Isnt:function(a,b)
-      {
-       var _;
-       if(Unchecked.Equals(a,b))
-        {
-         JavaScript.Log(["Inequality test failed.",a,b]);
-         _=ok(false,"Inequality test failed.");
-        }
-       else
-        {
-         _=ok(true,"Pass.");
-        }
-       return _;
-      },
-      Test:function(name)
-      {
-       return TestBuilder.New(name);
-      },
-      TestBuilder:Runtime.Class({
-       Delay:function(f)
-       {
-        return test(this.name,f);
-       },
-       Zero:function()
-       {
-        return null;
-       }
-      },{
-       New:function(name)
-       {
-        var r;
-        r=Runtime.New(this,{});
-        r.name=name;
-        return r;
-       }
-      })
-     },
-     Random:{
-      ArrayOf:function(generator)
-      {
-       return{
-        Base:[[]],
-        Next:function()
-        {
-         var len;
-         len=Random.Natural().Next.call(null,null)%100;
-         return Arrays.init(len,function()
-         {
-          return generator.Next.call(null,null);
-         });
-        }
-       };
-      },
-      Boolean:Runtime.Field(function()
-      {
-       return{
-        Base:[true,false],
-        Next:function()
-        {
-         return Random.StandardUniform().Next.call(null,null)>0.5;
-        }
-       };
-      }),
-      Const:function(x)
-      {
-       return{
-        Base:[x],
-        Next:function()
-        {
-         return x;
-        }
-       };
-      },
-      Exponential:function(lambda)
-      {
-       return{
-        Base:[],
-        Next:function()
-        {
-         var p;
-         p=Random.StandardUniform().Next.call(null,null);
-         return-Math.log(1-p)/lambda;
-        }
-       };
-      },
-      Float:Runtime.Field(function()
-      {
-       return{
-        Base:[0],
-        Next:function()
-        {
-         var sign;
-         sign=Random.Boolean().Next.call(null,null)?1:-1;
-         return sign*Random.Exponential(0.1).Next.call(null,null);
-        }
-       };
-      }),
-      FloatExhaustive:Runtime.Field(function()
-      {
-       return{
-        Base:[0,NaN1,Infinity1,-Infinity1],
-        Next:function()
-        {
-         return Random.Float().Next.call(null,null);
-        }
-       };
-      }),
-      FloatWithin:function(low,hi)
-      {
-       return{
-        Base:[low,hi],
-        Next:function()
-        {
-         return low+(hi-low)*Math.random();
-        }
-       };
-      },
-      Implies:function(a,b)
-      {
-       return!a?true:b;
-      },
-      Imply:function(a,b)
-      {
-       return Random.Implies(a,b);
-      },
-      Int:Runtime.Field(function()
-      {
-       return{
-        Base:[0,1,-1],
-        Next:function()
-        {
-         return Math.round(Random.Float().Next.call(null,null));
-        }
-       };
-      }),
-      ListOf:function(generator)
-      {
-       var f,gen;
-       f=function(array)
-       {
-        return List.ofArray(array);
-       };
-       gen=Random.ArrayOf(generator);
-       return Random.Map(f,gen);
-      },
-      Map:function(f,gen)
-      {
-       var f1;
-       f1=gen.Next;
-       return{
-        Base:Arrays.map(f,gen.Base),
-        Next:function(x)
-        {
-         return f(f1(x));
-        }
-       };
-      },
-      Mix:function(a,b)
-      {
-       var left;
-       left={
-        contents:false
-       };
-       return{
-        Base:a.Base.concat(b.Base),
-        Next:function()
-        {
-         left.contents=!left.contents;
-         return left.contents?a.Next.call(null,null):b.Next.call(null,null);
-        }
-       };
-      },
-      Natural:Runtime.Field(function()
-      {
-       var g;
-       g=Random.Int().Next;
-       return{
-        Base:[0,1],
-        Next:function(x)
-        {
-         var value;
-         value=g(x);
-         return Math.abs(value);
-        }
-       };
-      }),
-      OneOf:function(seeds)
-      {
-       var index;
-       index=Random.Within(1,IntrinsicFunctionProxy.GetLength(seeds));
-       return{
-        Base:seeds,
-        Next:function()
-        {
-         return IntrinsicFunctionProxy.GetArray(seeds,index.Next.call(null,null)-1);
-        }
-       };
-      },
-      OptionOf:function(generator)
-      {
-       return Random.Mix(Random.Const({
-        $:0
-       }),Random.Map(function(arg0)
-       {
-        return{
-         $:1,
-         $0:arg0
-        };
-       },generator));
-      },
-      StandardUniform:Runtime.Field(function()
-      {
-       return{
-        Base:[],
-        Next:function()
-        {
-         return Math.random();
-        }
-       };
-      }),
-      String:Runtime.Field(function()
-      {
-       return{
-        Base:[""],
-        Next:function()
-        {
-         var len,cs;
-         len=Random.Natural().Next.call(null,null)%100;
-         cs=Arrays.init(len,function()
-         {
-          return Random.Int().Next.call(null,null)%256;
-         });
-         return String.fromCharCode.apply(undefined,cs);
-        }
-       };
-      }),
-      StringExhaustive:Runtime.Field(function()
-      {
-       return{
-        Base:[null,""],
-        Next:Random.String().Next
-       };
-      }),
-      Tuple2Of:function(a,b)
-      {
-       return{
-        Base:Seq.toArray(Seq.delay(function()
-        {
-         return Seq.collect(function(x)
-         {
-          return Seq.map(function(y)
-          {
-           return[x,y];
-          },b.Base);
-         },a.Base);
-        })),
-        Next:function()
-        {
-         return[a.Next.call(null,null),b.Next.call(null,null)];
-        }
-       };
-      },
-      Tuple3Of:function(a,b,c)
-      {
-       return{
-        Base:Seq.toArray(Seq.delay(function()
-        {
-         return Seq.collect(function(x)
-         {
-          return Seq.collect(function(y)
-          {
-           return Seq.map(function(z)
-           {
-            return[x,y,z];
-           },c.Base);
-          },b.Base);
-         },a.Base);
-        })),
-        Next:function()
-        {
-         return[a.Next.call(null,null),b.Next.call(null,null),c.Next.call(null,null)];
-        }
-       };
-      },
-      Within:function(low,hi)
-      {
-       return{
-        Base:[low,hi],
-        Next:function()
-        {
-         return Random.Natural().Next.call(null,null)%(hi-low)+low;
-        }
-       };
-      }
-     }
-    }
-   }
-  }
- });
- Runtime.OnInit(function()
- {
-  WebSharper=Runtime.Safe(Global.IntelliFactory.WebSharper);
-  IntrinsicFunctionProxy=Runtime.Safe(WebSharper.IntrinsicFunctionProxy);
-  ok=Runtime.Safe(Global.ok);
-  Unchecked=Runtime.Safe(WebSharper.Unchecked);
-  JavaScript=Runtime.Safe(WebSharper.JavaScript);
-  Testing=Runtime.Safe(WebSharper.Testing);
-  Pervasives=Runtime.Safe(Testing.Pervasives);
-  TestBuilder=Runtime.Safe(Pervasives.TestBuilder);
-  test=Runtime.Safe(Global.test);
-  Random=Runtime.Safe(Testing.Random);
-  Arrays=Runtime.Safe(WebSharper.Arrays);
-  Math=Runtime.Safe(Global.Math);
-  NaN1=Runtime.Safe(Global.NaN);
-  Infinity1=Runtime.Safe(Global.Infinity);
-  List=Runtime.Safe(WebSharper.List);
-  String=Runtime.Safe(Global.String);
-  return Seq=Runtime.Safe(WebSharper.Seq);
- });
- Runtime.OnLoad(function()
- {
-  Random.StringExhaustive();
-  Random.String();
-  Random.StandardUniform();
-  Random.Natural();
-  Random.Int();
-  Random.FloatExhaustive();
-  Random.Float();
-  Random.Boolean();
-  return;
- });
-}());
-
-(function()
-{
- var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,Unchecked,Seq,Option,Control,Disposable,IntrinsicFunctionProxy,FSharpEvent,Util,Event,Event1,Collections,ResizeArray,ResizeArrayProxy,EventModule,HotStream,HotStream1,Operators,Error,Concurrency,setTimeout,clearTimeout,LinkedList,ListProxy,MailboxProcessor,Observable,Observer,Observable1,List,T,Observer1;
- Runtime.Define(Global,{
-  IntelliFactory:{
-   WebSharper:{
-    Control:{
-     Disposable:{
-      Of:function(dispose)
-      {
-       return{
-        Dispose:dispose
-       };
-      }
-     },
-     Event:{
-      Event:Runtime.Class({
-       AddHandler:function(h)
-       {
-        return this.Handlers.Add(h);
-       },
-       RemoveHandler:function(h)
-       {
-        var predicate,objectArg,action,source,option;
-        predicate=function(y)
-        {
-         return Unchecked.Equals(h,y);
-        };
-        objectArg=this.Handlers;
-        action=function(arg00)
-        {
-         return objectArg.RemoveAt(arg00);
-        };
-        source=this.Handlers;
-        option=Seq.tryFindIndex(predicate,source);
-        return Option.iter(action,option);
-       },
-       Subscribe:function(observer)
-       {
-        var h,_this=this;
-        h=function(x)
-        {
-         return observer.OnNext(x);
-        };
-        this.AddHandler(h);
-        return Disposable.Of(function()
-        {
-         return _this.RemoveHandler(h);
-        });
-       },
-       Trigger:function(x)
-       {
-        var arr,idx,h;
-        arr=this.Handlers.ToArray();
-        for(idx=0;idx<=arr.length-1;idx++){
-         h=IntrinsicFunctionProxy.GetArray(arr,idx);
-         h(x);
-        }
-        return;
-       }
-      })
-     },
-     EventModule:{
-      Choose:function(c,e)
-      {
-       var r;
-       r=FSharpEvent.New();
-       Util.addListener(e,function(x)
-       {
-        var matchValue,_,y;
-        matchValue=c(x);
-        if(matchValue.$==0)
-         {
-          _=null;
-         }
-        else
-         {
-          y=matchValue.$0;
-          _=r.event.Trigger(y);
-         }
-        return _;
-       });
-       return r.event;
-      },
-      Filter:function(ok,e)
-      {
-       var r;
-       r=Runtime.New(Event1,{
-        Handlers:ResizeArrayProxy.New1()
-       });
-       Util.addListener(e,function(x)
-       {
-        return ok(x)?r.Trigger(x):null;
-       });
-       return r;
-      },
-      Map:function(f,e)
-      {
-       var r;
-       r=Runtime.New(Event1,{
-        Handlers:ResizeArrayProxy.New1()
-       });
-       Util.addListener(e,function(x)
-       {
-        return r.Trigger(f(x));
-       });
-       return r;
-      },
-      Merge:function(e1,e2)
-      {
-       var r;
-       r=Runtime.New(Event1,{
-        Handlers:ResizeArrayProxy.New1()
-       });
-       Util.addListener(e1,function(arg00)
-       {
-        return r.Trigger(arg00);
-       });
-       Util.addListener(e2,function(arg00)
-       {
-        return r.Trigger(arg00);
-       });
-       return r;
-      },
-      Pairwise:function(e)
-      {
-       var buf,ev;
-       buf={
-        contents:{
-         $:0
-        }
-       };
-       ev=Runtime.New(Event1,{
-        Handlers:ResizeArrayProxy.New1()
-       });
-       Util.addListener(e,function(x)
-       {
-        var matchValue,_,old;
-        matchValue=buf.contents;
-        if(matchValue.$==1)
-         {
-          old=matchValue.$0;
-          buf.contents={
-           $:1,
-           $0:x
-          };
-          _=ev.Trigger([old,x]);
-         }
-        else
-         {
-          _=void(buf.contents={
-           $:1,
-           $0:x
-          });
-         }
-        return _;
-       });
-       return ev;
-      },
-      Partition:function(f,e)
-      {
-       return[EventModule.Filter(f,e),EventModule.Filter(function(x)
-       {
-        var value;
-        value=f(x);
-        return!value;
-       },e)];
-      },
-      Scan:function(fold,seed,e)
-      {
-       var state,f;
-       state={
-        contents:seed
-       };
-       f=function(value)
-       {
-        state.contents=(fold(state.contents))(value);
-        return state.contents;
-       };
-       return EventModule.Map(f,e);
-      },
-      Split:function(f,e)
-      {
-       var chooser,chooser1;
-       chooser=function(x)
-       {
-        var matchValue,_,x1;
-        matchValue=f(x);
-        if(matchValue.$==0)
-         {
-          x1=matchValue.$0;
-          _={
-           $:1,
-           $0:x1
-          };
-         }
-        else
-         {
-          _={
-           $:0
-          };
-         }
-        return _;
-       };
-       chooser1=function(x)
-       {
-        var matchValue,_,x1;
-        matchValue=f(x);
-        if(matchValue.$==1)
-         {
-          x1=matchValue.$0;
-          _={
-           $:1,
-           $0:x1
-          };
-         }
-        else
-         {
-          _={
-           $:0
-          };
-         }
-        return _;
-       };
-       return[EventModule.Choose(chooser,e),EventModule.Choose(chooser1,e)];
-      }
-     },
-     FSharpEvent:Runtime.Class({},{
-      New:function()
-      {
-       var r;
-       r=Runtime.New(this,{});
-       r.event=Runtime.New(Event1,{
-        Handlers:ResizeArrayProxy.New1()
-       });
-       return r;
-      }
-     }),
-     HotStream:{
-      HotStream:Runtime.Class({
-       Subscribe:function(o)
-       {
-        var disp,_this;
-        this.Latest.contents.$==1?o.OnNext(this.Latest.contents.$0):null;
-        _this=this.Event;
-        disp=Util.subscribeTo(_this.event,function(v)
-        {
-         return o.OnNext(v);
-        });
-        return disp;
-       },
-       Trigger:function(v)
-       {
-        var _this;
-        this.Latest.contents={
-         $:1,
-         $0:v
-        };
-        _this=this.Event;
-        return _this.event.Trigger(v);
-       }
-      },{
-       New:function()
-       {
-        return Runtime.New(HotStream1,{
-         Latest:{
-          contents:{
-           $:0
-          }
-         },
-         Event:FSharpEvent.New()
-        });
-       }
-      })
-     },
-     MailboxProcessor:Runtime.Class({
-      PostAndAsyncReply:function(msgf,timeout)
-      {
-       var f,_this=this;
-       f=function()
-       {
-        var x,f1;
-        x=_this.PostAndTryAsyncReply(msgf,timeout);
-        f1=function(_arg4)
-        {
-         var x1,_,x2;
-         if(_arg4.$==1)
-          {
-           x2=_arg4.$0;
-           _=x2;
-          }
-         else
-          {
-           _=Operators.Raise(new Error("TimeoutException"));
-          }
-         x1=_;
-         return Concurrency.Return(x1);
-        };
-        return Concurrency.Bind(x,f1);
-       };
-       return Concurrency.Delay(f);
-      },
-      PostAndTryAsyncReply:function(msgf,timeout)
-      {
-       var timeout1,arg00,_this=this;
-       timeout1=Operators.DefaultArg(timeout,this.get_DefaultTimeout());
-       arg00=Runtime.Tupled(function(tupledArg)
-       {
-        var ok,_arg3,_arg4,_,arg001,value,waiting,arg002,value1,value2;
-        ok=tupledArg[0];
-        _arg3=tupledArg[1];
-        _arg4=tupledArg[2];
-        if(timeout1<0)
-         {
-          arg001=msgf(function(x)
-          {
-           return ok({
-            $:1,
-            $0:x
-           });
-          });
-          value=_this.mailbox.AddLast(arg001);
-          _=_this.resume();
-         }
-        else
-         {
-          waiting={
-           contents:true
-          };
-          arg002=msgf(function(res)
-          {
-           var _1;
-           if(waiting.contents)
-            {
-             waiting.contents=false;
-             _1=ok({
-              $:1,
-              $0:res
-             });
-            }
-           else
-            {
-             _1=null;
-            }
-           return _1;
-          });
-          value1=_this.mailbox.AddLast(arg002);
-          _this.resume();
-          value2=setTimeout(function()
-          {
-           var _1;
-           if(waiting.contents)
-            {
-             waiting.contents=false;
-             _1=ok({
-              $:0
-             });
-            }
-           else
-            {
-             _1=null;
-            }
-           return _1;
-          },timeout1);
-          _=void value2;
-         }
-        return _;
-       });
-       return Concurrency.FromContinuations(arg00);
-      },
-      Receive:function(timeout)
-      {
-       var f,_this=this;
-       f=function()
-       {
-        var x,f1;
-        x=_this.TryReceive(timeout);
-        f1=function(_arg3)
-        {
-         var x1,_,x2;
-         if(_arg3.$==1)
-          {
-           x2=_arg3.$0;
-           _=x2;
-          }
-         else
-          {
-           _=Operators.Raise(new Error("TimeoutException"));
-          }
-         x1=_;
-         return Concurrency.Return(x1);
-        };
-        return Concurrency.Bind(x,f1);
-       };
-       return Concurrency.Delay(f);
-      },
-      Scan:function(scanner,timeout)
-      {
-       var f,_this=this;
-       f=function()
-       {
-        var x,f1;
-        x=_this.TryScan(scanner,timeout);
-        f1=function(_arg8)
-        {
-         var x1,_,x2;
-         if(_arg8.$==1)
-          {
-           x2=_arg8.$0;
-           _=x2;
-          }
-         else
-          {
-           _=Operators.Raise(new Error("TimeoutException"));
-          }
-         x1=_;
-         return Concurrency.Return(x1);
-        };
-        return Concurrency.Bind(x,f1);
-       };
-       return Concurrency.Delay(f);
-      },
-      Start:function()
-      {
-       var _,f,_this=this,a1;
-       if(this.started)
-        {
-         _=Operators.FailWith("The MailboxProcessor has already been started.");
-        }
-       else
-        {
-         this.started=true;
-         f=function()
-         {
-          var f1,a,f3;
-          f1=function()
-          {
-           var x,f2;
-           x=_this.initial.call(null,_this);
-           f2=function()
-           {
-            return Concurrency.Return(null);
-           };
-           return Concurrency.Bind(x,f2);
-          };
-          a=Concurrency.Delay(f1);
-          f3=function(_arg2)
-          {
-           var _this1;
-           _this1=_this.errorEvent;
-           _this1.event.Trigger(_arg2);
-           return Concurrency.Return(null);
-          };
-          return Concurrency.TryWith(a,f3);
-         };
-         a1=Concurrency.Delay(f);
-         _=_this.startAsync(a1);
-        }
-       return _;
-      },
-      TryReceive:function(timeout)
-      {
-       var timeout1,arg00,_this=this;
-       timeout1=Operators.DefaultArg(timeout,this.get_DefaultTimeout());
-       arg00=Runtime.Tupled(function(tupledArg)
-       {
-        var ok,_arg1,_arg2,_,_1,f,arg01,waiting,pending,f1,arg02,arg03;
-        ok=tupledArg[0];
-        _arg1=tupledArg[1];
-        _arg2=tupledArg[2];
-        if(Unchecked.Equals(_this.mailbox.get_First(),null))
-         {
-          if(timeout1<0)
-           {
-            f=function()
-            {
-             var arg0;
-             arg0=_this.dequeue();
-             ok({
-              $:1,
-              $0:arg0
-             });
-             return Concurrency.Return(null);
-            };
-            arg01=Concurrency.Delay(f);
-            _1=void(_this.savedCont={
-             $:1,
-             $0:arg01
-            });
-           }
-          else
-           {
-            waiting={
-             contents:true
-            };
-            pending=setTimeout(function()
-            {
-             var _2;
-             if(waiting.contents)
-              {
-               waiting.contents=false;
-               _this.savedCont={
-                $:0
-               };
-               _2=ok({
-                $:0
-               });
-              }
-             else
-              {
-               _2=null;
-              }
-             return _2;
-            },timeout1);
-            f1=function()
-            {
-             var _2,arg0;
-             if(waiting.contents)
-              {
-               waiting.contents=false;
-               clearTimeout(pending);
-               arg0=_this.dequeue();
-               ok({
-                $:1,
-                $0:arg0
-               });
-               _2=Concurrency.Return(null);
-              }
-             else
-              {
-               _2=Concurrency.Return(null);
-              }
-             return _2;
-            };
-            arg02=Concurrency.Delay(f1);
-            _1=void(_this.savedCont={
-             $:1,
-             $0:arg02
-            });
-           }
-          _=_1;
-         }
-        else
-         {
-          arg03=_this.dequeue();
-          _=ok({
-           $:1,
-           $0:arg03
-          });
-         }
-        return _;
-       });
-       return Concurrency.FromContinuations(arg00);
-      },
-      TryScan:function(scanner,timeout)
-      {
-       var timeout1,f,_this=this;
-       timeout1=Operators.DefaultArg(timeout,this.get_DefaultTimeout());
-       f=function()
-       {
-        var scanInbox,matchValue1,_1,found1,f1,arg00,x1;
-        scanInbox=function()
-        {
-         var m,found,matchValue,_;
-         m=_this.mailbox.get_First();
-         found={
-          $:0
-         };
-         while(!Unchecked.Equals(m,null))
-          {
-           matchValue=scanner(m.v);
-           if(matchValue.$==0)
-            {
-             _=m=m.n;
-            }
-           else
-            {
-             _this.mailbox.Remove(m);
-             m=null;
-             _=found=matchValue;
-            }
-          }
-         return found;
-        };
-        matchValue1=scanInbox(null);
-        if(matchValue1.$==1)
-         {
-          found1=matchValue1.$0;
-          f1=function(_arg5)
-          {
-           var x;
-           x={
-            $:1,
-            $0:_arg5
-           };
-           return Concurrency.Return(x);
-          };
-          _1=Concurrency.Bind(found1,f1);
-         }
-        else
-         {
-          arg00=Runtime.Tupled(function(tupledArg)
-          {
-           var ok,_arg5,_arg6,_,scanNext,waiting,pending,scanNext1;
-           ok=tupledArg[0];
-           _arg5=tupledArg[1];
-           _arg6=tupledArg[2];
-           if(timeout1<0)
-            {
-             scanNext=function()
-             {
-              var f2,arg0;
-              f2=function()
-              {
-               var matchValue,_2,c,f3;
-               matchValue=scanner(_this.mailbox.get_First().v);
-               if(matchValue.$==1)
-                {
-                 c=matchValue.$0;
-                 _this.mailbox.RemoveFirst();
-                 f3=function(_arg61)
-                 {
-                  ok({
-                   $:1,
-                   $0:_arg61
-                  });
-                  return Concurrency.Return(null);
-                 };
-                 _2=Concurrency.Bind(c,f3);
-                }
-               else
-                {
-                 scanNext(null);
-                 _2=Concurrency.Return(null);
-                }
-               return _2;
-              };
-              arg0=Concurrency.Delay(f2);
-              _this.savedCont={
-               $:1,
-               $0:arg0
-              };
-              return;
-             };
-             _=scanNext(null);
-            }
-           else
-            {
-             waiting={
-              contents:true
-             };
-             pending=setTimeout(function()
-             {
-              var _2;
-              if(waiting.contents)
-               {
-                waiting.contents=false;
-                _this.savedCont={
-                 $:0
-                };
-                _2=ok({
-                 $:0
-                });
-               }
-              else
-               {
-                _2=null;
-               }
-              return _2;
-             },timeout1);
-             scanNext1=function()
-             {
-              var f2,arg0;
-              f2=function()
-              {
-               var matchValue,_2,c,f3;
-               matchValue=scanner(_this.mailbox.get_First().v);
-               if(matchValue.$==1)
-                {
-                 c=matchValue.$0;
-                 _this.mailbox.RemoveFirst();
-                 f3=function(_arg7)
-                 {
-                  var _3;
-                  if(waiting.contents)
-                   {
-                    waiting.contents=false;
-                    clearTimeout(pending);
-                    ok({
-                     $:1,
-                     $0:_arg7
-                    });
-                    _3=Concurrency.Return(null);
-                   }
-                  else
-                   {
-                    _3=Concurrency.Return(null);
-                   }
-                  return _3;
-                 };
-                 _2=Concurrency.Bind(c,f3);
-                }
-               else
-                {
-                 scanNext1(null);
-                 _2=Concurrency.Return(null);
-                }
-               return _2;
-              };
-              arg0=Concurrency.Delay(f2);
-              _this.savedCont={
-               $:1,
-               $0:arg0
-              };
-              return;
-             };
-             _=scanNext1(null);
-            }
-           return _;
-          });
-          x1=Concurrency.FromContinuations(arg00);
-          _1=x1;
-         }
-        return _1;
-       };
-       return Concurrency.Delay(f);
-      },
-      dequeue:function()
-      {
-       var f;
-       f=this.mailbox.get_First().v;
-       this.mailbox.RemoveFirst();
-       return f;
-      },
-      get_CurrentQueueLength:function()
-      {
-       return this.mailbox.get_Count();
-      },
-      get_DefaultTimeout:function()
-      {
-       return this["DefaultTimeout@"];
-      },
-      get_Error:function()
-      {
-       var _this;
-       _this=this.errorEvent;
-       return _this.event;
-      },
-      resume:function()
-      {
-       var matchValue,_,c;
-       matchValue=this.savedCont;
-       if(matchValue.$==1)
-        {
-         c=matchValue.$0;
-         this.savedCont={
-          $:0
-         };
-         _=this.startAsync(c);
-        }
-       else
-        {
-         _=null;
-        }
-       return _;
-      },
-      set_DefaultTimeout:function(v)
-      {
-       this["DefaultTimeout@"]=v;
-       return;
-      },
-      startAsync:function(a)
-      {
-       var t;
-       t=this.token;
-       return Concurrency.Start(a,t);
-      }
-     },{
-      New:function(initial,token)
-      {
-       var r,matchValue,_,ct,callback,value;
-       r=Runtime.New(this,{});
-       r.initial=initial;
-       r.token=token;
-       r.started=false;
-       r.errorEvent=FSharpEvent.New();
-       r.mailbox=ListProxy.New();
-       r.savedCont={
-        $:0
-       };
-       matchValue=r.token;
-       if(matchValue.$==0)
-        {
-         _=null;
-        }
-       else
-        {
-         ct=matchValue.$0;
-         callback=function()
-         {
-          return r.resume();
-         };
-         value=Concurrency.Register(ct,function()
-         {
-          return callback();
-         });
-         _=void value;
-        }
-       r["DefaultTimeout@"]=-1;
-       return r;
-      },
-      Start:function(initial,token)
-      {
-       var mb;
-       mb=MailboxProcessor.New(initial,token);
-       mb.Start();
-       return mb;
-      }
-     }),
-     Observable:{
-      Aggregate:function(io,seed,fold)
-      {
-       var f;
-       f=function(o1)
-       {
-        var state,on,arg001;
-        state={
-         contents:seed
-        };
-        on=function(v)
-        {
-         return Observable.Protect(function()
-         {
-          return(fold(state.contents))(v);
-         },function(s)
-         {
-          state.contents=s;
-          return o1.OnNext(s);
-         },function(arg00)
-         {
-          return o1.OnError(arg00);
-         });
-        };
-        arg001=Observer.New(on,function(arg00)
-        {
-         return o1.OnError(arg00);
-        },function()
-        {
-         return o1.OnCompleted();
-        });
-        return io.Subscribe(arg001);
-       };
-       return Observable.New(f);
-      },
-      Choose:function(f,io)
-      {
-       var f1;
-       f1=function(o1)
-       {
-        var on,arg001;
-        on=function(v)
-        {
-         var action;
-         action=function(arg00)
-         {
-          return o1.OnNext(arg00);
-         };
-         return Observable.Protect(function()
-         {
-          return f(v);
-         },function(option)
-         {
-          return Option.iter(action,option);
-         },function(arg00)
-         {
-          return o1.OnError(arg00);
-         });
-        };
-        arg001=Observer.New(on,function(arg00)
-        {
-         return o1.OnError(arg00);
-        },function()
-        {
-         return o1.OnCompleted();
-        });
-        return io.Subscribe(arg001);
-       };
-       return Observable.New(f1);
-      },
-      CombineLatest:function(io1,io2,f)
-      {
-       var f1;
-       f1=function(o)
-       {
-        var lv1,lv2,update,onNext,o1,onNext1,o2,d1,d2;
-        lv1={
-         contents:{
-          $:0
-         }
-        };
-        lv2={
-         contents:{
-          $:0
-         }
-        };
-        update=function()
-        {
-         var matchValue,_,_1,v1,v2;
-         matchValue=[lv1.contents,lv2.contents];
-         if(matchValue[0].$==1)
-          {
-           if(matchValue[1].$==1)
-            {
-             v1=matchValue[0].$0;
-             v2=matchValue[1].$0;
-             _1=Observable.Protect(function()
-             {
-              return(f(v1))(v2);
-             },function(arg00)
-             {
-              return o.OnNext(arg00);
-             },function(arg00)
-             {
-              return o.OnError(arg00);
-             });
-            }
-           else
-            {
-             _1=null;
-            }
-           _=_1;
-          }
-         else
-          {
-           _=null;
-          }
-         return _;
-        };
-        onNext=function(x)
-        {
-         lv1.contents={
-          $:1,
-          $0:x
-         };
-         return update(null);
-        };
-        o1=Observer.New(onNext,function()
-        {
-        },function()
-        {
-        });
-        onNext1=function(y)
-        {
-         lv2.contents={
-          $:1,
-          $0:y
-         };
-         return update(null);
-        };
-        o2=Observer.New(onNext1,function()
-        {
-        },function()
-        {
-        });
-        d1=io1.Subscribe(o1);
-        d2=io2.Subscribe(o2);
-        return Disposable.Of(function()
-        {
-         d1.Dispose();
-         return d2.Dispose();
-        });
-       };
-       return Observable.New(f1);
-      },
-      Concat:function(io1,io2)
-      {
-       var f;
-       f=function(o)
-       {
-        var innerDisp,outerDisp,dispose;
-        innerDisp={
-         contents:{
-          $:0
-         }
-        };
-        outerDisp=io1.Subscribe(Observer.New(function(arg00)
-        {
-         return o.OnNext(arg00);
-        },function()
-        {
-        },function()
-        {
-         var arg0;
-         arg0=io2.Subscribe(o);
-         innerDisp.contents={
-          $:1,
-          $0:arg0
-         };
-        }));
-        dispose=function()
-        {
-         innerDisp.contents.$==1?innerDisp.contents.$0.Dispose():null;
-         return outerDisp.Dispose();
-        };
-        return Disposable.Of(dispose);
-       };
-       return Observable.New(f);
-      },
-      Drop:function(count,io)
-      {
-       var f;
-       f=function(o1)
-       {
-        var index,on,arg00;
-        index={
-         contents:0
-        };
-        on=function(v)
-        {
-         Operators.Increment(index);
-         return index.contents>count?o1.OnNext(v):null;
-        };
-        arg00=Observer.New(on,function(arg001)
-        {
-         return o1.OnError(arg001);
-        },function()
-        {
-         return o1.OnCompleted();
-        });
-        return io.Subscribe(arg00);
-       };
-       return Observable.New(f);
-      },
-      Filter:function(f,io)
-      {
-       var f1;
-       f1=function(o1)
-       {
-        var on,arg001;
-        on=function(v)
-        {
-         var action;
-         action=function(arg00)
-         {
-          return o1.OnNext(arg00);
-         };
-         return Observable.Protect(function()
-         {
-          return f(v)?{
-           $:1,
-           $0:v
-          }:{
-           $:0
-          };
-         },function(option)
-         {
-          return Option.iter(action,option);
-         },function(arg00)
-         {
-          return o1.OnError(arg00);
-         });
-        };
-        arg001=Observer.New(on,function(arg00)
-        {
-         return o1.OnError(arg00);
-        },function()
-        {
-         return o1.OnCompleted();
-        });
-        return io.Subscribe(arg001);
-       };
-       return Observable.New(f1);
-      },
-      Map:function(f,io)
-      {
-       var f1;
-       f1=function(o1)
-       {
-        var on,arg001;
-        on=function(v)
-        {
-         return Observable.Protect(function()
-         {
-          return f(v);
-         },function(arg00)
-         {
-          return o1.OnNext(arg00);
-         },function(arg00)
-         {
-          return o1.OnError(arg00);
-         });
-        };
-        arg001=Observer.New(on,function(arg00)
-        {
-         return o1.OnError(arg00);
-        },function()
-        {
-         return o1.OnCompleted();
-        });
-        return io.Subscribe(arg001);
-       };
-       return Observable.New(f1);
-      },
-      Merge:function(io1,io2)
-      {
-       var f;
-       f=function(o)
-       {
-        var completed1,completed2,arg00,disp1,arg002,disp2;
-        completed1={
-         contents:false
-        };
-        completed2={
-         contents:false
-        };
-        arg00=Observer.New(function(arg001)
-        {
-         return o.OnNext(arg001);
-        },function()
-        {
-        },function()
-        {
-         completed1.contents=true;
-         return(completed1.contents?completed2.contents:false)?o.OnCompleted():null;
-        });
-        disp1=io1.Subscribe(arg00);
-        arg002=Observer.New(function(arg001)
-        {
-         return o.OnNext(arg001);
-        },function()
-        {
-        },function()
-        {
-         completed2.contents=true;
-         return(completed1.contents?completed2.contents:false)?o.OnCompleted():null;
-        });
-        disp2=io2.Subscribe(arg002);
-        return Disposable.Of(function()
-        {
-         disp1.Dispose();
-         return disp2.Dispose();
-        });
-       };
-       return Observable.New(f);
-      },
-      Never:function()
-      {
-       return Observable.New(function()
-       {
-        return Disposable.Of(function()
-        {
-        });
-       });
-      },
-      New:function(f)
-      {
-       return Runtime.New(Observable1,{
-        Subscribe1:f
-       });
-      },
-      Observable:Runtime.Class({
-       Subscribe:function(observer)
-       {
-        return this.Subscribe1.call(null,observer);
-       }
-      }),
-      Of:function(f)
-      {
-       return Observable.New(function(o)
-       {
-        return Disposable.Of(f(function(x)
-        {
-         return o.OnNext(x);
-        }));
-       });
-      },
-      Protect:function(f,succeed,fail)
-      {
-       var matchValue,_,e,_1,e1,x;
-       try
-       {
-        _={
-         $:0,
-         $0:f(null)
-        };
-       }
-       catch(e)
-       {
-        _={
-         $:1,
-         $0:e
-        };
-       }
-       matchValue=_;
-       if(matchValue.$==1)
-        {
-         e1=matchValue.$0;
-         _1=fail(e1);
-        }
-       else
-        {
-         x=matchValue.$0;
-         _1=succeed(x);
-        }
-       return _1;
-      },
-      Range:function(start,count)
-      {
-       var f;
-       f=function(o)
-       {
-        var i;
-        for(i=start;i<=start+count;i++){
-         o.OnNext(i);
-        }
-        return Disposable.Of(function()
-        {
-        });
-       };
-       return Observable.New(f);
-      },
-      Return:function(x)
-      {
-       var f;
-       f=function(o)
-       {
-        o.OnNext(x);
-        o.OnCompleted();
-        return Disposable.Of(function()
-        {
-        });
-       };
-       return Observable.New(f);
-      },
-      SelectMany:function(io)
-      {
-       return Observable.New(function(o)
-       {
-        var disp,d;
-        disp={
-         contents:function()
-         {
-         }
-        };
-        d=Util.subscribeTo(io,function(o1)
-        {
-         var d1;
-         d1=Util.subscribeTo(o1,function(v)
-         {
-          return o.OnNext(v);
-         });
-         disp.contents=function()
-         {
-          disp.contents.call(null,null);
-          return d1.Dispose();
-         };
-         return;
-        });
-        return Disposable.Of(function()
-        {
-         disp.contents.call(null,null);
-         return d.Dispose();
-        });
-       });
-      },
-      Sequence:function(ios)
-      {
-       var sequence;
-       sequence=function(ios1)
-       {
-        var _,xs,x,rest;
-        if(ios1.$==1)
-         {
-          xs=ios1.$1;
-          x=ios1.$0;
-          rest=sequence(xs);
-          _=Observable.CombineLatest(x,rest,function(x1)
-          {
-           return function(y)
-           {
-            return Runtime.New(T,{
-             $:1,
-             $0:x1,
-             $1:y
-            });
-           };
-          });
-         }
-        else
-         {
-          _=Observable.Return(Runtime.New(T,{
-           $:0
-          }));
-         }
-        return _;
-       };
-       return sequence(List.ofSeq(ios));
-      },
-      Switch:function(io)
-      {
-       return Observable.New(function(o)
-       {
-        var index,disp,disp1;
-        index={
-         contents:0
-        };
-        disp={
-         contents:{
-          $:0
-         }
-        };
-        disp1=Util.subscribeTo(io,function(o1)
-        {
-         var currentIndex,arg0,d;
-         Operators.Increment(index);
-         disp.contents.$==1?disp.contents.$0.Dispose():null;
-         currentIndex=index.contents;
-         arg0=Util.subscribeTo(o1,function(v)
-         {
-          return currentIndex===index.contents?o.OnNext(v):null;
-         });
-         d={
-          $:1,
-          $0:arg0
-         };
-         disp.contents=d;
-         return;
-        });
-        return disp1;
-       });
-      }
-     },
-     ObservableModule:{
-      Pairwise:function(e)
-      {
-       var f;
-       f=function(o1)
-       {
-        var last,on,arg00;
-        last={
-         contents:{
-          $:0
-         }
-        };
-        on=function(v)
-        {
-         var matchValue,_,l;
-         matchValue=last.contents;
-         if(matchValue.$==1)
-          {
-           l=matchValue.$0;
-           _=o1.OnNext([l,v]);
-          }
-         else
-          {
-           _=null;
-          }
-         last.contents={
-          $:1,
-          $0:v
-         };
-         return;
-        };
-        arg00=Observer.New(on,function(arg001)
-        {
-         return o1.OnError(arg001);
-        },function()
-        {
-         return o1.OnCompleted();
-        });
-        return e.Subscribe(arg00);
-       };
-       return Observable.New(f);
-      },
-      Partition:function(f,e)
-      {
-       var ok;
-       ok=function(x)
-       {
-        var value;
-        value=f(x);
-        return!value;
-       };
-       return[Observable.Filter(f,e),Observable.Filter(ok,e)];
-      },
-      Scan:function(fold,seed,e)
-      {
-       var f;
-       f=function(o1)
-       {
-        var state,on,arg001;
-        state={
-         contents:seed
-        };
-        on=function(v)
-        {
-         return Observable.Protect(function()
-         {
-          return(fold(state.contents))(v);
-         },function(s)
-         {
-          state.contents=s;
-          return o1.OnNext(s);
-         },function(arg00)
-         {
-          return o1.OnError(arg00);
-         });
-        };
-        arg001=Observer.New(on,function(arg00)
-        {
-         return o1.OnError(arg00);
-        },function()
-        {
-         return o1.OnCompleted();
-        });
-        return e.Subscribe(arg001);
-       };
-       return Observable.New(f);
-      },
-      Split:function(f,e)
-      {
-       var chooser,left,chooser1,right;
-       chooser=function(x)
-       {
-        var matchValue,_,x1;
-        matchValue=f(x);
-        if(matchValue.$==0)
-         {
-          x1=matchValue.$0;
-          _={
-           $:1,
-           $0:x1
-          };
-         }
-        else
-         {
-          _={
-           $:0
-          };
-         }
-        return _;
-       };
-       left=Observable.Choose(chooser,e);
-       chooser1=function(x)
-       {
-        var matchValue,_,x1;
-        matchValue=f(x);
-        if(matchValue.$==1)
-         {
-          x1=matchValue.$0;
-          _={
-           $:1,
-           $0:x1
-          };
-         }
-        else
-         {
-          _={
-           $:0
-          };
-         }
-        return _;
-       };
-       right=Observable.Choose(chooser1,e);
-       return[left,right];
-      }
-     },
-     Observer:{
-      New:function(f,e,c)
-      {
-       return Runtime.New(Observer1,{
-        onNext:f,
-        onError:e,
-        onCompleted:c
-       });
-      },
-      Observer:Runtime.Class({
-       OnCompleted:function()
-       {
-        return this.onCompleted.call(null,null);
-       },
-       OnError:function(e)
-       {
-        return this.onError.call(null,e);
-       },
-       OnNext:function(x)
-       {
-        return this.onNext.call(null,x);
-       }
-      }),
-      Of:function(f)
-      {
-       return Runtime.New(Observer1,{
-        onNext:function(x)
-        {
-         return f(x);
-        },
-        onError:function(x)
-        {
-         return Operators.Raise(x);
-        },
-        onCompleted:function()
-        {
-         return null;
-        }
-       });
-      }
-     }
-    }
-   }
-  }
- });
- Runtime.OnInit(function()
- {
-  WebSharper=Runtime.Safe(Global.IntelliFactory.WebSharper);
-  Unchecked=Runtime.Safe(WebSharper.Unchecked);
-  Seq=Runtime.Safe(WebSharper.Seq);
-  Option=Runtime.Safe(WebSharper.Option);
-  Control=Runtime.Safe(WebSharper.Control);
-  Disposable=Runtime.Safe(Control.Disposable);
-  IntrinsicFunctionProxy=Runtime.Safe(WebSharper.IntrinsicFunctionProxy);
-  FSharpEvent=Runtime.Safe(Control.FSharpEvent);
-  Util=Runtime.Safe(WebSharper.Util);
-  Event=Runtime.Safe(Control.Event);
-  Event1=Runtime.Safe(Event.Event);
-  Collections=Runtime.Safe(WebSharper.Collections);
-  ResizeArray=Runtime.Safe(Collections.ResizeArray);
-  ResizeArrayProxy=Runtime.Safe(ResizeArray.ResizeArrayProxy);
-  EventModule=Runtime.Safe(Control.EventModule);
-  HotStream=Runtime.Safe(Control.HotStream);
-  HotStream1=Runtime.Safe(HotStream.HotStream);
-  Operators=Runtime.Safe(WebSharper.Operators);
-  Error=Runtime.Safe(Global.Error);
-  Concurrency=Runtime.Safe(WebSharper.Concurrency);
-  setTimeout=Runtime.Safe(Global.setTimeout);
-  clearTimeout=Runtime.Safe(Global.clearTimeout);
-  LinkedList=Runtime.Safe(Collections.LinkedList);
-  ListProxy=Runtime.Safe(LinkedList.ListProxy);
-  MailboxProcessor=Runtime.Safe(Control.MailboxProcessor);
-  Observable=Runtime.Safe(Control.Observable);
-  Observer=Runtime.Safe(Control.Observer);
-  Observable1=Runtime.Safe(Observable.Observable);
-  List=Runtime.Safe(WebSharper.List);
-  T=Runtime.Safe(List.T);
-  return Observer1=Runtime.Safe(Observer.Observer);
- });
- Runtime.OnLoad(function()
- {
-  return;
- });
-}());
-
-(function()
-{
- var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,Collections,BalancedTree,Operators,IntrinsicFunctionProxy,Seq,List,T,Arrays,JavaScript,Enumerator,DictionaryUtil,Dictionary,Unchecked,FSharpMap,Pair,Option,MapUtil,FSharpSet,SetModule,SetUtil,Array,HashSet,HashSetUtil,HashSet1,LinkedList,EnumeratorProxy,ListProxy,ResizeArray,ResizeArrayProxy;
+ var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,Collections,BalancedTree,Operators,IntrinsicFunctionProxy,Seq,List,T,Arrays,JavaScript,JS,Enumerator,DictionaryUtil,Dictionary,Unchecked,FSharpMap,Pair,Option,MapUtil,FSharpSet,SetModule,SetUtil,Array,HashSet,HashSetUtil,HashSet1,LinkedList,EnumeratorProxy,ListProxy,ResizeArray,ResizeArrayProxy;
  Runtime.Define(Global,{
   IntelliFactory:{
    WebSharper:{
@@ -8375,7 +6394,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
       GetEnumerator:function()
       {
        var s;
-       s=JavaScript.GetFieldValues(this.data);
+       s=JS.GetFieldValues(this.data);
        return Enumerator.Get(s);
       },
       Remove:function(k)
@@ -8384,7 +6403,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        h=this.hash.call(null,k);
        if(this.data.hasOwnProperty(h))
         {
-         JavaScript.Delete(this.data,h);
+         JS.Delete(this.data,h);
          this.count=this.count-1;
          _=true;
         }
@@ -9746,6 +7765,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   T=Runtime.Safe(List.T);
   Arrays=Runtime.Safe(WebSharper.Arrays);
   JavaScript=Runtime.Safe(WebSharper.JavaScript);
+  JS=Runtime.Safe(JavaScript.JS);
   Enumerator=Runtime.Safe(WebSharper.Enumerator);
   DictionaryUtil=Runtime.Safe(Collections.DictionaryUtil);
   Dictionary=Runtime.Safe(Collections.Dictionary);
@@ -9775,5922 +7795,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
 
 (function()
 {
- var Global=this,Runtime=this.IntelliFactory.Runtime,Reactive,Disposable,HotStream,WebSharper,Control,FSharpEvent,Observer,Observable,Util,Collections,Dictionary,Operators,Seq,Reactive1,Reactive2,List,T;
- Runtime.Define(Global,{
-  IntelliFactory:{
-   Reactive:{
-    Disposable:Runtime.Class({
-     Dispose:function()
-     {
-      return this.Dispose1.call(null,null);
-     }
-    },{
-     New:function(d)
-     {
-      return Runtime.New(Disposable,{
-       Dispose1:d
-      });
-     }
-    }),
-    HotStream:Runtime.Class({
-     Subscribe:function(o)
-     {
-      var _this;
-      this.Latest.contents.$==1?o.OnNext(this.Latest.contents.$0):null;
-      _this=this.Event;
-      return _this.event.Subscribe(o);
-     },
-     Trigger:function(v)
-     {
-      var _this;
-      this.Latest.contents={
-       $:1,
-       $0:v
-      };
-      _this=this.Event;
-      return _this.event.Trigger(v);
-     }
-    },{
-     New:function(x)
-     {
-      var value;
-      value={
-       $:1,
-       $0:x
-      };
-      return Runtime.New(HotStream,{
-       Latest:{
-        contents:value
-       },
-       Event:FSharpEvent.New()
-      });
-     },
-     New1:function()
-     {
-      return Runtime.New(HotStream,{
-       Latest:{
-        contents:{
-         $:0
-        }
-       },
-       Event:FSharpEvent.New()
-      });
-     }
-    }),
-    Observable:Runtime.Class({
-     Subscribe:function(o)
-     {
-      return this.OnSubscribe.call(null,o);
-     },
-     SubscribeWith:function(onNext,onComplete)
-     {
-      return this.OnSubscribe.call(null,Observer.New(onNext,onComplete));
-     }
-    },{
-     New:function(f)
-     {
-      return Runtime.New(Observable,{
-       OnSubscribe:f
-      });
-     }
-    }),
-    Observer:Runtime.Class({
-     OnCompleted:function()
-     {
-      return this.OnCompleted1.call(null,null);
-     },
-     OnError:function()
-     {
-      return null;
-     },
-     OnNext:function(t)
-     {
-      return this.OnNext1.call(null,t);
-     }
-    },{
-     New:function(onNext,onComplete)
-     {
-      return Runtime.New(Observer,{
-       OnNext1:onNext,
-       OnCompleted1:onComplete
-      });
-     }
-    }),
-    Reactive:{
-     Aggregate:function(io,seed,acc)
-     {
-      return Observable.New(function(o)
-      {
-       var state;
-       state={
-        contents:seed
-       };
-       return Util.subscribeTo(io,function(value)
-       {
-        state.contents=(acc(state.contents))(value);
-        return o.OnNext(state.contents);
-       });
-      });
-     },
-     Choose:function(io,f)
-     {
-      var arg00;
-      arg00=function(o1)
-      {
-       return Util.subscribeTo(io,function(v)
-       {
-        var matchValue,_,v1;
-        matchValue=f(v);
-        if(matchValue.$==0)
-         {
-          _=null;
-         }
-        else
-         {
-          v1=matchValue.$0;
-          _=o1.OnNext(v1);
-         }
-        return _;
-       });
-      };
-      return Observable.New(arg00);
-     },
-     CollectLatest:function(outer)
-     {
-      return Observable.New(function(o)
-      {
-       var dict,index;
-       dict=Dictionary.New2();
-       index={
-        contents:0
-       };
-       return Util.subscribeTo(outer,function(inner)
-       {
-        var currentIndex,value;
-        Operators.Increment(index);
-        currentIndex=index.contents;
-        value=Util.subscribeTo(inner,function(value1)
-        {
-         var arg00;
-         dict.set_Item(currentIndex,value1);
-         arg00=Seq.delay(function()
-         {
-          return Seq.map(function(pair)
-          {
-           return pair.V;
-          },dict);
-         });
-         return o.OnNext(arg00);
-        });
-        return;
-       });
-      });
-     },
-     CombineLatest:function(io1,io2,f)
-     {
-      var arg00;
-      arg00=function(o)
-      {
-       var lv1,lv2,update,onNext,arg10,o1,onNext1,arg101,o2,d1,d2;
-       lv1={
-        contents:{
-         $:0
-        }
-       };
-       lv2={
-        contents:{
-         $:0
-        }
-       };
-       update=function()
-       {
-        var matchValue,_,_1,v1,v2;
-        matchValue=[lv1.contents,lv2.contents];
-        if(matchValue[0].$==1)
-         {
-          if(matchValue[1].$==1)
-           {
-            v1=matchValue[0].$0;
-            v2=matchValue[1].$0;
-            _1=o.OnNext((f(v1))(v2));
-           }
-          else
-           {
-            _1=null;
-           }
-          _=_1;
-         }
-        else
-         {
-          _=null;
-         }
-        return _;
-       };
-       onNext=function(x)
-       {
-        lv1.contents={
-         $:1,
-         $0:x
-        };
-        return update(null);
-       };
-       arg10=function()
-       {
-       };
-       o1=Observer.New(onNext,arg10);
-       onNext1=function(y)
-       {
-        lv2.contents={
-         $:1,
-         $0:y
-        };
-        return update(null);
-       };
-       arg101=function()
-       {
-       };
-       o2=Observer.New(onNext1,arg101);
-       d1=io1.Subscribe(o1);
-       d2=io2.Subscribe(o2);
-       return Disposable.New(function()
-       {
-        d1.Dispose();
-        return d2.Dispose();
-       });
-      };
-      return Observable.New(arg00);
-     },
-     Concat:function(io1,io2)
-     {
-      var arg00;
-      arg00=function(o)
-      {
-       var innerDisp,arg001,arg10,arg003,outerDisp;
-       innerDisp={
-        contents:{
-         $:0
-        }
-       };
-       arg001=function(arg002)
-       {
-        return o.OnNext(arg002);
-       };
-       arg10=function()
-       {
-        innerDisp.contents={
-         $:1,
-         $0:io2.Subscribe(o)
-        };
-       };
-       arg003=Observer.New(arg001,arg10);
-       outerDisp=io1.Subscribe(arg003);
-       return Disposable.New(function()
-       {
-        innerDisp.contents.$==1?innerDisp.contents.$0.Dispose():null;
-        return outerDisp.Dispose();
-       });
-      };
-      return Observable.New(arg00);
-     },
-     Default:Runtime.Field(function()
-     {
-      return Reactive2.New();
-     }),
-     Drop:function(io,count)
-     {
-      var arg00;
-      arg00=function(o1)
-      {
-       var index;
-       index={
-        contents:0
-       };
-       return Util.subscribeTo(io,function(v)
-       {
-        Operators.Increment(index);
-        return index.contents>count?o1.OnNext(v):null;
-       });
-      };
-      return Observable.New(arg00);
-     },
-     Heat:function(io)
-     {
-      var s;
-      s=HotStream.New1();
-      Util.subscribeTo(io,function(arg00)
-      {
-       return s.Trigger(arg00);
-      });
-      return s;
-     },
-     Merge:function(io1,io2)
-     {
-      var arg00;
-      arg00=function(o)
-      {
-       var completed1,completed2,arg001,arg10,arg003,disp1,arg004,arg101,arg005,disp2;
-       completed1={
-        contents:false
-       };
-       completed2={
-        contents:false
-       };
-       arg001=function(arg002)
-       {
-        return o.OnNext(arg002);
-       };
-       arg10=function()
-       {
-        completed1.contents=true;
-        return(completed1.contents?completed2.contents:false)?o.OnCompleted():null;
-       };
-       arg003=Observer.New(arg001,arg10);
-       disp1=io1.Subscribe(arg003);
-       arg004=function(arg002)
-       {
-        return o.OnNext(arg002);
-       };
-       arg101=function()
-       {
-        completed2.contents=true;
-        return(completed1.contents?completed2.contents:false)?o.OnCompleted():null;
-       };
-       arg005=Observer.New(arg004,arg101);
-       disp2=io2.Subscribe(arg005);
-       return Disposable.New(function()
-       {
-        disp1.Dispose();
-        return disp2.Dispose();
-       });
-      };
-      return Observable.New(arg00);
-     },
-     Never:function()
-     {
-      return Observable.New(function()
-      {
-       return Disposable.New(function()
-       {
-       });
-      });
-     },
-     Range:function(start,count)
-     {
-      var arg00;
-      arg00=function(o)
-      {
-       var i;
-       for(i=start;i<=start+count;i++){
-        o.OnNext(i);
-       }
-       return Disposable.New(function()
-       {
-       });
-      };
-      return Observable.New(arg00);
-     },
-     Reactive:Runtime.Class({
-      Aggregate:function(io,s,a)
-      {
-       return Reactive1.Aggregate(io,s,a);
-      },
-      Choose:function(io,f)
-      {
-       return Reactive1.Choose(io,f);
-      },
-      CollectLatest:function(io)
-      {
-       return Reactive1.CollectLatest(io);
-      },
-      CombineLatest:function(io1,io2,f)
-      {
-       return Reactive1.CombineLatest(io1,io2,f);
-      },
-      Concat:function(io1,io2)
-      {
-       return Reactive1.Concat(io1,io2);
-      },
-      Drop:function(io,count)
-      {
-       return Reactive1.Drop(io,count);
-      },
-      Heat:function(io)
-      {
-       return Reactive1.Heat(io);
-      },
-      Merge:function(io1,io2)
-      {
-       return Reactive1.Merge(io1,io2);
-      },
-      Never:function()
-      {
-       return Reactive1.Never();
-      },
-      Return:function(x)
-      {
-       return Reactive1.Return(x);
-      },
-      Select:function(io,f)
-      {
-       return Reactive1.Select(io,f);
-      },
-      SelectMany:function(io)
-      {
-       return Reactive1.SelectMany(io);
-      },
-      Sequence:function(ios)
-      {
-       return Reactive1.Sequence(ios);
-      },
-      Switch:function(io)
-      {
-       return Reactive1.Switch(io);
-      },
-      Where:function(io,f)
-      {
-       return Reactive1.Where(io,f);
-      }
-     },{
-      New:function()
-      {
-       return Runtime.New(this,{});
-      }
-     }),
-     Return:function(x)
-     {
-      var f;
-      f=function(o)
-      {
-       o.OnNext(x);
-       o.OnCompleted();
-       return Disposable.New(function()
-       {
-       });
-      };
-      return Observable.New(f);
-     },
-     Select:function(io,f)
-     {
-      return Observable.New(function(o1)
-      {
-       return Util.subscribeTo(io,function(v)
-       {
-        return o1.OnNext(f(v));
-       });
-      });
-     },
-     SelectMany:function(io)
-     {
-      return Observable.New(function(o)
-      {
-       var disp,d;
-       disp={
-        contents:function()
-        {
-        }
-       };
-       d=Util.subscribeTo(io,function(o1)
-       {
-        var d1;
-        d1=Util.subscribeTo(o1,function(arg00)
-        {
-         return o.OnNext(arg00);
-        });
-        disp.contents=function()
-        {
-         disp.contents.call(null,null);
-         return d1.Dispose();
-        };
-        return;
-       });
-       return Disposable.New(function()
-       {
-        disp.contents.call(null,null);
-        return d.Dispose();
-       });
-      });
-     },
-     Sequence:function(ios)
-     {
-      var sequence;
-      sequence=function(ios1)
-      {
-       var _,xs,x,rest;
-       if(ios1.$==1)
-        {
-         xs=ios1.$1;
-         x=ios1.$0;
-         rest=sequence(xs);
-         _=Reactive1.CombineLatest(x,rest,function(x1)
-         {
-          return function(y)
-          {
-           return Runtime.New(T,{
-            $:1,
-            $0:x1,
-            $1:y
-           });
-          };
-         });
-        }
-       else
-        {
-         _=Reactive1.Return(Runtime.New(T,{
-          $:0
-         }));
-        }
-       return _;
-      };
-      return Reactive1.Select(sequence(List.ofSeq(ios)),function(source)
-      {
-       return source;
-      });
-     },
-     Switch:function(io)
-     {
-      return Observable.New(function(o)
-      {
-       var index,disp,disp1;
-       index={
-        contents:0
-       };
-       disp={
-        contents:{
-         $:0
-        }
-       };
-       disp1=Util.subscribeTo(io,function(o1)
-       {
-        var currentIndex,arg0,d;
-        Operators.Increment(index);
-        disp.contents.$==1?disp.contents.$0.Dispose():null;
-        currentIndex=index.contents;
-        arg0=Util.subscribeTo(o1,function(v)
-        {
-         return currentIndex===index.contents?o.OnNext(v):null;
-        });
-        d={
-         $:1,
-         $0:arg0
-        };
-        disp.contents=d;
-        return;
-       });
-       return disp1;
-      });
-     },
-     Where:function(io,f)
-     {
-      var arg00;
-      arg00=function(o1)
-      {
-       return Util.subscribeTo(io,function(v)
-       {
-        return f(v)?o1.OnNext(v):null;
-       });
-      };
-      return Observable.New(arg00);
-     }
-    }
-   }
-  }
- });
- Runtime.OnInit(function()
- {
-  Reactive=Runtime.Safe(Global.IntelliFactory.Reactive);
-  Disposable=Runtime.Safe(Reactive.Disposable);
-  HotStream=Runtime.Safe(Reactive.HotStream);
-  WebSharper=Runtime.Safe(Global.IntelliFactory.WebSharper);
-  Control=Runtime.Safe(WebSharper.Control);
-  FSharpEvent=Runtime.Safe(Control.FSharpEvent);
-  Observer=Runtime.Safe(Reactive.Observer);
-  Observable=Runtime.Safe(Reactive.Observable);
-  Util=Runtime.Safe(WebSharper.Util);
-  Collections=Runtime.Safe(WebSharper.Collections);
-  Dictionary=Runtime.Safe(Collections.Dictionary);
-  Operators=Runtime.Safe(WebSharper.Operators);
-  Seq=Runtime.Safe(WebSharper.Seq);
-  Reactive1=Runtime.Safe(Reactive.Reactive);
-  Reactive2=Runtime.Safe(Reactive1.Reactive);
-  List=Runtime.Safe(WebSharper.List);
-  return T=Runtime.Safe(List.T);
- });
- Runtime.OnLoad(function()
- {
-  Reactive1.Default();
-  return;
- });
-}());
-
-(function()
-{
- var Global=this,Runtime=this.IntelliFactory.Runtime,Formlet,Base,Formlet1,Form,Tree,Edit,Result,WebSharper,List,T,LayoutUtils,Tree1,Util,Seq,Enumerator,Unchecked;
- Runtime.Define(Global,{
-  IntelliFactory:{
-   Formlet:{
-    Base:{
-     D:Runtime.Class({
-      Dispose:function()
-      {
-       return null;
-      }
-     },{
-      New:function()
-      {
-       return Runtime.New(this,{});
-      }
-     }),
-     Form:Runtime.Class({
-      Dispose:function()
-      {
-       return this.Dispose1.call(null,null);
-      }
-     }),
-     Formlet:Runtime.Class({
-      Build:function()
-      {
-       return this.Build1.call(null,null);
-      },
-      MapResult:function(f)
-      {
-       var _this=this;
-       return Runtime.New(Formlet1,{
-        Layout:this.Layout,
-        Build1:function()
-        {
-         var form,objectArg,arg00,arg10,state;
-         form=_this.Build1.call(null,null);
-         objectArg=_this.Utils.Reactive;
-         arg00=form.State;
-         arg10=function(x)
-         {
-          return f(x);
-         };
-         objectArg.Select(arg00,arg10);
-         state=form.State;
-         return Runtime.New(Form,{
-          Body:form.Body,
-          Dispose1:form.Dispose1,
-          Notify:form.Notify,
-          State:state
-         });
-        },
-        Utils:_this.Utils
-       });
-      },
-      get_Layout:function()
-      {
-       return this.Layout;
-      }
-     }),
-     FormletBuilder:Runtime.Class({
-      Bind:function(x,f)
-      {
-       var objectArg;
-       objectArg=this.F;
-       return objectArg.Bind(x,f);
-      },
-      Delay:function(f)
-      {
-       return this.F.Delay(f);
-      },
-      Return:function(x)
-      {
-       return this.F.Return(x);
-      },
-      ReturnFrom:function(f)
-      {
-       return f;
-      }
-     },{
-      New:function(F)
-      {
-       var r;
-       r=Runtime.New(this,{});
-       r.F=F;
-       return r;
-      }
-     }),
-     FormletProvider:Runtime.Class({
-      AppendLayout:function(layout,formlet)
-      {
-       var arg10;
-       arg10=this.ApplyLayout(formlet);
-       return this.WithLayout(layout,arg10);
-      },
-      Apply:function(f,x)
-      {
-       var arg00,_this=this;
-       arg00=function()
-       {
-        var f1,x1,objectArg,arg001,arg10,left,objectArg1,arg002,arg101,right,objectArg2,body,objectArg3,arg003,arg102,arg20,state;
-        f1=_this.BuildForm(f);
-        x1=_this.BuildForm(x);
-        objectArg=_this.U.Reactive;
-        arg001=f1.Body;
-        arg10=function(arg0)
-        {
-         return Runtime.New(Edit,{
-          $:1,
-          $0:arg0
-         });
-        };
-        left=objectArg.Select(arg001,arg10);
-        objectArg1=_this.U.Reactive;
-        arg002=x1.Body;
-        arg101=function(arg0)
-        {
-         return Runtime.New(Edit,{
-          $:2,
-          $0:arg0
-         });
-        };
-        right=objectArg1.Select(arg002,arg101);
-        objectArg2=_this.U.Reactive;
-        body=objectArg2.Merge(left,right);
-        objectArg3=_this.U.Reactive;
-        arg003=x1.State;
-        arg102=f1.State;
-        arg20=function(r)
-        {
-         return function(f2)
-         {
-          return Result.Apply(f2,r);
-         };
-        };
-        state=objectArg3.CombineLatest(arg003,arg102,arg20);
-        return Runtime.New(Form,{
-         Body:body,
-         Dispose1:function()
-         {
-          x1.Dispose1.call(null,null);
-          return f1.Dispose1.call(null,null);
-         },
-         Notify:function(o)
-         {
-          x1.Notify.call(null,o);
-          return f1.Notify.call(null,o);
-         },
-         State:state
-        });
-       };
-       return _this.New(arg00);
-      },
-      ApplyLayout:function(formlet)
-      {
-       var arg00,_this=this;
-       arg00=function()
-       {
-        var form,matchValue,body,_,body1;
-        form=formlet.Build();
-        matchValue=formlet.get_Layout().Apply.call(null,form.Body);
-        if(matchValue.$==0)
-         {
-          _=form.Body;
-         }
-        else
-         {
-          matchValue.$0[1];
-          body1=matchValue.$0[0];
-          _=_this.U.Reactive.Return(Tree.Set(body1));
-         }
-        body=_;
-        return Runtime.New(Form,{
-         Body:body,
-         Dispose1:form.Dispose1,
-         Notify:form.Notify,
-         State:form.State
-        });
-       };
-       return _this.New(arg00);
-      },
-      Bind:function(formlet,f)
-      {
-       var arg00;
-       arg00=this.Map(f,formlet);
-       return this.Join(arg00);
-      },
-      BindWith:function(hF,formlet,f)
-      {
-       var arg00,_this=this;
-       arg00=function()
-       {
-        var formlet1,form,objectArg,arg001,arg10,left,objectArg1,arg002,arg101,right,matchValue,combB,_,_1,bLeft,bRight,objectArg2,value,arg003;
-        formlet1=_this.Bind(formlet,f);
-        form=formlet1.Build();
-        objectArg=_this.U.Reactive;
-        arg001=form.Body;
-        arg10=function(edit)
-        {
-         return edit.$==1?true:false;
-        };
-        left=_this.U.DefaultLayout.Apply.call(null,objectArg.Where(arg001,arg10));
-        objectArg1=_this.U.Reactive;
-        arg002=form.Body;
-        arg101=function(edit)
-        {
-         return edit.$==2?true:false;
-        };
-        right=_this.U.DefaultLayout.Apply.call(null,objectArg1.Where(arg002,arg101));
-        matchValue=[left,right];
-        if(matchValue[0].$==1)
-         {
-          if(matchValue[1].$==1)
-           {
-            bLeft=matchValue[0].$0[0];
-            bRight=matchValue[1].$0[0];
-            objectArg2=_this.U.Reactive;
-            value=(hF(bLeft))(bRight);
-            arg003=Tree.Set(value);
-            _1=objectArg2.Return(arg003);
-           }
-          else
-           {
-            _1=_this.U.Reactive.Never();
-           }
-          _=_1;
-         }
-        else
-         {
-          _=_this.U.Reactive.Never();
-         }
-        combB=_;
-        return Runtime.New(Form,{
-         Body:combB,
-         Dispose1:form.Dispose1,
-         Notify:form.Notify,
-         State:form.State
-        });
-       };
-       return _this.New(arg00);
-      },
-      BuildForm:function(formlet)
-      {
-       var form,matchValue,_,d,body;
-       form=formlet.Build();
-       matchValue=formlet.get_Layout().Apply.call(null,form.Body);
-       if(matchValue.$==1)
-        {
-         d=matchValue.$0[1];
-         body=matchValue.$0[0];
-         _=Runtime.New(Form,{
-          Body:this.U.Reactive.Return(Tree.Set(body)),
-          Dispose1:function()
-          {
-           form.Dispose1.call(null,null);
-           return d.Dispose();
-          },
-          Notify:form.Notify,
-          State:form.State
-         });
-        }
-       else
-        {
-         _=form;
-        }
-       return _;
-      },
-      Delay:function(f)
-      {
-       var Build,_this=this;
-       Build=function()
-       {
-        return _this.BuildForm(f(null));
-       };
-       return Runtime.New(Formlet1,{
-        Layout:_this.L.Delay(function()
-        {
-         return f(null).get_Layout();
-        }),
-        Build1:Build,
-        Utils:_this.U
-       });
-      },
-      Deletable:function(formlet)
-      {
-       var arg10,_this=this;
-       arg10=function(value)
-       {
-        var _,value1;
-        if(value.$==1)
-         {
-          value1=value.$0;
-          _=_this.Return({
-           $:1,
-           $0:value1
-          });
-         }
-        else
-         {
-          _=_this.ReturnEmpty({
-           $:0
-          });
-         }
-        return _;
-       };
-       return _this.Replace(formlet,arg10);
-      },
-      Empty:function()
-      {
-       var arg00,_this=this;
-       arg00=function()
-       {
-        return Runtime.New(Form,{
-         Body:_this.U.Reactive.Return(Tree.Delete()),
-         Dispose1:function()
-         {
-         },
-         Notify:function()
-         {
-         },
-         State:_this.U.Reactive.Never()
-        });
-       };
-       return _this.New(arg00);
-      },
-      EmptyForm:function()
-      {
-       return Runtime.New(Form,{
-        Body:this.U.Reactive.Never(),
-        Dispose1:function()
-        {
-        },
-        Notify:function()
-        {
-        },
-        State:this.U.Reactive.Never()
-       });
-      },
-      Fail:function(fs)
-      {
-       return Runtime.New(Form,{
-        Body:this.U.Reactive.Never(),
-        Dispose1:function(x)
-        {
-         return x;
-        },
-        Notify:function()
-        {
-        },
-        State:this.U.Reactive.Return(Runtime.New(Result,{
-         $:1,
-         $0:fs
-        }))
-       });
-      },
-      FailWith:function(fs)
-      {
-       var arg00,_this=this;
-       arg00=function()
-       {
-        return _this.Fail(fs);
-       };
-       return _this.New(arg00);
-      },
-      FlipBody:function(formlet)
-      {
-       var arg00,_this=this,x,arg002;
-       arg00=function()
-       {
-        var form,objectArg,arg001,arg10,body;
-        form=formlet.Build();
-        objectArg=_this.U.Reactive;
-        arg001=form.Body;
-        arg10=function(edit)
-        {
-         return Tree.FlipEdit(edit);
-        };
-        body=objectArg.Select(arg001,arg10);
-        return Runtime.New(Form,{
-         Body:body,
-         Dispose1:form.Dispose1,
-         Notify:form.Notify,
-         State:form.State
-        });
-       };
-       x=_this.New(arg00);
-       arg002=formlet.get_Layout();
-       return _this.WithLayout(arg002,x);
-      },
-      FromState:function(state)
-      {
-       var arg00,_this=this;
-       arg00=function()
-       {
-        return Runtime.New(Form,{
-         Body:_this.U.Reactive.Never(),
-         Dispose1:function()
-         {
-         },
-         Notify:function()
-         {
-         },
-         State:state
-        });
-       };
-       return _this.New(arg00);
-      },
-      InitWith:function(value,formlet)
-      {
-       var arg00,_this=this,x,arg002;
-       arg00=function()
-       {
-        var form,objectArg,arg001,arg10,state;
-        form=formlet.Build();
-        objectArg=_this.U.Reactive;
-        arg001=_this.U.Reactive.Return(Runtime.New(Result,{
-         $:0,
-         $0:value
-        }));
-        arg10=form.State;
-        state=objectArg.Concat(arg001,arg10);
-        return Runtime.New(Form,{
-         Body:form.Body,
-         Dispose1:form.Dispose1,
-         Notify:form.Notify,
-         State:state
-        });
-       };
-       x=_this.New(arg00);
-       arg002=formlet.get_Layout();
-       return _this.WithLayout(arg002,x);
-      },
-      InitWithFailure:function(formlet)
-      {
-       var arg00,_this=this,x,arg002;
-       arg00=function()
-       {
-        var form,objectArg,arg001,arg10,state;
-        form=formlet.Build();
-        objectArg=_this.U.Reactive;
-        arg001=_this.U.Reactive.Return(Runtime.New(Result,{
-         $:1,
-         $0:Runtime.New(T,{
-          $:0
-         })
-        }));
-        arg10=form.State;
-        state=objectArg.Concat(arg001,arg10);
-        return Runtime.New(Form,{
-         Body:form.Body,
-         Dispose1:form.Dispose1,
-         Notify:form.Notify,
-         State:state
-        });
-       };
-       x=_this.New(arg00);
-       arg002=formlet.get_Layout();
-       return _this.WithLayout(arg002,x);
-      },
-      Join:function(formlet)
-      {
-       var arg00,_this=this;
-       arg00=function()
-       {
-        var form1,objectArg,arg001,arg10,objectArg1,arg002,formStream,objectArg2,arg101,value,objectArg4,arg003,arg103,right,objectArg5,objectArg6,arg004,arg104,arg005,body,state,objectArg7,arg105,notify,dispose;
-        form1=_this.BuildForm(formlet);
-        objectArg=_this.U.Reactive;
-        arg001=form1.State;
-        arg10=function(res)
-        {
-         var _,fs,innerF;
-         if(res.$==1)
-          {
-           fs=res.$0;
-           _=_this.Fail(fs);
-          }
-         else
-          {
-           innerF=res.$0;
-           _=_this.BuildForm(innerF);
-          }
-         return _;
-        };
-        objectArg1=_this.U.Reactive;
-        arg002=objectArg.Select(arg001,arg10);
-        formStream=objectArg1.Heat(arg002);
-        objectArg2=_this.U.Reactive;
-        arg101=function(f)
-        {
-         var _delete,objectArg3,arg102;
-         _delete=_this.U.Reactive.Return(Tree.Delete());
-         objectArg3=_this.U.Reactive;
-         arg102=f.Body;
-         return objectArg3.Concat(_delete,arg102);
-        };
-        value=objectArg2.Select(formStream,arg101);
-        objectArg4=_this.U.Reactive;
-        arg003=_this.U.Reactive.Switch(value);
-        arg103=function(arg0)
-        {
-         return Runtime.New(Edit,{
-          $:2,
-          $0:arg0
-         });
-        };
-        right=objectArg4.Select(arg003,arg103);
-        objectArg5=_this.U.Reactive;
-        objectArg6=_this.U.Reactive;
-        arg004=form1.Body;
-        arg104=function(arg0)
-        {
-         return Runtime.New(Edit,{
-          $:1,
-          $0:arg0
-         });
-        };
-        arg005=objectArg6.Select(arg004,arg104);
-        body=objectArg5.Merge(arg005,right);
-        objectArg7=_this.U.Reactive;
-        arg105=function(f)
-        {
-         return f.State;
-        };
-        state=_this.U.Reactive.Switch(objectArg7.Select(formStream,arg105));
-        notify=function(o)
-        {
-         return form1.Notify.call(null,o);
-        };
-        dispose=function()
-        {
-         return form1.Dispose1.call(null,null);
-        };
-        return Runtime.New(Form,{
-         Body:body,
-         Dispose1:dispose,
-         Notify:notify,
-         State:state
-        });
-       };
-       return _this.New(arg00);
-      },
-      LiftResult:function(formlet)
-      {
-       var arg00;
-       arg00=function(arg0)
-       {
-        return Runtime.New(Result,{
-         $:0,
-         $0:arg0
-        });
-       };
-       return this.MapResult(arg00,formlet);
-      },
-      Map:function(f,formlet)
-      {
-       var arg00;
-       arg00=function(arg10)
-       {
-        return Result.Map(f,arg10);
-       };
-       return this.MapResult(arg00,formlet);
-      },
-      MapBody:function(f,formlet)
-      {
-       var layout,_this=this;
-       layout={
-        Apply:function(o)
-        {
-         var matchValue,_,matchValue1,_1,d,body,d1,body1;
-         matchValue=formlet.get_Layout().Apply.call(null,o);
-         if(matchValue.$==0)
-          {
-           matchValue1=_this.U.DefaultLayout.Apply.call(null,o);
-           if(matchValue1.$==0)
-            {
-             _1={
-              $:0
-             };
-            }
-           else
-            {
-             d=matchValue1.$0[1];
-             body=matchValue1.$0[0];
-             _1={
-              $:1,
-              $0:[f(body),d]
-             };
-            }
-           _=_1;
-          }
-         else
-          {
-           d1=matchValue.$0[1];
-           body1=matchValue.$0[0];
-           _={
-            $:1,
-            $0:[f(body1),d1]
-           };
-          }
-         return _;
-        }
-       };
-       return _this.WithLayout(layout,formlet);
-      },
-      MapResult:function(f,formlet)
-      {
-       var Build,_this=this;
-       Build=function()
-       {
-        var form,objectArg,arg00,arg10,state;
-        form=formlet.Build();
-        objectArg=_this.U.Reactive;
-        arg00=form.State;
-        arg10=function(x)
-        {
-         return f(x);
-        };
-        state=objectArg.Select(arg00,arg10);
-        return Runtime.New(Form,{
-         Body:form.Body,
-         Dispose1:form.Dispose1,
-         Notify:form.Notify,
-         State:state
-        });
-       };
-       return Runtime.New(Formlet1,{
-        Layout:formlet.get_Layout(),
-        Build1:Build,
-        Utils:_this.U
-       });
-      },
-      Never:function()
-      {
-       var arg00,_this=this;
-       arg00=function()
-       {
-        return Runtime.New(Form,{
-         Body:_this.U.Reactive.Never(),
-         Dispose1:function()
-         {
-         },
-         Notify:function()
-         {
-         },
-         State:_this.U.Reactive.Never()
-        });
-       };
-       return _this.New(arg00);
-      },
-      New:function(build)
-      {
-       return Runtime.New(Formlet1,{
-        Layout:this.L.Default(),
-        Build1:build,
-        Utils:this.U
-       });
-      },
-      Replace:function(formlet,f)
-      {
-       var arg00,arg001;
-       arg00=function(value)
-       {
-        return f(value);
-       };
-       arg001=this.Map(arg00,formlet);
-       return this.Switch(arg001);
-      },
-      ReplaceFirstWithFailure:function(formlet)
-      {
-       var arg00,_this=this,x,arg003;
-       arg00=function()
-       {
-        var form,objectArg,arg001,state,objectArg1,arg002,state1;
-        form=formlet.Build();
-        objectArg=_this.U.Reactive;
-        arg001=form.State;
-        state=objectArg.Drop(arg001,1);
-        objectArg1=_this.U.Reactive;
-        arg002=_this.U.Reactive.Return(Runtime.New(Result,{
-         $:1,
-         $0:Runtime.New(T,{
-          $:0
-         })
-        }));
-        state1=objectArg1.Concat(arg002,state);
-        return Runtime.New(Form,{
-         Body:form.Body,
-         Dispose1:form.Dispose1,
-         Notify:form.Notify,
-         State:state1
-        });
-       };
-       x=_this.New(arg00);
-       arg003=formlet.get_Layout();
-       return _this.WithLayout(arg003,x);
-      },
-      Return:function(x)
-      {
-       var arg00,_this=this;
-       arg00=function()
-       {
-        return Runtime.New(Form,{
-         Body:_this.U.Reactive.Never(),
-         Dispose1:function(x1)
-         {
-          return x1;
-         },
-         Notify:function()
-         {
-         },
-         State:_this.U.Reactive.Return(Runtime.New(Result,{
-          $:0,
-          $0:x
-         }))
-        });
-       };
-       return _this.New(arg00);
-      },
-      ReturnEmpty:function(x)
-      {
-       var arg00,_this=this;
-       arg00=function()
-       {
-        return Runtime.New(Form,{
-         Body:_this.U.Reactive.Return(Tree.Delete()),
-         Dispose1:function(x1)
-         {
-          return x1;
-         },
-         Notify:function()
-         {
-         },
-         State:_this.U.Reactive.Return(Runtime.New(Result,{
-          $:0,
-          $0:x
-         }))
-        });
-       };
-       return _this.New(arg00);
-      },
-      SelectMany:function(formlet)
-      {
-       var arg00,_this=this;
-       arg00=function()
-       {
-        var form1,objectArg,arg001,arg10,objectArg1,arg002,formStream,objectArg2,arg003,arg101,left,tag,incrTag,objectArg3,arg102,allBodies,right,objectArg5,body,objectArg6,arg103,stateStream,objectArg7,arg005,arg104,state,notify,dispose;
-        form1=_this.BuildForm(formlet);
-        objectArg=_this.U.Reactive;
-        arg001=form1.State;
-        arg10=function(res)
-        {
-         var _,innerF,arg0;
-         if(res.$==1)
-          {
-           res.$0;
-           _={
-            $:0
-           };
-          }
-         else
-          {
-           innerF=res.$0;
-           arg0=_this.BuildForm(innerF);
-           _={
-            $:1,
-            $0:arg0
-           };
-          }
-         return _;
-        };
-        objectArg1=_this.U.Reactive;
-        arg002=objectArg.Choose(arg001,arg10);
-        formStream=objectArg1.Heat(arg002);
-        objectArg2=_this.U.Reactive;
-        arg003=form1.Body;
-        arg101=function(arg0)
-        {
-         return Runtime.New(Edit,{
-          $:1,
-          $0:arg0
-         });
-        };
-        left=objectArg2.Select(arg003,arg101);
-        tag={
-         contents:function(arg0)
-         {
-          return Runtime.New(Edit,{
-           $:1,
-           $0:arg0
-          });
-         }
-        };
-        incrTag=function()
-        {
-         var f;
-         f=tag.contents;
-         tag.contents=function(x)
-         {
-          var arg0;
-          arg0=f(x);
-          return Runtime.New(Edit,{
-           $:2,
-           $0:arg0
-          });
-         };
-         return;
-        };
-        objectArg3=_this.U.Reactive;
-        arg102=function(f)
-        {
-         var tagLocal,objectArg4,arg004;
-         incrTag(null);
-         tagLocal=tag.contents;
-         objectArg4=_this.U.Reactive;
-         arg004=f.Body;
-         return objectArg4.Select(arg004,tagLocal);
-        };
-        allBodies=objectArg3.Select(formStream,arg102);
-        right=_this.U.Reactive.SelectMany(allBodies);
-        objectArg5=_this.U.Reactive;
-        body=objectArg5.Merge(left,right);
-        objectArg6=_this.U.Reactive;
-        arg103=function(f)
-        {
-         return f.State;
-        };
-        stateStream=objectArg6.Select(formStream,arg103);
-        objectArg7=_this.U.Reactive;
-        arg005=_this.U.Reactive.CollectLatest(stateStream);
-        arg104=function(arg004)
-        {
-         return Result.Sequence(arg004);
-        };
-        state=objectArg7.Select(arg005,arg104);
-        notify=function(o)
-        {
-         return form1.Notify.call(null,o);
-        };
-        dispose=function()
-        {
-         return form1.Dispose1.call(null,null);
-        };
-        return Runtime.New(Form,{
-         Body:body,
-         Dispose1:dispose,
-         Notify:notify,
-         State:state
-        });
-       };
-       return _this.New(arg00);
-      },
-      Sequence:function(fs)
-      {
-       var fs1,_,fs2,f,fComp,fRest,arg00;
-       fs1=List.ofSeq(fs);
-       if(fs1.$==1)
-        {
-         fs2=fs1.$1;
-         f=fs1.$0;
-         fComp=this.Return(function(v)
-         {
-          return function(vs)
-          {
-           return Runtime.New(T,{
-            $:1,
-            $0:v,
-            $1:vs
-           });
-          };
-         });
-         fRest=this.Sequence(fs2);
-         arg00=this.Apply(fComp,f);
-         _=this.Apply(arg00,fRest);
-        }
-       else
-        {
-         _=this.Return(Runtime.New(T,{
-          $:0
-         }));
-        }
-       return _;
-      },
-      Switch:function(formlet)
-      {
-       var arg00,_this=this;
-       arg00=function()
-       {
-        var arg001,formlet1,form1,objectArg,arg002,arg10,objectArg1,arg003,formStream,objectArg2,arg004,arg101,objectArg3,arg102,body,state,objectArg4,arg103,notify,dispose;
-        arg001=_this.WithLayoutOrDefault(formlet);
-        formlet1=_this.ApplyLayout(arg001);
-        form1=_this.BuildForm(formlet1);
-        objectArg=_this.U.Reactive;
-        arg002=form1.State;
-        arg10=function(res)
-        {
-         var _,innerF,arg0;
-         if(res.$==1)
-          {
-           res.$0;
-           _={
-            $:0
-           };
-          }
-         else
-          {
-           innerF=res.$0;
-           arg0=_this.BuildForm(innerF);
-           _={
-            $:1,
-            $0:arg0
-           };
-          }
-         return _;
-        };
-        objectArg1=_this.U.Reactive;
-        arg003=objectArg.Choose(arg002,arg10);
-        formStream=objectArg1.Heat(arg003);
-        objectArg2=_this.U.Reactive;
-        arg004=form1.Body;
-        objectArg3=_this.U.Reactive;
-        arg102=function(f)
-        {
-         return f.Body;
-        };
-        arg101=_this.U.Reactive.Switch(objectArg3.Select(formStream,arg102));
-        body=objectArg2.Concat(arg004,arg101);
-        objectArg4=_this.U.Reactive;
-        arg103=function(f)
-        {
-         return f.State;
-        };
-        state=_this.U.Reactive.Switch(objectArg4.Select(formStream,arg103));
-        notify=function(o)
-        {
-         return form1.Notify.call(null,o);
-        };
-        dispose=function()
-        {
-         return form1.Dispose1.call(null,null);
-        };
-        return Runtime.New(Form,{
-         Body:body,
-         Dispose1:dispose,
-         Notify:notify,
-         State:state
-        });
-       };
-       return _this.New(arg00);
-      },
-      WithCancelation:function(formlet,cancelFormlet)
-      {
-       var compose,f1,f2,f3,f,arg00,arg10;
-       compose=function(r1)
-       {
-        return function(r2)
-        {
-         var matchValue,_,_1,fs,s;
-         matchValue=[r1,r2];
-         if(matchValue[1].$==0)
-          {
-           _=Runtime.New(Result,{
-            $:0,
-            $0:{
-             $:0
-            }
-           });
-          }
-         else
-          {
-           if(matchValue[0].$==1)
-            {
-             fs=matchValue[0].$0;
-             _1=Runtime.New(Result,{
-              $:1,
-              $0:fs
-             });
-            }
-           else
-            {
-             s=matchValue[0].$0;
-             _1=Runtime.New(Result,{
-              $:0,
-              $0:{
-               $:1,
-               $0:s
-              }
-             });
-            }
-           _=_1;
-          }
-         return _;
-        };
-       };
-       f1=this.Return(compose);
-       f2=this.LiftResult(formlet);
-       f3=this.LiftResult(cancelFormlet);
-       f=this.Apply(f1,f2);
-       arg00=function(arg001)
-       {
-        return Result.Join(arg001);
-       };
-       arg10=this.Apply(f,f3);
-       return this.MapResult(arg00,arg10);
-      },
-      WithLayout:function(layout,formlet)
-      {
-       return Runtime.New(Formlet1,{
-        Layout:layout,
-        Build1:function()
-        {
-         return formlet.Build();
-        },
-        Utils:this.U
-       });
-      },
-      WithLayoutOrDefault:function(formlet)
-      {
-       var arg00;
-       arg00=function(x)
-       {
-        return x;
-       };
-       return this.MapBody(arg00,formlet);
-      },
-      WithNotification:function(notify,formlet)
-      {
-       var arg00,_this=this,x,arg001;
-       arg00=function()
-       {
-        var form,Notify;
-        form=_this.BuildForm(formlet);
-        Notify=function(obj)
-        {
-         form.Notify.call(null,obj);
-         return notify(obj);
-        };
-        return Runtime.New(Form,{
-         Body:form.Body,
-         Dispose1:form.Dispose1,
-         Notify:Notify,
-         State:form.State
-        });
-       };
-       x=_this.New(arg00);
-       arg001=formlet.get_Layout();
-       return _this.WithLayout(arg001,x);
-      },
-      WithNotificationChannel:function(formlet)
-      {
-       var arg00,_this=this,x,arg003;
-       arg00=function()
-       {
-        var form,objectArg,arg001,arg002,arg10,state,Notify;
-        form=formlet.Build();
-        objectArg=_this.U.Reactive;
-        arg001=form.State;
-        arg002=function(v)
-        {
-         return[v,form.Notify];
-        };
-        arg10=function(arg101)
-        {
-         return Result.Map(arg002,arg101);
-        };
-        state=objectArg.Select(arg001,arg10);
-        Notify=form.Notify;
-        return Runtime.New(Form,{
-         Body:form.Body,
-         Dispose1:form.Dispose1,
-         Notify:Notify,
-         State:state
-        });
-       };
-       x=_this.New(arg00);
-       arg003=formlet.get_Layout();
-       return _this.WithLayout(arg003,x);
-      }
-     },{
-      New:function(U)
-      {
-       var r;
-       r=Runtime.New(this,{});
-       r.U=U;
-       r.L=LayoutUtils.New({
-        Reactive:r.U.Reactive
-       });
-       return r;
-      }
-     }),
-     LayoutUtils:Runtime.Class({
-      Default:function()
-      {
-       return{
-        Apply:function()
-        {
-         return{
-          $:0
-         };
-        }
-       };
-      },
-      Delay:function(f)
-      {
-       return{
-        Apply:function(x)
-        {
-         return f(null).Apply.call(null,x);
-        }
-       };
-      },
-      New:function(container)
-      {
-       return{
-        Apply:function(event)
-        {
-         var panel,tree,disp;
-         panel=container(null);
-         tree={
-          contents:Runtime.New(Tree1,{
-           $:0
-          })
-         };
-         disp=Util.subscribeTo(event,function(edit)
-         {
-          var deletedTree,patternInput,off,action;
-          deletedTree=Tree.ReplacedTree(edit,tree.contents);
-          tree.contents=Tree.Apply(edit,tree.contents);
-          patternInput=Tree.Range(edit,tree.contents);
-          off=patternInput[0];
-          panel.Remove.call(null,deletedTree.get_Sequence());
-          action=function(i)
-          {
-           return function(e)
-           {
-            return(panel.Insert.call(null,off+i))(e);
-           };
-          };
-          return Seq.iteri(action,edit);
-         });
-         return{
-          $:1,
-          $0:[panel.Body,disp]
-         };
-        }
-       };
-      }
-     },{
-      New:function()
-      {
-       return Runtime.New(this,{});
-      }
-     }),
-     Result:Runtime.Class({},{
-      Apply:function(f,r)
-      {
-       var matchValue,_,_1,fs1,fs2,fs,_2,fs3,f1,v;
-       matchValue=[f,r];
-       if(matchValue[0].$==1)
-        {
-         if(matchValue[1].$==1)
-          {
-           fs1=matchValue[0].$0;
-           fs2=matchValue[1].$0;
-           _1=Runtime.New(Result,{
-            $:1,
-            $0:List.append(fs1,fs2)
-           });
-          }
-         else
-          {
-           fs=matchValue[0].$0;
-           _1=Runtime.New(Result,{
-            $:1,
-            $0:fs
-           });
-          }
-         _=_1;
-        }
-       else
-        {
-         if(matchValue[1].$==1)
-          {
-           matchValue[0].$0;
-           fs3=matchValue[1].$0;
-           _2=Runtime.New(Result,{
-            $:1,
-            $0:fs3
-           });
-          }
-         else
-          {
-           f1=matchValue[0].$0;
-           v=matchValue[1].$0;
-           _2=Runtime.New(Result,{
-            $:0,
-            $0:f1(v)
-           });
-          }
-         _=_2;
-        }
-       return _;
-      },
-      Join:function(res)
-      {
-       var _,fs,s;
-       if(res.$==1)
-        {
-         fs=res.$0;
-         _=Runtime.New(Result,{
-          $:1,
-          $0:fs
-         });
-        }
-       else
-        {
-         s=res.$0;
-         _=s;
-        }
-       return _;
-      },
-      Map:function(f,res)
-      {
-       var _,fs,v;
-       if(res.$==1)
-        {
-         fs=res.$0;
-         _=Runtime.New(Result,{
-          $:1,
-          $0:fs
-         });
-        }
-       else
-        {
-         v=res.$0;
-         _=Runtime.New(Result,{
-          $:0,
-          $0:f(v)
-         });
-        }
-       return _;
-      },
-      OfOption:function(o)
-      {
-       var _,v;
-       if(o.$==0)
-        {
-         _=Runtime.New(Result,{
-          $:1,
-          $0:Runtime.New(T,{
-           $:0
-          })
-         });
-        }
-       else
-        {
-         v=o.$0;
-         _=Runtime.New(Result,{
-          $:0,
-          $0:v
-         });
-        }
-       return _;
-      },
-      Sequence:function(rs)
-      {
-       var merge;
-       merge=function(rs1)
-       {
-        return function(r)
-        {
-         var _,fs1,_1,fs2,vs,_2,fs,v,b;
-         if(rs1.$==1)
-          {
-           fs1=rs1.$0;
-           if(r.$==1)
-            {
-             fs2=r.$0;
-             _1=Runtime.New(Result,{
-              $:1,
-              $0:List.append(fs1,fs2)
-             });
-            }
-           else
-            {
-             r.$0;
-             _1=Runtime.New(Result,{
-              $:1,
-              $0:fs1
-             });
-            }
-           _=_1;
-          }
-         else
-          {
-           vs=rs1.$0;
-           if(r.$==1)
-            {
-             fs=r.$0;
-             _2=Runtime.New(Result,{
-              $:1,
-              $0:fs
-             });
-            }
-           else
-            {
-             v=r.$0;
-             b=List.ofArray([v]);
-             _2=Runtime.New(Result,{
-              $:0,
-              $0:List.append(vs,b)
-             });
-            }
-           _=_2;
-          }
-         return _;
-        };
-       };
-       return Seq.fold(merge,Runtime.New(Result,{
-        $:0,
-        $0:Runtime.New(T,{
-         $:0
-        })
-       }),rs);
-      }
-     }),
-     Tree:{
-      Apply:function(edit,input)
-      {
-       var apply;
-       apply=function(edit1,input1)
-       {
-        var _,edit2,_1,r,l,edit3,_2,r1,l1,output;
-        if(edit1.$==1)
-         {
-          edit2=edit1.$0;
-          if(input1.$==2)
-           {
-            r=input1.$1;
-            l=input1.$0;
-            _1=Runtime.New(Tree1,{
-             $:2,
-             $0:apply(edit2,l),
-             $1:r
-            });
-           }
-          else
-           {
-            _1=apply(Runtime.New(Edit,{
-             $:1,
-             $0:edit2
-            }),Runtime.New(Tree1,{
-             $:2,
-             $0:Runtime.New(Tree1,{
-              $:0
-             }),
-             $1:input1
-            }));
-           }
-          _=_1;
-         }
-        else
-         {
-          if(edit1.$==2)
-           {
-            edit3=edit1.$0;
-            if(input1.$==2)
-             {
-              r1=input1.$1;
-              l1=input1.$0;
-              _2=Runtime.New(Tree1,{
-               $:2,
-               $0:l1,
-               $1:apply(edit3,r1)
-              });
-             }
-            else
-             {
-              _2=apply(Runtime.New(Edit,{
-               $:2,
-               $0:edit3
-              }),Runtime.New(Tree1,{
-               $:2,
-               $0:input1,
-               $1:Runtime.New(Tree1,{
-                $:0
-               })
-              }));
-             }
-            _=_2;
-           }
-          else
-           {
-            output=edit1.$0;
-            _=output;
-           }
-         }
-        return _;
-       };
-       return apply(edit,input);
-      },
-      Count:function(t)
-      {
-       var loop,_,_1,b,a,_2,_3,tree,k,_4,ts,t1,_5;
-       loop=[];
-       _=Runtime.New(T,{
-        $:0
-       });
-       loop[3]=t;
-       loop[2]=_;
-       loop[1]=0;
-       loop[0]=1;
-       while(loop[0])
-        {
-         if(loop[3].$==2)
-          {
-           b=loop[3].$1;
-           a=loop[3].$0;
-           _2=Runtime.New(T,{
-            $:1,
-            $0:b,
-            $1:loop[2]
-           });
-           _3=loop[1];
-           loop[3]=a;
-           loop[2]=_2;
-           loop[1]=_3;
-           _1=void(loop[0]=1);
-          }
-         else
-          {
-           tree=loop[3];
-           k=tree.$==0?0:1;
-           if(loop[2].$==1)
-            {
-             ts=loop[2].$1;
-             t1=loop[2].$0;
-             _5=loop[1]+k;
-             loop[3]=t1;
-             loop[2]=ts;
-             loop[1]=_5;
-             _4=void(loop[0]=1);
-            }
-           else
-            {
-             loop[0]=0;
-             _4=void(loop[1]=loop[1]+k);
-            }
-           _1=_4;
-          }
-        }
-       return loop[1];
-      },
-      DeepFlipEdit:function(edit)
-      {
-       var _,e,e1,t;
-       if(edit.$==1)
-        {
-         e=edit.$0;
-         _=Runtime.New(Edit,{
-          $:2,
-          $0:Tree.DeepFlipEdit(e)
-         });
-        }
-       else
-        {
-         if(edit.$==2)
-          {
-           e1=edit.$0;
-           _=Runtime.New(Edit,{
-            $:1,
-            $0:Tree.DeepFlipEdit(e1)
-           });
-          }
-         else
-          {
-           t=edit.$0;
-           _=Runtime.New(Edit,{
-            $:0,
-            $0:t
-           });
-          }
-        }
-       return _;
-      },
-      Delete:function()
-      {
-       return Runtime.New(Edit,{
-        $:0,
-        $0:Runtime.New(Tree1,{
-         $:0
-        })
-       });
-      },
-      Edit:Runtime.Class({
-       GetEnumerator:function()
-       {
-        var _this;
-        _this=this.get_Sequence();
-        return Enumerator.Get(_this);
-       },
-       GetEnumerator1:function()
-       {
-        var _this;
-        _this=this.get_Sequence();
-        return Enumerator.Get(_this);
-       },
-       get_Sequence:function()
-       {
-        var _,edit,edit1,tree;
-        if(this.$==1)
-         {
-          edit=this.$0;
-          _=edit.get_Sequence();
-         }
-        else
-         {
-          if(this.$==2)
-           {
-            edit1=this.$0;
-            _=edit1.get_Sequence();
-           }
-          else
-           {
-            tree=this.$0;
-            _=tree.get_Sequence();
-           }
-         }
-        return _;
-       }
-      }),
-      FlipEdit:function(edit)
-      {
-       var _,e,e1,t;
-       if(edit.$==1)
-        {
-         e=edit.$0;
-         _=Runtime.New(Edit,{
-          $:2,
-          $0:e
-         });
-        }
-       else
-        {
-         if(edit.$==2)
-          {
-           e1=edit.$0;
-           _=Runtime.New(Edit,{
-            $:1,
-            $0:e1
-           });
-          }
-         else
-          {
-           t=edit.$0;
-           _=Runtime.New(Edit,{
-            $:0,
-            $0:t
-           });
-          }
-        }
-       return _;
-      },
-      FromSequence:function(vs)
-      {
-       var folder,state1;
-       folder=function(state)
-       {
-        return function(v)
-        {
-         return Runtime.New(Tree1,{
-          $:2,
-          $0:state,
-          $1:Runtime.New(Tree1,{
-           $:1,
-           $0:v
-          })
-         });
-        };
-       };
-       state1=Runtime.New(Tree1,{
-        $:0
-       });
-       return Seq.fold(folder,state1,vs);
-      },
-      Range:function(edit,input)
-      {
-       var loop,_,edit1,_1,l,_2,_3,edit2,_4,r,l1,tree,_5,_6;
-       loop=[];
-       loop[3]=0;
-       loop[2]=input;
-       loop[1]=edit;
-       loop[0]=1;
-       while(loop[0])
-        {
-         if(loop[1].$==1)
-          {
-           edit1=loop[1].$0;
-           if(loop[2].$==2)
-            {
-             loop[2].$1;
-             l=loop[2].$0;
-             loop[3]=loop[3];
-             loop[2]=l;
-             loop[1]=edit1;
-             _1=void(loop[0]=1);
-            }
-           else
-            {
-             _2=loop[3];
-             _3=Runtime.New(Tree1,{
-              $:0
-             });
-             loop[3]=_2;
-             loop[2]=_3;
-             loop[1]=edit1;
-             _1=void(loop[0]=1);
-            }
-           _=_1;
-          }
-         else
-          {
-           if(loop[1].$==2)
-            {
-             edit2=loop[1].$0;
-             if(loop[2].$==2)
-              {
-               r=loop[2].$1;
-               l1=loop[2].$0;
-               loop[3]=loop[3]+Tree.Count(l1);
-               loop[2]=r;
-               loop[1]=edit2;
-               _4=void(loop[0]=1);
-              }
-             else
-              {
-               tree=loop[2];
-               _5=loop[3]+Tree.Count(tree);
-               _6=Runtime.New(Tree1,{
-                $:0
-               });
-               loop[3]=_5;
-               loop[2]=_6;
-               loop[1]=edit2;
-               _4=void(loop[0]=1);
-              }
-             _=_4;
-            }
-           else
-            {
-             loop[1].$0;
-             loop[0]=0;
-             _=void(loop[1]=[loop[3],Tree.Count(loop[2])]);
-            }
-          }
-        }
-       return loop[1];
-      },
-      ReplacedTree:function(edit,input)
-      {
-       var _,edit1,_1,l,edit2,_2,r;
-       if(edit.$==1)
-        {
-         edit1=edit.$0;
-         if(input.$==2)
-          {
-           input.$1;
-           l=input.$0;
-           _1=Tree.ReplacedTree(edit1,l);
-          }
-         else
-          {
-           _1=Tree.ReplacedTree(Runtime.New(Edit,{
-            $:1,
-            $0:edit1
-           }),Runtime.New(Tree1,{
-            $:2,
-            $0:Runtime.New(Tree1,{
-             $:0
-            }),
-            $1:input
-           }));
-          }
-         _=_1;
-        }
-       else
-        {
-         if(edit.$==2)
-          {
-           edit2=edit.$0;
-           if(input.$==2)
-            {
-             r=input.$1;
-             input.$0;
-             _2=Tree.ReplacedTree(edit2,r);
-            }
-           else
-            {
-             _2=Tree.ReplacedTree(Runtime.New(Edit,{
-              $:2,
-              $0:edit2
-             }),Runtime.New(Tree1,{
-              $:2,
-              $0:input,
-              $1:Runtime.New(Tree1,{
-               $:0
-              })
-             }));
-            }
-           _=_2;
-          }
-         else
-          {
-           edit.$0;
-           _=input;
-          }
-        }
-       return _;
-      },
-      Set:function(value)
-      {
-       return Runtime.New(Edit,{
-        $:0,
-        $0:Runtime.New(Tree1,{
-         $:1,
-         $0:value
-        })
-       });
-      },
-      ShowEdit:function(edit)
-      {
-       var showE;
-       showE=function(edit1)
-       {
-        var _,l,r;
-        if(edit1.$==1)
-         {
-          l=edit1.$0;
-          _="Left > "+showE(l);
-         }
-        else
-         {
-          if(edit1.$==2)
-           {
-            r=edit1.$0;
-            _="Right > "+showE(r);
-           }
-          else
-           {
-            _="Replace";
-           }
-         }
-        return _;
-       };
-       return showE(edit);
-      },
-      Transform:function(f,edit)
-      {
-       var _,e,arg0,e1,arg01,t;
-       if(edit.$==1)
-        {
-         e=edit.$0;
-         arg0=Tree.Transform(f,e);
-         _=Runtime.New(Edit,{
-          $:1,
-          $0:arg0
-         });
-        }
-       else
-        {
-         if(edit.$==2)
-          {
-           e1=edit.$0;
-           arg01=Tree.Transform(f,e1);
-           _=Runtime.New(Edit,{
-            $:2,
-            $0:arg01
-           });
-          }
-         else
-          {
-           t=edit.$0;
-           _=Runtime.New(Edit,{
-            $:0,
-            $0:f(t)
-           });
-          }
-        }
-       return _;
-      },
-      Tree:Runtime.Class({
-       GetEnumerator:function()
-       {
-        var _this;
-        _this=this.get_Sequence();
-        return Enumerator.Get(_this);
-       },
-       GetEnumerator1:function()
-       {
-        var _this;
-        _this=this.get_Sequence();
-        return Enumerator.Get(_this);
-       },
-       Map:function(f)
-       {
-        var _,t,right,left;
-        if(this.$==1)
-         {
-          t=this.$0;
-          _=Runtime.New(Tree1,{
-           $:1,
-           $0:f(t)
-          });
-         }
-        else
-         {
-          if(this.$==2)
-           {
-            right=this.$1;
-            left=this.$0;
-            _=Runtime.New(Tree1,{
-             $:2,
-             $0:left.Map(f),
-             $1:right.Map(f)
-            });
-           }
-          else
-           {
-            _=Runtime.New(Tree1,{
-             $:0
-            });
-           }
-         }
-        return _;
-       },
-       get_Sequence:function()
-       {
-        var _,x,y,x1;
-        if(this.$==1)
-         {
-          x=this.$0;
-          _=[x];
-         }
-        else
-         {
-          if(this.$==2)
-           {
-            y=this.$1;
-            x1=this.$0;
-            _=Seq.append(x1.get_Sequence(),y.get_Sequence());
-           }
-          else
-           {
-            _=Seq.empty();
-           }
-         }
-        return _;
-       }
-      })
-     },
-     Validator:Runtime.Class({
-      Is:function(f,m,flet)
-      {
-       return this.Validate(f,m,flet);
-      },
-      IsEmail:function(msg)
-      {
-       var _this=this;
-       return function(arg20)
-       {
-        return _this.IsRegexMatch("^[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\\.)+[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?$",msg,arg20);
-       };
-      },
-      IsEqual:function(value,msg,flet)
-      {
-       var arg00;
-       arg00=function(i)
-       {
-        return Unchecked.Equals(i,value);
-       };
-       return this.Validate(arg00,msg,flet);
-      },
-      IsFloat:function(msg)
-      {
-       var _this=this;
-       return function(arg20)
-       {
-        return _this.IsRegexMatch("^\\s*(\\+|-)?((\\d+(\\.\\d+)?)|(\\.\\d+))\\s*$",msg,arg20);
-       };
-      },
-      IsGreaterThan:function(min,msg,flet)
-      {
-       var arg00;
-       arg00=function(i)
-       {
-        return Unchecked.Compare(i,min)===1;
-       };
-       return this.Validate(arg00,msg,flet);
-      },
-      IsInt:function(msg)
-      {
-       var _this=this;
-       return function(arg20)
-       {
-        return _this.IsRegexMatch("^-?\\d+$",msg,arg20);
-       };
-      },
-      IsLessThan:function(max,msg,flet)
-      {
-       var arg00;
-       arg00=function(i)
-       {
-        return Unchecked.Compare(i,max)===-1;
-       };
-       return this.Validate(arg00,msg,flet);
-      },
-      IsNotEmpty:function(msg,flet)
-      {
-       var arg00;
-       arg00=function(s)
-       {
-        return s!=="";
-       };
-       return this.Validate(arg00,msg,flet);
-      },
-      IsNotEqual:function(value,msg,flet)
-      {
-       var arg00;
-       arg00=function(i)
-       {
-        return!Unchecked.Equals(i,value);
-       };
-       return this.Validate(arg00,msg,flet);
-      },
-      IsRegexMatch:function(regex,msg,flet)
-      {
-       var arg00,_this=this;
-       arg00=function(x)
-       {
-        var objectArg;
-        objectArg=_this.VP;
-        return objectArg.Matches(regex,x);
-       };
-       return _this.Validate(arg00,msg,flet);
-      },
-      IsTrue:function(msg,flet)
-      {
-       var arg00;
-       arg00=function(x)
-       {
-        return x;
-       };
-       return this.Validate(arg00,msg,flet);
-      },
-      Validate:function(f,msg,flet)
-      {
-       var value;
-       value=flet.MapResult(function(res)
-       {
-        var _,fs,v;
-        if(res.$==1)
-         {
-          fs=res.$0;
-          _=Runtime.New(Result,{
-           $:1,
-           $0:fs
-          });
-         }
-        else
-         {
-          v=res.$0;
-          _=f(v)?Runtime.New(Result,{
-           $:0,
-           $0:v
-          }):Runtime.New(Result,{
-           $:1,
-           $0:List.ofArray([msg])
-          });
-         }
-        return _;
-       });
-       return value;
-      }
-     },{
-      New:function(VP)
-      {
-       var r;
-       r=Runtime.New(this,{});
-       r.VP=VP;
-       return r;
-      }
-     })
-    }
-   }
-  }
- });
- Runtime.OnInit(function()
- {
-  Formlet=Runtime.Safe(Global.IntelliFactory.Formlet);
-  Base=Runtime.Safe(Formlet.Base);
-  Formlet1=Runtime.Safe(Base.Formlet);
-  Form=Runtime.Safe(Base.Form);
-  Tree=Runtime.Safe(Base.Tree);
-  Edit=Runtime.Safe(Tree.Edit);
-  Result=Runtime.Safe(Base.Result);
-  WebSharper=Runtime.Safe(Global.IntelliFactory.WebSharper);
-  List=Runtime.Safe(WebSharper.List);
-  T=Runtime.Safe(List.T);
-  LayoutUtils=Runtime.Safe(Base.LayoutUtils);
-  Tree1=Runtime.Safe(Tree.Tree);
-  Util=Runtime.Safe(WebSharper.Util);
-  Seq=Runtime.Safe(WebSharper.Seq);
-  Enumerator=Runtime.Safe(WebSharper.Enumerator);
-  return Unchecked=Runtime.Safe(WebSharper.Unchecked);
- });
- Runtime.OnLoad(function()
- {
-  return;
- });
-}());
-
-(function()
-{
- var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,Formlet,Body,Html,Default,List,Controls,Reactive,HotStream,Formlet1,Base,Result,T,Operators,jQuery,EventsPervasives,Data,Formlet2,Operators1,CssConstants,Math,Seq,Utils,Tree,Edit,Form,Arrays,IntrinsicFunctionProxy,FormletProvider,Formlet3,Util,LayoutProvider,LayoutUtils,Reactive1,Validator,ValidatorProvidor,RegExp,Collections,Dictionary,ElementStore,Enhance,FormButtonConfiguration,FormContainerConfiguration,Padding,ManyConfiguration,ValidationFrameConfiguration,ValidationIconConfiguration,JSON,FormletBuilder,Layout,FormRowConfiguration,LabelConfiguration,Padding1,Enumerator;
- Runtime.Define(Global,{
-  IntelliFactory:{
-   WebSharper:{
-    Formlet:{
-     Body:Runtime.Class({},{
-      New:function(el,l)
-      {
-       return Runtime.New(Body,{
-        Element:el,
-        Label:l
-       });
-      }
-     }),
-     Controls:{
-      Button:function(label)
-      {
-       var genElem;
-       genElem=function()
-       {
-        return Default.Button(List.ofArray([Default.Text(label)]));
-       };
-       return Controls.ElementButton(genElem);
-      },
-      Checkbox:function(def)
-      {
-       return Controls.CheckboxControl(false,def);
-      },
-      CheckboxControl:function(readOnly,def)
-      {
-       var f;
-       f=function()
-       {
-        var state,readOnlyAtts,_,_this,x,_this1,arg00,body,_2,objectArg,arg002,objectArg1,arg003,reset;
-        state=HotStream.New(Runtime.New(Result,{
-         $:0,
-         $0:def
-        }));
-        if(readOnly)
-         {
-          _this=Default.Attr();
-          _=List.ofArray([_this.NewAttr("disabled","disabled")]);
-         }
-        else
-         {
-          _=Runtime.New(T,{
-           $:0
-          });
-         }
-        readOnlyAtts=_;
-        _this1=Default.Attr();
-        x=Operators.add(Default.Input(List.ofArray([_this1.NewAttr("type","checkbox"),Default.Attr().Class("inputCheckbox")])),readOnlyAtts);
-        arg00=function(cb)
-        {
-         return function()
-         {
-          var _1,arg0,arg001;
-          if(!readOnly)
-           {
-            arg0=jQuery(cb.Body).prop("checked");
-            arg001=Runtime.New(Result,{
-             $:0,
-             $0:arg0
-            });
-            _1=state.Trigger(arg001);
-           }
-          else
-           {
-            _1=null;
-           }
-          return _1;
-         };
-        };
-        EventsPervasives.Events().OnClick(arg00,x);
-        body=x;
-        if(def)
-         {
-          objectArg=body["HtmlProvider@31"];
-          arg002=body.Body;
-          _2=objectArg.SetAttribute(arg002,"defaultChecked","true");
-         }
-        else
-         {
-          objectArg1=body["HtmlProvider@31"];
-          arg003=body.Body;
-          _2=objectArg1.RemoveAttribute(arg003,"checked");
-         }
-        reset=function()
-        {
-         var _1,objectArg2,arg001,objectArg3,arg004,objectArg4,arg005;
-         if(def)
-          {
-           objectArg2=body["HtmlProvider@31"];
-           arg001=body.Body;
-           _1=objectArg2.SetProperty(arg001,"checked",true);
-          }
-         else
-          {
-           objectArg3=body["HtmlProvider@31"];
-           arg004=body.Body;
-           objectArg3.RemoveAttribute(arg004,"checked");
-           objectArg4=body["HtmlProvider@31"];
-           arg005=body.Body;
-           _1=objectArg4.SetProperty(arg005,"checked",false);
-          }
-         return state.Trigger(Runtime.New(Result,{
-          $:0,
-          $0:def
-         }));
-        };
-        reset(null);
-        return[body,reset,state];
-       };
-       return Data.MkFormlet(f);
-      },
-      CheckboxGroup:function(values)
-      {
-       return Controls.CheckboxGroupControl(false,values);
-      },
-      CheckboxGroupControl:function(readOnly,values)
-      {
-       var mapping,fs,x2,chooser,f1;
-       mapping=Runtime.Tupled(function(tupledArg)
-       {
-        var l,v,b,x,arg0,label,f,formlet;
-        l=tupledArg[0];
-        v=tupledArg[1];
-        b=tupledArg[2];
-        x=Controls.CheckboxControl(readOnly,b);
-        arg0=function()
-        {
-         var x1,_this;
-         x1=List.ofArray([Default.Text(l)]);
-         _this=Default.Tags();
-         return _this.NewTag("label",x1);
-        };
-        label={
-         $:1,
-         $0:arg0
-        };
-        f=function(b1)
-        {
-         return[b1,v];
-        };
-        formlet=Formlet2.WithLabel(label,x);
-        return Formlet2.Map(f,formlet);
-       });
-       fs=List.map(mapping,values);
-       x2=Formlet2.Sequence(fs);
-       chooser=Runtime.Tupled(function(tupledArg)
-       {
-        var b,v;
-        b=tupledArg[0];
-        v=tupledArg[1];
-        return b?{
-         $:1,
-         $0:v
-        }:{
-         $:0
-        };
-       });
-       f1=function(list)
-       {
-        return List.choose(chooser,list);
-       };
-       return Formlet2.Map(f1,x2);
-      },
-      ElementButton:function(genElem)
-      {
-       var f;
-       f=function()
-       {
-        var state,count,x,arg00,body,reset;
-        state=HotStream.New(Runtime.New(Result,{
-         $:1,
-         $0:Runtime.New(T,{
-          $:0
-         })
-        }));
-        count={
-         contents:0
-        };
-        x=genElem(null);
-        arg00=function()
-        {
-         return function()
-         {
-          state.Trigger(Runtime.New(Result,{
-           $:0,
-           $0:count.contents
-          }));
-          return Operators1.Increment(count);
-         };
-        };
-        EventsPervasives.Events().OnClick(arg00,x);
-        body=x;
-        reset=function()
-        {
-         count.contents=0;
-         return state.Trigger(Runtime.New(Result,{
-          $:1,
-          $0:Runtime.New(T,{
-           $:0
-          })
-         }));
-        };
-        return[body,reset,state];
-       };
-       return Data.MkFormlet(f);
-      },
-      Input:function(value)
-      {
-       return Controls.InputField(false,"text",CssConstants.InputTextClass(),value);
-      },
-      InputControl:function(value,f)
-      {
-       var f1;
-       f1=function()
-       {
-        var state,body,reset;
-        state=HotStream.New(Runtime.New(Result,{
-         $:0,
-         $0:value
-        }));
-        body=f(state);
-        body.set_Value(value);
-        reset=function()
-        {
-         body.set_Value(value);
-         return state.Trigger(Runtime.New(Result,{
-          $:0,
-          $0:value
-         }));
-        };
-        return[body,reset,state];
-       };
-       return Data.MkFormlet(f1);
-      },
-      InputField:function(readOnly,typ,cls,value)
-      {
-       return Controls.InputControl(value,function(state)
-       {
-        var ro,_,_this,a,_this1,x,input,f;
-        if(readOnly)
-         {
-          _this=Default.Attr();
-          _=List.ofArray([_this.NewAttr("readonly","readonly")]);
-         }
-        else
-         {
-          _=Runtime.New(T,{
-           $:0
-          });
-         }
-        ro=_;
-        _this1=Default.Attr();
-        a=List.ofArray([_this1.NewAttr("type",typ),Default.Attr().Class(cls)]);
-        x=List.append(a,ro);
-        input=Default.Input(x);
-        f=function()
-        {
-         return!readOnly?state.Trigger(Runtime.New(Result,{
-          $:0,
-          $0:input.get_Value()
-         })):null;
-        };
-        Controls.OnTextChange(f,input);
-        return input;
-       });
-      },
-      OnTextChange:function(f,control)
-      {
-       var value,up,arg00,arg001;
-       value={
-        contents:control.get_Value()
-       };
-       up=function()
-       {
-        var _;
-        if(control.get_Value()!==value.contents)
-         {
-          value.contents=control.get_Value();
-          _=f(null);
-         }
-        else
-         {
-          _=null;
-         }
-        return _;
-       };
-       arg00=function()
-       {
-        return up(null);
-       };
-       EventsPervasives.Events().OnChange(arg00,control);
-       arg001=function()
-       {
-        return function()
-        {
-         return up(null);
-        };
-       };
-       EventsPervasives.Events().OnKeyUp(arg001,control);
-       control.Body.oninput=up;
-       return;
-      },
-      Password:function(value)
-      {
-       return Controls.InputField(false,"password","inputPassword",value);
-      },
-      RadioButtonGroup:function(def,values)
-      {
-       return Controls.RadioButtonGroupControl(false,def,values);
-      },
-      RadioButtonGroupControl:function(readOnly,def,values)
-      {
-       var f;
-       f=function()
-       {
-        var groupId,x,_,defIx,mapping,x1,chooser,d,f1,state,mapping1,rbLbVls,resetRB,reset,mapping2,vs,arg0,arg003,body;
-        groupId="id"+Math.round(Math.random()*100000000);
-        if(def.$==0)
-         {
-          _={
-           $:0
-          };
-         }
-        else
-         {
-          defIx=def.$0;
-          mapping=function(ix)
-          {
-           return Runtime.Tupled(function(tupledArg)
-           {
-            var value;
-            tupledArg[0];
-            value=tupledArg[1];
-            return[ix,value];
-           });
-          };
-          x1=List.mapi(mapping,values);
-          chooser=Runtime.Tupled(function(tupledArg)
-          {
-           var ix,value,_1,defIx1;
-           ix=tupledArg[0];
-           value=tupledArg[1];
-           if(def.$==0)
-            {
-             _1={
-              $:0
-             };
-            }
-           else
-            {
-             defIx1=def.$0;
-             _1=defIx1===ix?{
-              $:1,
-              $0:Runtime.New(Result,{
-               $:0,
-               $0:value
-              })
-             }:{
-              $:0
-             };
-            }
-           return _1;
-          });
-          _=Seq.tryPick(chooser,x1);
-         }
-        x=_;
-        d=HotStream.New(Runtime.New(Result,{
-         $:1,
-         $0:Runtime.New(T,{
-          $:0
-         })
-        }));
-        f1=function(arg00)
-        {
-         return HotStream.New(arg00);
-        };
-        state=Utils.Maybe(d,f1,x);
-        mapping1=Runtime.Tupled(function(tupledArg)
-        {
-         var label,value,inp,_this,_this1,_1,_this2;
-         label=tupledArg[0];
-         value=tupledArg[1];
-         _this=Default.Attr();
-         _this1=Default.Attr();
-         if(readOnly)
-          {
-           _this2=Default.Attr();
-           _1=List.ofArray([_this2.NewAttr("disabled","disabled")]);
-          }
-         else
-          {
-           _1=Runtime.New(T,{
-            $:0
-           });
-          }
-         inp=Operators.add(Default.Input(List.ofArray([Default.Attr().Class("inputRadio"),_this.NewAttr("type","radio"),_this1.NewAttr("name",groupId)])),_1);
-         return[inp,label,value];
-        });
-        rbLbVls=List.map(mapping1,values);
-        resetRB=function(rb,value,ix)
-        {
-         var _1,objectArg,arg00,defIx1,_2,objectArg1,arg001,objectArg2,arg002;
-         if(def.$==0)
-          {
-           objectArg=rb["HtmlProvider@31"];
-           arg00=rb.Body;
-           objectArg.RemoveAttribute(arg00,"checked");
-           _1=state.Trigger(Runtime.New(Result,{
-            $:1,
-            $0:Runtime.New(T,{
-             $:0
-            })
-           }));
-          }
-         else
-          {
-           defIx1=def.$0;
-           if(defIx1===ix)
-            {
-             objectArg1=rb["HtmlProvider@31"];
-             arg001=rb.Body;
-             objectArg1.SetProperty(arg001,"checked",true);
-             _2=state.Trigger(Runtime.New(Result,{
-              $:0,
-              $0:value
-             }));
-            }
-           else
-            {
-             objectArg2=rb["HtmlProvider@31"];
-             arg002=rb.Body;
-             _2=objectArg2.SetProperty(arg002,"checked",false);
-            }
-           _1=_2;
-          }
-         return _1;
-        };
-        reset=function()
-        {
-         var action;
-         action=function(ix)
-         {
-          return Runtime.Tupled(function(tupledArg)
-          {
-           var rb,value;
-           rb=tupledArg[0];
-           tupledArg[1];
-           value=tupledArg[2];
-           return resetRB(rb,value,ix);
-          });
-         };
-         return Seq.iteri(action,rbLbVls);
-        };
-        mapping2=function(ix)
-        {
-         return Runtime.Tupled(function(tupledArg)
-         {
-          var rb,label,value,arg00,Label;
-          rb=tupledArg[0];
-          label=tupledArg[1];
-          value=tupledArg[2];
-          resetRB(rb,value,ix);
-          arg00=function()
-          {
-           return function()
-           {
-            return!readOnly?state.Trigger(Runtime.New(Result,{
-             $:0,
-             $0:value
-            })):null;
-           };
-          };
-          EventsPervasives.Events().OnClick(arg00,rb);
-          Label={
-           $:1,
-           $0:function()
-           {
-            var x2,_this;
-            x2=List.ofArray([Default.Text(label)]);
-            _this=Default.Tags();
-            return _this.NewTag("label",x2);
-           }
-          };
-          return Runtime.New(Body,{
-           Element:rb,
-           Label:Label
-          });
-         });
-        };
-        vs=List.mapi(mapping2,rbLbVls);
-        arg0=Tree.FromSequence(vs);
-        arg003=Runtime.New(Edit,{
-         $:0,
-         $0:arg0
-        });
-        body=Data.RX().Return(arg003);
-        return Runtime.New(Form,{
-         Body:body,
-         Dispose1:function()
-         {
-         },
-         Notify:function()
-         {
-          return reset(null);
-         },
-         State:state
-        });
-       };
-       return Formlet2.New(f);
-      },
-      ReadOnlyCheckbox:function(def)
-      {
-       return Controls.CheckboxControl(true,def);
-      },
-      ReadOnlyInput:function(value)
-      {
-       return Controls.InputField(true,"text",CssConstants.InputTextClass(),value);
-      },
-      ReadOnlyRadioButtonGroup:function(def,values)
-      {
-       return Controls.RadioButtonGroupControl(true,def,values);
-      },
-      ReadOnlySelect:function(def,vls)
-      {
-       return Controls.SelectControl(true,def,vls);
-      },
-      ReadOnlyTextArea:function(value)
-      {
-       return Controls.TextAreaControl(true,value);
-      },
-      Select:function(def,vls)
-      {
-       return Controls.SelectControl(false,def,vls);
-      },
-      SelectControl:function(readOnly,def,vls)
-      {
-       var f;
-       f=function()
-       {
-        var mapping,list,aVls,sIx,mapping1,x2,select,body,_,_this2,sValue,state,reset,arg001;
-        mapping=Runtime.Tupled(function(tuple)
-        {
-         return tuple[1];
-        });
-        list=List.map(mapping,vls);
-        aVls=Arrays.ofSeq(list);
-        sIx=(def>=0?def<vls.get_Length():false)?def:0;
-        mapping1=function(i)
-        {
-         return Runtime.Tupled(function(tupledArg)
-         {
-          var nm,_this,x,_this1,x1;
-          nm=tupledArg[0];
-          tupledArg[1];
-          _this=Default.Tags();
-          _this1=Default.Attr();
-          x1=Global.String(i);
-          x=List.ofArray([Default.Text(nm),_this1.NewAttr("value",x1)]);
-          return _this.NewTag("option",x);
-         });
-        };
-        x2=List.mapi(mapping1,vls);
-        select=Default.Select(x2);
-        if(readOnly)
-         {
-          _this2=Default.Attr();
-          _=Operators.add(select,List.ofArray([_this2.NewAttr("disabled","disabled")]));
-         }
-        else
-         {
-          _=select;
-         }
-        body=_;
-        sValue=Runtime.New(Result,{
-         $:0,
-         $0:IntrinsicFunctionProxy.GetArray(aVls,sIx)
-        });
-        state=HotStream.New(sValue);
-        reset=function()
-        {
-         var value,objectArg,arg00;
-         value=Global.String(sIx);
-         objectArg=body["HtmlProvider@31"];
-         arg00=body.Body;
-         objectArg.SetProperty(arg00,"value",value);
-         return state.Trigger(sValue);
-        };
-        reset(null);
-        arg001=function()
-        {
-         var _1,value,arg0,arg00;
-         if(!readOnly)
-          {
-           value=body.get_Value();
-           arg0=IntrinsicFunctionProxy.GetArray(aVls,value<<0);
-           arg00=Runtime.New(Result,{
-            $:0,
-            $0:arg0
-           });
-           _1=state.Trigger(arg00);
-          }
-         else
-          {
-           _1=null;
-          }
-         return _1;
-        };
-        EventsPervasives.Events().OnChange(arg001,body);
-        reset(null);
-        return[body,reset,state];
-       };
-       return Data.MkFormlet(f);
-      },
-      TextArea:function(value)
-      {
-       return Controls.TextAreaControl(false,value);
-      },
-      TextAreaControl:function(readOnly,value)
-      {
-       return Controls.InputControl(value,function(state)
-       {
-        var x,_,_this,input,f;
-        if(readOnly)
-         {
-          _this=Default.Attr();
-          _=List.ofArray([_this.NewAttr("readonly","readonly")]);
-         }
-        else
-         {
-          _=Runtime.New(T,{
-           $:0
-          });
-         }
-        x=_;
-        input=Default.TextArea(x);
-        f=function()
-        {
-         return!readOnly?state.Trigger(Runtime.New(Result,{
-          $:0,
-          $0:input.get_Value()
-         })):null;
-        };
-        Controls.OnTextChange(f,input);
-        return input;
-       });
-      }
-     },
-     CssConstants:{
-      InputTextClass:Runtime.Field(function()
-      {
-       return"inputText";
-      })
-     },
-     Data:{
-      $:function(f,x)
-      {
-       var objectArg,x1;
-       objectArg=Data.BaseFormlet();
-       x1=objectArg.Apply(f,x);
-       return Data.OfIFormlet(x1);
-      },
-      BaseFormlet:function()
-      {
-       return FormletProvider.New(Data.UtilsProvider());
-      },
-      DefaultLayout:Runtime.Field(function()
-      {
-       return Data.Layout().get_Vertical();
-      }),
-      Formlet:Runtime.Class({
-       Build:function()
-       {
-        return this.BuildInternal.call(null,null);
-       },
-       MapResult:function(f)
-       {
-        var x,_this=this;
-        x=Runtime.New(Formlet3,{
-         BuildInternal:function()
-         {
-          var form,objectArg,arg00,arg10;
-          form=_this.BuildInternal.call(null,null);
-          objectArg=_this.Utils.Reactive;
-          arg00=form.State;
-          arg10=function(x1)
-          {
-           return f(x1);
-          };
-          return Runtime.New(Form,{
-           Body:form.Body,
-           Dispose1:form.Dispose1,
-           Notify:form.Notify,
-           State:objectArg.Select(arg00,arg10)
-          });
-         },
-         LayoutInternal:_this.LayoutInternal,
-         ElementInternal:{
-          $:0
-         },
-         FormletBase:_this.FormletBase,
-         Utils:_this.Utils
-        });
-        return x;
-       },
-       Render:function()
-       {
-        return this.Run(function()
-        {
-        }).Render();
-       },
-       Run:function(f)
-       {
-        var matchValue,_,formlet,form,value,matchValue1,el,_1,patternInput,body,body1,el1;
-        matchValue=this.ElementInternal;
-        if(matchValue.$==0)
-         {
-          formlet=this.FormletBase.ApplyLayout(this);
-          form=formlet.Build();
-          value=Util.subscribeTo(form.State,function(res)
-          {
-           var value1;
-           value1=Result.Map(f,res);
-           return;
-          });
-          matchValue1=formlet.get_Layout().Apply.call(null,form.Body);
-          if(matchValue1.$==0)
-           {
-            patternInput=Data.DefaultLayout().Apply.call(null,form.Body).$0;
-            body=patternInput[0];
-            _1=body.Element;
-           }
-          else
-           {
-            body1=matchValue1.$0[0];
-            _1=body1.Element;
-           }
-          el=_1;
-          this.ElementInternal={
-           $:1,
-           $0:el
-          };
-          _=el;
-         }
-        else
-         {
-          el1=matchValue.$0;
-          _=el1;
-         }
-        return _;
-       },
-       get_Body:function()
-       {
-        return this.Run(function()
-        {
-        }).get_Body();
-       },
-       get_Layout:function()
-       {
-        return this.LayoutInternal;
-       }
-      }),
-      Layout:Runtime.Field(function()
-      {
-       return LayoutProvider.New(LayoutUtils.New({
-        Reactive:Reactive1.Default()
-       }));
-      }),
-      MkFormlet:function(f)
-      {
-       var objectArg,arg00,formlet;
-       objectArg=Data.BaseFormlet();
-       arg00=function()
-       {
-        var patternInput,state,reset,body,Notify,value,arg001;
-        patternInput=f(null);
-        state=patternInput[2];
-        reset=patternInput[1];
-        body=patternInput[0];
-        Notify=function()
-        {
-         return reset(null);
-        };
-        value=Data.NewBody(body,{
-         $:0
-        });
-        arg001=Tree.Set(value);
-        return Runtime.New(Form,{
-         Body:Data.RX().Return(arg001),
-         Dispose1:function()
-         {
-          return null;
-         },
-         Notify:Notify,
-         State:state
-        });
-       };
-       formlet=objectArg.New(arg00);
-       return Data.OfIFormlet(formlet);
-      },
-      NewBody:function(arg00,arg10)
-      {
-       return Body.New(arg00,arg10);
-      },
-      OfIFormlet:function(formlet)
-      {
-       var f2;
-       f2=Runtime.New(Formlet3,{
-        BuildInternal:function()
-        {
-         return formlet.Build();
-        },
-        LayoutInternal:formlet.get_Layout(),
-        ElementInternal:{
-         $:0
-        },
-        FormletBase:Data.BaseFormlet(),
-        Utils:Data.UtilsProvider()
-       });
-       return Data.PropagateRenderFrom(formlet,f2);
-      },
-      PropagateRenderFrom:function(f1,f2)
-      {
-       f1.hasOwnProperty("Render")?void(f2.Render=f1.Render):null;
-       return f2;
-      },
-      RX:Runtime.Field(function()
-      {
-       return Reactive1.Default();
-      }),
-      UtilsProvider:function()
-      {
-       return{
-        Reactive:Data.RX(),
-        DefaultLayout:Data.DefaultLayout()
-       };
-      },
-      Validator:Runtime.Field(function()
-      {
-       return Validator.New(ValidatorProvidor.New());
-      }),
-      ValidatorProvidor:Runtime.Class({
-       Matches:function(regex,text)
-       {
-        return text.match(new RegExp(regex));
-       }
-      },{
-       New:function()
-       {
-        return Runtime.New(this,{});
-       }
-      })
-     },
-     ElementStore:Runtime.Class({
-      Init:function()
-      {
-       this.store=Dictionary.New2();
-       return;
-      },
-      RegisterElement:function(key,f)
-      {
-       var value;
-       value=this.store.ContainsKey(key);
-       return!value?this.store.set_Item(key,f):null;
-      },
-      Remove:function(key)
-      {
-       var _,value;
-       if(this.store.ContainsKey(key))
-        {
-         (this.store.get_Item(key))(null);
-         value=this.store.Remove(key);
-         _=void value;
-        }
-       else
-        {
-         _=null;
-        }
-       return _;
-      }
-     },{
-      New:function()
-      {
-       return Runtime.New(this,{});
-      },
-      NewElementStore:function()
-      {
-       var store;
-       store=ElementStore.New();
-       store.Init();
-       return store;
-      }
-     }),
-     Enhance:{
-      Cancel:function(formlet,isCancel)
-      {
-       return Formlet2.Replace(formlet,function(value)
-       {
-        return isCancel(value)?Formlet2.Empty():Formlet2.Return(value);
-       });
-      },
-      CustomMany:function(config,formlet)
-      {
-       var formlet1,addButton,f,formlet2,c,x,l,x1,delF,manyF,resetS,formlet6,resetF,reset,_builder_,formlet7;
-       formlet1=Controls.ElementButton(function()
-       {
-        return Operators.add(Default.Div(List.ofArray([Default.Attr().Class(config.AddIconClass)])),List.ofArray([Default.Div(Runtime.New(T,{
-         $:0
-        }))]));
-       });
-       addButton=Formlet2.InitWith(1,formlet1);
-       f=function()
-       {
-       };
-       formlet2=Controls.ElementButton(function()
-       {
-        return Operators.add(Default.Div(List.ofArray([Default.Attr().Class(config.RemoveIconClass)])),List.ofArray([Default.Div(Runtime.New(T,{
-         $:0
-        }))]));
-       });
-       c=Formlet2.Map(f,formlet2);
-       x=Formlet2.WithCancelation(formlet,c);
-       l=Data.Layout().get_Horizontal();
-       x1=Formlet2.WithLayout(l,x);
-       delF=Enhance.Deletable(x1);
-       manyF=function()
-       {
-        var f1,formlet3,formlet4,formlet5;
-        f1=function(source)
-        {
-         return List.ofSeq(source);
-        };
-        formlet3=Enhance.Many_(addButton,function()
-        {
-         return delF;
-        });
-        formlet4=Formlet2.Map(f1,formlet3);
-        formlet5=Formlet2.WithLayoutOrDefault(formlet4);
-        return Formlet2.ApplyLayout(formlet5);
-       };
-       resetS=HotStream.New(Runtime.New(Result,{
-        $:0,
-        $0:null
-       }));
-       formlet6=Data.BaseFormlet().FromState(resetS);
-       resetF=Data.OfIFormlet(formlet6);
-       reset=function()
-       {
-        return resetS.Trigger(Runtime.New(Result,{
-         $:0,
-         $0:null
-        }));
-       };
-       _builder_=Formlet2.Do();
-       formlet7=_builder_.Delay(function()
-       {
-        return _builder_.Bind(resetF,function()
-        {
-         return _builder_.ReturnFrom(manyF(null));
-        });
-       });
-       return Formlet2.WithNotification(reset,formlet7);
-      },
-      Deletable:function(formlet)
-      {
-       return Enhance.Replace(formlet,function(value)
-       {
-        var _,value1;
-        if(value.$==1)
-         {
-          value1=value.$0;
-          _=Formlet2.Return({
-           $:1,
-           $0:value1
-          });
-         }
-        else
-         {
-          _=Formlet2.ReturnEmpty({
-           $:0
-          });
-         }
-        return _;
-       });
-      },
-      FormButtonConfiguration:Runtime.Class({},{
-       get_Default:function()
-       {
-        return Runtime.New(FormButtonConfiguration,{
-         Label:{
-          $:0
-         },
-         Style:{
-          $:0
-         },
-         Class:{
-          $:0
-         }
-        });
-       }
-      }),
-      FormContainerConfiguration:Runtime.Class({},{
-       get_Default:function()
-       {
-        var Description;
-        Description={
-         $:0
-        };
-        return Runtime.New(FormContainerConfiguration,{
-         Header:{
-          $:0
-         },
-         Padding:Padding.get_Default(),
-         Description:Description,
-         BackgroundColor:{
-          $:0
-         },
-         BorderColor:{
-          $:0
-         },
-         CssClass:{
-          $:0
-         },
-         Style:{
-          $:0
-         }
-        });
-       }
-      }),
-      InputButton:function(conf,enabled)
-      {
-       var f;
-       f=function()
-       {
-        var state,count,label,x1,_this,_this1,arg00,submit,submit1,_,objectArg,arg001,matchValue,_1,style,objectArg1,arg002,matchValue1,_2,cls,objectArg2,arg003,reset;
-        state=HotStream.New(Runtime.New(Result,{
-         $:1,
-         $0:Runtime.New(T,{
-          $:0
-         })
-        }));
-        count={
-         contents:0
-        };
-        label=Utils.Maybe("Submit",function(x)
-        {
-         return x;
-        },conf.Label);
-        _this=Default.Attr();
-        _this1=Default.Attr();
-        x1=Operators.add(Default.Input(List.ofArray([_this.NewAttr("type","button")])),List.ofArray([Default.Attr().Class("submitButton"),_this1.NewAttr("value",label)]));
-        arg00=function()
-        {
-         return function()
-         {
-          Operators1.Increment(count);
-          return state.Trigger(Runtime.New(Result,{
-           $:0,
-           $0:count.contents
-          }));
-         };
-        };
-        EventsPervasives.Events().OnClick(arg00,x1);
-        submit=x1;
-        if(!enabled)
-         {
-          objectArg=submit["HtmlProvider@31"];
-          arg001=submit.Body;
-          _=objectArg.AddClass(arg001,"disabledButton");
-         }
-        else
-         {
-          _=null;
-         }
-        matchValue=conf.Style;
-        if(matchValue.$==1)
-         {
-          style=matchValue.$0;
-          objectArg1=submit["HtmlProvider@31"];
-          arg002=submit.Body;
-          _1=objectArg1.SetStyle(arg002,style);
-         }
-        else
-         {
-          _1=null;
-         }
-        matchValue1=conf.Class;
-        if(matchValue1.$==1)
-         {
-          cls=matchValue1.$0;
-          objectArg2=submit["HtmlProvider@31"];
-          arg003=submit.Body;
-          _2=objectArg2.AddClass(arg003,cls);
-         }
-        else
-         {
-          _2=null;
-         }
-        submit1=submit;
-        reset=function()
-        {
-         count.contents=0;
-         return state.Trigger(Runtime.New(Result,{
-          $:1,
-          $0:Runtime.New(T,{
-           $:0
-          })
-         }));
-        };
-        state.Trigger(Runtime.New(Result,{
-         $:1,
-         $0:Runtime.New(T,{
-          $:0
-         })
-        }));
-        return[submit1,reset,state];
-       };
-       return Data.MkFormlet(f);
-      },
-      Many:function(formlet)
-      {
-       return Enhance.CustomMany(ManyConfiguration.get_Default(),formlet);
-      },
-      ManyConfiguration:Runtime.Class({},{
-       get_Default:function()
-       {
-        return Runtime.New(ManyConfiguration,{
-         AddIconClass:"addIcon",
-         RemoveIconClass:"removeIcon"
-        });
-       }
-      }),
-      Many_:function(add,f)
-      {
-       var f1,chooser,f2,formlet,formlet1,formlet2;
-       f1=function(v)
-       {
-        return f(v);
-       };
-       chooser=function(x)
-       {
-        return x;
-       };
-       f2=function(source)
-       {
-        return Seq.choose(chooser,source);
-       };
-       formlet=Formlet2.Map(f1,add);
-       formlet1=Formlet2.SelectMany(formlet);
-       formlet2=Formlet2.FlipBody(formlet1);
-       return Formlet2.Map(f2,formlet2);
-      },
-      Padding:Runtime.Class({},{
-       get_Default:function()
-       {
-        return Runtime.New(Padding,{
-         Left:{
-          $:0
-         },
-         Right:{
-          $:0
-         },
-         Top:{
-          $:0
-         },
-         Bottom:{
-          $:0
-         }
-        });
-       }
-      }),
-      Replace:function(formlet,f)
-      {
-       var f1,x;
-       f1=function(res)
-       {
-        var _,fs,arg0,s;
-        if(res.$==1)
-         {
-          fs=res.$0;
-          arg0=Formlet2.FailWith(fs);
-          _=Runtime.New(Result,{
-           $:0,
-           $0:arg0
-          });
-         }
-        else
-         {
-          s=res.$0;
-          _=Runtime.New(Result,{
-           $:0,
-           $0:f(s)
-          });
-         }
-        return _;
-       };
-       x=Formlet2.MapResult(f1,formlet);
-       return Formlet2.Switch(x);
-      },
-      ValidationFrameConfiguration:Runtime.Class({},{
-       get_Default:function()
-       {
-        return Runtime.New(ValidationFrameConfiguration,{
-         ValidClass:{
-          $:1,
-          $0:"successFormlet"
-         },
-         ValidStyle:{
-          $:0
-         },
-         ErrorClass:{
-          $:1,
-          $0:"errorFormlet"
-         },
-         ErrorStyle:{
-          $:0
-         }
-        });
-       }
-      }),
-      ValidationIconConfiguration:Runtime.Class({},{
-       get_Default:function()
-       {
-        return Runtime.New(ValidationIconConfiguration,{
-         ValidIconClass:"validIcon",
-         ErrorIconClass:"errorIcon"
-        });
-       }
-      }),
-      WithCssClass:function(css,formlet)
-      {
-       var f;
-       f=function(el)
-       {
-        var objectArg,arg00;
-        objectArg=el["HtmlProvider@31"];
-        arg00=el.Body;
-        objectArg.AddClass(arg00,css);
-        return el;
-       };
-       return Formlet2.MapElement(f,formlet);
-      },
-      WithCustomFormContainer:function(fc,formlet)
-      {
-       var x,f;
-       x=Formlet2.ApplyLayout(formlet);
-       f=function(formEl)
-       {
-        var x1,d,f1,description,x2,d1,f2,tb,cell,f3,o,x3,f4,value,f5,value1,f6,value2,f7,value3,f8,value4,action,matchValue,_1,style,objectArg1,arg002,matchValue1,_2,cls,objectArg2,arg003;
-        x1=fc.Description;
-        d=Runtime.New(T,{
-         $:0
-        });
-        f1=function(descr)
-        {
-         var _,genEl,text;
-         if(descr.$==1)
-          {
-           genEl=descr.$0;
-           _=List.ofArray([genEl(null)]);
-          }
-         else
-          {
-           text=descr.$0;
-           _=List.ofArray([Default.P(List.ofArray([Default.Tags().text(text)]))]);
-          }
-         return _;
-        };
-        description=Utils.Maybe(d,f1,x1);
-        x2=fc.Header;
-        d1=Utils.InTable(List.ofArray([List.ofArray([Operators.add(Default.Div(List.ofArray([Default.Attr().Class("headerPanel")])),description)]),List.ofArray([formEl])]));
-        f2=function(formElem)
-        {
-         var hdr,_,genElem,text,header;
-         if(formElem.$==1)
-          {
-           genElem=formElem.$0;
-           _=genElem(null);
-          }
-         else
-          {
-           text=formElem.$0;
-           _=Default.H1(List.ofArray([Default.Tags().text(text)]));
-          }
-         hdr=_;
-         header=Operators.add(Default.Div(List.ofArray([Default.Attr().Class("headerPanel")])),Runtime.New(T,{
-          $:1,
-          $0:hdr,
-          $1:description
-         }));
-         return Utils.InTable(List.ofArray([List.ofArray([header]),List.ofArray([formEl])]));
-        };
-        tb=Utils.Maybe(d1,f2,x2);
-        cell=Operators.add(Default.TD(List.ofArray([Default.Attr().Class("formlet")])),List.ofArray([tb]));
-        f3=function(color)
-        {
-         var arg00,objectArg,arg001;
-         arg00="border-color: "+color;
-         objectArg=cell["HtmlProvider@31"];
-         arg001=cell.Body;
-         return objectArg.SetStyle(arg001,arg00);
-        };
-        o=fc.BorderColor;
-        Utils.Maybe(null,f3,o);
-        f4=function(color)
-        {
-         return color;
-        };
-        value=fc.BackgroundColor;
-        f5=function(v)
-        {
-         return Global.String(v)+"px";
-        };
-        value1=fc.Padding.Left;
-        f6=function(v)
-        {
-         return Global.String(v)+"px";
-        };
-        value2=fc.Padding.Right;
-        f7=function(v)
-        {
-         return Global.String(v)+"px";
-        };
-        value3=fc.Padding.Top;
-        f8=function(v)
-        {
-         return Global.String(v)+"px";
-        };
-        value4=fc.Padding.Bottom;
-        x3=List.ofArray([["background-color",Utils.MapOption(f4,value)],["padding-left",Utils.MapOption(f5,value1)],["padding-right",Utils.MapOption(f6,value2)],["padding-top",Utils.MapOption(f7,value3)],["padding-bottom",Utils.MapOption(f8,value4)]]);
-        action=Runtime.Tupled(function(tupledArg)
-        {
-         var name,value5,_,v,objectArg,arg00;
-         name=tupledArg[0];
-         value5=tupledArg[1];
-         if(value5.$==0)
-          {
-           _=null;
-          }
-         else
-          {
-           v=value5.$0;
-           objectArg=cell["HtmlProvider@31"];
-           arg00=cell.Body;
-           _=objectArg.SetCss(arg00,name,v);
-          }
-         return _;
-        });
-        Seq.iter(action,x3);
-        matchValue=fc.Style;
-        if(matchValue.$==0)
-         {
-          _1=null;
-         }
-        else
-         {
-          style=matchValue.$0;
-          objectArg1=cell["HtmlProvider@31"];
-          arg002=cell.Body;
-          _1=objectArg1.SetStyle(arg002,style);
-         }
-        matchValue1=fc.CssClass;
-        if(matchValue1.$==0)
-         {
-          _2=null;
-         }
-        else
-         {
-          cls=matchValue1.$0;
-          objectArg2=cell["HtmlProvider@31"];
-          arg003=cell.Body;
-          _2=objectArg2.AddClass(arg003,cls);
-         }
-        return Default.Table(List.ofArray([Default.TBody(List.ofArray([Default.TR(List.ofArray([cell]))]))]));
-       };
-       return Formlet2.MapElement(f,x);
-      },
-      WithCustomResetButton:function(buttonConf,formlet)
-      {
-       var matchValue,buttonConf1,_,reset;
-       matchValue=buttonConf.Label;
-       if(matchValue.$==0)
-        {
-         _=Runtime.New(FormButtonConfiguration,{
-          Label:{
-           $:1,
-           $0:"Reset"
-          },
-          Style:buttonConf.Style,
-          Class:buttonConf.Class
-         });
-        }
-       else
-        {
-         matchValue.$0;
-         _=buttonConf;
-        }
-       buttonConf1=_;
-       reset=Enhance.InputButton(buttonConf1,true);
-       return Enhance.WithResetFormlet(formlet,reset);
-      },
-      WithCustomSubmitAndResetButtons:function(submitConf,resetConf,formlet)
-      {
-       var submitReset;
-       submitReset=function(reset)
-       {
-        return function(result)
-        {
-         var submit,_,fs,f,formlet1,value,f1,formlet2,_builder_,reset1,x,l;
-         if(result.$==1)
-          {
-           fs=result.$0;
-           f=function()
-           {
-            return Runtime.New(Result,{
-             $:1,
-             $0:fs
-            });
-           };
-           formlet1=Enhance.InputButton(submitConf,false);
-           _=Formlet2.MapResult(f,formlet1);
-          }
-         else
-          {
-           value=result.$0;
-           f1=function()
-           {
-            return value;
-           };
-           formlet2=Enhance.InputButton(submitConf,true);
-           _=Formlet2.Map(f1,formlet2);
-          }
-         submit=_;
-         _builder_=Formlet2.Do();
-         reset1=_builder_.Delay(function()
-         {
-          return _builder_.Bind(Formlet2.LiftResult(Enhance.InputButton(resetConf,true)),function(_arg1)
-          {
-           _arg1.$==0?reset(null):null;
-           return _builder_.Return(null);
-          });
-         });
-         x=Data.$(Data.$(Formlet2.Return(function(v)
-         {
-          return function()
-          {
-           return v;
-          };
-         }),submit),reset1);
-         l=Data.Layout().get_Horizontal();
-         return Formlet2.WithLayout(l,x);
-        };
-       };
-       return Enhance.WithSubmitAndReset(formlet,submitReset);
-      },
-      WithCustomSubmitButton:function(buttonConf,formlet)
-      {
-       var matchValue,buttonConf1,_;
-       matchValue=buttonConf.Label;
-       if(matchValue.$==0)
-        {
-         _=Runtime.New(FormButtonConfiguration,{
-          Label:{
-           $:1,
-           $0:"Submit"
-          },
-          Style:buttonConf.Style,
-          Class:buttonConf.Class
-         });
-        }
-       else
-        {
-         matchValue.$0;
-         _=buttonConf;
-        }
-       buttonConf1=_;
-       return Enhance.WithSubmitFormlet(formlet,function(res)
-       {
-        var f,enabled,formlet1;
-        f=function()
-        {
-        };
-        enabled=res.$==0?true:false;
-        formlet1=Enhance.InputButton(buttonConf1,enabled);
-        return Formlet2.Map(f,formlet1);
-       });
-      },
-      WithCustomValidationFrame:function(vc,formlet)
-      {
-       var wrapper;
-       wrapper=function(state)
-       {
-        return function(body)
-        {
-         var x,f;
-         x=Default.Div(List.ofArray([body.Element]));
-         f=function(panel)
-         {
-          var value;
-          value=Util.subscribeTo(state,function(res)
-          {
-           var _,msgs,matchValue,_1,cls,objectArg,arg00,matchValue1,_2,cls1,objectArg1,arg001,matchValue2,_3,style,objectArg2,arg002,objectArg3,arg003,matchValue3,_4,cls2,objectArg4,arg004,matchValue4,_5,cls3,objectArg5,arg005,matchValue5,_6,style1,objectArg6,arg006,objectArg7,arg007;
-           if(res.$==1)
-            {
-             msgs=res.$0;
-             matchValue=vc.ValidClass;
-             if(matchValue.$==1)
-              {
-               cls=matchValue.$0;
-               objectArg=panel["HtmlProvider@31"];
-               arg00=panel.Body;
-               _1=objectArg.RemoveClass(arg00,cls);
-              }
-             else
-              {
-               _1=null;
-              }
-             matchValue1=vc.ErrorClass;
-             if(matchValue1.$==1)
-              {
-               cls1=matchValue1.$0;
-               objectArg1=panel["HtmlProvider@31"];
-               arg001=panel.Body;
-               _2=objectArg1.AddClass(arg001,cls1);
-              }
-             else
-              {
-               _2=null;
-              }
-             matchValue2=vc.ErrorStyle;
-             if(matchValue2.$==1)
-              {
-               style=matchValue2.$0;
-               objectArg2=panel["HtmlProvider@31"];
-               arg002=panel.Body;
-               _3=objectArg2.SetStyle(arg002,style);
-              }
-             else
-              {
-               objectArg3=panel["HtmlProvider@31"];
-               arg003=panel.Body;
-               _3=objectArg3.SetStyle(arg003,"");
-              }
-             _=_3;
-            }
-           else
-            {
-             matchValue3=vc.ErrorClass;
-             if(matchValue3.$==1)
-              {
-               cls2=matchValue3.$0;
-               objectArg4=panel["HtmlProvider@31"];
-               arg004=panel.Body;
-               _4=objectArg4.RemoveClass(arg004,cls2);
-              }
-             else
-              {
-               _4=null;
-              }
-             matchValue4=vc.ValidClass;
-             if(matchValue4.$==1)
-              {
-               cls3=matchValue4.$0;
-               objectArg5=panel["HtmlProvider@31"];
-               arg005=panel.Body;
-               _5=objectArg5.AddClass(arg005,cls3);
-              }
-             else
-              {
-               _5=null;
-              }
-             matchValue5=vc.ValidStyle;
-             if(matchValue5.$==1)
-              {
-               style1=matchValue5.$0;
-               objectArg6=panel["HtmlProvider@31"];
-               arg006=panel.Body;
-               _6=objectArg6.SetStyle(arg006,style1);
-              }
-             else
-              {
-               objectArg7=panel["HtmlProvider@31"];
-               arg007=panel.Body;
-               _6=objectArg7.SetStyle(arg007,"");
-              }
-             _=_6;
-            }
-           return _;
-          });
-          return;
-         };
-         Operators.OnAfterRender(f,x);
-         return x;
-        };
-       };
-       return Enhance.WrapFormlet(wrapper,formlet);
-      },
-      WithCustomValidationIcon:function(vic,formlet)
-      {
-       var formlet1,valid,_builder_,f1,formlet2,x1,l;
-       formlet1=Formlet2.WithLayoutOrDefault(formlet);
-       valid=function(res)
-       {
-        var genElem;
-        genElem=function()
-        {
-         var _,msgs,f,title,_this,_this1;
-         if(res.$==1)
-          {
-           msgs=res.$0;
-           f=function(x)
-           {
-            return function(y)
-            {
-             return x+" "+y;
-            };
-           };
-           title=Seq.fold(f,"",msgs);
-           _this=Default.Attr();
-           _=Operators.add(Default.Div(List.ofArray([Default.Attr().Class(vic.ErrorIconClass),_this.NewAttr("title",title)])),List.ofArray([Default.Div(Runtime.New(T,{
-            $:0
-           }))]));
-          }
-         else
-          {
-           _this1=Default.Attr();
-           _=Operators.add(Default.Div(List.ofArray([Default.Attr().Class(vic.ValidIconClass),_this1.NewAttr("title","")])),List.ofArray([Default.Div(Runtime.New(T,{
-            $:0
-           }))]));
-          }
-         return _;
-        };
-        return Formlet2.OfElement(genElem);
-       };
-       _builder_=Formlet2.Do();
-       f1=function(arg00)
-       {
-        return Result.Join(arg00);
-       };
-       formlet2=_builder_.Delay(function()
-       {
-        return _builder_.Bind(Formlet2.LiftResult(formlet1),function(_arg1)
-        {
-         return _builder_.Bind(valid(_arg1),function()
-         {
-          return _builder_.Return(_arg1);
-         });
-        });
-       });
-       x1=Formlet2.MapResult(f1,formlet2);
-       l=Data.Layout().get_Horizontal();
-       return Formlet2.WithLayout(l,x1);
-      },
-      WithErrorFormlet:function(f,formlet)
-      {
-       var _builder_,f1,formlet1;
-       _builder_=Formlet2.Do();
-       f1=function(arg00)
-       {
-        return Result.Join(arg00);
-       };
-       formlet1=_builder_.Delay(function()
-       {
-        return _builder_.Bind(Formlet2.LiftResult(formlet),function(_arg1)
-        {
-         var _,msgs,_builder_1;
-         if(_arg1.$==1)
-          {
-           msgs=_arg1.$0;
-           _builder_1=Formlet2.Do();
-           _=_builder_1.Delay(function()
-           {
-            return _builder_1.Bind(f(msgs),function()
-            {
-             return _builder_1.Return(_arg1);
-            });
-           });
-          }
-         else
-          {
-           _arg1.$0;
-           _=Formlet2.Return(_arg1);
-          }
-         return _builder_.ReturnFrom(_);
-        });
-       });
-       return Formlet2.MapResult(f1,formlet1);
-      },
-      WithErrorSummary:function(label,formlet)
-      {
-       var errrFormlet,_builder_,f1,formlet1;
-       errrFormlet=function(fs)
-       {
-        return Formlet2.OfElement(function()
-        {
-         var x,x1,_this,mapping,x2,_this1;
-         x1=List.ofArray([Default.Text(label)]);
-         _this=Default.Tags();
-         mapping=function(f)
-         {
-          return Default.LI(List.ofArray([Default.Text(f)]));
-         };
-         x2=List.map(mapping,fs);
-         x=List.ofArray([_this.NewTag("legend",x1),Default.UL(x2)]);
-         _this1=Default.Tags();
-         return _this1.NewTag("fieldset",x);
-        });
-       };
-       _builder_=Formlet2.Do();
-       f1=function(arg00)
-       {
-        return Result.Join(arg00);
-       };
-       formlet1=_builder_.Delay(function()
-       {
-        return _builder_.Bind(Formlet2.LiftResult(formlet),function(_arg1)
-        {
-         var _,fs,f,formlet2;
-         if(_arg1.$==1)
-          {
-           fs=_arg1.$0;
-           f=function()
-           {
-            return _arg1;
-           };
-           formlet2=errrFormlet(fs);
-           _=Formlet2.Map(f,formlet2);
-          }
-         else
-          {
-           _arg1.$0;
-           _=Formlet2.Return(_arg1);
-          }
-         return _builder_.ReturnFrom(_);
-        });
-       });
-       return Formlet2.MapResult(f1,formlet1);
-      },
-      WithFormContainer:function(formlet)
-      {
-       return Enhance.WithCustomFormContainer(FormContainerConfiguration.get_Default(),formlet);
-      },
-      WithJsonPost:function(conf,formlet)
-      {
-       var matchValue,postUrl,_,url,_this,matchValue1,enc,_1,enc1,_this1,_this2,x,_this3,_this4,x1,hiddenField,_this5,x2,_this6,_this7,submitButton,a,_this8,_this9,formAttrs,x3,f,form1,f1,formlet1;
-       matchValue=conf.PostUrl;
-       if(matchValue.$==0)
-        {
-         _=Runtime.New(T,{
-          $:0
-         });
-        }
-       else
-        {
-         url=matchValue.$0;
-         _this=Default.Attr();
-         _=List.ofArray([_this.NewAttr("action",url)]);
-        }
-       postUrl=_;
-       matchValue1=conf.EncodingType;
-       if(matchValue1.$==0)
-        {
-         _1=Runtime.New(T,{
-          $:0
-         });
-        }
-       else
-        {
-         enc1=matchValue1.$0;
-         _this1=Default.Attr();
-         _1=List.ofArray([_this1.NewAttr("enctype",enc1)]);
-        }
-       enc=_1;
-       _this2=Default.Tags();
-       _this3=Default.Attr();
-       _this4=Default.Attr();
-       x1=conf.ParameterName;
-       x=List.ofArray([_this3.NewAttr("type","hidden"),_this4.NewAttr("name",x1)]);
-       hiddenField=_this2.NewTag("input",x);
-       _this5=Default.Tags();
-       _this6=Default.Attr();
-       _this7=Default.Attr();
-       x2=List.ofArray([_this6.NewAttr("type","submit"),_this7.NewAttr("value","Submit")]);
-       submitButton=_this5.NewTag("input",x2);
-       _this8=Default.Attr();
-       _this9=Default.Attr();
-       a=Runtime.New(T,{
-        $:1,
-        $0:_this8.NewAttr("method","POST"),
-        $1:Runtime.New(T,{
-         $:1,
-         $0:_this9.NewAttr("style","display:none"),
-         $1:postUrl
-        })
-       });
-       formAttrs=List.append(a,enc);
-       x3=Operators.add(Default.Form(formAttrs),List.ofArray([hiddenField,submitButton]));
-       f=function(form)
-       {
-        var matchValue2,_2,enc2,_3,value;
-        matchValue2=conf.EncodingType;
-        if(matchValue2.$==0)
-         {
-          _2=null;
-         }
-        else
-         {
-          enc2=matchValue2.$0;
-          if(enc2==="multipart/form-data")
-           {
-            value=jQuery(form.Body).attr("encoding","multipart/form-data");
-            _3=void value;
-           }
-          else
-           {
-            _3=null;
-           }
-          _2=_3;
-         }
-        return _2;
-       };
-       Operators.OnAfterRender(f,x3);
-       form1=x3;
-       f1=function(value)
-       {
-        var data;
-        data=JSON.stringify(value);
-        jQuery(hiddenField.Body).val(data);
-        return jQuery(submitButton.Body).click();
-       };
-       formlet1=Formlet2.Map(f1,formlet);
-       return Default.Div(List.ofArray([form1,formlet1]));
-      },
-      WithLabel:function(labelGen,formlet)
-      {
-       return Formlet2.WithLabel({
-        $:1,
-        $0:labelGen
-       },formlet);
-      },
-      WithLabelAbove:function(formlet)
-      {
-       var f;
-       f=function(body)
-       {
-        var matchValue,label,_,l,el,Label;
-        matchValue=body.Label;
-        if(matchValue.$==0)
-         {
-          _=Default.Span(Runtime.New(T,{
-           $:0
-          }));
-         }
-        else
-         {
-          l=matchValue.$0;
-          _=l(null);
-         }
-        label=_;
-        el=Default.Table(List.ofArray([Default.TBody(List.ofArray([Default.TR(List.ofArray([Default.TD(List.ofArray([label]))])),Default.TR(List.ofArray([Default.TD(List.ofArray([body.Element]))]))]))]));
-        Label={
-         $:0
-        };
-        return Runtime.New(Body,{
-         Element:el,
-         Label:Label
-        });
-       };
-       return Formlet2.MapBody(f,formlet);
-      },
-      WithLabelAndInfo:function(label,info,formlet)
-      {
-       var lblTbl;
-       lblTbl=function()
-       {
-        var x,_this,_this1;
-        x=List.ofArray([Default.Text(label)]);
-        _this=Default.Tags();
-        _this1=Default.Attr();
-        return Utils.InTable(List.ofArray([List.ofArray([_this.NewTag("label",x),Default.Span(List.ofArray([_this1.NewAttr("title",info),Default.Attr().Class("infoIcon")]))])]));
-       };
-       return Enhance.WithLabel(lblTbl,formlet);
-      },
-      WithLabelConfiguration:function(lc,formlet)
-      {
-       var x,l;
-       x=Formlet2.ApplyLayout(formlet);
-       l=Data.Layout().LabelLayout(lc);
-       return Formlet2.WithLayout(l,x);
-      },
-      WithLabelLeft:function(formlet)
-      {
-       var f;
-       f=function(body)
-       {
-        var matchValue,label,_,l,el,Label;
-        matchValue=body.Label;
-        if(matchValue.$==0)
-         {
-          _=Default.Span(Runtime.New(T,{
-           $:0
-          }));
-         }
-        else
-         {
-          l=matchValue.$0;
-          _=l(null);
-         }
-        label=_;
-        el=Default.Table(List.ofArray([Default.TBody(List.ofArray([Default.TR(List.ofArray([Default.TD(List.ofArray([body.Element])),Default.TD(List.ofArray([label]))]))]))]));
-        Label={
-         $:0
-        };
-        return Runtime.New(Body,{
-         Element:el,
-         Label:Label
-        });
-       };
-       return Formlet2.MapBody(f,formlet);
-      },
-      WithLegend:function(label,formlet)
-      {
-       var f;
-       f=function(body)
-       {
-        var x,x1,_this,matchValue,_,label1,_this1,element;
-        x1=List.ofArray([Default.Tags().text(label)]);
-        _this=Default.Tags();
-        matchValue=body.Label;
-        if(matchValue.$==0)
-         {
-          _=body.Element;
-         }
-        else
-         {
-          label1=matchValue.$0;
-          _=Utils.InTable(List.ofArray([List.ofArray([label1(null),body.Element])]));
-         }
-        x=List.ofArray([_this.NewTag("legend",x1),_]);
-        _this1=Default.Tags();
-        element=_this1.NewTag("fieldset",x);
-        return Runtime.New(Body,{
-         Element:element,
-         Label:{
-          $:0
-         }
-        });
-       };
-       return Formlet2.MapBody(f,formlet);
-      },
-      WithResetAction:function(f,formlet)
-      {
-       var f1,x,l,x1,x2;
-       f1=function()
-       {
-        var form,notify;
-        form=formlet.Build();
-        notify=function(o)
-        {
-         return f(null)?form.Notify.call(null,o):null;
-        };
-        return Runtime.New(Form,{
-         Body:form.Body,
-         Dispose1:form.Dispose1,
-         Notify:notify,
-         State:form.State
-        });
-       };
-       x=Formlet2.New(f1);
-       l=formlet.get_Layout();
-       x1=Formlet2.WithLayout(l,x);
-       x2=Data.PropagateRenderFrom(formlet,x1);
-       return Data.OfIFormlet(x2);
-      },
-      WithResetButton:function(formlet)
-      {
-       return Enhance.WithCustomResetButton(FormButtonConfiguration.get_Default(),formlet);
-      },
-      WithResetFormlet:function(formlet,reset)
-      {
-       var formlet1,x,x1,x2,formlet2,button,_builder_,f,formlet3,f2,x3;
-       formlet1=Formlet2.WithLayoutOrDefault(formlet);
-       x=Formlet2.ApplyLayout(formlet1);
-       x1=Formlet2.InitWithFailure(x);
-       x2=Formlet2.LiftResult(x1);
-       formlet2=Formlet2.WithNotificationChannel(x2);
-       button=Formlet2.LiftResult(reset);
-       _builder_=Formlet2.Do();
-       f=function(arg00)
-       {
-        return Result.Join(arg00);
-       };
-       formlet3=_builder_.Delay(function()
-       {
-        return _builder_.Bind(formlet2,Runtime.Tupled(function(_arg1)
-        {
-         var v,notify;
-         v=_arg1[0];
-         notify=_arg1[1];
-         return _builder_.Bind(button,function(_arg2)
-         {
-          _arg2.$==0?notify(null):null;
-          return _builder_.Return(v);
-         });
-        }));
-       });
-       f2=Formlet2.MapResult(f,formlet3);
-       x3=Data.PropagateRenderFrom(formlet2,f2);
-       return Data.OfIFormlet(x3);
-      },
-      WithRowConfiguration:function(rc,formlet)
-      {
-       var x,l;
-       x=Formlet2.ApplyLayout(formlet);
-       l=Data.Layout().RowLayout(rc);
-       return Formlet2.WithLayout(l,x);
-      },
-      WithSubmitAndReset:function(formlet,submReset)
-      {
-       var _builder_,f2,formlet3;
-       _builder_=Formlet2.Do();
-       f2=_builder_.Delay(function()
-       {
-        var formlet1,formlet2;
-        formlet1=Formlet2.InitWithFailure(formlet);
-        formlet2=Formlet2.LiftResult(formlet1);
-        return _builder_.Bind(Formlet2.WithNotificationChannel(formlet2),Runtime.Tupled(function(_arg1)
-        {
-         var res,notify;
-         res=_arg1[0];
-         notify=_arg1[1];
-         return _builder_.ReturnFrom((submReset(function(arg00)
-         {
-          return notify(arg00);
-         }))(res));
-        }));
-       });
-       formlet3=Data.PropagateRenderFrom(formlet,f2);
-       return Data.OfIFormlet(formlet3);
-      },
-      WithSubmitAndResetButtons:function(formlet)
-      {
-       var inputRecord,submitConf,inputRecord1,resetConf;
-       inputRecord=FormButtonConfiguration.get_Default();
-       submitConf=Runtime.New(FormButtonConfiguration,{
-        Label:{
-         $:1,
-         $0:"Submit"
-        },
-        Style:inputRecord.Style,
-        Class:inputRecord.Class
-       });
-       inputRecord1=FormButtonConfiguration.get_Default();
-       resetConf=Runtime.New(FormButtonConfiguration,{
-        Label:{
-         $:1,
-         $0:"Reset"
-        },
-        Style:inputRecord1.Style,
-        Class:inputRecord1.Class
-       });
-       return Enhance.WithCustomSubmitAndResetButtons(submitConf,resetConf,formlet);
-      },
-      WithSubmitButton:function(formlet)
-      {
-       return Enhance.WithCustomSubmitButton(FormButtonConfiguration.get_Default(),formlet);
-      },
-      WithSubmitFormlet:function(formlet,submit)
-      {
-       var _builder_,f,formlet1,f2,x;
-       _builder_=Formlet2.Do();
-       f=function(arg00)
-       {
-        return Result.Join(arg00);
-       };
-       formlet1=_builder_.Delay(function()
-       {
-        var formlet2;
-        formlet2=Formlet2.InitWithFailure(formlet);
-        return _builder_.Bind(Formlet2.LiftResult(formlet2),function(_arg1)
-        {
-         return _builder_.Bind(submit(_arg1),function()
-         {
-          return _builder_.Return(_arg1);
-         });
-        });
-       });
-       f2=Formlet2.MapResult(f,formlet1);
-       x=Data.PropagateRenderFrom(formlet,f2);
-       return Data.OfIFormlet(x);
-      },
-      WithTextLabel:function(label,formlet)
-      {
-       return Enhance.WithLabel(function()
-       {
-        var x,_this;
-        x=List.ofArray([Default.Text(label)]);
-        _this=Default.Tags();
-        return _this.NewTag("label",x);
-       },formlet);
-      },
-      WithValidationFrame:function(formlet)
-      {
-       return Enhance.WithCustomValidationFrame(ValidationFrameConfiguration.get_Default(),formlet);
-      },
-      WithValidationIcon:function(formlet)
-      {
-       return Enhance.WithCustomValidationIcon(ValidationIconConfiguration.get_Default(),formlet);
-      },
-      WrapFormlet:function(wrapper,formlet)
-      {
-       var f;
-       f=function()
-       {
-        var formlet1,form,patternInput,body,panel;
-        formlet1=Formlet2.WithLayoutOrDefault(formlet);
-        form=Formlet2.BuildForm(formlet1);
-        patternInput=formlet1.get_Layout().Apply.call(null,form.Body).$0;
-        patternInput[1];
-        body=patternInput[0];
-        panel=(wrapper(form.State))(body);
-        return[panel,function()
-        {
-         return form.Notify.call(null,null);
-        },form.State];
-       };
-       return Data.MkFormlet(f);
-      }
-     },
-     Formlet:{
-      ApplyLayout:function(formlet)
-      {
-       var f2,formlet1;
-       f2=Data.BaseFormlet().ApplyLayout(formlet);
-       formlet1=Data.PropagateRenderFrom(formlet,f2);
-       return Data.OfIFormlet(formlet1);
-      },
-      Bind:function(fl,f)
-      {
-       var objectArg,arg10,x1,x2;
-       objectArg=Data.BaseFormlet();
-       arg10=function(x)
-       {
-        var y;
-        y=f(x);
-        return y;
-       };
-       x1=objectArg.Bind(fl,arg10);
-       x2=Data.PropagateRenderFrom(fl,x1);
-       return Data.OfIFormlet(x2);
-      },
-      BindWith:function(compose,formlet,f)
-      {
-       var objectArg,arg20,x1,x2;
-       objectArg=Data.BaseFormlet();
-       arg20=function(x)
-       {
-        return f(x);
-       };
-       x1=objectArg.BindWith(compose,formlet,arg20);
-       x2=Data.PropagateRenderFrom(formlet,x1);
-       return Data.OfIFormlet(x2);
-      },
-      BuildForm:function(f)
-      {
-       return Data.BaseFormlet().BuildForm(f);
-      },
-      BuildFormlet:function(f)
-      {
-       return Data.MkFormlet(f);
-      },
-      Choose:function(fs)
-      {
-       var count,mapping,fs1,x1,f2,x5,arg00,x6,f3;
-       count={
-        contents:0
-       };
-       mapping=function(f)
-       {
-        var f1,formlet,formlet1;
-        f1=function(x)
-        {
-         Operators1.Increment(count);
-         return[x,count.contents];
-        };
-        formlet=Formlet2.Map(f1,f);
-        formlet1=Formlet2.InitWithFailure(formlet);
-        return Formlet2.LiftResult(formlet1);
-       };
-       fs1=Seq.map(mapping,fs);
-       x1=Formlet2.Sequence(fs1);
-       f2=function(xs)
-       {
-        var chooser,x2,projection,x3,x4,chooser1;
-        chooser=function(x)
-        {
-         var _,v;
-         if(x.$==0)
-          {
-           v=x.$0;
-           _={
-            $:1,
-            $0:v
-           };
-          }
-         else
-          {
-           _={
-            $:0
-           };
-          }
-         return _;
-        };
-        x2=List.choose(chooser,xs);
-        projection=Runtime.Tupled(function(tupledArg)
-        {
-         var ix;
-         tupledArg[0];
-         ix=tupledArg[1];
-         return ix;
-        });
-        x3=List.sortBy(projection,x2);
-        x4=List.rev(x3);
-        chooser1=Runtime.Tupled(function(tupledArg)
-        {
-         var x;
-         x=tupledArg[0];
-         tupledArg[1];
-         return{
-          $:1,
-          $0:x
-         };
-        });
-        return Seq.tryPick(chooser1,x4);
-       };
-       x5=Formlet2.Map(f2,x1);
-       arg00=function(x)
-       {
-        return x.$==1;
-       };
-       x6=Data.Validator().Is(arg00,"",x5);
-       f3=function(x)
-       {
-        return x.$0;
-       };
-       return Formlet2.Map(f3,x6);
-      },
-      Delay:function(f)
-      {
-       var formlet;
-       formlet=Data.BaseFormlet().Delay(function()
-       {
-        return f(null);
-       });
-       return Data.OfIFormlet(formlet);
-      },
-      Deletable:function(formlet)
-      {
-       var f2,formlet1;
-       f2=Data.BaseFormlet().Deletable(formlet);
-       formlet1=Data.PropagateRenderFrom(formlet,f2);
-       return Data.OfIFormlet(formlet1);
-      },
-      Do:Runtime.Field(function()
-      {
-       return FormletBuilder.New();
-      }),
-      Empty:function()
-      {
-       var formlet;
-       formlet=Data.BaseFormlet().Empty();
-       return Data.OfIFormlet(formlet);
-      },
-      FailWith:function(fs)
-      {
-       var formlet;
-       formlet=Data.BaseFormlet().FailWith(fs);
-       return Data.OfIFormlet(formlet);
-      },
-      FlipBody:function(formlet)
-      {
-       var f2,formlet1;
-       f2=Data.BaseFormlet().FlipBody(formlet);
-       formlet1=Data.PropagateRenderFrom(formlet,f2);
-       return Data.OfIFormlet(formlet1);
-      },
-      Flowlet:function(formlet)
-      {
-       var objectArg,arg00,x,x1;
-       objectArg=Data.BaseFormlet();
-       arg00=Data.Layout().get_Flowlet();
-       x=objectArg.WithLayout(arg00,formlet);
-       x1=Data.PropagateRenderFrom(formlet,x);
-       return Data.OfIFormlet(x1);
-      },
-      Horizontal:function(formlet)
-      {
-       var objectArg,arg00,x,x1;
-       objectArg=Data.BaseFormlet();
-       arg00=Data.Layout().get_Horizontal();
-       x=objectArg.WithLayout(arg00,formlet);
-       x1=Data.PropagateRenderFrom(formlet,x);
-       return Data.OfIFormlet(x1);
-      },
-      InitWith:function(value,formlet)
-      {
-       var objectArg,x,x1;
-       objectArg=Data.BaseFormlet();
-       x=objectArg.InitWith(value,formlet);
-       x1=Data.PropagateRenderFrom(formlet,x);
-       return Data.OfIFormlet(x1);
-      },
-      InitWithFailure:function(formlet)
-      {
-       var f2,formlet1;
-       f2=Data.BaseFormlet().InitWithFailure(formlet);
-       formlet1=Data.PropagateRenderFrom(formlet,f2);
-       return Data.OfIFormlet(formlet1);
-      },
-      Join:function(formlet)
-      {
-       var f,x,objectArg,x1,x2;
-       f=function(f1)
-       {
-        return f1;
-       };
-       x=Formlet2.Map(f,formlet);
-       objectArg=Data.BaseFormlet();
-       x1=objectArg.Join(x);
-       x2=Data.PropagateRenderFrom(formlet,x1);
-       return Data.OfIFormlet(x2);
-      },
-      LiftResult:function(formlet)
-      {
-       var f2,formlet1;
-       f2=Data.BaseFormlet().LiftResult(formlet);
-       formlet1=Data.PropagateRenderFrom(formlet,f2);
-       return Data.OfIFormlet(formlet1);
-      },
-      Map:function(f,formlet)
-      {
-       var objectArg,x,x1;
-       objectArg=Data.BaseFormlet();
-       x=objectArg.Map(f,formlet);
-       x1=Data.PropagateRenderFrom(formlet,x);
-       return Data.OfIFormlet(x1);
-      },
-      MapBody:function(f,formlet)
-      {
-       var objectArg,x,x1;
-       objectArg=Data.BaseFormlet();
-       x=objectArg.MapBody(f,formlet);
-       x1=Data.PropagateRenderFrom(formlet,x);
-       return Data.OfIFormlet(x1);
-      },
-      MapElement:function(f,formlet)
-      {
-       var objectArg,arg00,f2,formlet1;
-       objectArg=Data.BaseFormlet();
-       arg00=function(b)
-       {
-        return Runtime.New(Body,{
-         Element:f(b.Element),
-         Label:b.Label
-        });
-       };
-       f2=objectArg.MapBody(arg00,formlet);
-       formlet1=Data.PropagateRenderFrom(formlet,f2);
-       return Data.OfIFormlet(formlet1);
-      },
-      MapResult:function(f,formlet)
-      {
-       var objectArg,x,x1;
-       objectArg=Data.BaseFormlet();
-       x=objectArg.MapResult(f,formlet);
-       x1=Data.PropagateRenderFrom(formlet,x);
-       return Data.OfIFormlet(x1);
-      },
-      Never:function()
-      {
-       var formlet;
-       formlet=Data.BaseFormlet().Never();
-       return Data.OfIFormlet(formlet);
-      },
-      New:function(f)
-      {
-       var formlet;
-       formlet=Data.BaseFormlet().New(f);
-       return Data.OfIFormlet(formlet);
-      },
-      OfElement:function(genElem)
-      {
-       var f;
-       f=function()
-       {
-        var elem;
-        elem=genElem(null);
-        return[elem,function()
-        {
-        },Data.RX().Return(Runtime.New(Result,{
-         $:0,
-         $0:null
-        }))];
-       };
-       return Data.MkFormlet(f);
-      },
-      Render:function(formlet)
-      {
-       var f2;
-       f2=formlet.Run(function()
-       {
-       });
-       return Data.PropagateRenderFrom(formlet,f2);
-      },
-      Replace:function(formlet,f)
-      {
-       var objectArg,arg10,x1,x2;
-       objectArg=Data.BaseFormlet();
-       arg10=function(x)
-       {
-        return f(x);
-       };
-       x1=objectArg.Replace(formlet,arg10);
-       x2=Data.PropagateRenderFrom(formlet,x1);
-       return Data.OfIFormlet(x2);
-      },
-      ReplaceFirstWithFailure:function(formlet)
-      {
-       var f2,formlet1;
-       f2=Data.BaseFormlet().ReplaceFirstWithFailure(formlet);
-       formlet1=Data.PropagateRenderFrom(formlet,f2);
-       return Data.OfIFormlet(formlet1);
-      },
-      Return:function(x)
-      {
-       var formlet;
-       formlet=Data.BaseFormlet().Return(x);
-       return Data.OfIFormlet(formlet);
-      },
-      ReturnEmpty:function(x)
-      {
-       var formlet;
-       formlet=Data.BaseFormlet().ReturnEmpty(x);
-       return Data.OfIFormlet(formlet);
-      },
-      Run:function(f,formlet)
-      {
-       return formlet.Run(f);
-      },
-      SelectMany:function(formlet)
-      {
-       var f,x,objectArg,x1,x2;
-       f=function(f1)
-       {
-        return f1;
-       };
-       x=Formlet2.Map(f,formlet);
-       objectArg=Data.BaseFormlet();
-       x1=objectArg.SelectMany(x);
-       x2=Data.PropagateRenderFrom(formlet,x1);
-       return Data.OfIFormlet(x2);
-      },
-      Sequence:function(fs)
-      {
-       var mapping,x1,objectArg,x2;
-       mapping=function(x)
-       {
-        return x;
-       };
-       x1=Seq.map(mapping,fs);
-       objectArg=Data.BaseFormlet();
-       x2=objectArg.Sequence(x1);
-       return Data.OfIFormlet(x2);
-      },
-      Switch:function(formlet)
-      {
-       var f,x,objectArg,x1,x2;
-       f=function(f1)
-       {
-        return f1;
-       };
-       x=Formlet2.Map(f,formlet);
-       objectArg=Data.BaseFormlet();
-       x1=objectArg.Switch(x);
-       x2=Data.PropagateRenderFrom(formlet,x1);
-       return Data.OfIFormlet(x2);
-      },
-      Vertical:function(formlet)
-      {
-       var objectArg,arg00,x,x1;
-       objectArg=Data.BaseFormlet();
-       arg00=Data.Layout().get_Vertical();
-       x=objectArg.WithLayout(arg00,formlet);
-       x1=Data.PropagateRenderFrom(formlet,x);
-       return Data.OfIFormlet(x1);
-      },
-      WithCancelation:function(formlet,c)
-      {
-       var objectArg,x,x1;
-       objectArg=Data.BaseFormlet();
-       x=objectArg.WithCancelation(formlet,c);
-       x1=Data.PropagateRenderFrom(formlet,x);
-       return Data.OfIFormlet(x1);
-      },
-      WithLabel:function(label,formlet)
-      {
-       var objectArg,arg00,f2,formlet1;
-       objectArg=Data.BaseFormlet();
-       arg00=function(body)
-       {
-        return Runtime.New(Body,{
-         Element:body.Element,
-         Label:label
-        });
-       };
-       f2=objectArg.MapBody(arg00,formlet);
-       formlet1=Data.PropagateRenderFrom(formlet,f2);
-       return Data.OfIFormlet(formlet1);
-      },
-      WithLayout:function(l,formlet)
-      {
-       var objectArg,x,x1;
-       objectArg=Data.BaseFormlet();
-       x=objectArg.WithLayout(l,formlet);
-       x1=Data.PropagateRenderFrom(formlet,x);
-       return Data.OfIFormlet(x1);
-      },
-      WithLayoutOrDefault:function(formlet)
-      {
-       var f2,formlet1;
-       f2=Data.BaseFormlet().WithLayoutOrDefault(formlet);
-       formlet1=Data.PropagateRenderFrom(formlet,f2);
-       return Data.OfIFormlet(formlet1);
-      },
-      WithNotification:function(c,formlet)
-      {
-       var objectArg,x,x1;
-       objectArg=Data.BaseFormlet();
-       x=objectArg.WithNotification(c,formlet);
-       x1=Data.PropagateRenderFrom(formlet,x);
-       return Data.OfIFormlet(x1);
-      },
-      WithNotificationChannel:function(formlet)
-      {
-       var f2,formlet1;
-       f2=Data.BaseFormlet().WithNotificationChannel(formlet);
-       formlet1=Data.PropagateRenderFrom(formlet,f2);
-       return Data.OfIFormlet(formlet1);
-      }
-     },
-     FormletBuilder:Runtime.Class({
-      Bind:function(formlet,f)
-      {
-       var objectArg,arg10,x1,x2;
-       objectArg=Data.BaseFormlet();
-       arg10=function(x)
-       {
-        var y;
-        y=f(x);
-        return y;
-       };
-       x1=objectArg.Bind(formlet,arg10);
-       x2=Data.PropagateRenderFrom(formlet,x1);
-       return Data.OfIFormlet(x2);
-      },
-      Delay:function(f)
-      {
-       var formlet;
-       formlet=Data.BaseFormlet().Delay(function(x)
-       {
-        return f(x);
-       });
-       return Data.OfIFormlet(formlet);
-      },
-      Return:function(x)
-      {
-       var formlet;
-       formlet=Data.BaseFormlet().Return(x);
-       return Data.OfIFormlet(formlet);
-      },
-      ReturnFrom:function(f)
-      {
-       return Data.OfIFormlet(f);
-      }
-     },{
-      New:function()
-      {
-       return Runtime.New(this,{});
-      }
-     }),
-     Layout:{
-      FormRowConfiguration:Runtime.Class({},{
-       get_Default:function()
-       {
-        return Runtime.New(FormRowConfiguration,{
-         Padding:{
-          $:0
-         },
-         Color:{
-          $:0
-         },
-         Class:{
-          $:0
-         },
-         Style:{
-          $:0
-         },
-         LabelConfiguration:{
-          $:0
-         }
-        });
-       }
-      }),
-      LabelConfiguration:Runtime.Class({},{
-       get_Default:function()
-       {
-        return Runtime.New(LabelConfiguration,{
-         Align:{
-          $:0
-         },
-         VerticalAlign:{
-          $:1
-         },
-         Placement:{
-          $:0
-         }
-        });
-       }
-      }),
-      Padding:Runtime.Class({},{
-       get_Default:function()
-       {
-        return Runtime.New(Padding1,{
-         Left:{
-          $:0
-         },
-         Right:{
-          $:0
-         },
-         Top:{
-          $:0
-         },
-         Bottom:{
-          $:0
-         }
-        });
-       }
-      })
-     },
-     LayoutProvider:Runtime.Class({
-      ColumnLayout:function(rowConfig)
-      {
-       var objectArg,arg00,_this=this;
-       objectArg=this.LayoutUtils;
-       arg00=function()
-       {
-        var row,container,store,insert,remove;
-        row=Default.TR(Runtime.New(T,{
-         $:0
-        }));
-        container=Default.Table(List.ofArray([Default.TBody(List.ofArray([row]))]));
-        store=ElementStore.NewElementStore();
-        insert=function(rowIx)
-        {
-         return function(body)
-         {
-          var elemId,newCol,jqPanel,index,inserted;
-          elemId=body.Element.get_Id();
-          newCol=Default.TD(List.ofArray([Default.Table(List.ofArray([Default.TBody(List.ofArray([_this.MakeRow(rowConfig,rowIx,body)]))]))]));
-          jqPanel=jQuery(row.Body);
-          index={
-           contents:0
-          };
-          inserted={
-           contents:false
-          };
-          jqPanel.children().each(function()
-          {
-           var jqCol,_;
-           jqCol=jQuery(this);
-           if(rowIx===index.contents)
-            {
-             jQuery(newCol.Body).insertBefore(jqCol);
-             newCol.Render();
-             _=void(inserted.contents=true);
-            }
-           else
-            {
-             _=null;
-            }
-           return Operators1.Increment(index);
-          });
-          !inserted.contents?row.AppendI(newCol):null;
-          return store.RegisterElement(elemId,function()
-          {
-           return newCol["HtmlProvider@31"].Remove(newCol.Body);
-          });
-         };
-        };
-        remove=function(elems)
-        {
-         var enumerator,b;
-         enumerator=Enumerator.Get(elems);
-         while(enumerator.MoveNext())
-          {
-           b=enumerator.get_Current();
-           store.Remove(b.Element.get_Id());
-          }
-         return;
-        };
-        return{
-         Body:Runtime.New(Body,{
-          Element:container,
-          Label:{
-           $:0
-          }
-         }),
-         SyncRoot:null,
-         Insert:insert,
-         Remove:remove
-        };
-       };
-       return objectArg.New(arg00);
-      },
-      HorizontalAlignElem:function(align,el)
-      {
-       var _float,_this,x;
-       _float=align.$==0?"left":"right";
-       _this=Default.Attr();
-       x="float:"+_float+";";
-       return Operators.add(Default.Div(List.ofArray([_this.NewAttr("style",x)])),List.ofArray([el]));
-      },
-      LabelLayout:function(lc)
-      {
-       var inputRecord,LabelConfiguration1;
-       inputRecord=FormRowConfiguration.get_Default();
-       LabelConfiguration1={
-        $:1,
-        $0:lc
-       };
-       return this.RowLayout(Runtime.New(FormRowConfiguration,{
-        Padding:inputRecord.Padding,
-        Color:inputRecord.Color,
-        Class:inputRecord.Class,
-        Style:inputRecord.Style,
-        LabelConfiguration:LabelConfiguration1
-       }));
-      },
-      MakeLayout:function(lm)
-      {
-       var objectArg,arg00;
-       objectArg=this.LayoutUtils;
-       arg00=function()
-       {
-        var lm1,store,insert,remove;
-        lm1=lm(null);
-        store=ElementStore.NewElementStore();
-        insert=function(ix)
-        {
-         return function(bd)
-         {
-          var elemId,newElems;
-          elemId=bd.Element.get_Id();
-          newElems=(lm1.Insert.call(null,ix))(bd);
-          return store.RegisterElement(elemId,function()
-          {
-           var enumerator,e;
-           enumerator=Enumerator.Get(newElems);
-           while(enumerator.MoveNext())
-            {
-             e=enumerator.get_Current();
-             e["HtmlProvider@31"].Remove(e.Body);
-            }
-           return;
-          });
-         };
-        };
-        remove=function(elems)
-        {
-         var enumerator,b;
-         enumerator=Enumerator.Get(elems);
-         while(enumerator.MoveNext())
-          {
-           b=enumerator.get_Current();
-           store.Remove(b.Element.get_Id());
-          }
-         return;
-        };
-        return{
-         Body:Runtime.New(Body,{
-          Element:lm1.Panel,
-          Label:{
-           $:0
-          }
-         }),
-         SyncRoot:null,
-         Insert:insert,
-         Remove:remove
-        };
-       };
-       return objectArg.New(arg00);
-      },
-      MakeRow:function(rowConfig,rowIndex,body)
-      {
-       var x,d,f,padding,f1,o,paddingLeft,f2,o1,paddingTop,f3,o2,paddingRight,f4,o3,paddingBottom,makeCell,elem1,matchValue,cells,_1,labelGen,x5,d1,f6,labelConf,arg00,arg10,label,matchValue1,_2,x6,x7,x8,d2,f7,rowClass,x9,d3,f8,rowColorStyleProp,xa,d4,f9,rowStyleProp,matchValue2,rowStyle,_3,arg002,_this2,b2,b3,xb;
-       x=rowConfig.Padding;
-       d=Padding1.get_Default();
-       f=function(x1)
-       {
-        return x1;
-       };
-       padding=Utils.Maybe(d,f,x);
-       f1=function(x1)
-       {
-        return x1;
-       };
-       o=padding.Left;
-       paddingLeft=Utils.Maybe(0,f1,o);
-       f2=function(x1)
-       {
-        return x1;
-       };
-       o1=padding.Top;
-       paddingTop=Utils.Maybe(0,f2,o1);
-       f3=function(x1)
-       {
-        return x1;
-       };
-       o2=padding.Right;
-       paddingRight=Utils.Maybe(0,f3,o2);
-       f4=function(x1)
-       {
-        return x1;
-       };
-       o3=padding.Bottom;
-       paddingBottom=Utils.Maybe(0,f4,o3);
-       makeCell=function(l)
-       {
-        return function(t)
-        {
-         return function(r)
-         {
-          return function(b)
-          {
-           return function(csp)
-           {
-            return function(valign)
-            {
-             return function(elem)
-             {
-              var x1,mapping,reduction,source,paddingStyle,f5,valignStyle,_this,x3,style,colSpan,_,_this1,a,b1,x4;
-              x1=List.ofArray([["padding-left: ",l],["padding-top: ",t],["padding-right: ",r],["padding-bottom: ",b]]);
-              mapping=Runtime.Tupled(function(tupledArg)
-              {
-               var k,v;
-               k=tupledArg[0];
-               v=tupledArg[1];
-               return k+Global.String(v)+"px;";
-              });
-              reduction=function(x2)
-              {
-               return function(y)
-               {
-                return x2+y;
-               };
-              };
-              source=List.map(mapping,x1);
-              paddingStyle=Seq.reduce(reduction,source);
-              f5=function(valign1)
-              {
-               var value;
-               value=valign1.$==1?"middle":valign1.$==2?"bottom":"top";
-               return"vertical-align: "+value+";";
-              };
-              valignStyle=Utils.Maybe("",f5,valign);
-              _this=Default.Attr();
-              x3=paddingStyle+";"+valignStyle;
-              style=_this.NewAttr("style",x3);
-              if(csp)
-               {
-                _this1=Default.Attr();
-                _=List.ofArray([_this1.NewAttr("colspan","2")]);
-               }
-              else
-               {
-                _=Runtime.New(T,{
-                 $:0
-                });
-               }
-              colSpan=_;
-              a=Runtime.New(T,{
-               $:1,
-               $0:style,
-               $1:colSpan
-              });
-              b1=List.ofArray([elem]);
-              x4=List.append(a,b1);
-              return Default.TD(x4);
-             };
-            };
-           };
-          };
-         };
-        };
-       };
-       elem1=body.Element;
-       matchValue=body.Label;
-       if(matchValue.$==1)
-        {
-         labelGen=matchValue.$0;
-         x5=rowConfig.LabelConfiguration;
-         d1=LabelConfiguration.get_Default();
-         f6=function(x1)
-         {
-          return x1;
-         };
-         labelConf=Utils.Maybe(d1,f6,x5);
-         arg00=labelConf.Align;
-         arg10=labelGen(null);
-         label=this.HorizontalAlignElem(arg00,arg10);
-         matchValue1=labelConf.Placement;
-         if(matchValue1.$==3)
-          {
-           x6=Utils.InTable(List.ofArray([List.ofArray([elem1]),List.ofArray([label])]));
-           _2=List.ofArray([((((((makeCell(paddingLeft))(paddingTop))(paddingRight))(paddingBottom))(true))({
-            $:0
-           }))(x6)]);
-          }
-         else
-          {
-           if(matchValue1.$==0)
-            {
-             _2=List.ofArray([((((((makeCell(paddingLeft))(paddingTop))(0))(paddingBottom))(false))({
-              $:1,
-              $0:labelConf.VerticalAlign
-             }))(label),((((((makeCell(0))(paddingTop))(paddingRight))(paddingBottom))(false))({
-              $:0
-             }))(elem1)]);
-            }
-           else
-            {
-             if(matchValue1.$==1)
-              {
-               _2=List.ofArray([((((((makeCell(paddingLeft))(paddingTop))(0))(paddingBottom))(false))({
-                $:1,
-                $0:labelConf.VerticalAlign
-               }))(elem1),((((((makeCell(0))(paddingTop))(paddingRight))(paddingBottom))(false))({
-                $:0
-               }))(label)]);
-              }
-             else
-              {
-               x7=Utils.InTable(List.ofArray([List.ofArray([label]),List.ofArray([elem1])]));
-               _2=List.ofArray([((((((makeCell(paddingLeft))(paddingTop))(paddingRight))(paddingBottom))(true))({
-                $:0
-               }))(x7)]);
-              }
-            }
-          }
-         _1=_2;
-        }
-       else
-        {
-         _1=List.ofArray([((((((makeCell(paddingLeft))(paddingTop))(paddingRight))(paddingBottom))(true))({
-          $:0
-         }))(elem1)]);
-        }
-       cells=_1;
-       x8=rowConfig.Class;
-       d2=Runtime.New(T,{
-        $:0
-       });
-       f7=function(classGen)
-       {
-        var arg001;
-        arg001=classGen(rowIndex);
-        return List.ofArray([Default.Attr().Class(arg001)]);
-       };
-       rowClass=Utils.Maybe(d2,f7,x8);
-       x9=rowConfig.Color;
-       d3=Runtime.New(T,{
-        $:0
-       });
-       f8=function(colGen)
-       {
-        var col;
-        col=colGen(rowIndex);
-        return List.ofArray(["background-color: "+col]);
-       };
-       rowColorStyleProp=Utils.Maybe(d3,f8,x9);
-       xa=rowConfig.Style;
-       d4=Runtime.New(T,{
-        $:0
-       });
-       f9=function(styleGen)
-       {
-        return List.ofArray([styleGen(rowIndex)]);
-       };
-       rowStyleProp=Utils.Maybe(d4,f9,xa);
-       matchValue2=List.append(rowColorStyleProp,rowStyleProp);
-       if(matchValue2.$==0)
-        {
-         _3=Runtime.New(T,{
-          $:0
-         });
-        }
-       else
-        {
-         arg002=Seq.reduce(function(x1)
-         {
-          return function(y)
-          {
-           return x1+";"+y;
-          };
-         },matchValue2);
-         _this2=Default.Attr();
-         _3=List.ofArray([_this2.NewAttr("style",arg002)]);
-        }
-       rowStyle=_3;
-       b2=List.append(rowStyle,cells);
-       b3=List.append(rowStyle,b2);
-       xb=List.append(rowClass,b3);
-       return Default.TR(xb);
-      },
-      RowLayout:function(rowConfig)
-      {
-       var objectArg,arg00,_this=this;
-       objectArg=this.LayoutUtils;
-       arg00=function()
-       {
-        var panel,container,store,insert,remove;
-        panel=Default.TBody(Runtime.New(T,{
-         $:0
-        }));
-        container=Default.Table(List.ofArray([panel]));
-        store=ElementStore.NewElementStore();
-        insert=function(rowIx)
-        {
-         return function(body)
-         {
-          var elemId,row,jqPanel,index,inserted;
-          elemId=body.Element.get_Id();
-          row=_this.MakeRow(rowConfig,rowIx,body);
-          jqPanel=jQuery(panel.Body);
-          index={
-           contents:0
-          };
-          inserted={
-           contents:false
-          };
-          jqPanel.children().each(function()
-          {
-           var jqRow,_;
-           jqRow=jQuery(this);
-           if(rowIx===index.contents)
-            {
-             jQuery(row.Body).insertBefore(jqRow);
-             row.Render();
-             _=void(inserted.contents=true);
-            }
-           else
-            {
-             _=null;
-            }
-           return Operators1.Increment(index);
-          });
-          !inserted.contents?panel.AppendI(row):null;
-          return store.RegisterElement(elemId,function()
-          {
-           return row["HtmlProvider@31"].Remove(row.Body);
-          });
-         };
-        };
-        remove=function(elems)
-        {
-         var enumerator,b;
-         enumerator=Enumerator.Get(elems);
-         while(enumerator.MoveNext())
-          {
-           b=enumerator.get_Current();
-           store.Remove(b.Element.get_Id());
-          }
-         return;
-        };
-        return{
-         Body:Runtime.New(Body,{
-          Element:container,
-          Label:{
-           $:0
-          }
-         }),
-         SyncRoot:null,
-         Insert:insert,
-         Remove:remove
-        };
-       };
-       return objectArg.New(arg00);
-      },
-      VerticalAlignedTD:function(valign,elem)
-      {
-       var valign1,cell,objectArg,arg00;
-       valign1=valign.$==1?"middle":valign.$==2?"bottom":"top";
-       cell=Default.TD(List.ofArray([elem]));
-       objectArg=cell["HtmlProvider@31"];
-       arg00=cell.Body;
-       objectArg.SetCss(arg00,"vertical-align",valign1);
-       return cell;
-      },
-      get_Flowlet:function()
-      {
-       var lm;
-       lm=function()
-       {
-        var panel,insert;
-        panel=Default.Div(Runtime.New(T,{
-         $:0
-        }));
-        insert=function()
-        {
-         return function(bd)
-         {
-          var label,nextScreen;
-          label=bd.Label.$==1?bd.Label.$0.call(null,null):Default.Span(Runtime.New(T,{
-           $:0
-          }));
-          nextScreen=Utils.InTable(List.ofArray([List.ofArray([label,Default.Div(List.ofArray([bd.Element]))])]));
-          panel["HtmlProvider@31"].Clear(panel.Body);
-          panel.AppendI(nextScreen);
-          return List.ofArray([nextScreen]);
-         };
-        };
-        return{
-         Insert:insert,
-         Panel:panel
-        };
-       };
-       return this.MakeLayout(lm);
-      },
-      get_Horizontal:function()
-      {
-       return this.ColumnLayout(FormRowConfiguration.get_Default());
-      },
-      get_Vertical:function()
-      {
-       return this.RowLayout(FormRowConfiguration.get_Default());
-      }
-     },{
-      New:function(LayoutUtils1)
-      {
-       var r;
-       r=Runtime.New(this,{});
-       r.LayoutUtils=LayoutUtils1;
-       return r;
-      }
-     }),
-     Utils:{
-      InTable:function(rows)
-      {
-       var mapping,rs,tb;
-       mapping=function(cols)
-       {
-        var mapping1,xs;
-        mapping1=function(c)
-        {
-         return Default.TD(List.ofArray([c]));
-        };
-        xs=List.map(mapping1,cols);
-        return Default.TR(xs);
-       };
-       rs=List.map(mapping,rows);
-       tb=Default.TBody(rs);
-       return Default.Table(List.ofArray([tb]));
-      },
-      MapOption:function(f,value)
-      {
-       var _,v;
-       if(value.$==1)
-        {
-         v=value.$0;
-         _={
-          $:1,
-          $0:f(v)
-         };
-        }
-       else
-        {
-         _={
-          $:0
-         };
-        }
-       return _;
-      },
-      Maybe:function(d,f,o)
-      {
-       var _,x;
-       if(o.$==0)
-        {
-         _=d;
-        }
-       else
-        {
-         x=o.$0;
-         _=f(x);
-        }
-       return _;
-      }
-     }
-    }
-   }
-  }
- });
- Runtime.OnInit(function()
- {
-  WebSharper=Runtime.Safe(Global.IntelliFactory.WebSharper);
-  Formlet=Runtime.Safe(WebSharper.Formlet);
-  Body=Runtime.Safe(Formlet.Body);
-  Html=Runtime.Safe(WebSharper.Html);
-  Default=Runtime.Safe(Html.Default);
-  List=Runtime.Safe(WebSharper.List);
-  Controls=Runtime.Safe(Formlet.Controls);
-  Reactive=Runtime.Safe(Global.IntelliFactory.Reactive);
-  HotStream=Runtime.Safe(Reactive.HotStream);
-  Formlet1=Runtime.Safe(Global.IntelliFactory.Formlet);
-  Base=Runtime.Safe(Formlet1.Base);
-  Result=Runtime.Safe(Base.Result);
-  T=Runtime.Safe(List.T);
-  Operators=Runtime.Safe(Html.Operators);
-  jQuery=Runtime.Safe(Global.jQuery);
-  EventsPervasives=Runtime.Safe(Html.EventsPervasives);
-  Data=Runtime.Safe(Formlet.Data);
-  Formlet2=Runtime.Safe(Formlet.Formlet);
-  Operators1=Runtime.Safe(WebSharper.Operators);
-  CssConstants=Runtime.Safe(Formlet.CssConstants);
-  Math=Runtime.Safe(Global.Math);
-  Seq=Runtime.Safe(WebSharper.Seq);
-  Utils=Runtime.Safe(Formlet.Utils);
-  Tree=Runtime.Safe(Base.Tree);
-  Edit=Runtime.Safe(Tree.Edit);
-  Form=Runtime.Safe(Base.Form);
-  Arrays=Runtime.Safe(WebSharper.Arrays);
-  IntrinsicFunctionProxy=Runtime.Safe(WebSharper.IntrinsicFunctionProxy);
-  FormletProvider=Runtime.Safe(Base.FormletProvider);
-  Formlet3=Runtime.Safe(Data.Formlet);
-  Util=Runtime.Safe(WebSharper.Util);
-  LayoutProvider=Runtime.Safe(Formlet.LayoutProvider);
-  LayoutUtils=Runtime.Safe(Base.LayoutUtils);
-  Reactive1=Runtime.Safe(Reactive.Reactive);
-  Validator=Runtime.Safe(Base.Validator);
-  ValidatorProvidor=Runtime.Safe(Data.ValidatorProvidor);
-  RegExp=Runtime.Safe(Global.RegExp);
-  Collections=Runtime.Safe(WebSharper.Collections);
-  Dictionary=Runtime.Safe(Collections.Dictionary);
-  ElementStore=Runtime.Safe(Formlet.ElementStore);
-  Enhance=Runtime.Safe(Formlet.Enhance);
-  FormButtonConfiguration=Runtime.Safe(Enhance.FormButtonConfiguration);
-  FormContainerConfiguration=Runtime.Safe(Enhance.FormContainerConfiguration);
-  Padding=Runtime.Safe(Enhance.Padding);
-  ManyConfiguration=Runtime.Safe(Enhance.ManyConfiguration);
-  ValidationFrameConfiguration=Runtime.Safe(Enhance.ValidationFrameConfiguration);
-  ValidationIconConfiguration=Runtime.Safe(Enhance.ValidationIconConfiguration);
-  JSON=Runtime.Safe(Global.JSON);
-  FormletBuilder=Runtime.Safe(Formlet.FormletBuilder);
-  Layout=Runtime.Safe(Formlet.Layout);
-  FormRowConfiguration=Runtime.Safe(Layout.FormRowConfiguration);
-  LabelConfiguration=Runtime.Safe(Layout.LabelConfiguration);
-  Padding1=Runtime.Safe(Layout.Padding);
-  return Enumerator=Runtime.Safe(WebSharper.Enumerator);
- });
- Runtime.OnLoad(function()
- {
-  Formlet2.Do();
-  Data.Validator();
-  Data.RX();
-  Data.Layout();
-  Data.DefaultLayout();
-  CssConstants.InputTextClass();
-  return;
- });
-}());
-
-(function()
-{
- var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,IntrinsicFunctionProxy,Concurrency,Array,Seq,UI,Next,Abbrev,Fresh,Collections,HashSet,HashSet1,HashSet2,Arrays,JQueue,Unchecked,Slot,An,AppendList,Anims,window,Trans1,Option,View1,Lazy,Array1,Attrs,DomUtility,Attr,AnimatedAttrNode,DynamicAttrNode,View,Docs,UINextPagelet,Doc,List,Var,Var1,Mailbox,Operators,NodeSet,DocElemNode,DomNodes,jQuery,document,Easing,Easings,FlowBuilder,Flow,Html,Elements,T,Input,DoubleInterpolation,Key,ListModels,ListModel1,Model1,Strings,encodeURIComponent,Route,decodeURIComponent,Routing,Trie,Router,Router1,Dictionary,Snap,Async,Enumerator,ResizeArray,ResizeArrayProxy,MapModule,FSharpMap,Html1,Default,ViewBuilder,Attributes,SvgAttributes;
+ var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,IntrinsicFunctionProxy,Concurrency,Array,Seq,UI,Next,Abbrev,Fresh,Collections,HashSet,HashSet1,HashSet2,Arrays,JQueue,Unchecked,Slot,An,AppendList,Anims,window,Trans1,Option,View1,Lazy,Array1,Attrs,DomUtility,Attr,AnimatedAttrNode,DynamicAttrNode,View,Docs,UINextPagelet,Doc,List,Var,Var1,Mailbox,Operators,NodeSet,DocElemNode,DomNodes,jQuery,document,Easing,Easings,FlowBuilder,Flow,Html,Elements,T,Input,DoubleInterpolation,Key,ListModels,ListModel1,Model1,Strings,encodeURIComponent,Route,decodeURIComponent,Routing,Trie,Router,Router1,Dictionary,Snap,Async,Enumerator,ResizeArray,ResizeArrayProxy,MapModule,FSharpMap,Html1,Client,Pagelet,Default,ViewBuilder,Attributes,SvgAttributes;
  Runtime.Define(Global,{
   IntelliFactory:{
    WebSharper:{
@@ -21123,10 +13228,10 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        New:function(doc)
        {
         var r;
-        r=Runtime.New(this,{});
+        r=Runtime.New(this,Pagelet.New());
         r.doc=doc;
         r.divId=Fresh.Id();
-        r.body=Default.Div(List.ofArray([Default.Id(r.divId)])).Body;
+        r.body=Default.Div(List.ofArray([Default.Id(r.divId)])).get_Body();
         return r;
        }
       }),
@@ -21583,13 +13688,16 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   MapModule=Runtime.Safe(Collections.MapModule);
   FSharpMap=Runtime.Safe(Collections.FSharpMap);
   Html1=Runtime.Safe(WebSharper.Html);
-  Default=Runtime.Safe(Html1.Default);
+  Client=Runtime.Safe(Html1.Client);
+  Pagelet=Runtime.Safe(Client.Pagelet);
+  Default=Runtime.Safe(Client.Default);
   ViewBuilder=Runtime.Safe(Next.ViewBuilder);
   Attributes=Runtime.Safe(Html.Attributes);
   return SvgAttributes=Runtime.Safe(Html.SvgAttributes);
  });
  Runtime.OnLoad(function()
  {
+  Runtime.Inherit(UINextPagelet,Pagelet);
   Input.MousePosSt();
   Input.MouseBtnSt();
   Input.KeyListenerState();
@@ -21866,6 +13974,7868 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   DomUtility.Doc();
   Attrs.EmptyAttr();
   Fresh.counter();
+  return;
+ });
+}());
+
+(function()
+{
+ var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,IntrinsicFunctionProxy,ok,Unchecked,console,Testing,Pervasives,TestBuilder,test,Random,Arrays,Math,NaN1,Infinity1,List,String,Seq;
+ Runtime.Define(Global,{
+  IntelliFactory:{
+   WebSharper:{
+    Testing:{
+     Assert:{
+      For:function(times,gen,attempt)
+      {
+       var _this,i,i1;
+       _this=gen.Base;
+       for(i=0;i<=IntrinsicFunctionProxy.GetLength(_this)-1;i++){
+        attempt(IntrinsicFunctionProxy.GetArray(gen.Base,i));
+       }
+       for(i1=1;i1<=times;i1++){
+        attempt(gen.Next.call(null,null));
+       }
+       return;
+      },
+      Raises:function(f)
+      {
+       var _,matchValue;
+       try
+       {
+        f(null);
+        _=ok(false,"Assert raises exception test failed.");
+       }
+       catch(matchValue)
+       {
+        _=ok(true,"Pass.");
+       }
+       return _;
+      }
+     },
+     Pervasives:{
+      Is:function(a,b)
+      {
+       var _,ps;
+       if(!Unchecked.Equals(a,b))
+        {
+         ps=["Equality test failed.",a,b];
+         console?console.log.apply(console,ps):undefined;
+         _=ok(false,"Equality test failed.");
+        }
+       else
+        {
+         _=ok(true,"Pass.");
+        }
+       return _;
+      },
+      Isnt:function(a,b)
+      {
+       var _,ps;
+       if(Unchecked.Equals(a,b))
+        {
+         ps=["Inequality test failed.",a,b];
+         console?console.log.apply(console,ps):undefined;
+         _=ok(false,"Inequality test failed.");
+        }
+       else
+        {
+         _=ok(true,"Pass.");
+        }
+       return _;
+      },
+      Test:function(name)
+      {
+       return TestBuilder.New(name);
+      },
+      TestBuilder:Runtime.Class({
+       Delay:function(f)
+       {
+        return test(this.name,f);
+       },
+       Zero:function()
+       {
+        return null;
+       }
+      },{
+       New:function(name)
+       {
+        var r;
+        r=Runtime.New(this,{});
+        r.name=name;
+        return r;
+       }
+      })
+     },
+     Random:{
+      ArrayOf:function(generator)
+      {
+       return{
+        Base:[[]],
+        Next:function()
+        {
+         var len;
+         len=Random.Natural().Next.call(null,null)%100;
+         return Arrays.init(len,function()
+         {
+          return generator.Next.call(null,null);
+         });
+        }
+       };
+      },
+      Boolean:Runtime.Field(function()
+      {
+       return{
+        Base:[true,false],
+        Next:function()
+        {
+         return Random.StandardUniform().Next.call(null,null)>0.5;
+        }
+       };
+      }),
+      Const:function(x)
+      {
+       return{
+        Base:[x],
+        Next:function()
+        {
+         return x;
+        }
+       };
+      },
+      Exponential:function(lambda)
+      {
+       return{
+        Base:[],
+        Next:function()
+        {
+         var p;
+         p=Random.StandardUniform().Next.call(null,null);
+         return-Math.log(1-p)/lambda;
+        }
+       };
+      },
+      Float:Runtime.Field(function()
+      {
+       return{
+        Base:[0],
+        Next:function()
+        {
+         var sign;
+         sign=Random.Boolean().Next.call(null,null)?1:-1;
+         return sign*Random.Exponential(0.1).Next.call(null,null);
+        }
+       };
+      }),
+      FloatExhaustive:Runtime.Field(function()
+      {
+       return{
+        Base:[0,NaN1,Infinity1,-Infinity1],
+        Next:function()
+        {
+         return Random.Float().Next.call(null,null);
+        }
+       };
+      }),
+      FloatWithin:function(low,hi)
+      {
+       return{
+        Base:[low,hi],
+        Next:function()
+        {
+         return low+(hi-low)*Math.random();
+        }
+       };
+      },
+      Implies:function(a,b)
+      {
+       return!a?true:b;
+      },
+      Imply:function(a,b)
+      {
+       return Random.Implies(a,b);
+      },
+      Int:Runtime.Field(function()
+      {
+       return{
+        Base:[0,1,-1],
+        Next:function()
+        {
+         return Math.round(Random.Float().Next.call(null,null));
+        }
+       };
+      }),
+      ListOf:function(generator)
+      {
+       var f,gen;
+       f=function(array)
+       {
+        return List.ofArray(array);
+       };
+       gen=Random.ArrayOf(generator);
+       return Random.Map(f,gen);
+      },
+      Map:function(f,gen)
+      {
+       var f1;
+       f1=gen.Next;
+       return{
+        Base:Arrays.map(f,gen.Base),
+        Next:function(x)
+        {
+         return f(f1(x));
+        }
+       };
+      },
+      Mix:function(a,b)
+      {
+       var left;
+       left={
+        contents:false
+       };
+       return{
+        Base:a.Base.concat(b.Base),
+        Next:function()
+        {
+         left.contents=!left.contents;
+         return left.contents?a.Next.call(null,null):b.Next.call(null,null);
+        }
+       };
+      },
+      Natural:Runtime.Field(function()
+      {
+       var g;
+       g=Random.Int().Next;
+       return{
+        Base:[0,1],
+        Next:function(x)
+        {
+         var value;
+         value=g(x);
+         return Math.abs(value);
+        }
+       };
+      }),
+      OneOf:function(seeds)
+      {
+       var index;
+       index=Random.Within(1,IntrinsicFunctionProxy.GetLength(seeds));
+       return{
+        Base:seeds,
+        Next:function()
+        {
+         return IntrinsicFunctionProxy.GetArray(seeds,index.Next.call(null,null)-1);
+        }
+       };
+      },
+      OptionOf:function(generator)
+      {
+       return Random.Mix(Random.Const({
+        $:0
+       }),Random.Map(function(arg0)
+       {
+        return{
+         $:1,
+         $0:arg0
+        };
+       },generator));
+      },
+      StandardUniform:Runtime.Field(function()
+      {
+       return{
+        Base:[],
+        Next:function()
+        {
+         return Math.random();
+        }
+       };
+      }),
+      String:Runtime.Field(function()
+      {
+       return{
+        Base:[""],
+        Next:function()
+        {
+         var len,cs;
+         len=Random.Natural().Next.call(null,null)%100;
+         cs=Arrays.init(len,function()
+         {
+          return Random.Int().Next.call(null,null)%256;
+         });
+         return String.fromCharCode.apply(undefined,cs);
+        }
+       };
+      }),
+      StringExhaustive:Runtime.Field(function()
+      {
+       return{
+        Base:[null,""],
+        Next:Random.String().Next
+       };
+      }),
+      Tuple2Of:function(a,b)
+      {
+       return{
+        Base:Seq.toArray(Seq.delay(function()
+        {
+         return Seq.collect(function(x)
+         {
+          return Seq.map(function(y)
+          {
+           return[x,y];
+          },b.Base);
+         },a.Base);
+        })),
+        Next:function()
+        {
+         return[a.Next.call(null,null),b.Next.call(null,null)];
+        }
+       };
+      },
+      Tuple3Of:function(a,b,c)
+      {
+       return{
+        Base:Seq.toArray(Seq.delay(function()
+        {
+         return Seq.collect(function(x)
+         {
+          return Seq.collect(function(y)
+          {
+           return Seq.map(function(z)
+           {
+            return[x,y,z];
+           },c.Base);
+          },b.Base);
+         },a.Base);
+        })),
+        Next:function()
+        {
+         return[a.Next.call(null,null),b.Next.call(null,null),c.Next.call(null,null)];
+        }
+       };
+      },
+      Within:function(low,hi)
+      {
+       return{
+        Base:[low,hi],
+        Next:function()
+        {
+         return Random.Natural().Next.call(null,null)%(hi-low)+low;
+        }
+       };
+      }
+     }
+    }
+   }
+  }
+ });
+ Runtime.OnInit(function()
+ {
+  WebSharper=Runtime.Safe(Global.IntelliFactory.WebSharper);
+  IntrinsicFunctionProxy=Runtime.Safe(WebSharper.IntrinsicFunctionProxy);
+  ok=Runtime.Safe(Global.ok);
+  Unchecked=Runtime.Safe(WebSharper.Unchecked);
+  console=Runtime.Safe(Global.console);
+  Testing=Runtime.Safe(WebSharper.Testing);
+  Pervasives=Runtime.Safe(Testing.Pervasives);
+  TestBuilder=Runtime.Safe(Pervasives.TestBuilder);
+  test=Runtime.Safe(Global.test);
+  Random=Runtime.Safe(Testing.Random);
+  Arrays=Runtime.Safe(WebSharper.Arrays);
+  Math=Runtime.Safe(Global.Math);
+  NaN1=Runtime.Safe(Global.NaN);
+  Infinity1=Runtime.Safe(Global.Infinity);
+  List=Runtime.Safe(WebSharper.List);
+  String=Runtime.Safe(Global.String);
+  return Seq=Runtime.Safe(WebSharper.Seq);
+ });
+ Runtime.OnLoad(function()
+ {
+  Random.StringExhaustive();
+  Random.String();
+  Random.StandardUniform();
+  Random.Natural();
+  Random.Int();
+  Random.FloatExhaustive();
+  Random.Float();
+  Random.Boolean();
+  return;
+ });
+}());
+
+(function()
+{
+ var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,Unchecked,Seq,Option,Control,Disposable,IntrinsicFunctionProxy,FSharpEvent,Util,Event,Event1,Collections,ResizeArray,ResizeArrayProxy,EventModule,HotStream,HotStream1,Operators,Error,Concurrency,setTimeout,clearTimeout,LinkedList,ListProxy,MailboxProcessor,Observable,Observer,Observable1,List,T,Observer1;
+ Runtime.Define(Global,{
+  IntelliFactory:{
+   WebSharper:{
+    Control:{
+     Disposable:{
+      Of:function(dispose)
+      {
+       return{
+        Dispose:dispose
+       };
+      }
+     },
+     Event:{
+      Event:Runtime.Class({
+       AddHandler:function(h)
+       {
+        return this.Handlers.Add(h);
+       },
+       RemoveHandler:function(h)
+       {
+        var predicate,objectArg,action,source,option;
+        predicate=function(y)
+        {
+         return Unchecked.Equals(h,y);
+        };
+        objectArg=this.Handlers;
+        action=function(arg00)
+        {
+         return objectArg.RemoveAt(arg00);
+        };
+        source=this.Handlers;
+        option=Seq.tryFindIndex(predicate,source);
+        return Option.iter(action,option);
+       },
+       Subscribe:function(observer)
+       {
+        var h,_this=this;
+        h=function(x)
+        {
+         return observer.OnNext(x);
+        };
+        this.AddHandler(h);
+        return Disposable.Of(function()
+        {
+         return _this.RemoveHandler(h);
+        });
+       },
+       Trigger:function(x)
+       {
+        var arr,idx,h;
+        arr=this.Handlers.ToArray();
+        for(idx=0;idx<=arr.length-1;idx++){
+         h=IntrinsicFunctionProxy.GetArray(arr,idx);
+         h(x);
+        }
+        return;
+       }
+      })
+     },
+     EventModule:{
+      Choose:function(c,e)
+      {
+       var r;
+       r=FSharpEvent.New();
+       Util.addListener(e,function(x)
+       {
+        var matchValue,_,y;
+        matchValue=c(x);
+        if(matchValue.$==0)
+         {
+          _=null;
+         }
+        else
+         {
+          y=matchValue.$0;
+          _=r.event.Trigger(y);
+         }
+        return _;
+       });
+       return r.event;
+      },
+      Filter:function(ok,e)
+      {
+       var r;
+       r=Runtime.New(Event1,{
+        Handlers:ResizeArrayProxy.New1()
+       });
+       Util.addListener(e,function(x)
+       {
+        return ok(x)?r.Trigger(x):null;
+       });
+       return r;
+      },
+      Map:function(f,e)
+      {
+       var r;
+       r=Runtime.New(Event1,{
+        Handlers:ResizeArrayProxy.New1()
+       });
+       Util.addListener(e,function(x)
+       {
+        return r.Trigger(f(x));
+       });
+       return r;
+      },
+      Merge:function(e1,e2)
+      {
+       var r;
+       r=Runtime.New(Event1,{
+        Handlers:ResizeArrayProxy.New1()
+       });
+       Util.addListener(e1,function(arg00)
+       {
+        return r.Trigger(arg00);
+       });
+       Util.addListener(e2,function(arg00)
+       {
+        return r.Trigger(arg00);
+       });
+       return r;
+      },
+      Pairwise:function(e)
+      {
+       var buf,ev;
+       buf={
+        contents:{
+         $:0
+        }
+       };
+       ev=Runtime.New(Event1,{
+        Handlers:ResizeArrayProxy.New1()
+       });
+       Util.addListener(e,function(x)
+       {
+        var matchValue,_,old;
+        matchValue=buf.contents;
+        if(matchValue.$==1)
+         {
+          old=matchValue.$0;
+          buf.contents={
+           $:1,
+           $0:x
+          };
+          _=ev.Trigger([old,x]);
+         }
+        else
+         {
+          _=void(buf.contents={
+           $:1,
+           $0:x
+          });
+         }
+        return _;
+       });
+       return ev;
+      },
+      Partition:function(f,e)
+      {
+       return[EventModule.Filter(f,e),EventModule.Filter(function(x)
+       {
+        var value;
+        value=f(x);
+        return!value;
+       },e)];
+      },
+      Scan:function(fold,seed,e)
+      {
+       var state,f;
+       state={
+        contents:seed
+       };
+       f=function(value)
+       {
+        state.contents=(fold(state.contents))(value);
+        return state.contents;
+       };
+       return EventModule.Map(f,e);
+      },
+      Split:function(f,e)
+      {
+       var chooser,chooser1;
+       chooser=function(x)
+       {
+        var matchValue,_,x1;
+        matchValue=f(x);
+        if(matchValue.$==0)
+         {
+          x1=matchValue.$0;
+          _={
+           $:1,
+           $0:x1
+          };
+         }
+        else
+         {
+          _={
+           $:0
+          };
+         }
+        return _;
+       };
+       chooser1=function(x)
+       {
+        var matchValue,_,x1;
+        matchValue=f(x);
+        if(matchValue.$==1)
+         {
+          x1=matchValue.$0;
+          _={
+           $:1,
+           $0:x1
+          };
+         }
+        else
+         {
+          _={
+           $:0
+          };
+         }
+        return _;
+       };
+       return[EventModule.Choose(chooser,e),EventModule.Choose(chooser1,e)];
+      }
+     },
+     FSharpEvent:Runtime.Class({},{
+      New:function()
+      {
+       var r;
+       r=Runtime.New(this,{});
+       r.event=Runtime.New(Event1,{
+        Handlers:ResizeArrayProxy.New1()
+       });
+       return r;
+      }
+     }),
+     HotStream:{
+      HotStream:Runtime.Class({
+       Subscribe:function(o)
+       {
+        var disp,_this;
+        this.Latest.contents.$==1?o.OnNext(this.Latest.contents.$0):null;
+        _this=this.Event;
+        disp=Util.subscribeTo(_this.event,function(v)
+        {
+         return o.OnNext(v);
+        });
+        return disp;
+       },
+       Trigger:function(v)
+       {
+        var _this;
+        this.Latest.contents={
+         $:1,
+         $0:v
+        };
+        _this=this.Event;
+        return _this.event.Trigger(v);
+       }
+      },{
+       New:function()
+       {
+        return Runtime.New(HotStream1,{
+         Latest:{
+          contents:{
+           $:0
+          }
+         },
+         Event:FSharpEvent.New()
+        });
+       }
+      })
+     },
+     MailboxProcessor:Runtime.Class({
+      PostAndAsyncReply:function(msgf,timeout)
+      {
+       var f,_this=this;
+       f=function()
+       {
+        var x,f1;
+        x=_this.PostAndTryAsyncReply(msgf,timeout);
+        f1=function(_arg4)
+        {
+         var x1,_,x2;
+         if(_arg4.$==1)
+          {
+           x2=_arg4.$0;
+           _=x2;
+          }
+         else
+          {
+           _=Operators.Raise(new Error("TimeoutException"));
+          }
+         x1=_;
+         return Concurrency.Return(x1);
+        };
+        return Concurrency.Bind(x,f1);
+       };
+       return Concurrency.Delay(f);
+      },
+      PostAndTryAsyncReply:function(msgf,timeout)
+      {
+       var timeout1,arg00,_this=this;
+       timeout1=Operators.DefaultArg(timeout,this.get_DefaultTimeout());
+       arg00=Runtime.Tupled(function(tupledArg)
+       {
+        var ok,_arg3,_arg4,_,arg001,value,waiting,arg002,value1,value2;
+        ok=tupledArg[0];
+        _arg3=tupledArg[1];
+        _arg4=tupledArg[2];
+        if(timeout1<0)
+         {
+          arg001=msgf(function(x)
+          {
+           return ok({
+            $:1,
+            $0:x
+           });
+          });
+          value=_this.mailbox.AddLast(arg001);
+          _=_this.resume();
+         }
+        else
+         {
+          waiting={
+           contents:true
+          };
+          arg002=msgf(function(res)
+          {
+           var _1;
+           if(waiting.contents)
+            {
+             waiting.contents=false;
+             _1=ok({
+              $:1,
+              $0:res
+             });
+            }
+           else
+            {
+             _1=null;
+            }
+           return _1;
+          });
+          value1=_this.mailbox.AddLast(arg002);
+          _this.resume();
+          value2=setTimeout(function()
+          {
+           var _1;
+           if(waiting.contents)
+            {
+             waiting.contents=false;
+             _1=ok({
+              $:0
+             });
+            }
+           else
+            {
+             _1=null;
+            }
+           return _1;
+          },timeout1);
+          _=void value2;
+         }
+        return _;
+       });
+       return Concurrency.FromContinuations(arg00);
+      },
+      Receive:function(timeout)
+      {
+       var f,_this=this;
+       f=function()
+       {
+        var x,f1;
+        x=_this.TryReceive(timeout);
+        f1=function(_arg3)
+        {
+         var x1,_,x2;
+         if(_arg3.$==1)
+          {
+           x2=_arg3.$0;
+           _=x2;
+          }
+         else
+          {
+           _=Operators.Raise(new Error("TimeoutException"));
+          }
+         x1=_;
+         return Concurrency.Return(x1);
+        };
+        return Concurrency.Bind(x,f1);
+       };
+       return Concurrency.Delay(f);
+      },
+      Scan:function(scanner,timeout)
+      {
+       var f,_this=this;
+       f=function()
+       {
+        var x,f1;
+        x=_this.TryScan(scanner,timeout);
+        f1=function(_arg8)
+        {
+         var x1,_,x2;
+         if(_arg8.$==1)
+          {
+           x2=_arg8.$0;
+           _=x2;
+          }
+         else
+          {
+           _=Operators.Raise(new Error("TimeoutException"));
+          }
+         x1=_;
+         return Concurrency.Return(x1);
+        };
+        return Concurrency.Bind(x,f1);
+       };
+       return Concurrency.Delay(f);
+      },
+      Start:function()
+      {
+       var _,f,_this=this,a1;
+       if(this.started)
+        {
+         _=Operators.FailWith("The MailboxProcessor has already been started.");
+        }
+       else
+        {
+         this.started=true;
+         f=function()
+         {
+          var f1,a,f3;
+          f1=function()
+          {
+           var x,f2;
+           x=_this.initial.call(null,_this);
+           f2=function()
+           {
+            return Concurrency.Return(null);
+           };
+           return Concurrency.Bind(x,f2);
+          };
+          a=Concurrency.Delay(f1);
+          f3=function(_arg2)
+          {
+           var _this1;
+           _this1=_this.errorEvent;
+           _this1.event.Trigger(_arg2);
+           return Concurrency.Return(null);
+          };
+          return Concurrency.TryWith(a,f3);
+         };
+         a1=Concurrency.Delay(f);
+         _=_this.startAsync(a1);
+        }
+       return _;
+      },
+      TryReceive:function(timeout)
+      {
+       var timeout1,arg00,_this=this;
+       timeout1=Operators.DefaultArg(timeout,this.get_DefaultTimeout());
+       arg00=Runtime.Tupled(function(tupledArg)
+       {
+        var ok,_arg1,_arg2,_,_1,f,arg01,waiting,pending,f1,arg02,arg03;
+        ok=tupledArg[0];
+        _arg1=tupledArg[1];
+        _arg2=tupledArg[2];
+        if(Unchecked.Equals(_this.mailbox.get_First(),null))
+         {
+          if(timeout1<0)
+           {
+            f=function()
+            {
+             var arg0;
+             arg0=_this.dequeue();
+             ok({
+              $:1,
+              $0:arg0
+             });
+             return Concurrency.Return(null);
+            };
+            arg01=Concurrency.Delay(f);
+            _1=void(_this.savedCont={
+             $:1,
+             $0:arg01
+            });
+           }
+          else
+           {
+            waiting={
+             contents:true
+            };
+            pending=setTimeout(function()
+            {
+             var _2;
+             if(waiting.contents)
+              {
+               waiting.contents=false;
+               _this.savedCont={
+                $:0
+               };
+               _2=ok({
+                $:0
+               });
+              }
+             else
+              {
+               _2=null;
+              }
+             return _2;
+            },timeout1);
+            f1=function()
+            {
+             var _2,arg0;
+             if(waiting.contents)
+              {
+               waiting.contents=false;
+               clearTimeout(pending);
+               arg0=_this.dequeue();
+               ok({
+                $:1,
+                $0:arg0
+               });
+               _2=Concurrency.Return(null);
+              }
+             else
+              {
+               _2=Concurrency.Return(null);
+              }
+             return _2;
+            };
+            arg02=Concurrency.Delay(f1);
+            _1=void(_this.savedCont={
+             $:1,
+             $0:arg02
+            });
+           }
+          _=_1;
+         }
+        else
+         {
+          arg03=_this.dequeue();
+          _=ok({
+           $:1,
+           $0:arg03
+          });
+         }
+        return _;
+       });
+       return Concurrency.FromContinuations(arg00);
+      },
+      TryScan:function(scanner,timeout)
+      {
+       var timeout1,f,_this=this;
+       timeout1=Operators.DefaultArg(timeout,this.get_DefaultTimeout());
+       f=function()
+       {
+        var scanInbox,matchValue1,_1,found1,f1,arg00,x1;
+        scanInbox=function()
+        {
+         var m,found,matchValue,_;
+         m=_this.mailbox.get_First();
+         found={
+          $:0
+         };
+         while(!Unchecked.Equals(m,null))
+          {
+           matchValue=scanner(m.v);
+           if(matchValue.$==0)
+            {
+             _=m=m.n;
+            }
+           else
+            {
+             _this.mailbox.Remove(m);
+             m=null;
+             _=found=matchValue;
+            }
+          }
+         return found;
+        };
+        matchValue1=scanInbox(null);
+        if(matchValue1.$==1)
+         {
+          found1=matchValue1.$0;
+          f1=function(_arg5)
+          {
+           var x;
+           x={
+            $:1,
+            $0:_arg5
+           };
+           return Concurrency.Return(x);
+          };
+          _1=Concurrency.Bind(found1,f1);
+         }
+        else
+         {
+          arg00=Runtime.Tupled(function(tupledArg)
+          {
+           var ok,_arg5,_arg6,_,scanNext,waiting,pending,scanNext1;
+           ok=tupledArg[0];
+           _arg5=tupledArg[1];
+           _arg6=tupledArg[2];
+           if(timeout1<0)
+            {
+             scanNext=function()
+             {
+              var f2,arg0;
+              f2=function()
+              {
+               var matchValue,_2,c,f3;
+               matchValue=scanner(_this.mailbox.get_First().v);
+               if(matchValue.$==1)
+                {
+                 c=matchValue.$0;
+                 _this.mailbox.RemoveFirst();
+                 f3=function(_arg61)
+                 {
+                  ok({
+                   $:1,
+                   $0:_arg61
+                  });
+                  return Concurrency.Return(null);
+                 };
+                 _2=Concurrency.Bind(c,f3);
+                }
+               else
+                {
+                 scanNext(null);
+                 _2=Concurrency.Return(null);
+                }
+               return _2;
+              };
+              arg0=Concurrency.Delay(f2);
+              _this.savedCont={
+               $:1,
+               $0:arg0
+              };
+              return;
+             };
+             _=scanNext(null);
+            }
+           else
+            {
+             waiting={
+              contents:true
+             };
+             pending=setTimeout(function()
+             {
+              var _2;
+              if(waiting.contents)
+               {
+                waiting.contents=false;
+                _this.savedCont={
+                 $:0
+                };
+                _2=ok({
+                 $:0
+                });
+               }
+              else
+               {
+                _2=null;
+               }
+              return _2;
+             },timeout1);
+             scanNext1=function()
+             {
+              var f2,arg0;
+              f2=function()
+              {
+               var matchValue,_2,c,f3;
+               matchValue=scanner(_this.mailbox.get_First().v);
+               if(matchValue.$==1)
+                {
+                 c=matchValue.$0;
+                 _this.mailbox.RemoveFirst();
+                 f3=function(_arg7)
+                 {
+                  var _3;
+                  if(waiting.contents)
+                   {
+                    waiting.contents=false;
+                    clearTimeout(pending);
+                    ok({
+                     $:1,
+                     $0:_arg7
+                    });
+                    _3=Concurrency.Return(null);
+                   }
+                  else
+                   {
+                    _3=Concurrency.Return(null);
+                   }
+                  return _3;
+                 };
+                 _2=Concurrency.Bind(c,f3);
+                }
+               else
+                {
+                 scanNext1(null);
+                 _2=Concurrency.Return(null);
+                }
+               return _2;
+              };
+              arg0=Concurrency.Delay(f2);
+              _this.savedCont={
+               $:1,
+               $0:arg0
+              };
+              return;
+             };
+             _=scanNext1(null);
+            }
+           return _;
+          });
+          x1=Concurrency.FromContinuations(arg00);
+          _1=x1;
+         }
+        return _1;
+       };
+       return Concurrency.Delay(f);
+      },
+      dequeue:function()
+      {
+       var f;
+       f=this.mailbox.get_First().v;
+       this.mailbox.RemoveFirst();
+       return f;
+      },
+      get_CurrentQueueLength:function()
+      {
+       return this.mailbox.get_Count();
+      },
+      get_DefaultTimeout:function()
+      {
+       return this["DefaultTimeout@"];
+      },
+      get_Error:function()
+      {
+       var _this;
+       _this=this.errorEvent;
+       return _this.event;
+      },
+      resume:function()
+      {
+       var matchValue,_,c;
+       matchValue=this.savedCont;
+       if(matchValue.$==1)
+        {
+         c=matchValue.$0;
+         this.savedCont={
+          $:0
+         };
+         _=this.startAsync(c);
+        }
+       else
+        {
+         _=null;
+        }
+       return _;
+      },
+      set_DefaultTimeout:function(v)
+      {
+       this["DefaultTimeout@"]=v;
+       return;
+      },
+      startAsync:function(a)
+      {
+       var t;
+       t=this.token;
+       return Concurrency.Start(a,t);
+      }
+     },{
+      New:function(initial,token)
+      {
+       var r,matchValue,_,ct,callback,value;
+       r=Runtime.New(this,{});
+       r.initial=initial;
+       r.token=token;
+       r.started=false;
+       r.errorEvent=FSharpEvent.New();
+       r.mailbox=ListProxy.New();
+       r.savedCont={
+        $:0
+       };
+       matchValue=r.token;
+       if(matchValue.$==0)
+        {
+         _=null;
+        }
+       else
+        {
+         ct=matchValue.$0;
+         callback=function()
+         {
+          return r.resume();
+         };
+         value=Concurrency.Register(ct,function()
+         {
+          return callback();
+         });
+         _=void value;
+        }
+       r["DefaultTimeout@"]=-1;
+       return r;
+      },
+      Start:function(initial,token)
+      {
+       var mb;
+       mb=MailboxProcessor.New(initial,token);
+       mb.Start();
+       return mb;
+      }
+     }),
+     Observable:{
+      Aggregate:function(io,seed,fold)
+      {
+       var f;
+       f=function(o1)
+       {
+        var state,on,arg001;
+        state={
+         contents:seed
+        };
+        on=function(v)
+        {
+         return Observable.Protect(function()
+         {
+          return(fold(state.contents))(v);
+         },function(s)
+         {
+          state.contents=s;
+          return o1.OnNext(s);
+         },function(arg00)
+         {
+          return o1.OnError(arg00);
+         });
+        };
+        arg001=Observer.New(on,function(arg00)
+        {
+         return o1.OnError(arg00);
+        },function()
+        {
+         return o1.OnCompleted();
+        });
+        return io.Subscribe(arg001);
+       };
+       return Observable.New(f);
+      },
+      Choose:function(f,io)
+      {
+       var f1;
+       f1=function(o1)
+       {
+        var on,arg001;
+        on=function(v)
+        {
+         var action;
+         action=function(arg00)
+         {
+          return o1.OnNext(arg00);
+         };
+         return Observable.Protect(function()
+         {
+          return f(v);
+         },function(option)
+         {
+          return Option.iter(action,option);
+         },function(arg00)
+         {
+          return o1.OnError(arg00);
+         });
+        };
+        arg001=Observer.New(on,function(arg00)
+        {
+         return o1.OnError(arg00);
+        },function()
+        {
+         return o1.OnCompleted();
+        });
+        return io.Subscribe(arg001);
+       };
+       return Observable.New(f1);
+      },
+      CombineLatest:function(io1,io2,f)
+      {
+       var f1;
+       f1=function(o)
+       {
+        var lv1,lv2,update,onNext,o1,onNext1,o2,d1,d2;
+        lv1={
+         contents:{
+          $:0
+         }
+        };
+        lv2={
+         contents:{
+          $:0
+         }
+        };
+        update=function()
+        {
+         var matchValue,_,_1,v1,v2;
+         matchValue=[lv1.contents,lv2.contents];
+         if(matchValue[0].$==1)
+          {
+           if(matchValue[1].$==1)
+            {
+             v1=matchValue[0].$0;
+             v2=matchValue[1].$0;
+             _1=Observable.Protect(function()
+             {
+              return(f(v1))(v2);
+             },function(arg00)
+             {
+              return o.OnNext(arg00);
+             },function(arg00)
+             {
+              return o.OnError(arg00);
+             });
+            }
+           else
+            {
+             _1=null;
+            }
+           _=_1;
+          }
+         else
+          {
+           _=null;
+          }
+         return _;
+        };
+        onNext=function(x)
+        {
+         lv1.contents={
+          $:1,
+          $0:x
+         };
+         return update(null);
+        };
+        o1=Observer.New(onNext,function()
+        {
+        },function()
+        {
+        });
+        onNext1=function(y)
+        {
+         lv2.contents={
+          $:1,
+          $0:y
+         };
+         return update(null);
+        };
+        o2=Observer.New(onNext1,function()
+        {
+        },function()
+        {
+        });
+        d1=io1.Subscribe(o1);
+        d2=io2.Subscribe(o2);
+        return Disposable.Of(function()
+        {
+         d1.Dispose();
+         return d2.Dispose();
+        });
+       };
+       return Observable.New(f1);
+      },
+      Concat:function(io1,io2)
+      {
+       var f;
+       f=function(o)
+       {
+        var innerDisp,outerDisp,dispose;
+        innerDisp={
+         contents:{
+          $:0
+         }
+        };
+        outerDisp=io1.Subscribe(Observer.New(function(arg00)
+        {
+         return o.OnNext(arg00);
+        },function()
+        {
+        },function()
+        {
+         var arg0;
+         arg0=io2.Subscribe(o);
+         innerDisp.contents={
+          $:1,
+          $0:arg0
+         };
+        }));
+        dispose=function()
+        {
+         innerDisp.contents.$==1?innerDisp.contents.$0.Dispose():null;
+         return outerDisp.Dispose();
+        };
+        return Disposable.Of(dispose);
+       };
+       return Observable.New(f);
+      },
+      Drop:function(count,io)
+      {
+       var f;
+       f=function(o1)
+       {
+        var index,on,arg00;
+        index={
+         contents:0
+        };
+        on=function(v)
+        {
+         Operators.Increment(index);
+         return index.contents>count?o1.OnNext(v):null;
+        };
+        arg00=Observer.New(on,function(arg001)
+        {
+         return o1.OnError(arg001);
+        },function()
+        {
+         return o1.OnCompleted();
+        });
+        return io.Subscribe(arg00);
+       };
+       return Observable.New(f);
+      },
+      Filter:function(f,io)
+      {
+       var f1;
+       f1=function(o1)
+       {
+        var on,arg001;
+        on=function(v)
+        {
+         var action;
+         action=function(arg00)
+         {
+          return o1.OnNext(arg00);
+         };
+         return Observable.Protect(function()
+         {
+          return f(v)?{
+           $:1,
+           $0:v
+          }:{
+           $:0
+          };
+         },function(option)
+         {
+          return Option.iter(action,option);
+         },function(arg00)
+         {
+          return o1.OnError(arg00);
+         });
+        };
+        arg001=Observer.New(on,function(arg00)
+        {
+         return o1.OnError(arg00);
+        },function()
+        {
+         return o1.OnCompleted();
+        });
+        return io.Subscribe(arg001);
+       };
+       return Observable.New(f1);
+      },
+      Map:function(f,io)
+      {
+       var f1;
+       f1=function(o1)
+       {
+        var on,arg001;
+        on=function(v)
+        {
+         return Observable.Protect(function()
+         {
+          return f(v);
+         },function(arg00)
+         {
+          return o1.OnNext(arg00);
+         },function(arg00)
+         {
+          return o1.OnError(arg00);
+         });
+        };
+        arg001=Observer.New(on,function(arg00)
+        {
+         return o1.OnError(arg00);
+        },function()
+        {
+         return o1.OnCompleted();
+        });
+        return io.Subscribe(arg001);
+       };
+       return Observable.New(f1);
+      },
+      Merge:function(io1,io2)
+      {
+       var f;
+       f=function(o)
+       {
+        var completed1,completed2,arg00,disp1,arg002,disp2;
+        completed1={
+         contents:false
+        };
+        completed2={
+         contents:false
+        };
+        arg00=Observer.New(function(arg001)
+        {
+         return o.OnNext(arg001);
+        },function()
+        {
+        },function()
+        {
+         completed1.contents=true;
+         return(completed1.contents?completed2.contents:false)?o.OnCompleted():null;
+        });
+        disp1=io1.Subscribe(arg00);
+        arg002=Observer.New(function(arg001)
+        {
+         return o.OnNext(arg001);
+        },function()
+        {
+        },function()
+        {
+         completed2.contents=true;
+         return(completed1.contents?completed2.contents:false)?o.OnCompleted():null;
+        });
+        disp2=io2.Subscribe(arg002);
+        return Disposable.Of(function()
+        {
+         disp1.Dispose();
+         return disp2.Dispose();
+        });
+       };
+       return Observable.New(f);
+      },
+      Never:function()
+      {
+       return Observable.New(function()
+       {
+        return Disposable.Of(function()
+        {
+        });
+       });
+      },
+      New:function(f)
+      {
+       return Runtime.New(Observable1,{
+        Subscribe1:f
+       });
+      },
+      Observable:Runtime.Class({
+       Subscribe:function(observer)
+       {
+        return this.Subscribe1.call(null,observer);
+       }
+      }),
+      Of:function(f)
+      {
+       return Observable.New(function(o)
+       {
+        return Disposable.Of(f(function(x)
+        {
+         return o.OnNext(x);
+        }));
+       });
+      },
+      Protect:function(f,succeed,fail)
+      {
+       var matchValue,_,e,_1,e1,x;
+       try
+       {
+        _={
+         $:0,
+         $0:f(null)
+        };
+       }
+       catch(e)
+       {
+        _={
+         $:1,
+         $0:e
+        };
+       }
+       matchValue=_;
+       if(matchValue.$==1)
+        {
+         e1=matchValue.$0;
+         _1=fail(e1);
+        }
+       else
+        {
+         x=matchValue.$0;
+         _1=succeed(x);
+        }
+       return _1;
+      },
+      Range:function(start,count)
+      {
+       var f;
+       f=function(o)
+       {
+        var i;
+        for(i=start;i<=start+count;i++){
+         o.OnNext(i);
+        }
+        return Disposable.Of(function()
+        {
+        });
+       };
+       return Observable.New(f);
+      },
+      Return:function(x)
+      {
+       var f;
+       f=function(o)
+       {
+        o.OnNext(x);
+        o.OnCompleted();
+        return Disposable.Of(function()
+        {
+        });
+       };
+       return Observable.New(f);
+      },
+      SelectMany:function(io)
+      {
+       return Observable.New(function(o)
+       {
+        var disp,d;
+        disp={
+         contents:function()
+         {
+         }
+        };
+        d=Util.subscribeTo(io,function(o1)
+        {
+         var d1;
+         d1=Util.subscribeTo(o1,function(v)
+         {
+          return o.OnNext(v);
+         });
+         disp.contents=function()
+         {
+          disp.contents.call(null,null);
+          return d1.Dispose();
+         };
+         return;
+        });
+        return Disposable.Of(function()
+        {
+         disp.contents.call(null,null);
+         return d.Dispose();
+        });
+       });
+      },
+      Sequence:function(ios)
+      {
+       var sequence;
+       sequence=function(ios1)
+       {
+        var _,xs,x,rest;
+        if(ios1.$==1)
+         {
+          xs=ios1.$1;
+          x=ios1.$0;
+          rest=sequence(xs);
+          _=Observable.CombineLatest(x,rest,function(x1)
+          {
+           return function(y)
+           {
+            return Runtime.New(T,{
+             $:1,
+             $0:x1,
+             $1:y
+            });
+           };
+          });
+         }
+        else
+         {
+          _=Observable.Return(Runtime.New(T,{
+           $:0
+          }));
+         }
+        return _;
+       };
+       return sequence(List.ofSeq(ios));
+      },
+      Switch:function(io)
+      {
+       return Observable.New(function(o)
+       {
+        var index,disp,disp1;
+        index={
+         contents:0
+        };
+        disp={
+         contents:{
+          $:0
+         }
+        };
+        disp1=Util.subscribeTo(io,function(o1)
+        {
+         var currentIndex,arg0,d;
+         Operators.Increment(index);
+         disp.contents.$==1?disp.contents.$0.Dispose():null;
+         currentIndex=index.contents;
+         arg0=Util.subscribeTo(o1,function(v)
+         {
+          return currentIndex===index.contents?o.OnNext(v):null;
+         });
+         d={
+          $:1,
+          $0:arg0
+         };
+         disp.contents=d;
+         return;
+        });
+        return disp1;
+       });
+      }
+     },
+     ObservableModule:{
+      Pairwise:function(e)
+      {
+       var f;
+       f=function(o1)
+       {
+        var last,on,arg00;
+        last={
+         contents:{
+          $:0
+         }
+        };
+        on=function(v)
+        {
+         var matchValue,_,l;
+         matchValue=last.contents;
+         if(matchValue.$==1)
+          {
+           l=matchValue.$0;
+           _=o1.OnNext([l,v]);
+          }
+         else
+          {
+           _=null;
+          }
+         last.contents={
+          $:1,
+          $0:v
+         };
+         return;
+        };
+        arg00=Observer.New(on,function(arg001)
+        {
+         return o1.OnError(arg001);
+        },function()
+        {
+         return o1.OnCompleted();
+        });
+        return e.Subscribe(arg00);
+       };
+       return Observable.New(f);
+      },
+      Partition:function(f,e)
+      {
+       var ok;
+       ok=function(x)
+       {
+        var value;
+        value=f(x);
+        return!value;
+       };
+       return[Observable.Filter(f,e),Observable.Filter(ok,e)];
+      },
+      Scan:function(fold,seed,e)
+      {
+       var f;
+       f=function(o1)
+       {
+        var state,on,arg001;
+        state={
+         contents:seed
+        };
+        on=function(v)
+        {
+         return Observable.Protect(function()
+         {
+          return(fold(state.contents))(v);
+         },function(s)
+         {
+          state.contents=s;
+          return o1.OnNext(s);
+         },function(arg00)
+         {
+          return o1.OnError(arg00);
+         });
+        };
+        arg001=Observer.New(on,function(arg00)
+        {
+         return o1.OnError(arg00);
+        },function()
+        {
+         return o1.OnCompleted();
+        });
+        return e.Subscribe(arg001);
+       };
+       return Observable.New(f);
+      },
+      Split:function(f,e)
+      {
+       var chooser,left,chooser1,right;
+       chooser=function(x)
+       {
+        var matchValue,_,x1;
+        matchValue=f(x);
+        if(matchValue.$==0)
+         {
+          x1=matchValue.$0;
+          _={
+           $:1,
+           $0:x1
+          };
+         }
+        else
+         {
+          _={
+           $:0
+          };
+         }
+        return _;
+       };
+       left=Observable.Choose(chooser,e);
+       chooser1=function(x)
+       {
+        var matchValue,_,x1;
+        matchValue=f(x);
+        if(matchValue.$==1)
+         {
+          x1=matchValue.$0;
+          _={
+           $:1,
+           $0:x1
+          };
+         }
+        else
+         {
+          _={
+           $:0
+          };
+         }
+        return _;
+       };
+       right=Observable.Choose(chooser1,e);
+       return[left,right];
+      }
+     },
+     Observer:{
+      New:function(f,e,c)
+      {
+       return Runtime.New(Observer1,{
+        onNext:f,
+        onError:e,
+        onCompleted:c
+       });
+      },
+      Observer:Runtime.Class({
+       OnCompleted:function()
+       {
+        return this.onCompleted.call(null,null);
+       },
+       OnError:function(e)
+       {
+        return this.onError.call(null,e);
+       },
+       OnNext:function(x)
+       {
+        return this.onNext.call(null,x);
+       }
+      }),
+      Of:function(f)
+      {
+       return Runtime.New(Observer1,{
+        onNext:function(x)
+        {
+         return f(x);
+        },
+        onError:function(x)
+        {
+         return Operators.Raise(x);
+        },
+        onCompleted:function()
+        {
+         return null;
+        }
+       });
+      }
+     }
+    }
+   }
+  }
+ });
+ Runtime.OnInit(function()
+ {
+  WebSharper=Runtime.Safe(Global.IntelliFactory.WebSharper);
+  Unchecked=Runtime.Safe(WebSharper.Unchecked);
+  Seq=Runtime.Safe(WebSharper.Seq);
+  Option=Runtime.Safe(WebSharper.Option);
+  Control=Runtime.Safe(WebSharper.Control);
+  Disposable=Runtime.Safe(Control.Disposable);
+  IntrinsicFunctionProxy=Runtime.Safe(WebSharper.IntrinsicFunctionProxy);
+  FSharpEvent=Runtime.Safe(Control.FSharpEvent);
+  Util=Runtime.Safe(WebSharper.Util);
+  Event=Runtime.Safe(Control.Event);
+  Event1=Runtime.Safe(Event.Event);
+  Collections=Runtime.Safe(WebSharper.Collections);
+  ResizeArray=Runtime.Safe(Collections.ResizeArray);
+  ResizeArrayProxy=Runtime.Safe(ResizeArray.ResizeArrayProxy);
+  EventModule=Runtime.Safe(Control.EventModule);
+  HotStream=Runtime.Safe(Control.HotStream);
+  HotStream1=Runtime.Safe(HotStream.HotStream);
+  Operators=Runtime.Safe(WebSharper.Operators);
+  Error=Runtime.Safe(Global.Error);
+  Concurrency=Runtime.Safe(WebSharper.Concurrency);
+  setTimeout=Runtime.Safe(Global.setTimeout);
+  clearTimeout=Runtime.Safe(Global.clearTimeout);
+  LinkedList=Runtime.Safe(Collections.LinkedList);
+  ListProxy=Runtime.Safe(LinkedList.ListProxy);
+  MailboxProcessor=Runtime.Safe(Control.MailboxProcessor);
+  Observable=Runtime.Safe(Control.Observable);
+  Observer=Runtime.Safe(Control.Observer);
+  Observable1=Runtime.Safe(Observable.Observable);
+  List=Runtime.Safe(WebSharper.List);
+  T=Runtime.Safe(List.T);
+  return Observer1=Runtime.Safe(Observer.Observer);
+ });
+ Runtime.OnLoad(function()
+ {
+  return;
+ });
+}());
+
+(function()
+{
+ var Global=this,Runtime=this.IntelliFactory.Runtime,Reactive,Disposable,HotStream,WebSharper,Control,FSharpEvent,Observer,Observable,Util,Collections,Dictionary,Operators,Seq,Reactive1,Reactive2,List,T;
+ Runtime.Define(Global,{
+  IntelliFactory:{
+   Reactive:{
+    Disposable:Runtime.Class({
+     Dispose:function()
+     {
+      return this.Dispose1.call(null,null);
+     }
+    },{
+     New:function(d)
+     {
+      return Runtime.New(Disposable,{
+       Dispose1:d
+      });
+     }
+    }),
+    HotStream:Runtime.Class({
+     Subscribe:function(o)
+     {
+      var _this;
+      this.Latest.contents.$==1?o.OnNext(this.Latest.contents.$0):null;
+      _this=this.Event;
+      return _this.event.Subscribe(o);
+     },
+     Trigger:function(v)
+     {
+      var _this;
+      this.Latest.contents={
+       $:1,
+       $0:v
+      };
+      _this=this.Event;
+      return _this.event.Trigger(v);
+     }
+    },{
+     New:function(x)
+     {
+      var value;
+      value={
+       $:1,
+       $0:x
+      };
+      return Runtime.New(HotStream,{
+       Latest:{
+        contents:value
+       },
+       Event:FSharpEvent.New()
+      });
+     },
+     New1:function()
+     {
+      return Runtime.New(HotStream,{
+       Latest:{
+        contents:{
+         $:0
+        }
+       },
+       Event:FSharpEvent.New()
+      });
+     }
+    }),
+    Observable:Runtime.Class({
+     Subscribe:function(o)
+     {
+      return this.OnSubscribe.call(null,o);
+     },
+     SubscribeWith:function(onNext,onComplete)
+     {
+      return this.OnSubscribe.call(null,Observer.New(onNext,onComplete));
+     }
+    },{
+     New:function(f)
+     {
+      return Runtime.New(Observable,{
+       OnSubscribe:f
+      });
+     }
+    }),
+    Observer:Runtime.Class({
+     OnCompleted:function()
+     {
+      return this.OnCompleted1.call(null,null);
+     },
+     OnError:function()
+     {
+      return null;
+     },
+     OnNext:function(t)
+     {
+      return this.OnNext1.call(null,t);
+     }
+    },{
+     New:function(onNext,onComplete)
+     {
+      return Runtime.New(Observer,{
+       OnNext1:onNext,
+       OnCompleted1:onComplete
+      });
+     }
+    }),
+    Reactive:{
+     Aggregate:function(io,seed,acc)
+     {
+      return Observable.New(function(o)
+      {
+       var state;
+       state={
+        contents:seed
+       };
+       return Util.subscribeTo(io,function(value)
+       {
+        state.contents=(acc(state.contents))(value);
+        return o.OnNext(state.contents);
+       });
+      });
+     },
+     Choose:function(io,f)
+     {
+      var arg00;
+      arg00=function(o1)
+      {
+       return Util.subscribeTo(io,function(v)
+       {
+        var matchValue,_,v1;
+        matchValue=f(v);
+        if(matchValue.$==0)
+         {
+          _=null;
+         }
+        else
+         {
+          v1=matchValue.$0;
+          _=o1.OnNext(v1);
+         }
+        return _;
+       });
+      };
+      return Observable.New(arg00);
+     },
+     CollectLatest:function(outer)
+     {
+      return Observable.New(function(o)
+      {
+       var dict,index;
+       dict=Dictionary.New2();
+       index={
+        contents:0
+       };
+       return Util.subscribeTo(outer,function(inner)
+       {
+        var currentIndex,value;
+        Operators.Increment(index);
+        currentIndex=index.contents;
+        value=Util.subscribeTo(inner,function(value1)
+        {
+         var arg00;
+         dict.set_Item(currentIndex,value1);
+         arg00=Seq.delay(function()
+         {
+          return Seq.map(function(pair)
+          {
+           return pair.V;
+          },dict);
+         });
+         return o.OnNext(arg00);
+        });
+        return;
+       });
+      });
+     },
+     CombineLatest:function(io1,io2,f)
+     {
+      var arg00;
+      arg00=function(o)
+      {
+       var lv1,lv2,update,onNext,arg10,o1,onNext1,arg101,o2,d1,d2;
+       lv1={
+        contents:{
+         $:0
+        }
+       };
+       lv2={
+        contents:{
+         $:0
+        }
+       };
+       update=function()
+       {
+        var matchValue,_,_1,v1,v2;
+        matchValue=[lv1.contents,lv2.contents];
+        if(matchValue[0].$==1)
+         {
+          if(matchValue[1].$==1)
+           {
+            v1=matchValue[0].$0;
+            v2=matchValue[1].$0;
+            _1=o.OnNext((f(v1))(v2));
+           }
+          else
+           {
+            _1=null;
+           }
+          _=_1;
+         }
+        else
+         {
+          _=null;
+         }
+        return _;
+       };
+       onNext=function(x)
+       {
+        lv1.contents={
+         $:1,
+         $0:x
+        };
+        return update(null);
+       };
+       arg10=function()
+       {
+       };
+       o1=Observer.New(onNext,arg10);
+       onNext1=function(y)
+       {
+        lv2.contents={
+         $:1,
+         $0:y
+        };
+        return update(null);
+       };
+       arg101=function()
+       {
+       };
+       o2=Observer.New(onNext1,arg101);
+       d1=io1.Subscribe(o1);
+       d2=io2.Subscribe(o2);
+       return Disposable.New(function()
+       {
+        d1.Dispose();
+        return d2.Dispose();
+       });
+      };
+      return Observable.New(arg00);
+     },
+     Concat:function(io1,io2)
+     {
+      var arg00;
+      arg00=function(o)
+      {
+       var innerDisp,arg001,arg10,arg003,outerDisp;
+       innerDisp={
+        contents:{
+         $:0
+        }
+       };
+       arg001=function(arg002)
+       {
+        return o.OnNext(arg002);
+       };
+       arg10=function()
+       {
+        innerDisp.contents={
+         $:1,
+         $0:io2.Subscribe(o)
+        };
+       };
+       arg003=Observer.New(arg001,arg10);
+       outerDisp=io1.Subscribe(arg003);
+       return Disposable.New(function()
+       {
+        innerDisp.contents.$==1?innerDisp.contents.$0.Dispose():null;
+        return outerDisp.Dispose();
+       });
+      };
+      return Observable.New(arg00);
+     },
+     Default:Runtime.Field(function()
+     {
+      return Reactive2.New();
+     }),
+     Drop:function(io,count)
+     {
+      var arg00;
+      arg00=function(o1)
+      {
+       var index;
+       index={
+        contents:0
+       };
+       return Util.subscribeTo(io,function(v)
+       {
+        Operators.Increment(index);
+        return index.contents>count?o1.OnNext(v):null;
+       });
+      };
+      return Observable.New(arg00);
+     },
+     Heat:function(io)
+     {
+      var s;
+      s=HotStream.New1();
+      Util.subscribeTo(io,function(arg00)
+      {
+       return s.Trigger(arg00);
+      });
+      return s;
+     },
+     Merge:function(io1,io2)
+     {
+      var arg00;
+      arg00=function(o)
+      {
+       var completed1,completed2,arg001,arg10,arg003,disp1,arg004,arg101,arg005,disp2;
+       completed1={
+        contents:false
+       };
+       completed2={
+        contents:false
+       };
+       arg001=function(arg002)
+       {
+        return o.OnNext(arg002);
+       };
+       arg10=function()
+       {
+        completed1.contents=true;
+        return(completed1.contents?completed2.contents:false)?o.OnCompleted():null;
+       };
+       arg003=Observer.New(arg001,arg10);
+       disp1=io1.Subscribe(arg003);
+       arg004=function(arg002)
+       {
+        return o.OnNext(arg002);
+       };
+       arg101=function()
+       {
+        completed2.contents=true;
+        return(completed1.contents?completed2.contents:false)?o.OnCompleted():null;
+       };
+       arg005=Observer.New(arg004,arg101);
+       disp2=io2.Subscribe(arg005);
+       return Disposable.New(function()
+       {
+        disp1.Dispose();
+        return disp2.Dispose();
+       });
+      };
+      return Observable.New(arg00);
+     },
+     Never:function()
+     {
+      return Observable.New(function()
+      {
+       return Disposable.New(function()
+       {
+       });
+      });
+     },
+     Range:function(start,count)
+     {
+      var arg00;
+      arg00=function(o)
+      {
+       var i;
+       for(i=start;i<=start+count;i++){
+        o.OnNext(i);
+       }
+       return Disposable.New(function()
+       {
+       });
+      };
+      return Observable.New(arg00);
+     },
+     Reactive:Runtime.Class({
+      Aggregate:function(io,s,a)
+      {
+       return Reactive1.Aggregate(io,s,a);
+      },
+      Choose:function(io,f)
+      {
+       return Reactive1.Choose(io,f);
+      },
+      CollectLatest:function(io)
+      {
+       return Reactive1.CollectLatest(io);
+      },
+      CombineLatest:function(io1,io2,f)
+      {
+       return Reactive1.CombineLatest(io1,io2,f);
+      },
+      Concat:function(io1,io2)
+      {
+       return Reactive1.Concat(io1,io2);
+      },
+      Drop:function(io,count)
+      {
+       return Reactive1.Drop(io,count);
+      },
+      Heat:function(io)
+      {
+       return Reactive1.Heat(io);
+      },
+      Merge:function(io1,io2)
+      {
+       return Reactive1.Merge(io1,io2);
+      },
+      Never:function()
+      {
+       return Reactive1.Never();
+      },
+      Return:function(x)
+      {
+       return Reactive1.Return(x);
+      },
+      Select:function(io,f)
+      {
+       return Reactive1.Select(io,f);
+      },
+      SelectMany:function(io)
+      {
+       return Reactive1.SelectMany(io);
+      },
+      Sequence:function(ios)
+      {
+       return Reactive1.Sequence(ios);
+      },
+      Switch:function(io)
+      {
+       return Reactive1.Switch(io);
+      },
+      Where:function(io,f)
+      {
+       return Reactive1.Where(io,f);
+      }
+     },{
+      New:function()
+      {
+       return Runtime.New(this,{});
+      }
+     }),
+     Return:function(x)
+     {
+      var f;
+      f=function(o)
+      {
+       o.OnNext(x);
+       o.OnCompleted();
+       return Disposable.New(function()
+       {
+       });
+      };
+      return Observable.New(f);
+     },
+     Select:function(io,f)
+     {
+      return Observable.New(function(o1)
+      {
+       return Util.subscribeTo(io,function(v)
+       {
+        return o1.OnNext(f(v));
+       });
+      });
+     },
+     SelectMany:function(io)
+     {
+      return Observable.New(function(o)
+      {
+       var disp,d;
+       disp={
+        contents:function()
+        {
+        }
+       };
+       d=Util.subscribeTo(io,function(o1)
+       {
+        var d1;
+        d1=Util.subscribeTo(o1,function(arg00)
+        {
+         return o.OnNext(arg00);
+        });
+        disp.contents=function()
+        {
+         disp.contents.call(null,null);
+         return d1.Dispose();
+        };
+        return;
+       });
+       return Disposable.New(function()
+       {
+        disp.contents.call(null,null);
+        return d.Dispose();
+       });
+      });
+     },
+     Sequence:function(ios)
+     {
+      var sequence;
+      sequence=function(ios1)
+      {
+       var _,xs,x,rest;
+       if(ios1.$==1)
+        {
+         xs=ios1.$1;
+         x=ios1.$0;
+         rest=sequence(xs);
+         _=Reactive1.CombineLatest(x,rest,function(x1)
+         {
+          return function(y)
+          {
+           return Runtime.New(T,{
+            $:1,
+            $0:x1,
+            $1:y
+           });
+          };
+         });
+        }
+       else
+        {
+         _=Reactive1.Return(Runtime.New(T,{
+          $:0
+         }));
+        }
+       return _;
+      };
+      return Reactive1.Select(sequence(List.ofSeq(ios)),function(source)
+      {
+       return source;
+      });
+     },
+     Switch:function(io)
+     {
+      return Observable.New(function(o)
+      {
+       var index,disp,disp1;
+       index={
+        contents:0
+       };
+       disp={
+        contents:{
+         $:0
+        }
+       };
+       disp1=Util.subscribeTo(io,function(o1)
+       {
+        var currentIndex,arg0,d;
+        Operators.Increment(index);
+        disp.contents.$==1?disp.contents.$0.Dispose():null;
+        currentIndex=index.contents;
+        arg0=Util.subscribeTo(o1,function(v)
+        {
+         return currentIndex===index.contents?o.OnNext(v):null;
+        });
+        d={
+         $:1,
+         $0:arg0
+        };
+        disp.contents=d;
+        return;
+       });
+       return disp1;
+      });
+     },
+     Where:function(io,f)
+     {
+      var arg00;
+      arg00=function(o1)
+      {
+       return Util.subscribeTo(io,function(v)
+       {
+        return f(v)?o1.OnNext(v):null;
+       });
+      };
+      return Observable.New(arg00);
+     }
+    }
+   }
+  }
+ });
+ Runtime.OnInit(function()
+ {
+  Reactive=Runtime.Safe(Global.IntelliFactory.Reactive);
+  Disposable=Runtime.Safe(Reactive.Disposable);
+  HotStream=Runtime.Safe(Reactive.HotStream);
+  WebSharper=Runtime.Safe(Global.IntelliFactory.WebSharper);
+  Control=Runtime.Safe(WebSharper.Control);
+  FSharpEvent=Runtime.Safe(Control.FSharpEvent);
+  Observer=Runtime.Safe(Reactive.Observer);
+  Observable=Runtime.Safe(Reactive.Observable);
+  Util=Runtime.Safe(WebSharper.Util);
+  Collections=Runtime.Safe(WebSharper.Collections);
+  Dictionary=Runtime.Safe(Collections.Dictionary);
+  Operators=Runtime.Safe(WebSharper.Operators);
+  Seq=Runtime.Safe(WebSharper.Seq);
+  Reactive1=Runtime.Safe(Reactive.Reactive);
+  Reactive2=Runtime.Safe(Reactive1.Reactive);
+  List=Runtime.Safe(WebSharper.List);
+  return T=Runtime.Safe(List.T);
+ });
+ Runtime.OnLoad(function()
+ {
+  Reactive1.Default();
+  return;
+ });
+}());
+
+(function()
+{
+ var Global=this,Runtime=this.IntelliFactory.Runtime,Formlets,Base,Formlet,Form,Tree,Edit,Result,WebSharper,List,T,LayoutUtils,Tree1,Util,Seq,Enumerator,Unchecked;
+ Runtime.Define(Global,{
+  IntelliFactory:{
+   Formlets:{
+    Base:{
+     D:Runtime.Class({
+      Dispose:function()
+      {
+       return null;
+      }
+     },{
+      New:function()
+      {
+       return Runtime.New(this,{});
+      }
+     }),
+     Form:Runtime.Class({
+      Dispose:function()
+      {
+       return this.Dispose1.call(null,null);
+      }
+     }),
+     Formlet:Runtime.Class({
+      Build:function()
+      {
+       return this.Build1.call(null,null);
+      },
+      MapResult:function(f)
+      {
+       var _this=this;
+       return Runtime.New(Formlet,{
+        Layout:this.Layout,
+        Build1:function()
+        {
+         var form,objectArg,arg00,arg10,state;
+         form=_this.Build1.call(null,null);
+         objectArg=_this.Utils.Reactive;
+         arg00=form.State;
+         arg10=function(x)
+         {
+          return f(x);
+         };
+         objectArg.Select(arg00,arg10);
+         state=form.State;
+         return Runtime.New(Form,{
+          Body:form.Body,
+          Dispose1:form.Dispose1,
+          Notify:form.Notify,
+          State:state
+         });
+        },
+        Utils:_this.Utils
+       });
+      },
+      get_Layout:function()
+      {
+       return this.Layout;
+      }
+     }),
+     FormletBuilder:Runtime.Class({
+      Bind:function(x,f)
+      {
+       var objectArg;
+       objectArg=this.F;
+       return objectArg.Bind(x,f);
+      },
+      Delay:function(f)
+      {
+       return this.F.Delay(f);
+      },
+      Return:function(x)
+      {
+       return this.F.Return(x);
+      },
+      ReturnFrom:function(f)
+      {
+       return f;
+      }
+     },{
+      New:function(F)
+      {
+       var r;
+       r=Runtime.New(this,{});
+       r.F=F;
+       return r;
+      }
+     }),
+     FormletProvider:Runtime.Class({
+      AppendLayout:function(layout,formlet)
+      {
+       var arg10;
+       arg10=this.ApplyLayout(formlet);
+       return this.WithLayout(layout,arg10);
+      },
+      Apply:function(f,x)
+      {
+       var arg00,_this=this;
+       arg00=function()
+       {
+        var f1,x1,objectArg,arg001,arg10,left,objectArg1,arg002,arg101,right,objectArg2,body,objectArg3,arg003,arg102,arg20,state;
+        f1=_this.BuildForm(f);
+        x1=_this.BuildForm(x);
+        objectArg=_this.U.Reactive;
+        arg001=f1.Body;
+        arg10=function(arg0)
+        {
+         return Runtime.New(Edit,{
+          $:1,
+          $0:arg0
+         });
+        };
+        left=objectArg.Select(arg001,arg10);
+        objectArg1=_this.U.Reactive;
+        arg002=x1.Body;
+        arg101=function(arg0)
+        {
+         return Runtime.New(Edit,{
+          $:2,
+          $0:arg0
+         });
+        };
+        right=objectArg1.Select(arg002,arg101);
+        objectArg2=_this.U.Reactive;
+        body=objectArg2.Merge(left,right);
+        objectArg3=_this.U.Reactive;
+        arg003=x1.State;
+        arg102=f1.State;
+        arg20=function(r)
+        {
+         return function(f2)
+         {
+          return Result.Apply(f2,r);
+         };
+        };
+        state=objectArg3.CombineLatest(arg003,arg102,arg20);
+        return Runtime.New(Form,{
+         Body:body,
+         Dispose1:function()
+         {
+          x1.Dispose1.call(null,null);
+          return f1.Dispose1.call(null,null);
+         },
+         Notify:function(o)
+         {
+          x1.Notify.call(null,o);
+          return f1.Notify.call(null,o);
+         },
+         State:state
+        });
+       };
+       return _this.New(arg00);
+      },
+      ApplyLayout:function(formlet)
+      {
+       var arg00,_this=this;
+       arg00=function()
+       {
+        var form,matchValue,body,_,body1;
+        form=formlet.Build();
+        matchValue=formlet.get_Layout().Apply.call(null,form.Body);
+        if(matchValue.$==0)
+         {
+          _=form.Body;
+         }
+        else
+         {
+          matchValue.$0[1];
+          body1=matchValue.$0[0];
+          _=_this.U.Reactive.Return(Tree.Set(body1));
+         }
+        body=_;
+        return Runtime.New(Form,{
+         Body:body,
+         Dispose1:form.Dispose1,
+         Notify:form.Notify,
+         State:form.State
+        });
+       };
+       return _this.New(arg00);
+      },
+      Bind:function(formlet,f)
+      {
+       var arg00;
+       arg00=this.Map(f,formlet);
+       return this.Join(arg00);
+      },
+      BindWith:function(hF,formlet,f)
+      {
+       var arg00,_this=this;
+       arg00=function()
+       {
+        var formlet1,form,objectArg,arg001,arg10,left,objectArg1,arg002,arg101,right,matchValue,combB,_,_1,bLeft,bRight,objectArg2,value,arg003;
+        formlet1=_this.Bind(formlet,f);
+        form=formlet1.Build();
+        objectArg=_this.U.Reactive;
+        arg001=form.Body;
+        arg10=function(edit)
+        {
+         return edit.$==1?true:false;
+        };
+        left=_this.U.DefaultLayout.Apply.call(null,objectArg.Where(arg001,arg10));
+        objectArg1=_this.U.Reactive;
+        arg002=form.Body;
+        arg101=function(edit)
+        {
+         return edit.$==2?true:false;
+        };
+        right=_this.U.DefaultLayout.Apply.call(null,objectArg1.Where(arg002,arg101));
+        matchValue=[left,right];
+        if(matchValue[0].$==1)
+         {
+          if(matchValue[1].$==1)
+           {
+            bLeft=matchValue[0].$0[0];
+            bRight=matchValue[1].$0[0];
+            objectArg2=_this.U.Reactive;
+            value=(hF(bLeft))(bRight);
+            arg003=Tree.Set(value);
+            _1=objectArg2.Return(arg003);
+           }
+          else
+           {
+            _1=_this.U.Reactive.Never();
+           }
+          _=_1;
+         }
+        else
+         {
+          _=_this.U.Reactive.Never();
+         }
+        combB=_;
+        return Runtime.New(Form,{
+         Body:combB,
+         Dispose1:form.Dispose1,
+         Notify:form.Notify,
+         State:form.State
+        });
+       };
+       return _this.New(arg00);
+      },
+      BuildForm:function(formlet)
+      {
+       var form,matchValue,_,d,body;
+       form=formlet.Build();
+       matchValue=formlet.get_Layout().Apply.call(null,form.Body);
+       if(matchValue.$==1)
+        {
+         d=matchValue.$0[1];
+         body=matchValue.$0[0];
+         _=Runtime.New(Form,{
+          Body:this.U.Reactive.Return(Tree.Set(body)),
+          Dispose1:function()
+          {
+           form.Dispose1.call(null,null);
+           return d.Dispose();
+          },
+          Notify:form.Notify,
+          State:form.State
+         });
+        }
+       else
+        {
+         _=form;
+        }
+       return _;
+      },
+      Delay:function(f)
+      {
+       var Build,_this=this;
+       Build=function()
+       {
+        return _this.BuildForm(f(null));
+       };
+       return Runtime.New(Formlet,{
+        Layout:_this.L.Delay(function()
+        {
+         return f(null).get_Layout();
+        }),
+        Build1:Build,
+        Utils:_this.U
+       });
+      },
+      Deletable:function(formlet)
+      {
+       var arg10,_this=this;
+       arg10=function(value)
+       {
+        var _,value1;
+        if(value.$==1)
+         {
+          value1=value.$0;
+          _=_this.Return({
+           $:1,
+           $0:value1
+          });
+         }
+        else
+         {
+          _=_this.ReturnEmpty({
+           $:0
+          });
+         }
+        return _;
+       };
+       return _this.Replace(formlet,arg10);
+      },
+      Empty:function()
+      {
+       var arg00,_this=this;
+       arg00=function()
+       {
+        return Runtime.New(Form,{
+         Body:_this.U.Reactive.Return(Tree.Delete()),
+         Dispose1:function()
+         {
+         },
+         Notify:function()
+         {
+         },
+         State:_this.U.Reactive.Never()
+        });
+       };
+       return _this.New(arg00);
+      },
+      EmptyForm:function()
+      {
+       return Runtime.New(Form,{
+        Body:this.U.Reactive.Never(),
+        Dispose1:function()
+        {
+        },
+        Notify:function()
+        {
+        },
+        State:this.U.Reactive.Never()
+       });
+      },
+      Fail:function(fs)
+      {
+       return Runtime.New(Form,{
+        Body:this.U.Reactive.Never(),
+        Dispose1:function(x)
+        {
+         return x;
+        },
+        Notify:function()
+        {
+        },
+        State:this.U.Reactive.Return(Runtime.New(Result,{
+         $:1,
+         $0:fs
+        }))
+       });
+      },
+      FailWith:function(fs)
+      {
+       var arg00,_this=this;
+       arg00=function()
+       {
+        return _this.Fail(fs);
+       };
+       return _this.New(arg00);
+      },
+      FlipBody:function(formlet)
+      {
+       var arg00,_this=this,x,arg002;
+       arg00=function()
+       {
+        var form,objectArg,arg001,arg10,body;
+        form=formlet.Build();
+        objectArg=_this.U.Reactive;
+        arg001=form.Body;
+        arg10=function(edit)
+        {
+         return Tree.FlipEdit(edit);
+        };
+        body=objectArg.Select(arg001,arg10);
+        return Runtime.New(Form,{
+         Body:body,
+         Dispose1:form.Dispose1,
+         Notify:form.Notify,
+         State:form.State
+        });
+       };
+       x=_this.New(arg00);
+       arg002=formlet.get_Layout();
+       return _this.WithLayout(arg002,x);
+      },
+      FromState:function(state)
+      {
+       var arg00,_this=this;
+       arg00=function()
+       {
+        return Runtime.New(Form,{
+         Body:_this.U.Reactive.Never(),
+         Dispose1:function()
+         {
+         },
+         Notify:function()
+         {
+         },
+         State:state
+        });
+       };
+       return _this.New(arg00);
+      },
+      InitWith:function(value,formlet)
+      {
+       var arg00,_this=this,x,arg002;
+       arg00=function()
+       {
+        var form,objectArg,arg001,arg10,state;
+        form=formlet.Build();
+        objectArg=_this.U.Reactive;
+        arg001=_this.U.Reactive.Return(Runtime.New(Result,{
+         $:0,
+         $0:value
+        }));
+        arg10=form.State;
+        state=objectArg.Concat(arg001,arg10);
+        return Runtime.New(Form,{
+         Body:form.Body,
+         Dispose1:form.Dispose1,
+         Notify:form.Notify,
+         State:state
+        });
+       };
+       x=_this.New(arg00);
+       arg002=formlet.get_Layout();
+       return _this.WithLayout(arg002,x);
+      },
+      InitWithFailure:function(formlet)
+      {
+       var arg00,_this=this,x,arg002;
+       arg00=function()
+       {
+        var form,objectArg,arg001,arg10,state;
+        form=formlet.Build();
+        objectArg=_this.U.Reactive;
+        arg001=_this.U.Reactive.Return(Runtime.New(Result,{
+         $:1,
+         $0:Runtime.New(T,{
+          $:0
+         })
+        }));
+        arg10=form.State;
+        state=objectArg.Concat(arg001,arg10);
+        return Runtime.New(Form,{
+         Body:form.Body,
+         Dispose1:form.Dispose1,
+         Notify:form.Notify,
+         State:state
+        });
+       };
+       x=_this.New(arg00);
+       arg002=formlet.get_Layout();
+       return _this.WithLayout(arg002,x);
+      },
+      Join:function(formlet)
+      {
+       var arg00,_this=this;
+       arg00=function()
+       {
+        var form1,objectArg,arg001,arg10,objectArg1,arg002,formStream,objectArg2,arg101,value,objectArg4,arg003,arg103,right,objectArg5,objectArg6,arg004,arg104,arg005,body,state,objectArg7,arg105,notify,dispose;
+        form1=_this.BuildForm(formlet);
+        objectArg=_this.U.Reactive;
+        arg001=form1.State;
+        arg10=function(res)
+        {
+         var _,fs,innerF;
+         if(res.$==1)
+          {
+           fs=res.$0;
+           _=_this.Fail(fs);
+          }
+         else
+          {
+           innerF=res.$0;
+           _=_this.BuildForm(innerF);
+          }
+         return _;
+        };
+        objectArg1=_this.U.Reactive;
+        arg002=objectArg.Select(arg001,arg10);
+        formStream=objectArg1.Heat(arg002);
+        objectArg2=_this.U.Reactive;
+        arg101=function(f)
+        {
+         var _delete,objectArg3,arg102;
+         _delete=_this.U.Reactive.Return(Tree.Delete());
+         objectArg3=_this.U.Reactive;
+         arg102=f.Body;
+         return objectArg3.Concat(_delete,arg102);
+        };
+        value=objectArg2.Select(formStream,arg101);
+        objectArg4=_this.U.Reactive;
+        arg003=_this.U.Reactive.Switch(value);
+        arg103=function(arg0)
+        {
+         return Runtime.New(Edit,{
+          $:2,
+          $0:arg0
+         });
+        };
+        right=objectArg4.Select(arg003,arg103);
+        objectArg5=_this.U.Reactive;
+        objectArg6=_this.U.Reactive;
+        arg004=form1.Body;
+        arg104=function(arg0)
+        {
+         return Runtime.New(Edit,{
+          $:1,
+          $0:arg0
+         });
+        };
+        arg005=objectArg6.Select(arg004,arg104);
+        body=objectArg5.Merge(arg005,right);
+        objectArg7=_this.U.Reactive;
+        arg105=function(f)
+        {
+         return f.State;
+        };
+        state=_this.U.Reactive.Switch(objectArg7.Select(formStream,arg105));
+        notify=function(o)
+        {
+         return form1.Notify.call(null,o);
+        };
+        dispose=function()
+        {
+         return form1.Dispose1.call(null,null);
+        };
+        return Runtime.New(Form,{
+         Body:body,
+         Dispose1:dispose,
+         Notify:notify,
+         State:state
+        });
+       };
+       return _this.New(arg00);
+      },
+      LiftResult:function(formlet)
+      {
+       var arg00;
+       arg00=function(arg0)
+       {
+        return Runtime.New(Result,{
+         $:0,
+         $0:arg0
+        });
+       };
+       return this.MapResult(arg00,formlet);
+      },
+      Map:function(f,formlet)
+      {
+       var arg00;
+       arg00=function(arg10)
+       {
+        return Result.Map(f,arg10);
+       };
+       return this.MapResult(arg00,formlet);
+      },
+      MapBody:function(f,formlet)
+      {
+       var layout,_this=this;
+       layout={
+        Apply:function(o)
+        {
+         var matchValue,_,matchValue1,_1,d,body,d1,body1;
+         matchValue=formlet.get_Layout().Apply.call(null,o);
+         if(matchValue.$==0)
+          {
+           matchValue1=_this.U.DefaultLayout.Apply.call(null,o);
+           if(matchValue1.$==0)
+            {
+             _1={
+              $:0
+             };
+            }
+           else
+            {
+             d=matchValue1.$0[1];
+             body=matchValue1.$0[0];
+             _1={
+              $:1,
+              $0:[f(body),d]
+             };
+            }
+           _=_1;
+          }
+         else
+          {
+           d1=matchValue.$0[1];
+           body1=matchValue.$0[0];
+           _={
+            $:1,
+            $0:[f(body1),d1]
+           };
+          }
+         return _;
+        }
+       };
+       return _this.WithLayout(layout,formlet);
+      },
+      MapResult:function(f,formlet)
+      {
+       var Build,_this=this;
+       Build=function()
+       {
+        var form,objectArg,arg00,arg10,state;
+        form=formlet.Build();
+        objectArg=_this.U.Reactive;
+        arg00=form.State;
+        arg10=function(x)
+        {
+         return f(x);
+        };
+        state=objectArg.Select(arg00,arg10);
+        return Runtime.New(Form,{
+         Body:form.Body,
+         Dispose1:form.Dispose1,
+         Notify:form.Notify,
+         State:state
+        });
+       };
+       return Runtime.New(Formlet,{
+        Layout:formlet.get_Layout(),
+        Build1:Build,
+        Utils:_this.U
+       });
+      },
+      Never:function()
+      {
+       var arg00,_this=this;
+       arg00=function()
+       {
+        return Runtime.New(Form,{
+         Body:_this.U.Reactive.Never(),
+         Dispose1:function()
+         {
+         },
+         Notify:function()
+         {
+         },
+         State:_this.U.Reactive.Never()
+        });
+       };
+       return _this.New(arg00);
+      },
+      New:function(build)
+      {
+       return Runtime.New(Formlet,{
+        Layout:this.L.Default(),
+        Build1:build,
+        Utils:this.U
+       });
+      },
+      Replace:function(formlet,f)
+      {
+       var arg00,arg001;
+       arg00=function(value)
+       {
+        return f(value);
+       };
+       arg001=this.Map(arg00,formlet);
+       return this.Switch(arg001);
+      },
+      ReplaceFirstWithFailure:function(formlet)
+      {
+       var arg00,_this=this,x,arg003;
+       arg00=function()
+       {
+        var form,objectArg,arg001,state,objectArg1,arg002,state1;
+        form=formlet.Build();
+        objectArg=_this.U.Reactive;
+        arg001=form.State;
+        state=objectArg.Drop(arg001,1);
+        objectArg1=_this.U.Reactive;
+        arg002=_this.U.Reactive.Return(Runtime.New(Result,{
+         $:1,
+         $0:Runtime.New(T,{
+          $:0
+         })
+        }));
+        state1=objectArg1.Concat(arg002,state);
+        return Runtime.New(Form,{
+         Body:form.Body,
+         Dispose1:form.Dispose1,
+         Notify:form.Notify,
+         State:state1
+        });
+       };
+       x=_this.New(arg00);
+       arg003=formlet.get_Layout();
+       return _this.WithLayout(arg003,x);
+      },
+      Return:function(x)
+      {
+       var arg00,_this=this;
+       arg00=function()
+       {
+        return Runtime.New(Form,{
+         Body:_this.U.Reactive.Never(),
+         Dispose1:function(x1)
+         {
+          return x1;
+         },
+         Notify:function()
+         {
+         },
+         State:_this.U.Reactive.Return(Runtime.New(Result,{
+          $:0,
+          $0:x
+         }))
+        });
+       };
+       return _this.New(arg00);
+      },
+      ReturnEmpty:function(x)
+      {
+       var arg00,_this=this;
+       arg00=function()
+       {
+        return Runtime.New(Form,{
+         Body:_this.U.Reactive.Return(Tree.Delete()),
+         Dispose1:function(x1)
+         {
+          return x1;
+         },
+         Notify:function()
+         {
+         },
+         State:_this.U.Reactive.Return(Runtime.New(Result,{
+          $:0,
+          $0:x
+         }))
+        });
+       };
+       return _this.New(arg00);
+      },
+      SelectMany:function(formlet)
+      {
+       var arg00,_this=this;
+       arg00=function()
+       {
+        var form1,objectArg,arg001,arg10,objectArg1,arg002,formStream,objectArg2,arg003,arg101,left,tag,incrTag,objectArg3,arg102,allBodies,right,objectArg5,body,objectArg6,arg103,stateStream,objectArg7,arg005,arg104,state,notify,dispose;
+        form1=_this.BuildForm(formlet);
+        objectArg=_this.U.Reactive;
+        arg001=form1.State;
+        arg10=function(res)
+        {
+         var _,innerF,arg0;
+         if(res.$==1)
+          {
+           res.$0;
+           _={
+            $:0
+           };
+          }
+         else
+          {
+           innerF=res.$0;
+           arg0=_this.BuildForm(innerF);
+           _={
+            $:1,
+            $0:arg0
+           };
+          }
+         return _;
+        };
+        objectArg1=_this.U.Reactive;
+        arg002=objectArg.Choose(arg001,arg10);
+        formStream=objectArg1.Heat(arg002);
+        objectArg2=_this.U.Reactive;
+        arg003=form1.Body;
+        arg101=function(arg0)
+        {
+         return Runtime.New(Edit,{
+          $:1,
+          $0:arg0
+         });
+        };
+        left=objectArg2.Select(arg003,arg101);
+        tag={
+         contents:function(arg0)
+         {
+          return Runtime.New(Edit,{
+           $:1,
+           $0:arg0
+          });
+         }
+        };
+        incrTag=function()
+        {
+         var f;
+         f=tag.contents;
+         tag.contents=function(x)
+         {
+          var arg0;
+          arg0=f(x);
+          return Runtime.New(Edit,{
+           $:2,
+           $0:arg0
+          });
+         };
+         return;
+        };
+        objectArg3=_this.U.Reactive;
+        arg102=function(f)
+        {
+         var tagLocal,objectArg4,arg004;
+         incrTag(null);
+         tagLocal=tag.contents;
+         objectArg4=_this.U.Reactive;
+         arg004=f.Body;
+         return objectArg4.Select(arg004,tagLocal);
+        };
+        allBodies=objectArg3.Select(formStream,arg102);
+        right=_this.U.Reactive.SelectMany(allBodies);
+        objectArg5=_this.U.Reactive;
+        body=objectArg5.Merge(left,right);
+        objectArg6=_this.U.Reactive;
+        arg103=function(f)
+        {
+         return f.State;
+        };
+        stateStream=objectArg6.Select(formStream,arg103);
+        objectArg7=_this.U.Reactive;
+        arg005=_this.U.Reactive.CollectLatest(stateStream);
+        arg104=function(arg004)
+        {
+         return Result.Sequence(arg004);
+        };
+        state=objectArg7.Select(arg005,arg104);
+        notify=function(o)
+        {
+         return form1.Notify.call(null,o);
+        };
+        dispose=function()
+        {
+         return form1.Dispose1.call(null,null);
+        };
+        return Runtime.New(Form,{
+         Body:body,
+         Dispose1:dispose,
+         Notify:notify,
+         State:state
+        });
+       };
+       return _this.New(arg00);
+      },
+      Sequence:function(fs)
+      {
+       var fs1,_,fs2,f,fComp,fRest,arg00;
+       fs1=List.ofSeq(fs);
+       if(fs1.$==1)
+        {
+         fs2=fs1.$1;
+         f=fs1.$0;
+         fComp=this.Return(function(v)
+         {
+          return function(vs)
+          {
+           return Runtime.New(T,{
+            $:1,
+            $0:v,
+            $1:vs
+           });
+          };
+         });
+         fRest=this.Sequence(fs2);
+         arg00=this.Apply(fComp,f);
+         _=this.Apply(arg00,fRest);
+        }
+       else
+        {
+         _=this.Return(Runtime.New(T,{
+          $:0
+         }));
+        }
+       return _;
+      },
+      Switch:function(formlet)
+      {
+       var arg00,_this=this;
+       arg00=function()
+       {
+        var arg001,formlet1,form1,objectArg,arg002,arg10,objectArg1,arg003,formStream,objectArg2,arg004,arg101,objectArg3,arg102,body,state,objectArg4,arg103,notify,dispose;
+        arg001=_this.WithLayoutOrDefault(formlet);
+        formlet1=_this.ApplyLayout(arg001);
+        form1=_this.BuildForm(formlet1);
+        objectArg=_this.U.Reactive;
+        arg002=form1.State;
+        arg10=function(res)
+        {
+         var _,innerF,arg0;
+         if(res.$==1)
+          {
+           res.$0;
+           _={
+            $:0
+           };
+          }
+         else
+          {
+           innerF=res.$0;
+           arg0=_this.BuildForm(innerF);
+           _={
+            $:1,
+            $0:arg0
+           };
+          }
+         return _;
+        };
+        objectArg1=_this.U.Reactive;
+        arg003=objectArg.Choose(arg002,arg10);
+        formStream=objectArg1.Heat(arg003);
+        objectArg2=_this.U.Reactive;
+        arg004=form1.Body;
+        objectArg3=_this.U.Reactive;
+        arg102=function(f)
+        {
+         return f.Body;
+        };
+        arg101=_this.U.Reactive.Switch(objectArg3.Select(formStream,arg102));
+        body=objectArg2.Concat(arg004,arg101);
+        objectArg4=_this.U.Reactive;
+        arg103=function(f)
+        {
+         return f.State;
+        };
+        state=_this.U.Reactive.Switch(objectArg4.Select(formStream,arg103));
+        notify=function(o)
+        {
+         return form1.Notify.call(null,o);
+        };
+        dispose=function()
+        {
+         return form1.Dispose1.call(null,null);
+        };
+        return Runtime.New(Form,{
+         Body:body,
+         Dispose1:dispose,
+         Notify:notify,
+         State:state
+        });
+       };
+       return _this.New(arg00);
+      },
+      WithCancelation:function(formlet,cancelFormlet)
+      {
+       var compose,f1,f2,f3,f,arg00,arg10;
+       compose=function(r1)
+       {
+        return function(r2)
+        {
+         var matchValue,_,_1,fs,s;
+         matchValue=[r1,r2];
+         if(matchValue[1].$==0)
+          {
+           _=Runtime.New(Result,{
+            $:0,
+            $0:{
+             $:0
+            }
+           });
+          }
+         else
+          {
+           if(matchValue[0].$==1)
+            {
+             fs=matchValue[0].$0;
+             _1=Runtime.New(Result,{
+              $:1,
+              $0:fs
+             });
+            }
+           else
+            {
+             s=matchValue[0].$0;
+             _1=Runtime.New(Result,{
+              $:0,
+              $0:{
+               $:1,
+               $0:s
+              }
+             });
+            }
+           _=_1;
+          }
+         return _;
+        };
+       };
+       f1=this.Return(compose);
+       f2=this.LiftResult(formlet);
+       f3=this.LiftResult(cancelFormlet);
+       f=this.Apply(f1,f2);
+       arg00=function(arg001)
+       {
+        return Result.Join(arg001);
+       };
+       arg10=this.Apply(f,f3);
+       return this.MapResult(arg00,arg10);
+      },
+      WithLayout:function(layout,formlet)
+      {
+       return Runtime.New(Formlet,{
+        Layout:layout,
+        Build1:function()
+        {
+         return formlet.Build();
+        },
+        Utils:this.U
+       });
+      },
+      WithLayoutOrDefault:function(formlet)
+      {
+       var arg00;
+       arg00=function(x)
+       {
+        return x;
+       };
+       return this.MapBody(arg00,formlet);
+      },
+      WithNotification:function(notify,formlet)
+      {
+       var arg00,_this=this,x,arg001;
+       arg00=function()
+       {
+        var form,Notify;
+        form=_this.BuildForm(formlet);
+        Notify=function(obj)
+        {
+         form.Notify.call(null,obj);
+         return notify(obj);
+        };
+        return Runtime.New(Form,{
+         Body:form.Body,
+         Dispose1:form.Dispose1,
+         Notify:Notify,
+         State:form.State
+        });
+       };
+       x=_this.New(arg00);
+       arg001=formlet.get_Layout();
+       return _this.WithLayout(arg001,x);
+      },
+      WithNotificationChannel:function(formlet)
+      {
+       var arg00,_this=this,x,arg003;
+       arg00=function()
+       {
+        var form,objectArg,arg001,arg002,arg10,state,Notify;
+        form=formlet.Build();
+        objectArg=_this.U.Reactive;
+        arg001=form.State;
+        arg002=function(v)
+        {
+         return[v,form.Notify];
+        };
+        arg10=function(arg101)
+        {
+         return Result.Map(arg002,arg101);
+        };
+        state=objectArg.Select(arg001,arg10);
+        Notify=form.Notify;
+        return Runtime.New(Form,{
+         Body:form.Body,
+         Dispose1:form.Dispose1,
+         Notify:Notify,
+         State:state
+        });
+       };
+       x=_this.New(arg00);
+       arg003=formlet.get_Layout();
+       return _this.WithLayout(arg003,x);
+      }
+     },{
+      New:function(U)
+      {
+       var r;
+       r=Runtime.New(this,{});
+       r.U=U;
+       r.L=LayoutUtils.New({
+        Reactive:r.U.Reactive
+       });
+       return r;
+      }
+     }),
+     LayoutUtils:Runtime.Class({
+      Default:function()
+      {
+       return{
+        Apply:function()
+        {
+         return{
+          $:0
+         };
+        }
+       };
+      },
+      Delay:function(f)
+      {
+       return{
+        Apply:function(x)
+        {
+         return f(null).Apply.call(null,x);
+        }
+       };
+      },
+      New:function(container)
+      {
+       return{
+        Apply:function(event)
+        {
+         var panel,tree,disp;
+         panel=container(null);
+         tree={
+          contents:Runtime.New(Tree1,{
+           $:0
+          })
+         };
+         disp=Util.subscribeTo(event,function(edit)
+         {
+          var deletedTree,patternInput,off,action;
+          deletedTree=Tree.ReplacedTree(edit,tree.contents);
+          tree.contents=Tree.Apply(edit,tree.contents);
+          patternInput=Tree.Range(edit,tree.contents);
+          off=patternInput[0];
+          panel.Remove.call(null,deletedTree.get_Sequence());
+          action=function(i)
+          {
+           return function(e)
+           {
+            return(panel.Insert.call(null,off+i))(e);
+           };
+          };
+          return Seq.iteri(action,edit);
+         });
+         return{
+          $:1,
+          $0:[panel.Body,disp]
+         };
+        }
+       };
+      }
+     },{
+      New:function()
+      {
+       return Runtime.New(this,{});
+      }
+     }),
+     Result:Runtime.Class({},{
+      Apply:function(f,r)
+      {
+       var matchValue,_,_1,fs1,fs2,fs,_2,fs3,f1,v;
+       matchValue=[f,r];
+       if(matchValue[0].$==1)
+        {
+         if(matchValue[1].$==1)
+          {
+           fs1=matchValue[0].$0;
+           fs2=matchValue[1].$0;
+           _1=Runtime.New(Result,{
+            $:1,
+            $0:List.append(fs1,fs2)
+           });
+          }
+         else
+          {
+           fs=matchValue[0].$0;
+           _1=Runtime.New(Result,{
+            $:1,
+            $0:fs
+           });
+          }
+         _=_1;
+        }
+       else
+        {
+         if(matchValue[1].$==1)
+          {
+           matchValue[0].$0;
+           fs3=matchValue[1].$0;
+           _2=Runtime.New(Result,{
+            $:1,
+            $0:fs3
+           });
+          }
+         else
+          {
+           f1=matchValue[0].$0;
+           v=matchValue[1].$0;
+           _2=Runtime.New(Result,{
+            $:0,
+            $0:f1(v)
+           });
+          }
+         _=_2;
+        }
+       return _;
+      },
+      Join:function(res)
+      {
+       var _,fs,s;
+       if(res.$==1)
+        {
+         fs=res.$0;
+         _=Runtime.New(Result,{
+          $:1,
+          $0:fs
+         });
+        }
+       else
+        {
+         s=res.$0;
+         _=s;
+        }
+       return _;
+      },
+      Map:function(f,res)
+      {
+       var _,fs,v;
+       if(res.$==1)
+        {
+         fs=res.$0;
+         _=Runtime.New(Result,{
+          $:1,
+          $0:fs
+         });
+        }
+       else
+        {
+         v=res.$0;
+         _=Runtime.New(Result,{
+          $:0,
+          $0:f(v)
+         });
+        }
+       return _;
+      },
+      OfOption:function(o)
+      {
+       var _,v;
+       if(o.$==0)
+        {
+         _=Runtime.New(Result,{
+          $:1,
+          $0:Runtime.New(T,{
+           $:0
+          })
+         });
+        }
+       else
+        {
+         v=o.$0;
+         _=Runtime.New(Result,{
+          $:0,
+          $0:v
+         });
+        }
+       return _;
+      },
+      Sequence:function(rs)
+      {
+       var merge;
+       merge=function(rs1)
+       {
+        return function(r)
+        {
+         var _,fs1,_1,fs2,vs,_2,fs,v,b;
+         if(rs1.$==1)
+          {
+           fs1=rs1.$0;
+           if(r.$==1)
+            {
+             fs2=r.$0;
+             _1=Runtime.New(Result,{
+              $:1,
+              $0:List.append(fs1,fs2)
+             });
+            }
+           else
+            {
+             r.$0;
+             _1=Runtime.New(Result,{
+              $:1,
+              $0:fs1
+             });
+            }
+           _=_1;
+          }
+         else
+          {
+           vs=rs1.$0;
+           if(r.$==1)
+            {
+             fs=r.$0;
+             _2=Runtime.New(Result,{
+              $:1,
+              $0:fs
+             });
+            }
+           else
+            {
+             v=r.$0;
+             b=List.ofArray([v]);
+             _2=Runtime.New(Result,{
+              $:0,
+              $0:List.append(vs,b)
+             });
+            }
+           _=_2;
+          }
+         return _;
+        };
+       };
+       return Seq.fold(merge,Runtime.New(Result,{
+        $:0,
+        $0:Runtime.New(T,{
+         $:0
+        })
+       }),rs);
+      }
+     }),
+     Tree:{
+      Apply:function(edit,input)
+      {
+       var apply;
+       apply=function(edit1,input1)
+       {
+        var _,edit2,_1,r,l,edit3,_2,r1,l1,output;
+        if(edit1.$==1)
+         {
+          edit2=edit1.$0;
+          if(input1.$==2)
+           {
+            r=input1.$1;
+            l=input1.$0;
+            _1=Runtime.New(Tree1,{
+             $:2,
+             $0:apply(edit2,l),
+             $1:r
+            });
+           }
+          else
+           {
+            _1=apply(Runtime.New(Edit,{
+             $:1,
+             $0:edit2
+            }),Runtime.New(Tree1,{
+             $:2,
+             $0:Runtime.New(Tree1,{
+              $:0
+             }),
+             $1:input1
+            }));
+           }
+          _=_1;
+         }
+        else
+         {
+          if(edit1.$==2)
+           {
+            edit3=edit1.$0;
+            if(input1.$==2)
+             {
+              r1=input1.$1;
+              l1=input1.$0;
+              _2=Runtime.New(Tree1,{
+               $:2,
+               $0:l1,
+               $1:apply(edit3,r1)
+              });
+             }
+            else
+             {
+              _2=apply(Runtime.New(Edit,{
+               $:2,
+               $0:edit3
+              }),Runtime.New(Tree1,{
+               $:2,
+               $0:input1,
+               $1:Runtime.New(Tree1,{
+                $:0
+               })
+              }));
+             }
+            _=_2;
+           }
+          else
+           {
+            output=edit1.$0;
+            _=output;
+           }
+         }
+        return _;
+       };
+       return apply(edit,input);
+      },
+      Count:function(t)
+      {
+       var loop,_,_1,b,a,_2,_3,tree,k,_4,ts,t1,_5;
+       loop=[];
+       _=Runtime.New(T,{
+        $:0
+       });
+       loop[3]=t;
+       loop[2]=_;
+       loop[1]=0;
+       loop[0]=1;
+       while(loop[0])
+        {
+         if(loop[3].$==2)
+          {
+           b=loop[3].$1;
+           a=loop[3].$0;
+           _2=Runtime.New(T,{
+            $:1,
+            $0:b,
+            $1:loop[2]
+           });
+           _3=loop[1];
+           loop[3]=a;
+           loop[2]=_2;
+           loop[1]=_3;
+           _1=void(loop[0]=1);
+          }
+         else
+          {
+           tree=loop[3];
+           k=tree.$==0?0:1;
+           if(loop[2].$==1)
+            {
+             ts=loop[2].$1;
+             t1=loop[2].$0;
+             _5=loop[1]+k;
+             loop[3]=t1;
+             loop[2]=ts;
+             loop[1]=_5;
+             _4=void(loop[0]=1);
+            }
+           else
+            {
+             loop[0]=0;
+             _4=void(loop[1]=loop[1]+k);
+            }
+           _1=_4;
+          }
+        }
+       return loop[1];
+      },
+      DeepFlipEdit:function(edit)
+      {
+       var _,e,e1,t;
+       if(edit.$==1)
+        {
+         e=edit.$0;
+         _=Runtime.New(Edit,{
+          $:2,
+          $0:Tree.DeepFlipEdit(e)
+         });
+        }
+       else
+        {
+         if(edit.$==2)
+          {
+           e1=edit.$0;
+           _=Runtime.New(Edit,{
+            $:1,
+            $0:Tree.DeepFlipEdit(e1)
+           });
+          }
+         else
+          {
+           t=edit.$0;
+           _=Runtime.New(Edit,{
+            $:0,
+            $0:t
+           });
+          }
+        }
+       return _;
+      },
+      Delete:function()
+      {
+       return Runtime.New(Edit,{
+        $:0,
+        $0:Runtime.New(Tree1,{
+         $:0
+        })
+       });
+      },
+      Edit:Runtime.Class({
+       GetEnumerator:function()
+       {
+        var _this;
+        _this=this.get_Sequence();
+        return Enumerator.Get(_this);
+       },
+       GetEnumerator1:function()
+       {
+        var _this;
+        _this=this.get_Sequence();
+        return Enumerator.Get(_this);
+       },
+       get_Sequence:function()
+       {
+        var _,edit,edit1,tree;
+        if(this.$==1)
+         {
+          edit=this.$0;
+          _=edit.get_Sequence();
+         }
+        else
+         {
+          if(this.$==2)
+           {
+            edit1=this.$0;
+            _=edit1.get_Sequence();
+           }
+          else
+           {
+            tree=this.$0;
+            _=tree.get_Sequence();
+           }
+         }
+        return _;
+       }
+      }),
+      FlipEdit:function(edit)
+      {
+       var _,e,e1,t;
+       if(edit.$==1)
+        {
+         e=edit.$0;
+         _=Runtime.New(Edit,{
+          $:2,
+          $0:e
+         });
+        }
+       else
+        {
+         if(edit.$==2)
+          {
+           e1=edit.$0;
+           _=Runtime.New(Edit,{
+            $:1,
+            $0:e1
+           });
+          }
+         else
+          {
+           t=edit.$0;
+           _=Runtime.New(Edit,{
+            $:0,
+            $0:t
+           });
+          }
+        }
+       return _;
+      },
+      FromSequence:function(vs)
+      {
+       var folder,state1;
+       folder=function(state)
+       {
+        return function(v)
+        {
+         return Runtime.New(Tree1,{
+          $:2,
+          $0:state,
+          $1:Runtime.New(Tree1,{
+           $:1,
+           $0:v
+          })
+         });
+        };
+       };
+       state1=Runtime.New(Tree1,{
+        $:0
+       });
+       return Seq.fold(folder,state1,vs);
+      },
+      Range:function(edit,input)
+      {
+       var loop,_,edit1,_1,l,_2,_3,edit2,_4,r,l1,tree,_5,_6;
+       loop=[];
+       loop[3]=0;
+       loop[2]=input;
+       loop[1]=edit;
+       loop[0]=1;
+       while(loop[0])
+        {
+         if(loop[1].$==1)
+          {
+           edit1=loop[1].$0;
+           if(loop[2].$==2)
+            {
+             loop[2].$1;
+             l=loop[2].$0;
+             loop[3]=loop[3];
+             loop[2]=l;
+             loop[1]=edit1;
+             _1=void(loop[0]=1);
+            }
+           else
+            {
+             _2=loop[3];
+             _3=Runtime.New(Tree1,{
+              $:0
+             });
+             loop[3]=_2;
+             loop[2]=_3;
+             loop[1]=edit1;
+             _1=void(loop[0]=1);
+            }
+           _=_1;
+          }
+         else
+          {
+           if(loop[1].$==2)
+            {
+             edit2=loop[1].$0;
+             if(loop[2].$==2)
+              {
+               r=loop[2].$1;
+               l1=loop[2].$0;
+               loop[3]=loop[3]+Tree.Count(l1);
+               loop[2]=r;
+               loop[1]=edit2;
+               _4=void(loop[0]=1);
+              }
+             else
+              {
+               tree=loop[2];
+               _5=loop[3]+Tree.Count(tree);
+               _6=Runtime.New(Tree1,{
+                $:0
+               });
+               loop[3]=_5;
+               loop[2]=_6;
+               loop[1]=edit2;
+               _4=void(loop[0]=1);
+              }
+             _=_4;
+            }
+           else
+            {
+             loop[1].$0;
+             loop[0]=0;
+             _=void(loop[1]=[loop[3],Tree.Count(loop[2])]);
+            }
+          }
+        }
+       return loop[1];
+      },
+      ReplacedTree:function(edit,input)
+      {
+       var _,edit1,_1,l,edit2,_2,r;
+       if(edit.$==1)
+        {
+         edit1=edit.$0;
+         if(input.$==2)
+          {
+           input.$1;
+           l=input.$0;
+           _1=Tree.ReplacedTree(edit1,l);
+          }
+         else
+          {
+           _1=Tree.ReplacedTree(Runtime.New(Edit,{
+            $:1,
+            $0:edit1
+           }),Runtime.New(Tree1,{
+            $:2,
+            $0:Runtime.New(Tree1,{
+             $:0
+            }),
+            $1:input
+           }));
+          }
+         _=_1;
+        }
+       else
+        {
+         if(edit.$==2)
+          {
+           edit2=edit.$0;
+           if(input.$==2)
+            {
+             r=input.$1;
+             input.$0;
+             _2=Tree.ReplacedTree(edit2,r);
+            }
+           else
+            {
+             _2=Tree.ReplacedTree(Runtime.New(Edit,{
+              $:2,
+              $0:edit2
+             }),Runtime.New(Tree1,{
+              $:2,
+              $0:input,
+              $1:Runtime.New(Tree1,{
+               $:0
+              })
+             }));
+            }
+           _=_2;
+          }
+         else
+          {
+           edit.$0;
+           _=input;
+          }
+        }
+       return _;
+      },
+      Set:function(value)
+      {
+       return Runtime.New(Edit,{
+        $:0,
+        $0:Runtime.New(Tree1,{
+         $:1,
+         $0:value
+        })
+       });
+      },
+      ShowEdit:function(edit)
+      {
+       var showE;
+       showE=function(edit1)
+       {
+        var _,l,r;
+        if(edit1.$==1)
+         {
+          l=edit1.$0;
+          _="Left > "+showE(l);
+         }
+        else
+         {
+          if(edit1.$==2)
+           {
+            r=edit1.$0;
+            _="Right > "+showE(r);
+           }
+          else
+           {
+            _="Replace";
+           }
+         }
+        return _;
+       };
+       return showE(edit);
+      },
+      Transform:function(f,edit)
+      {
+       var _,e,arg0,e1,arg01,t;
+       if(edit.$==1)
+        {
+         e=edit.$0;
+         arg0=Tree.Transform(f,e);
+         _=Runtime.New(Edit,{
+          $:1,
+          $0:arg0
+         });
+        }
+       else
+        {
+         if(edit.$==2)
+          {
+           e1=edit.$0;
+           arg01=Tree.Transform(f,e1);
+           _=Runtime.New(Edit,{
+            $:2,
+            $0:arg01
+           });
+          }
+         else
+          {
+           t=edit.$0;
+           _=Runtime.New(Edit,{
+            $:0,
+            $0:f(t)
+           });
+          }
+        }
+       return _;
+      },
+      Tree:Runtime.Class({
+       GetEnumerator:function()
+       {
+        var _this;
+        _this=this.get_Sequence();
+        return Enumerator.Get(_this);
+       },
+       GetEnumerator1:function()
+       {
+        var _this;
+        _this=this.get_Sequence();
+        return Enumerator.Get(_this);
+       },
+       Map:function(f)
+       {
+        var _,t,right,left;
+        if(this.$==1)
+         {
+          t=this.$0;
+          _=Runtime.New(Tree1,{
+           $:1,
+           $0:f(t)
+          });
+         }
+        else
+         {
+          if(this.$==2)
+           {
+            right=this.$1;
+            left=this.$0;
+            _=Runtime.New(Tree1,{
+             $:2,
+             $0:left.Map(f),
+             $1:right.Map(f)
+            });
+           }
+          else
+           {
+            _=Runtime.New(Tree1,{
+             $:0
+            });
+           }
+         }
+        return _;
+       },
+       get_Sequence:function()
+       {
+        var _,x,y,x1;
+        if(this.$==1)
+         {
+          x=this.$0;
+          _=[x];
+         }
+        else
+         {
+          if(this.$==2)
+           {
+            y=this.$1;
+            x1=this.$0;
+            _=Seq.append(x1.get_Sequence(),y.get_Sequence());
+           }
+          else
+           {
+            _=Seq.empty();
+           }
+         }
+        return _;
+       }
+      })
+     },
+     Validator:Runtime.Class({
+      Is:function(f,m,flet)
+      {
+       return this.Validate(f,m,flet);
+      },
+      IsEmail:function(msg)
+      {
+       var _this=this;
+       return function(arg20)
+       {
+        return _this.IsRegexMatch("^[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\\.)+[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?$",msg,arg20);
+       };
+      },
+      IsEqual:function(value,msg,flet)
+      {
+       var arg00;
+       arg00=function(i)
+       {
+        return Unchecked.Equals(i,value);
+       };
+       return this.Validate(arg00,msg,flet);
+      },
+      IsFloat:function(msg)
+      {
+       var _this=this;
+       return function(arg20)
+       {
+        return _this.IsRegexMatch("^\\s*(\\+|-)?((\\d+(\\.\\d+)?)|(\\.\\d+))\\s*$",msg,arg20);
+       };
+      },
+      IsGreaterThan:function(min,msg,flet)
+      {
+       var arg00;
+       arg00=function(i)
+       {
+        return Unchecked.Compare(i,min)===1;
+       };
+       return this.Validate(arg00,msg,flet);
+      },
+      IsInt:function(msg)
+      {
+       var _this=this;
+       return function(arg20)
+       {
+        return _this.IsRegexMatch("^-?\\d+$",msg,arg20);
+       };
+      },
+      IsLessThan:function(max,msg,flet)
+      {
+       var arg00;
+       arg00=function(i)
+       {
+        return Unchecked.Compare(i,max)===-1;
+       };
+       return this.Validate(arg00,msg,flet);
+      },
+      IsNotEmpty:function(msg,flet)
+      {
+       var arg00;
+       arg00=function(s)
+       {
+        return s!=="";
+       };
+       return this.Validate(arg00,msg,flet);
+      },
+      IsNotEqual:function(value,msg,flet)
+      {
+       var arg00;
+       arg00=function(i)
+       {
+        return!Unchecked.Equals(i,value);
+       };
+       return this.Validate(arg00,msg,flet);
+      },
+      IsRegexMatch:function(regex,msg,flet)
+      {
+       var arg00,_this=this;
+       arg00=function(x)
+       {
+        var objectArg;
+        objectArg=_this.VP;
+        return objectArg.Matches(regex,x);
+       };
+       return _this.Validate(arg00,msg,flet);
+      },
+      IsTrue:function(msg,flet)
+      {
+       var arg00;
+       arg00=function(x)
+       {
+        return x;
+       };
+       return this.Validate(arg00,msg,flet);
+      },
+      Validate:function(f,msg,flet)
+      {
+       var value;
+       value=flet.MapResult(function(res)
+       {
+        var _,fs,v;
+        if(res.$==1)
+         {
+          fs=res.$0;
+          _=Runtime.New(Result,{
+           $:1,
+           $0:fs
+          });
+         }
+        else
+         {
+          v=res.$0;
+          _=f(v)?Runtime.New(Result,{
+           $:0,
+           $0:v
+          }):Runtime.New(Result,{
+           $:1,
+           $0:List.ofArray([msg])
+          });
+         }
+        return _;
+       });
+       return value;
+      }
+     },{
+      New:function(VP)
+      {
+       var r;
+       r=Runtime.New(this,{});
+       r.VP=VP;
+       return r;
+      }
+     })
+    }
+   }
+  }
+ });
+ Runtime.OnInit(function()
+ {
+  Formlets=Runtime.Safe(Global.IntelliFactory.Formlets);
+  Base=Runtime.Safe(Formlets.Base);
+  Formlet=Runtime.Safe(Base.Formlet);
+  Form=Runtime.Safe(Base.Form);
+  Tree=Runtime.Safe(Base.Tree);
+  Edit=Runtime.Safe(Tree.Edit);
+  Result=Runtime.Safe(Base.Result);
+  WebSharper=Runtime.Safe(Global.IntelliFactory.WebSharper);
+  List=Runtime.Safe(WebSharper.List);
+  T=Runtime.Safe(List.T);
+  LayoutUtils=Runtime.Safe(Base.LayoutUtils);
+  Tree1=Runtime.Safe(Tree.Tree);
+  Util=Runtime.Safe(WebSharper.Util);
+  Seq=Runtime.Safe(WebSharper.Seq);
+  Enumerator=Runtime.Safe(WebSharper.Enumerator);
+  return Unchecked=Runtime.Safe(WebSharper.Unchecked);
+ });
+ Runtime.OnLoad(function()
+ {
+  return;
+ });
+}());
+
+(function()
+{
+ var Global=this,Runtime=this.IntelliFactory.Runtime,WebSharper,Formlets,Body,Html,Client,Default,List,Controls,Reactive,HotStream,Formlets1,Base,Result,T,Operators,jQuery,EventsPervasives,Data,Formlet,Operators1,CssConstants,Math,Seq,Utils,Tree,Edit,Form,Arrays,IntrinsicFunctionProxy,FormletProvider,Formlet1,Pagelet,Util,LayoutProvider,LayoutUtils,Reactive1,Validator,ValidatorProvidor,RegExp,Collections,Dictionary,ElementStore,Enhance,FormButtonConfiguration,FormContainerConfiguration,Padding,ManyConfiguration,ValidationFrameConfiguration,ValidationIconConfiguration,JSON,FormletBuilder,Layout,FormRowConfiguration,LabelConfiguration,Padding1,Enumerator;
+ Runtime.Define(Global,{
+  IntelliFactory:{
+   WebSharper:{
+    Formlets:{
+     Body:Runtime.Class({},{
+      New:function(el,l)
+      {
+       return Runtime.New(Body,{
+        Element:el,
+        Label:l
+       });
+      }
+     }),
+     Controls:{
+      Button:function(label)
+      {
+       var genElem;
+       genElem=function()
+       {
+        return Default.Button(List.ofArray([Default.Text(label)]));
+       };
+       return Controls.ElementButton(genElem);
+      },
+      Checkbox:function(def)
+      {
+       return Controls.CheckboxControl(false,def);
+      },
+      CheckboxControl:function(readOnly,def)
+      {
+       var f;
+       f=function()
+       {
+        var state,readOnlyAtts,_,_this,x,_this1,arg00,body,_2,objectArg,arg002,objectArg1,arg003,reset;
+        state=HotStream.New(Runtime.New(Result,{
+         $:0,
+         $0:def
+        }));
+        if(readOnly)
+         {
+          _this=Default.Attr();
+          _=List.ofArray([_this.NewAttr("disabled","disabled")]);
+         }
+        else
+         {
+          _=Runtime.New(T,{
+           $:0
+          });
+         }
+        readOnlyAtts=_;
+        _this1=Default.Attr();
+        x=Operators.add(Default.Input(List.ofArray([_this1.NewAttr("type","checkbox"),Default.Attr().Class("inputCheckbox")])),readOnlyAtts);
+        arg00=function(cb)
+        {
+         return function()
+         {
+          var _1,arg0,arg001;
+          if(!readOnly)
+           {
+            arg0=jQuery(cb.get_Body()).prop("checked");
+            arg001=Runtime.New(Result,{
+             $:0,
+             $0:arg0
+            });
+            _1=state.Trigger(arg001);
+           }
+          else
+           {
+            _1=null;
+           }
+          return _1;
+         };
+        };
+        EventsPervasives.Events().OnClick(arg00,x);
+        body=x;
+        if(def)
+         {
+          objectArg=body["HtmlProvider@33"];
+          arg002=body.get_Body();
+          _2=objectArg.SetAttribute(arg002,"defaultChecked","true");
+         }
+        else
+         {
+          objectArg1=body["HtmlProvider@33"];
+          arg003=body.get_Body();
+          _2=objectArg1.RemoveAttribute(arg003,"checked");
+         }
+        reset=function()
+        {
+         var _1,objectArg2,arg001,objectArg3,arg004,objectArg4,arg005;
+         if(def)
+          {
+           objectArg2=body["HtmlProvider@33"];
+           arg001=body.get_Body();
+           _1=objectArg2.SetProperty(arg001,"checked",true);
+          }
+         else
+          {
+           objectArg3=body["HtmlProvider@33"];
+           arg004=body.get_Body();
+           objectArg3.RemoveAttribute(arg004,"checked");
+           objectArg4=body["HtmlProvider@33"];
+           arg005=body.get_Body();
+           _1=objectArg4.SetProperty(arg005,"checked",false);
+          }
+         return state.Trigger(Runtime.New(Result,{
+          $:0,
+          $0:def
+         }));
+        };
+        reset(null);
+        return[body,reset,state];
+       };
+       return Data.MkFormlet(f);
+      },
+      CheckboxGroup:function(values)
+      {
+       return Controls.CheckboxGroupControl(false,values);
+      },
+      CheckboxGroupControl:function(readOnly,values)
+      {
+       var mapping,fs,x2,chooser,f1;
+       mapping=Runtime.Tupled(function(tupledArg)
+       {
+        var l,v,b,x,arg0,label,f,formlet;
+        l=tupledArg[0];
+        v=tupledArg[1];
+        b=tupledArg[2];
+        x=Controls.CheckboxControl(readOnly,b);
+        arg0=function()
+        {
+         var x1,_this;
+         x1=List.ofArray([Default.Text(l)]);
+         _this=Default.Tags();
+         return _this.NewTag("label",x1);
+        };
+        label={
+         $:1,
+         $0:arg0
+        };
+        f=function(b1)
+        {
+         return[b1,v];
+        };
+        formlet=Formlet.WithLabel(label,x);
+        return Formlet.Map(f,formlet);
+       });
+       fs=List.map(mapping,values);
+       x2=Formlet.Sequence(fs);
+       chooser=Runtime.Tupled(function(tupledArg)
+       {
+        var b,v;
+        b=tupledArg[0];
+        v=tupledArg[1];
+        return b?{
+         $:1,
+         $0:v
+        }:{
+         $:0
+        };
+       });
+       f1=function(list)
+       {
+        return List.choose(chooser,list);
+       };
+       return Formlet.Map(f1,x2);
+      },
+      ElementButton:function(genElem)
+      {
+       var f;
+       f=function()
+       {
+        var state,count,x,arg00,body,reset;
+        state=HotStream.New(Runtime.New(Result,{
+         $:1,
+         $0:Runtime.New(T,{
+          $:0
+         })
+        }));
+        count={
+         contents:0
+        };
+        x=genElem(null);
+        arg00=function()
+        {
+         return function()
+         {
+          state.Trigger(Runtime.New(Result,{
+           $:0,
+           $0:count.contents
+          }));
+          return Operators1.Increment(count);
+         };
+        };
+        EventsPervasives.Events().OnClick(arg00,x);
+        body=x;
+        reset=function()
+        {
+         count.contents=0;
+         return state.Trigger(Runtime.New(Result,{
+          $:1,
+          $0:Runtime.New(T,{
+           $:0
+          })
+         }));
+        };
+        return[body,reset,state];
+       };
+       return Data.MkFormlet(f);
+      },
+      Input:function(value)
+      {
+       return Controls.InputField(false,"text",CssConstants.InputTextClass(),value);
+      },
+      InputControl:function(value,f)
+      {
+       var f1;
+       f1=function()
+       {
+        var state,body,reset;
+        state=HotStream.New(Runtime.New(Result,{
+         $:0,
+         $0:value
+        }));
+        body=f(state);
+        body.set_Value(value);
+        reset=function()
+        {
+         body.set_Value(value);
+         return state.Trigger(Runtime.New(Result,{
+          $:0,
+          $0:value
+         }));
+        };
+        return[body,reset,state];
+       };
+       return Data.MkFormlet(f1);
+      },
+      InputField:function(readOnly,typ,cls,value)
+      {
+       return Controls.InputControl(value,function(state)
+       {
+        var ro,_,_this,a,_this1,x,input,f;
+        if(readOnly)
+         {
+          _this=Default.Attr();
+          _=List.ofArray([_this.NewAttr("readonly","readonly")]);
+         }
+        else
+         {
+          _=Runtime.New(T,{
+           $:0
+          });
+         }
+        ro=_;
+        _this1=Default.Attr();
+        a=List.ofArray([_this1.NewAttr("type",typ),Default.Attr().Class(cls)]);
+        x=List.append(a,ro);
+        input=Default.Input(x);
+        f=function()
+        {
+         return!readOnly?state.Trigger(Runtime.New(Result,{
+          $:0,
+          $0:input.get_Value()
+         })):null;
+        };
+        Controls.OnTextChange(f,input);
+        return input;
+       });
+      },
+      OnTextChange:function(f,control)
+      {
+       var value,up,arg00,arg001;
+       value={
+        contents:control.get_Value()
+       };
+       up=function()
+       {
+        var _;
+        if(control.get_Value()!==value.contents)
+         {
+          value.contents=control.get_Value();
+          _=f(null);
+         }
+        else
+         {
+          _=null;
+         }
+        return _;
+       };
+       arg00=function()
+       {
+        return up(null);
+       };
+       EventsPervasives.Events().OnChange(arg00,control);
+       arg001=function()
+       {
+        return function()
+        {
+         return up(null);
+        };
+       };
+       EventsPervasives.Events().OnKeyUp(arg001,control);
+       control.Dom.oninput=up;
+       return;
+      },
+      Password:function(value)
+      {
+       return Controls.InputField(false,"password","inputPassword",value);
+      },
+      RadioButtonGroup:function(def,values)
+      {
+       return Controls.RadioButtonGroupControl(false,def,values);
+      },
+      RadioButtonGroupControl:function(readOnly,def,values)
+      {
+       var f;
+       f=function()
+       {
+        var groupId,x,_,defIx,mapping,x1,chooser,d,f1,state,mapping1,rbLbVls,resetRB,reset,mapping2,vs,arg0,arg003,body;
+        groupId="id"+Math.round(Math.random()*100000000);
+        if(def.$==0)
+         {
+          _={
+           $:0
+          };
+         }
+        else
+         {
+          defIx=def.$0;
+          mapping=function(ix)
+          {
+           return Runtime.Tupled(function(tupledArg)
+           {
+            var value;
+            tupledArg[0];
+            value=tupledArg[1];
+            return[ix,value];
+           });
+          };
+          x1=List.mapi(mapping,values);
+          chooser=Runtime.Tupled(function(tupledArg)
+          {
+           var ix,value,_1,defIx1;
+           ix=tupledArg[0];
+           value=tupledArg[1];
+           if(def.$==0)
+            {
+             _1={
+              $:0
+             };
+            }
+           else
+            {
+             defIx1=def.$0;
+             _1=defIx1===ix?{
+              $:1,
+              $0:Runtime.New(Result,{
+               $:0,
+               $0:value
+              })
+             }:{
+              $:0
+             };
+            }
+           return _1;
+          });
+          _=Seq.tryPick(chooser,x1);
+         }
+        x=_;
+        d=HotStream.New(Runtime.New(Result,{
+         $:1,
+         $0:Runtime.New(T,{
+          $:0
+         })
+        }));
+        f1=function(arg00)
+        {
+         return HotStream.New(arg00);
+        };
+        state=Utils.Maybe(d,f1,x);
+        mapping1=Runtime.Tupled(function(tupledArg)
+        {
+         var label,value,inp,_this,_this1,_1,_this2;
+         label=tupledArg[0];
+         value=tupledArg[1];
+         _this=Default.Attr();
+         _this1=Default.Attr();
+         if(readOnly)
+          {
+           _this2=Default.Attr();
+           _1=List.ofArray([_this2.NewAttr("disabled","disabled")]);
+          }
+         else
+          {
+           _1=Runtime.New(T,{
+            $:0
+           });
+          }
+         inp=Operators.add(Default.Input(List.ofArray([Default.Attr().Class("inputRadio"),_this.NewAttr("type","radio"),_this1.NewAttr("name",groupId)])),_1);
+         return[inp,label,value];
+        });
+        rbLbVls=List.map(mapping1,values);
+        resetRB=function(rb,value,ix)
+        {
+         var _1,objectArg,arg00,defIx1,_2,objectArg1,arg001,objectArg2,arg002;
+         if(def.$==0)
+          {
+           objectArg=rb["HtmlProvider@33"];
+           arg00=rb.get_Body();
+           objectArg.RemoveAttribute(arg00,"checked");
+           _1=state.Trigger(Runtime.New(Result,{
+            $:1,
+            $0:Runtime.New(T,{
+             $:0
+            })
+           }));
+          }
+         else
+          {
+           defIx1=def.$0;
+           if(defIx1===ix)
+            {
+             objectArg1=rb["HtmlProvider@33"];
+             arg001=rb.get_Body();
+             objectArg1.SetProperty(arg001,"checked",true);
+             _2=state.Trigger(Runtime.New(Result,{
+              $:0,
+              $0:value
+             }));
+            }
+           else
+            {
+             objectArg2=rb["HtmlProvider@33"];
+             arg002=rb.get_Body();
+             _2=objectArg2.SetProperty(arg002,"checked",false);
+            }
+           _1=_2;
+          }
+         return _1;
+        };
+        reset=function()
+        {
+         var action;
+         action=function(ix)
+         {
+          return Runtime.Tupled(function(tupledArg)
+          {
+           var rb,value;
+           rb=tupledArg[0];
+           tupledArg[1];
+           value=tupledArg[2];
+           return resetRB(rb,value,ix);
+          });
+         };
+         return Seq.iteri(action,rbLbVls);
+        };
+        mapping2=function(ix)
+        {
+         return Runtime.Tupled(function(tupledArg)
+         {
+          var rb,label,value,arg00,Label;
+          rb=tupledArg[0];
+          label=tupledArg[1];
+          value=tupledArg[2];
+          resetRB(rb,value,ix);
+          arg00=function()
+          {
+           return function()
+           {
+            return!readOnly?state.Trigger(Runtime.New(Result,{
+             $:0,
+             $0:value
+            })):null;
+           };
+          };
+          EventsPervasives.Events().OnClick(arg00,rb);
+          Label={
+           $:1,
+           $0:function()
+           {
+            var x2,_this;
+            x2=List.ofArray([Default.Text(label)]);
+            _this=Default.Tags();
+            return _this.NewTag("label",x2);
+           }
+          };
+          return Runtime.New(Body,{
+           Element:rb,
+           Label:Label
+          });
+         });
+        };
+        vs=List.mapi(mapping2,rbLbVls);
+        arg0=Tree.FromSequence(vs);
+        arg003=Runtime.New(Edit,{
+         $:0,
+         $0:arg0
+        });
+        body=Data.RX().Return(arg003);
+        return Runtime.New(Form,{
+         Body:body,
+         Dispose1:function()
+         {
+         },
+         Notify:function()
+         {
+          return reset(null);
+         },
+         State:state
+        });
+       };
+       return Formlet.New(f);
+      },
+      ReadOnlyCheckbox:function(def)
+      {
+       return Controls.CheckboxControl(true,def);
+      },
+      ReadOnlyInput:function(value)
+      {
+       return Controls.InputField(true,"text",CssConstants.InputTextClass(),value);
+      },
+      ReadOnlyRadioButtonGroup:function(def,values)
+      {
+       return Controls.RadioButtonGroupControl(true,def,values);
+      },
+      ReadOnlySelect:function(def,vls)
+      {
+       return Controls.SelectControl(true,def,vls);
+      },
+      ReadOnlyTextArea:function(value)
+      {
+       return Controls.TextAreaControl(true,value);
+      },
+      Select:function(def,vls)
+      {
+       return Controls.SelectControl(false,def,vls);
+      },
+      SelectControl:function(readOnly,def,vls)
+      {
+       var f;
+       f=function()
+       {
+        var mapping,list,aVls,sIx,mapping1,x2,select,body,_,_this2,sValue,state,reset,arg001;
+        mapping=Runtime.Tupled(function(tuple)
+        {
+         return tuple[1];
+        });
+        list=List.map(mapping,vls);
+        aVls=Arrays.ofSeq(list);
+        sIx=(def>=0?def<vls.get_Length():false)?def:0;
+        mapping1=function(i)
+        {
+         return Runtime.Tupled(function(tupledArg)
+         {
+          var nm,_this,x,_this1,x1;
+          nm=tupledArg[0];
+          tupledArg[1];
+          _this=Default.Tags();
+          _this1=Default.Attr();
+          x1=Global.String(i);
+          x=List.ofArray([Default.Text(nm),_this1.NewAttr("value",x1)]);
+          return _this.NewTag("option",x);
+         });
+        };
+        x2=List.mapi(mapping1,vls);
+        select=Default.Select(x2);
+        if(readOnly)
+         {
+          _this2=Default.Attr();
+          _=Operators.add(select,List.ofArray([_this2.NewAttr("disabled","disabled")]));
+         }
+        else
+         {
+          _=select;
+         }
+        body=_;
+        sValue=Runtime.New(Result,{
+         $:0,
+         $0:IntrinsicFunctionProxy.GetArray(aVls,sIx)
+        });
+        state=HotStream.New(sValue);
+        reset=function()
+        {
+         var value,objectArg,arg00;
+         value=Global.String(sIx);
+         objectArg=body["HtmlProvider@33"];
+         arg00=body.get_Body();
+         objectArg.SetProperty(arg00,"value",value);
+         return state.Trigger(sValue);
+        };
+        reset(null);
+        arg001=function()
+        {
+         var _1,value,arg0,arg00;
+         if(!readOnly)
+          {
+           value=body.get_Value();
+           arg0=IntrinsicFunctionProxy.GetArray(aVls,value<<0);
+           arg00=Runtime.New(Result,{
+            $:0,
+            $0:arg0
+           });
+           _1=state.Trigger(arg00);
+          }
+         else
+          {
+           _1=null;
+          }
+         return _1;
+        };
+        EventsPervasives.Events().OnChange(arg001,body);
+        reset(null);
+        return[body,reset,state];
+       };
+       return Data.MkFormlet(f);
+      },
+      TextArea:function(value)
+      {
+       return Controls.TextAreaControl(false,value);
+      },
+      TextAreaControl:function(readOnly,value)
+      {
+       return Controls.InputControl(value,function(state)
+       {
+        var x,_,_this,input,f;
+        if(readOnly)
+         {
+          _this=Default.Attr();
+          _=List.ofArray([_this.NewAttr("readonly","readonly")]);
+         }
+        else
+         {
+          _=Runtime.New(T,{
+           $:0
+          });
+         }
+        x=_;
+        input=Default.TextArea(x);
+        f=function()
+        {
+         return!readOnly?state.Trigger(Runtime.New(Result,{
+          $:0,
+          $0:input.get_Value()
+         })):null;
+        };
+        Controls.OnTextChange(f,input);
+        return input;
+       });
+      }
+     },
+     CssConstants:{
+      InputTextClass:Runtime.Field(function()
+      {
+       return"inputText";
+      })
+     },
+     Data:{
+      $:function(f,x)
+      {
+       var objectArg,x1;
+       objectArg=Data.BaseFormlet();
+       x1=objectArg.Apply(f,x);
+       return Data.OfIFormlet(x1);
+      },
+      BaseFormlet:function()
+      {
+       return FormletProvider.New(Data.UtilsProvider());
+      },
+      DefaultLayout:Runtime.Field(function()
+      {
+       return Data.Layout().get_Vertical();
+      }),
+      Formlet:Runtime.Class({
+       Build:function()
+       {
+        return this.buildInternal.call(null,null);
+       },
+       MapResult:function(f)
+       {
+        var x,_this=this;
+        x=Formlet1.New(function()
+        {
+         var form,objectArg,arg00,arg10;
+         form=_this.buildInternal.call(null,null);
+         objectArg=_this.utils.Reactive;
+         arg00=form.State;
+         arg10=function(x1)
+         {
+          return f(x1);
+         };
+         return Runtime.New(Form,{
+          Body:form.Body,
+          Dispose1:form.Dispose1,
+          Notify:form.Notify,
+          State:objectArg.Select(arg00,arg10)
+         });
+        },_this.layoutInternal,_this.formletBase,_this.utils);
+        return x;
+       },
+       Render:function()
+       {
+        return this.Run(function()
+        {
+        }).Render();
+       },
+       Run:function(f)
+       {
+        var matchValue,_,formlet,form,value,matchValue1,el,_1,patternInput,body,body1,el1;
+        matchValue=this.get_ElementInternal();
+        if(matchValue.$==0)
+         {
+          formlet=this.formletBase.ApplyLayout(this);
+          form=formlet.Build();
+          value=Util.subscribeTo(form.State,function(res)
+          {
+           var value1;
+           value1=Result.Map(f,res);
+           return;
+          });
+          matchValue1=formlet.get_Layout().Apply.call(null,form.Body);
+          if(matchValue1.$==0)
+           {
+            patternInput=Data.DefaultLayout().Apply.call(null,form.Body).$0;
+            body=patternInput[0];
+            _1=body.Element;
+           }
+          else
+           {
+            body1=matchValue1.$0[0];
+            _1=body1.Element;
+           }
+          el=_1;
+          this.set_ElementInternal({
+           $:1,
+           $0:el
+          });
+          _=el;
+         }
+        else
+         {
+          el1=matchValue.$0;
+          _=el1;
+         }
+        return _;
+       },
+       get_Body:function()
+       {
+        return this.Run(function()
+        {
+        }).get_Body();
+       },
+       get_ElementInternal:function()
+       {
+        return this["ElementInternal@"];
+       },
+       get_Layout:function()
+       {
+        return this.layoutInternal;
+       },
+       set_ElementInternal:function(v)
+       {
+        this["ElementInternal@"]=v;
+        return;
+       }
+      },{
+       New:function(buildInternal,layoutInternal,formletBase,utils)
+       {
+        var r;
+        r=Runtime.New(this,Pagelet.New());
+        r.buildInternal=buildInternal;
+        r.layoutInternal=layoutInternal;
+        r.formletBase=formletBase;
+        r.utils=utils;
+        r["ElementInternal@"]={
+         $:0
+        };
+        return r;
+       }
+      }),
+      Layout:Runtime.Field(function()
+      {
+       return LayoutProvider.New(LayoutUtils.New({
+        Reactive:Reactive1.Default()
+       }));
+      }),
+      MkFormlet:function(f)
+      {
+       var objectArg,arg00,formlet;
+       objectArg=Data.BaseFormlet();
+       arg00=function()
+       {
+        var patternInput,state,reset,body,Notify,value,arg001;
+        patternInput=f(null);
+        state=patternInput[2];
+        reset=patternInput[1];
+        body=patternInput[0];
+        Notify=function()
+        {
+         return reset(null);
+        };
+        value=Data.NewBody(body,{
+         $:0
+        });
+        arg001=Tree.Set(value);
+        return Runtime.New(Form,{
+         Body:Data.RX().Return(arg001),
+         Dispose1:function()
+         {
+          return null;
+         },
+         Notify:Notify,
+         State:state
+        });
+       };
+       formlet=objectArg.New(arg00);
+       return Data.OfIFormlet(formlet);
+      },
+      NewBody:function(arg00,arg10)
+      {
+       return Body.New(arg00,arg10);
+      },
+      OfIFormlet:function(formlet)
+      {
+       var f2;
+       f2=Formlet1.New(function()
+       {
+        return formlet.Build();
+       },formlet.get_Layout(),Data.BaseFormlet(),Data.UtilsProvider());
+       return Data.PropagateRenderFrom(formlet,f2);
+      },
+      PropagateRenderFrom:function(f1,f2)
+      {
+       f1.hasOwnProperty("Render")?void(f2.Render=f1.Render):null;
+       return f2;
+      },
+      RX:Runtime.Field(function()
+      {
+       return Reactive1.Default();
+      }),
+      UtilsProvider:function()
+      {
+       return{
+        Reactive:Data.RX(),
+        DefaultLayout:Data.DefaultLayout()
+       };
+      },
+      Validator:Runtime.Field(function()
+      {
+       return Validator.New(ValidatorProvidor.New());
+      }),
+      ValidatorProvidor:Runtime.Class({
+       Matches:function(regex,text)
+       {
+        return text.match(new RegExp(regex));
+       }
+      },{
+       New:function()
+       {
+        return Runtime.New(this,{});
+       }
+      })
+     },
+     ElementStore:Runtime.Class({
+      Init:function()
+      {
+       this.store=Dictionary.New2();
+       return;
+      },
+      RegisterElement:function(key,f)
+      {
+       var value;
+       value=this.store.ContainsKey(key);
+       return!value?this.store.set_Item(key,f):null;
+      },
+      Remove:function(key)
+      {
+       var _,value;
+       if(this.store.ContainsKey(key))
+        {
+         (this.store.get_Item(key))(null);
+         value=this.store.Remove(key);
+         _=void value;
+        }
+       else
+        {
+         _=null;
+        }
+       return _;
+      }
+     },{
+      New:function()
+      {
+       return Runtime.New(this,{});
+      },
+      NewElementStore:function()
+      {
+       var store;
+       store=ElementStore.New();
+       store.Init();
+       return store;
+      }
+     }),
+     Enhance:{
+      Cancel:function(formlet,isCancel)
+      {
+       return Formlet.Replace(formlet,function(value)
+       {
+        return isCancel(value)?Formlet.Empty():Formlet.Return(value);
+       });
+      },
+      CustomMany:function(config,formlet)
+      {
+       var formlet1,addButton,f,formlet2,c,x,l,x1,delF,manyF,resetS,formlet6,resetF,reset,_builder_,formlet7;
+       formlet1=Controls.ElementButton(function()
+       {
+        return Operators.add(Default.Div(List.ofArray([Default.Attr().Class(config.AddIconClass)])),List.ofArray([Default.Div(Runtime.New(T,{
+         $:0
+        }))]));
+       });
+       addButton=Formlet.InitWith(1,formlet1);
+       f=function()
+       {
+       };
+       formlet2=Controls.ElementButton(function()
+       {
+        return Operators.add(Default.Div(List.ofArray([Default.Attr().Class(config.RemoveIconClass)])),List.ofArray([Default.Div(Runtime.New(T,{
+         $:0
+        }))]));
+       });
+       c=Formlet.Map(f,formlet2);
+       x=Formlet.WithCancelation(formlet,c);
+       l=Data.Layout().get_Horizontal();
+       x1=Formlet.WithLayout(l,x);
+       delF=Enhance.Deletable(x1);
+       manyF=function()
+       {
+        var f1,formlet3,formlet4,formlet5;
+        f1=function(source)
+        {
+         return List.ofSeq(source);
+        };
+        formlet3=Enhance.Many_(addButton,function()
+        {
+         return delF;
+        });
+        formlet4=Formlet.Map(f1,formlet3);
+        formlet5=Formlet.WithLayoutOrDefault(formlet4);
+        return Formlet.ApplyLayout(formlet5);
+       };
+       resetS=HotStream.New(Runtime.New(Result,{
+        $:0,
+        $0:null
+       }));
+       formlet6=Data.BaseFormlet().FromState(resetS);
+       resetF=Data.OfIFormlet(formlet6);
+       reset=function()
+       {
+        return resetS.Trigger(Runtime.New(Result,{
+         $:0,
+         $0:null
+        }));
+       };
+       _builder_=Formlet.Do();
+       formlet7=_builder_.Delay(function()
+       {
+        return _builder_.Bind(resetF,function()
+        {
+         return _builder_.ReturnFrom(manyF(null));
+        });
+       });
+       return Formlet.WithNotification(reset,formlet7);
+      },
+      Deletable:function(formlet)
+      {
+       return Enhance.Replace(formlet,function(value)
+       {
+        var _,value1;
+        if(value.$==1)
+         {
+          value1=value.$0;
+          _=Formlet.Return({
+           $:1,
+           $0:value1
+          });
+         }
+        else
+         {
+          _=Formlet.ReturnEmpty({
+           $:0
+          });
+         }
+        return _;
+       });
+      },
+      FormButtonConfiguration:Runtime.Class({},{
+       get_Default:function()
+       {
+        return Runtime.New(FormButtonConfiguration,{
+         Label:{
+          $:0
+         },
+         Style:{
+          $:0
+         },
+         Class:{
+          $:0
+         }
+        });
+       }
+      }),
+      FormContainerConfiguration:Runtime.Class({},{
+       get_Default:function()
+       {
+        var Description;
+        Description={
+         $:0
+        };
+        return Runtime.New(FormContainerConfiguration,{
+         Header:{
+          $:0
+         },
+         Padding:Padding.get_Default(),
+         Description:Description,
+         BackgroundColor:{
+          $:0
+         },
+         BorderColor:{
+          $:0
+         },
+         CssClass:{
+          $:0
+         },
+         Style:{
+          $:0
+         }
+        });
+       }
+      }),
+      InputButton:function(conf,enabled)
+      {
+       var f;
+       f=function()
+       {
+        var state,count,label,x1,_this,_this1,arg00,submit,submit1,_,objectArg,arg001,matchValue,_1,style,objectArg1,arg002,matchValue1,_2,cls,objectArg2,arg003,reset;
+        state=HotStream.New(Runtime.New(Result,{
+         $:1,
+         $0:Runtime.New(T,{
+          $:0
+         })
+        }));
+        count={
+         contents:0
+        };
+        label=Utils.Maybe("Submit",function(x)
+        {
+         return x;
+        },conf.Label);
+        _this=Default.Attr();
+        _this1=Default.Attr();
+        x1=Operators.add(Default.Input(List.ofArray([_this.NewAttr("type","button")])),List.ofArray([Default.Attr().Class("submitButton"),_this1.NewAttr("value",label)]));
+        arg00=function()
+        {
+         return function()
+         {
+          Operators1.Increment(count);
+          return state.Trigger(Runtime.New(Result,{
+           $:0,
+           $0:count.contents
+          }));
+         };
+        };
+        EventsPervasives.Events().OnClick(arg00,x1);
+        submit=x1;
+        if(!enabled)
+         {
+          objectArg=submit["HtmlProvider@33"];
+          arg001=submit.get_Body();
+          _=objectArg.AddClass(arg001,"disabledButton");
+         }
+        else
+         {
+          _=null;
+         }
+        matchValue=conf.Style;
+        if(matchValue.$==1)
+         {
+          style=matchValue.$0;
+          objectArg1=submit["HtmlProvider@33"];
+          arg002=submit.get_Body();
+          _1=objectArg1.SetStyle(arg002,style);
+         }
+        else
+         {
+          _1=null;
+         }
+        matchValue1=conf.Class;
+        if(matchValue1.$==1)
+         {
+          cls=matchValue1.$0;
+          objectArg2=submit["HtmlProvider@33"];
+          arg003=submit.get_Body();
+          _2=objectArg2.AddClass(arg003,cls);
+         }
+        else
+         {
+          _2=null;
+         }
+        submit1=submit;
+        reset=function()
+        {
+         count.contents=0;
+         return state.Trigger(Runtime.New(Result,{
+          $:1,
+          $0:Runtime.New(T,{
+           $:0
+          })
+         }));
+        };
+        state.Trigger(Runtime.New(Result,{
+         $:1,
+         $0:Runtime.New(T,{
+          $:0
+         })
+        }));
+        return[submit1,reset,state];
+       };
+       return Data.MkFormlet(f);
+      },
+      Many:function(formlet)
+      {
+       return Enhance.CustomMany(ManyConfiguration.get_Default(),formlet);
+      },
+      ManyConfiguration:Runtime.Class({},{
+       get_Default:function()
+       {
+        return Runtime.New(ManyConfiguration,{
+         AddIconClass:"addIcon",
+         RemoveIconClass:"removeIcon"
+        });
+       }
+      }),
+      Many_:function(add,f)
+      {
+       var f1,chooser,f2,formlet,formlet1,formlet2;
+       f1=function(v)
+       {
+        return f(v);
+       };
+       chooser=function(x)
+       {
+        return x;
+       };
+       f2=function(source)
+       {
+        return Seq.choose(chooser,source);
+       };
+       formlet=Formlet.Map(f1,add);
+       formlet1=Formlet.SelectMany(formlet);
+       formlet2=Formlet.FlipBody(formlet1);
+       return Formlet.Map(f2,formlet2);
+      },
+      Padding:Runtime.Class({},{
+       get_Default:function()
+       {
+        return Runtime.New(Padding,{
+         Left:{
+          $:0
+         },
+         Right:{
+          $:0
+         },
+         Top:{
+          $:0
+         },
+         Bottom:{
+          $:0
+         }
+        });
+       }
+      }),
+      Replace:function(formlet,f)
+      {
+       var f1,x;
+       f1=function(res)
+       {
+        var _,fs,arg0,s;
+        if(res.$==1)
+         {
+          fs=res.$0;
+          arg0=Formlet.FailWith(fs);
+          _=Runtime.New(Result,{
+           $:0,
+           $0:arg0
+          });
+         }
+        else
+         {
+          s=res.$0;
+          _=Runtime.New(Result,{
+           $:0,
+           $0:f(s)
+          });
+         }
+        return _;
+       };
+       x=Formlet.MapResult(f1,formlet);
+       return Formlet.Switch(x);
+      },
+      ValidationFrameConfiguration:Runtime.Class({},{
+       get_Default:function()
+       {
+        return Runtime.New(ValidationFrameConfiguration,{
+         ValidClass:{
+          $:1,
+          $0:"successFormlet"
+         },
+         ValidStyle:{
+          $:0
+         },
+         ErrorClass:{
+          $:1,
+          $0:"errorFormlet"
+         },
+         ErrorStyle:{
+          $:0
+         }
+        });
+       }
+      }),
+      ValidationIconConfiguration:Runtime.Class({},{
+       get_Default:function()
+       {
+        return Runtime.New(ValidationIconConfiguration,{
+         ValidIconClass:"validIcon",
+         ErrorIconClass:"errorIcon"
+        });
+       }
+      }),
+      WithCssClass:function(css,formlet)
+      {
+       var f;
+       f=function(el)
+       {
+        var objectArg,arg00;
+        objectArg=el["HtmlProvider@33"];
+        arg00=el.get_Body();
+        objectArg.AddClass(arg00,css);
+        return el;
+       };
+       return Formlet.MapElement(f,formlet);
+      },
+      WithCustomFormContainer:function(fc,formlet)
+      {
+       var x,f;
+       x=Formlet.ApplyLayout(formlet);
+       f=function(formEl)
+       {
+        var x1,d,f1,description,x2,d1,f2,tb,cell,f3,o,x3,f4,value,f5,value1,f6,value2,f7,value3,f8,value4,action,matchValue,_1,style,objectArg1,arg002,matchValue1,_2,cls,objectArg2,arg003;
+        x1=fc.Description;
+        d=Runtime.New(T,{
+         $:0
+        });
+        f1=function(descr)
+        {
+         var _,genEl,text;
+         if(descr.$==1)
+          {
+           genEl=descr.$0;
+           _=List.ofArray([genEl(null)]);
+          }
+         else
+          {
+           text=descr.$0;
+           _=List.ofArray([Default.P(List.ofArray([Default.Tags().text(text)]))]);
+          }
+         return _;
+        };
+        description=Utils.Maybe(d,f1,x1);
+        x2=fc.Header;
+        d1=Utils.InTable(List.ofArray([List.ofArray([Operators.add(Default.Div(List.ofArray([Default.Attr().Class("headerPanel")])),description)]),List.ofArray([formEl])]));
+        f2=function(formElem)
+        {
+         var hdr,_,genElem,text,header;
+         if(formElem.$==1)
+          {
+           genElem=formElem.$0;
+           _=genElem(null);
+          }
+         else
+          {
+           text=formElem.$0;
+           _=Default.H1(List.ofArray([Default.Tags().text(text)]));
+          }
+         hdr=_;
+         header=Operators.add(Default.Div(List.ofArray([Default.Attr().Class("headerPanel")])),Runtime.New(T,{
+          $:1,
+          $0:hdr,
+          $1:description
+         }));
+         return Utils.InTable(List.ofArray([List.ofArray([header]),List.ofArray([formEl])]));
+        };
+        tb=Utils.Maybe(d1,f2,x2);
+        cell=Operators.add(Default.TD(List.ofArray([Default.Attr().Class("formlet")])),List.ofArray([tb]));
+        f3=function(color)
+        {
+         var arg00,objectArg,arg001;
+         arg00="border-color: "+color;
+         objectArg=cell["HtmlProvider@33"];
+         arg001=cell.get_Body();
+         return objectArg.SetStyle(arg001,arg00);
+        };
+        o=fc.BorderColor;
+        Utils.Maybe(null,f3,o);
+        f4=function(color)
+        {
+         return color;
+        };
+        value=fc.BackgroundColor;
+        f5=function(v)
+        {
+         return Global.String(v)+"px";
+        };
+        value1=fc.Padding.Left;
+        f6=function(v)
+        {
+         return Global.String(v)+"px";
+        };
+        value2=fc.Padding.Right;
+        f7=function(v)
+        {
+         return Global.String(v)+"px";
+        };
+        value3=fc.Padding.Top;
+        f8=function(v)
+        {
+         return Global.String(v)+"px";
+        };
+        value4=fc.Padding.Bottom;
+        x3=List.ofArray([["background-color",Utils.MapOption(f4,value)],["padding-left",Utils.MapOption(f5,value1)],["padding-right",Utils.MapOption(f6,value2)],["padding-top",Utils.MapOption(f7,value3)],["padding-bottom",Utils.MapOption(f8,value4)]]);
+        action=Runtime.Tupled(function(tupledArg)
+        {
+         var name,value5,_,v,objectArg,arg00;
+         name=tupledArg[0];
+         value5=tupledArg[1];
+         if(value5.$==0)
+          {
+           _=null;
+          }
+         else
+          {
+           v=value5.$0;
+           objectArg=cell["HtmlProvider@33"];
+           arg00=cell.get_Body();
+           _=objectArg.SetCss(arg00,name,v);
+          }
+         return _;
+        });
+        Seq.iter(action,x3);
+        matchValue=fc.Style;
+        if(matchValue.$==0)
+         {
+          _1=null;
+         }
+        else
+         {
+          style=matchValue.$0;
+          objectArg1=cell["HtmlProvider@33"];
+          arg002=cell.get_Body();
+          _1=objectArg1.SetStyle(arg002,style);
+         }
+        matchValue1=fc.CssClass;
+        if(matchValue1.$==0)
+         {
+          _2=null;
+         }
+        else
+         {
+          cls=matchValue1.$0;
+          objectArg2=cell["HtmlProvider@33"];
+          arg003=cell.get_Body();
+          _2=objectArg2.AddClass(arg003,cls);
+         }
+        return Default.Table(List.ofArray([Default.TBody(List.ofArray([Default.TR(List.ofArray([cell]))]))]));
+       };
+       return Formlet.MapElement(f,x);
+      },
+      WithCustomResetButton:function(buttonConf,formlet)
+      {
+       var matchValue,buttonConf1,_,reset;
+       matchValue=buttonConf.Label;
+       if(matchValue.$==0)
+        {
+         _=Runtime.New(FormButtonConfiguration,{
+          Label:{
+           $:1,
+           $0:"Reset"
+          },
+          Style:buttonConf.Style,
+          Class:buttonConf.Class
+         });
+        }
+       else
+        {
+         matchValue.$0;
+         _=buttonConf;
+        }
+       buttonConf1=_;
+       reset=Enhance.InputButton(buttonConf1,true);
+       return Enhance.WithResetFormlet(formlet,reset);
+      },
+      WithCustomSubmitAndResetButtons:function(submitConf,resetConf,formlet)
+      {
+       var submitReset;
+       submitReset=function(reset)
+       {
+        return function(result)
+        {
+         var submit,_,fs,f,formlet1,value,f1,formlet2,_builder_,reset1,x,l;
+         if(result.$==1)
+          {
+           fs=result.$0;
+           f=function()
+           {
+            return Runtime.New(Result,{
+             $:1,
+             $0:fs
+            });
+           };
+           formlet1=Enhance.InputButton(submitConf,false);
+           _=Formlet.MapResult(f,formlet1);
+          }
+         else
+          {
+           value=result.$0;
+           f1=function()
+           {
+            return value;
+           };
+           formlet2=Enhance.InputButton(submitConf,true);
+           _=Formlet.Map(f1,formlet2);
+          }
+         submit=_;
+         _builder_=Formlet.Do();
+         reset1=_builder_.Delay(function()
+         {
+          return _builder_.Bind(Formlet.LiftResult(Enhance.InputButton(resetConf,true)),function(_arg1)
+          {
+           _arg1.$==0?reset(null):null;
+           return _builder_.Return(null);
+          });
+         });
+         x=Data.$(Data.$(Formlet.Return(function(v)
+         {
+          return function()
+          {
+           return v;
+          };
+         }),submit),reset1);
+         l=Data.Layout().get_Horizontal();
+         return Formlet.WithLayout(l,x);
+        };
+       };
+       return Enhance.WithSubmitAndReset(formlet,submitReset);
+      },
+      WithCustomSubmitButton:function(buttonConf,formlet)
+      {
+       var matchValue,buttonConf1,_;
+       matchValue=buttonConf.Label;
+       if(matchValue.$==0)
+        {
+         _=Runtime.New(FormButtonConfiguration,{
+          Label:{
+           $:1,
+           $0:"Submit"
+          },
+          Style:buttonConf.Style,
+          Class:buttonConf.Class
+         });
+        }
+       else
+        {
+         matchValue.$0;
+         _=buttonConf;
+        }
+       buttonConf1=_;
+       return Enhance.WithSubmitFormlet(formlet,function(res)
+       {
+        var f,enabled,formlet1;
+        f=function()
+        {
+        };
+        enabled=res.$==0?true:false;
+        formlet1=Enhance.InputButton(buttonConf1,enabled);
+        return Formlet.Map(f,formlet1);
+       });
+      },
+      WithCustomValidationFrame:function(vc,formlet)
+      {
+       var wrapper;
+       wrapper=function(state)
+       {
+        return function(body)
+        {
+         var x,f;
+         x=Default.Div(List.ofArray([body.Element]));
+         f=function(panel)
+         {
+          var value;
+          value=Util.subscribeTo(state,function(res)
+          {
+           var _,msgs,matchValue,_1,cls,objectArg,arg00,matchValue1,_2,cls1,objectArg1,arg001,matchValue2,_3,style,objectArg2,arg002,objectArg3,arg003,matchValue3,_4,cls2,objectArg4,arg004,matchValue4,_5,cls3,objectArg5,arg005,matchValue5,_6,style1,objectArg6,arg006,objectArg7,arg007;
+           if(res.$==1)
+            {
+             msgs=res.$0;
+             matchValue=vc.ValidClass;
+             if(matchValue.$==1)
+              {
+               cls=matchValue.$0;
+               objectArg=panel["HtmlProvider@33"];
+               arg00=panel.get_Body();
+               _1=objectArg.RemoveClass(arg00,cls);
+              }
+             else
+              {
+               _1=null;
+              }
+             matchValue1=vc.ErrorClass;
+             if(matchValue1.$==1)
+              {
+               cls1=matchValue1.$0;
+               objectArg1=panel["HtmlProvider@33"];
+               arg001=panel.get_Body();
+               _2=objectArg1.AddClass(arg001,cls1);
+              }
+             else
+              {
+               _2=null;
+              }
+             matchValue2=vc.ErrorStyle;
+             if(matchValue2.$==1)
+              {
+               style=matchValue2.$0;
+               objectArg2=panel["HtmlProvider@33"];
+               arg002=panel.get_Body();
+               _3=objectArg2.SetStyle(arg002,style);
+              }
+             else
+              {
+               objectArg3=panel["HtmlProvider@33"];
+               arg003=panel.get_Body();
+               _3=objectArg3.SetStyle(arg003,"");
+              }
+             _=_3;
+            }
+           else
+            {
+             matchValue3=vc.ErrorClass;
+             if(matchValue3.$==1)
+              {
+               cls2=matchValue3.$0;
+               objectArg4=panel["HtmlProvider@33"];
+               arg004=panel.get_Body();
+               _4=objectArg4.RemoveClass(arg004,cls2);
+              }
+             else
+              {
+               _4=null;
+              }
+             matchValue4=vc.ValidClass;
+             if(matchValue4.$==1)
+              {
+               cls3=matchValue4.$0;
+               objectArg5=panel["HtmlProvider@33"];
+               arg005=panel.get_Body();
+               _5=objectArg5.AddClass(arg005,cls3);
+              }
+             else
+              {
+               _5=null;
+              }
+             matchValue5=vc.ValidStyle;
+             if(matchValue5.$==1)
+              {
+               style1=matchValue5.$0;
+               objectArg6=panel["HtmlProvider@33"];
+               arg006=panel.get_Body();
+               _6=objectArg6.SetStyle(arg006,style1);
+              }
+             else
+              {
+               objectArg7=panel["HtmlProvider@33"];
+               arg007=panel.get_Body();
+               _6=objectArg7.SetStyle(arg007,"");
+              }
+             _=_6;
+            }
+           return _;
+          });
+          return;
+         };
+         Operators.OnAfterRender(f,x);
+         return x;
+        };
+       };
+       return Enhance.WrapFormlet(wrapper,formlet);
+      },
+      WithCustomValidationIcon:function(vic,formlet)
+      {
+       var formlet1,valid,_builder_,f1,formlet2,x1,l;
+       formlet1=Formlet.WithLayoutOrDefault(formlet);
+       valid=function(res)
+       {
+        var genElem;
+        genElem=function()
+        {
+         var _,msgs,f,title,_this,_this1;
+         if(res.$==1)
+          {
+           msgs=res.$0;
+           f=function(x)
+           {
+            return function(y)
+            {
+             return x+" "+y;
+            };
+           };
+           title=Seq.fold(f,"",msgs);
+           _this=Default.Attr();
+           _=Operators.add(Default.Div(List.ofArray([Default.Attr().Class(vic.ErrorIconClass),_this.NewAttr("title",title)])),List.ofArray([Default.Div(Runtime.New(T,{
+            $:0
+           }))]));
+          }
+         else
+          {
+           _this1=Default.Attr();
+           _=Operators.add(Default.Div(List.ofArray([Default.Attr().Class(vic.ValidIconClass),_this1.NewAttr("title","")])),List.ofArray([Default.Div(Runtime.New(T,{
+            $:0
+           }))]));
+          }
+         return _;
+        };
+        return Formlet.OfElement(genElem);
+       };
+       _builder_=Formlet.Do();
+       f1=function(arg00)
+       {
+        return Result.Join(arg00);
+       };
+       formlet2=_builder_.Delay(function()
+       {
+        return _builder_.Bind(Formlet.LiftResult(formlet1),function(_arg1)
+        {
+         return _builder_.Bind(valid(_arg1),function()
+         {
+          return _builder_.Return(_arg1);
+         });
+        });
+       });
+       x1=Formlet.MapResult(f1,formlet2);
+       l=Data.Layout().get_Horizontal();
+       return Formlet.WithLayout(l,x1);
+      },
+      WithErrorFormlet:function(f,formlet)
+      {
+       var _builder_,f1,formlet1;
+       _builder_=Formlet.Do();
+       f1=function(arg00)
+       {
+        return Result.Join(arg00);
+       };
+       formlet1=_builder_.Delay(function()
+       {
+        return _builder_.Bind(Formlet.LiftResult(formlet),function(_arg1)
+        {
+         var _,msgs,_builder_1;
+         if(_arg1.$==1)
+          {
+           msgs=_arg1.$0;
+           _builder_1=Formlet.Do();
+           _=_builder_1.Delay(function()
+           {
+            return _builder_1.Bind(f(msgs),function()
+            {
+             return _builder_1.Return(_arg1);
+            });
+           });
+          }
+         else
+          {
+           _arg1.$0;
+           _=Formlet.Return(_arg1);
+          }
+         return _builder_.ReturnFrom(_);
+        });
+       });
+       return Formlet.MapResult(f1,formlet1);
+      },
+      WithErrorSummary:function(label,formlet)
+      {
+       var errrFormlet,_builder_,f1,formlet1;
+       errrFormlet=function(fs)
+       {
+        return Formlet.OfElement(function()
+        {
+         var x,x1,_this,mapping,x2,_this1;
+         x1=List.ofArray([Default.Text(label)]);
+         _this=Default.Tags();
+         mapping=function(f)
+         {
+          return Default.LI(List.ofArray([Default.Text(f)]));
+         };
+         x2=List.map(mapping,fs);
+         x=List.ofArray([_this.NewTag("legend",x1),Default.UL(x2)]);
+         _this1=Default.Tags();
+         return _this1.NewTag("fieldset",x);
+        });
+       };
+       _builder_=Formlet.Do();
+       f1=function(arg00)
+       {
+        return Result.Join(arg00);
+       };
+       formlet1=_builder_.Delay(function()
+       {
+        return _builder_.Bind(Formlet.LiftResult(formlet),function(_arg1)
+        {
+         var _,fs,f,formlet2;
+         if(_arg1.$==1)
+          {
+           fs=_arg1.$0;
+           f=function()
+           {
+            return _arg1;
+           };
+           formlet2=errrFormlet(fs);
+           _=Formlet.Map(f,formlet2);
+          }
+         else
+          {
+           _arg1.$0;
+           _=Formlet.Return(_arg1);
+          }
+         return _builder_.ReturnFrom(_);
+        });
+       });
+       return Formlet.MapResult(f1,formlet1);
+      },
+      WithFormContainer:function(formlet)
+      {
+       return Enhance.WithCustomFormContainer(FormContainerConfiguration.get_Default(),formlet);
+      },
+      WithJsonPost:function(conf,formlet)
+      {
+       var matchValue,postUrl,_,url,_this,matchValue1,enc,_1,enc1,_this1,_this2,x,_this3,_this4,x1,hiddenField,_this5,x2,_this6,_this7,submitButton,a,_this8,_this9,formAttrs,x3,f,form1,f1,formlet1;
+       matchValue=conf.PostUrl;
+       if(matchValue.$==0)
+        {
+         _=Runtime.New(T,{
+          $:0
+         });
+        }
+       else
+        {
+         url=matchValue.$0;
+         _this=Default.Attr();
+         _=List.ofArray([_this.NewAttr("action",url)]);
+        }
+       postUrl=_;
+       matchValue1=conf.EncodingType;
+       if(matchValue1.$==0)
+        {
+         _1=Runtime.New(T,{
+          $:0
+         });
+        }
+       else
+        {
+         enc1=matchValue1.$0;
+         _this1=Default.Attr();
+         _1=List.ofArray([_this1.NewAttr("enctype",enc1)]);
+        }
+       enc=_1;
+       _this2=Default.Tags();
+       _this3=Default.Attr();
+       _this4=Default.Attr();
+       x1=conf.ParameterName;
+       x=List.ofArray([_this3.NewAttr("type","hidden"),_this4.NewAttr("name",x1)]);
+       hiddenField=_this2.NewTag("input",x);
+       _this5=Default.Tags();
+       _this6=Default.Attr();
+       _this7=Default.Attr();
+       x2=List.ofArray([_this6.NewAttr("type","submit"),_this7.NewAttr("value","Submit")]);
+       submitButton=_this5.NewTag("input",x2);
+       _this8=Default.Attr();
+       _this9=Default.Attr();
+       a=Runtime.New(T,{
+        $:1,
+        $0:_this8.NewAttr("method","POST"),
+        $1:Runtime.New(T,{
+         $:1,
+         $0:_this9.NewAttr("style","display:none"),
+         $1:postUrl
+        })
+       });
+       formAttrs=List.append(a,enc);
+       x3=Operators.add(Default.Form(formAttrs),List.ofArray([hiddenField,submitButton]));
+       f=function(form)
+       {
+        var matchValue2,_2,enc2,_3,value;
+        matchValue2=conf.EncodingType;
+        if(matchValue2.$==0)
+         {
+          _2=null;
+         }
+        else
+         {
+          enc2=matchValue2.$0;
+          if(enc2==="multipart/form-data")
+           {
+            value=jQuery(form.get_Body()).attr("encoding","multipart/form-data");
+            _3=void value;
+           }
+          else
+           {
+            _3=null;
+           }
+          _2=_3;
+         }
+        return _2;
+       };
+       Operators.OnAfterRender(f,x3);
+       form1=x3;
+       f1=function(value)
+       {
+        var data;
+        data=JSON.stringify(value);
+        jQuery(hiddenField.get_Body()).val(data);
+        return jQuery(submitButton.get_Body()).click();
+       };
+       formlet1=Formlet.Map(f1,formlet);
+       return Default.Div(List.ofArray([form1,formlet1]));
+      },
+      WithLabel:function(labelGen,formlet)
+      {
+       return Formlet.WithLabel({
+        $:1,
+        $0:labelGen
+       },formlet);
+      },
+      WithLabelAbove:function(formlet)
+      {
+       var f;
+       f=function(body)
+       {
+        var matchValue,label,_,l,el,Label;
+        matchValue=body.Label;
+        if(matchValue.$==0)
+         {
+          _=Default.Span(Runtime.New(T,{
+           $:0
+          }));
+         }
+        else
+         {
+          l=matchValue.$0;
+          _=l(null);
+         }
+        label=_;
+        el=Default.Table(List.ofArray([Default.TBody(List.ofArray([Default.TR(List.ofArray([Default.TD(List.ofArray([label]))])),Default.TR(List.ofArray([Default.TD(List.ofArray([body.Element]))]))]))]));
+        Label={
+         $:0
+        };
+        return Runtime.New(Body,{
+         Element:el,
+         Label:Label
+        });
+       };
+       return Formlet.MapBody(f,formlet);
+      },
+      WithLabelAndInfo:function(label,info,formlet)
+      {
+       var lblTbl;
+       lblTbl=function()
+       {
+        var x,_this,_this1;
+        x=List.ofArray([Default.Text(label)]);
+        _this=Default.Tags();
+        _this1=Default.Attr();
+        return Utils.InTable(List.ofArray([List.ofArray([_this.NewTag("label",x),Default.Span(List.ofArray([_this1.NewAttr("title",info),Default.Attr().Class("infoIcon")]))])]));
+       };
+       return Enhance.WithLabel(lblTbl,formlet);
+      },
+      WithLabelConfiguration:function(lc,formlet)
+      {
+       var x,l;
+       x=Formlet.ApplyLayout(formlet);
+       l=Data.Layout().LabelLayout(lc);
+       return Formlet.WithLayout(l,x);
+      },
+      WithLabelLeft:function(formlet)
+      {
+       var f;
+       f=function(body)
+       {
+        var matchValue,label,_,l,el,Label;
+        matchValue=body.Label;
+        if(matchValue.$==0)
+         {
+          _=Default.Span(Runtime.New(T,{
+           $:0
+          }));
+         }
+        else
+         {
+          l=matchValue.$0;
+          _=l(null);
+         }
+        label=_;
+        el=Default.Table(List.ofArray([Default.TBody(List.ofArray([Default.TR(List.ofArray([Default.TD(List.ofArray([body.Element])),Default.TD(List.ofArray([label]))]))]))]));
+        Label={
+         $:0
+        };
+        return Runtime.New(Body,{
+         Element:el,
+         Label:Label
+        });
+       };
+       return Formlet.MapBody(f,formlet);
+      },
+      WithLegend:function(label,formlet)
+      {
+       var f;
+       f=function(body)
+       {
+        var x,x1,_this,matchValue,_,label1,_this1,element;
+        x1=List.ofArray([Default.Tags().text(label)]);
+        _this=Default.Tags();
+        matchValue=body.Label;
+        if(matchValue.$==0)
+         {
+          _=body.Element;
+         }
+        else
+         {
+          label1=matchValue.$0;
+          _=Utils.InTable(List.ofArray([List.ofArray([label1(null),body.Element])]));
+         }
+        x=List.ofArray([_this.NewTag("legend",x1),_]);
+        _this1=Default.Tags();
+        element=_this1.NewTag("fieldset",x);
+        return Runtime.New(Body,{
+         Element:element,
+         Label:{
+          $:0
+         }
+        });
+       };
+       return Formlet.MapBody(f,formlet);
+      },
+      WithResetAction:function(f,formlet)
+      {
+       var f1,x,l,x1,x2;
+       f1=function()
+       {
+        var form,notify;
+        form=formlet.Build();
+        notify=function(o)
+        {
+         return f(null)?form.Notify.call(null,o):null;
+        };
+        return Runtime.New(Form,{
+         Body:form.Body,
+         Dispose1:form.Dispose1,
+         Notify:notify,
+         State:form.State
+        });
+       };
+       x=Formlet.New(f1);
+       l=formlet.get_Layout();
+       x1=Formlet.WithLayout(l,x);
+       x2=Data.PropagateRenderFrom(formlet,x1);
+       return Data.OfIFormlet(x2);
+      },
+      WithResetButton:function(formlet)
+      {
+       return Enhance.WithCustomResetButton(FormButtonConfiguration.get_Default(),formlet);
+      },
+      WithResetFormlet:function(formlet,reset)
+      {
+       var formlet1,x,x1,x2,formlet2,button,_builder_,f,formlet3,f2,x3;
+       formlet1=Formlet.WithLayoutOrDefault(formlet);
+       x=Formlet.ApplyLayout(formlet1);
+       x1=Formlet.InitWithFailure(x);
+       x2=Formlet.LiftResult(x1);
+       formlet2=Formlet.WithNotificationChannel(x2);
+       button=Formlet.LiftResult(reset);
+       _builder_=Formlet.Do();
+       f=function(arg00)
+       {
+        return Result.Join(arg00);
+       };
+       formlet3=_builder_.Delay(function()
+       {
+        return _builder_.Bind(formlet2,Runtime.Tupled(function(_arg1)
+        {
+         var v,notify;
+         v=_arg1[0];
+         notify=_arg1[1];
+         return _builder_.Bind(button,function(_arg2)
+         {
+          _arg2.$==0?notify(null):null;
+          return _builder_.Return(v);
+         });
+        }));
+       });
+       f2=Formlet.MapResult(f,formlet3);
+       x3=Data.PropagateRenderFrom(formlet2,f2);
+       return Data.OfIFormlet(x3);
+      },
+      WithRowConfiguration:function(rc,formlet)
+      {
+       var x,l;
+       x=Formlet.ApplyLayout(formlet);
+       l=Data.Layout().RowLayout(rc);
+       return Formlet.WithLayout(l,x);
+      },
+      WithSubmitAndReset:function(formlet,submReset)
+      {
+       var _builder_,f2,formlet3;
+       _builder_=Formlet.Do();
+       f2=_builder_.Delay(function()
+       {
+        var formlet1,formlet2;
+        formlet1=Formlet.InitWithFailure(formlet);
+        formlet2=Formlet.LiftResult(formlet1);
+        return _builder_.Bind(Formlet.WithNotificationChannel(formlet2),Runtime.Tupled(function(_arg1)
+        {
+         var res,notify;
+         res=_arg1[0];
+         notify=_arg1[1];
+         return _builder_.ReturnFrom((submReset(function(arg00)
+         {
+          return notify(arg00);
+         }))(res));
+        }));
+       });
+       formlet3=Data.PropagateRenderFrom(formlet,f2);
+       return Data.OfIFormlet(formlet3);
+      },
+      WithSubmitAndResetButtons:function(formlet)
+      {
+       var inputRecord,submitConf,inputRecord1,resetConf;
+       inputRecord=FormButtonConfiguration.get_Default();
+       submitConf=Runtime.New(FormButtonConfiguration,{
+        Label:{
+         $:1,
+         $0:"Submit"
+        },
+        Style:inputRecord.Style,
+        Class:inputRecord.Class
+       });
+       inputRecord1=FormButtonConfiguration.get_Default();
+       resetConf=Runtime.New(FormButtonConfiguration,{
+        Label:{
+         $:1,
+         $0:"Reset"
+        },
+        Style:inputRecord1.Style,
+        Class:inputRecord1.Class
+       });
+       return Enhance.WithCustomSubmitAndResetButtons(submitConf,resetConf,formlet);
+      },
+      WithSubmitButton:function(formlet)
+      {
+       return Enhance.WithCustomSubmitButton(FormButtonConfiguration.get_Default(),formlet);
+      },
+      WithSubmitFormlet:function(formlet,submit)
+      {
+       var _builder_,f,formlet1,f2,x;
+       _builder_=Formlet.Do();
+       f=function(arg00)
+       {
+        return Result.Join(arg00);
+       };
+       formlet1=_builder_.Delay(function()
+       {
+        var formlet2;
+        formlet2=Formlet.InitWithFailure(formlet);
+        return _builder_.Bind(Formlet.LiftResult(formlet2),function(_arg1)
+        {
+         return _builder_.Bind(submit(_arg1),function()
+         {
+          return _builder_.Return(_arg1);
+         });
+        });
+       });
+       f2=Formlet.MapResult(f,formlet1);
+       x=Data.PropagateRenderFrom(formlet,f2);
+       return Data.OfIFormlet(x);
+      },
+      WithTextLabel:function(label,formlet)
+      {
+       return Enhance.WithLabel(function()
+       {
+        var x,_this;
+        x=List.ofArray([Default.Text(label)]);
+        _this=Default.Tags();
+        return _this.NewTag("label",x);
+       },formlet);
+      },
+      WithValidationFrame:function(formlet)
+      {
+       return Enhance.WithCustomValidationFrame(ValidationFrameConfiguration.get_Default(),formlet);
+      },
+      WithValidationIcon:function(formlet)
+      {
+       return Enhance.WithCustomValidationIcon(ValidationIconConfiguration.get_Default(),formlet);
+      },
+      WrapFormlet:function(wrapper,formlet)
+      {
+       var f;
+       f=function()
+       {
+        var formlet1,form,patternInput,body,panel;
+        formlet1=Formlet.WithLayoutOrDefault(formlet);
+        form=Formlet.BuildForm(formlet1);
+        patternInput=formlet1.get_Layout().Apply.call(null,form.Body).$0;
+        patternInput[1];
+        body=patternInput[0];
+        panel=(wrapper(form.State))(body);
+        return[panel,function()
+        {
+         return form.Notify.call(null,null);
+        },form.State];
+       };
+       return Data.MkFormlet(f);
+      }
+     },
+     Formlet:{
+      ApplyLayout:function(formlet)
+      {
+       var f2,formlet1;
+       f2=Data.BaseFormlet().ApplyLayout(formlet);
+       formlet1=Data.PropagateRenderFrom(formlet,f2);
+       return Data.OfIFormlet(formlet1);
+      },
+      Bind:function(fl,f)
+      {
+       var objectArg,arg10,x1,x2;
+       objectArg=Data.BaseFormlet();
+       arg10=function(x)
+       {
+        var y;
+        y=f(x);
+        return y;
+       };
+       x1=objectArg.Bind(fl,arg10);
+       x2=Data.PropagateRenderFrom(fl,x1);
+       return Data.OfIFormlet(x2);
+      },
+      BindWith:function(compose,formlet,f)
+      {
+       var objectArg,arg20,x1,x2;
+       objectArg=Data.BaseFormlet();
+       arg20=function(x)
+       {
+        return f(x);
+       };
+       x1=objectArg.BindWith(compose,formlet,arg20);
+       x2=Data.PropagateRenderFrom(formlet,x1);
+       return Data.OfIFormlet(x2);
+      },
+      BuildForm:function(f)
+      {
+       return Data.BaseFormlet().BuildForm(f);
+      },
+      BuildFormlet:function(f)
+      {
+       return Data.MkFormlet(f);
+      },
+      Choose:function(fs)
+      {
+       var count,mapping,fs1,x1,f2,x5,arg00,x6,f3;
+       count={
+        contents:0
+       };
+       mapping=function(f)
+       {
+        var f1,formlet,formlet1;
+        f1=function(x)
+        {
+         Operators1.Increment(count);
+         return[x,count.contents];
+        };
+        formlet=Formlet.Map(f1,f);
+        formlet1=Formlet.InitWithFailure(formlet);
+        return Formlet.LiftResult(formlet1);
+       };
+       fs1=Seq.map(mapping,fs);
+       x1=Formlet.Sequence(fs1);
+       f2=function(xs)
+       {
+        var chooser,x2,projection,x3,x4,chooser1;
+        chooser=function(x)
+        {
+         var _,v;
+         if(x.$==0)
+          {
+           v=x.$0;
+           _={
+            $:1,
+            $0:v
+           };
+          }
+         else
+          {
+           _={
+            $:0
+           };
+          }
+         return _;
+        };
+        x2=List.choose(chooser,xs);
+        projection=Runtime.Tupled(function(tupledArg)
+        {
+         var ix;
+         tupledArg[0];
+         ix=tupledArg[1];
+         return ix;
+        });
+        x3=List.sortBy(projection,x2);
+        x4=List.rev(x3);
+        chooser1=Runtime.Tupled(function(tupledArg)
+        {
+         var x;
+         x=tupledArg[0];
+         tupledArg[1];
+         return{
+          $:1,
+          $0:x
+         };
+        });
+        return Seq.tryPick(chooser1,x4);
+       };
+       x5=Formlet.Map(f2,x1);
+       arg00=function(x)
+       {
+        return x.$==1;
+       };
+       x6=Data.Validator().Is(arg00,"",x5);
+       f3=function(x)
+       {
+        return x.$0;
+       };
+       return Formlet.Map(f3,x6);
+      },
+      Delay:function(f)
+      {
+       var formlet;
+       formlet=Data.BaseFormlet().Delay(function()
+       {
+        return f(null);
+       });
+       return Data.OfIFormlet(formlet);
+      },
+      Deletable:function(formlet)
+      {
+       var f2,formlet1;
+       f2=Data.BaseFormlet().Deletable(formlet);
+       formlet1=Data.PropagateRenderFrom(formlet,f2);
+       return Data.OfIFormlet(formlet1);
+      },
+      Do:Runtime.Field(function()
+      {
+       return FormletBuilder.New();
+      }),
+      Empty:function()
+      {
+       var formlet;
+       formlet=Data.BaseFormlet().Empty();
+       return Data.OfIFormlet(formlet);
+      },
+      FailWith:function(fs)
+      {
+       var formlet;
+       formlet=Data.BaseFormlet().FailWith(fs);
+       return Data.OfIFormlet(formlet);
+      },
+      FlipBody:function(formlet)
+      {
+       var f2,formlet1;
+       f2=Data.BaseFormlet().FlipBody(formlet);
+       formlet1=Data.PropagateRenderFrom(formlet,f2);
+       return Data.OfIFormlet(formlet1);
+      },
+      Flowlet:function(formlet)
+      {
+       var objectArg,arg00,x,x1;
+       objectArg=Data.BaseFormlet();
+       arg00=Data.Layout().get_Flowlet();
+       x=objectArg.WithLayout(arg00,formlet);
+       x1=Data.PropagateRenderFrom(formlet,x);
+       return Data.OfIFormlet(x1);
+      },
+      Horizontal:function(formlet)
+      {
+       var objectArg,arg00,x,x1;
+       objectArg=Data.BaseFormlet();
+       arg00=Data.Layout().get_Horizontal();
+       x=objectArg.WithLayout(arg00,formlet);
+       x1=Data.PropagateRenderFrom(formlet,x);
+       return Data.OfIFormlet(x1);
+      },
+      InitWith:function(value,formlet)
+      {
+       var objectArg,x,x1;
+       objectArg=Data.BaseFormlet();
+       x=objectArg.InitWith(value,formlet);
+       x1=Data.PropagateRenderFrom(formlet,x);
+       return Data.OfIFormlet(x1);
+      },
+      InitWithFailure:function(formlet)
+      {
+       var f2,formlet1;
+       f2=Data.BaseFormlet().InitWithFailure(formlet);
+       formlet1=Data.PropagateRenderFrom(formlet,f2);
+       return Data.OfIFormlet(formlet1);
+      },
+      Join:function(formlet)
+      {
+       var f,x,objectArg,x1,x2;
+       f=function(f1)
+       {
+        return f1;
+       };
+       x=Formlet.Map(f,formlet);
+       objectArg=Data.BaseFormlet();
+       x1=objectArg.Join(x);
+       x2=Data.PropagateRenderFrom(formlet,x1);
+       return Data.OfIFormlet(x2);
+      },
+      LiftResult:function(formlet)
+      {
+       var f2,formlet1;
+       f2=Data.BaseFormlet().LiftResult(formlet);
+       formlet1=Data.PropagateRenderFrom(formlet,f2);
+       return Data.OfIFormlet(formlet1);
+      },
+      Map:function(f,formlet)
+      {
+       var objectArg,x,x1;
+       objectArg=Data.BaseFormlet();
+       x=objectArg.Map(f,formlet);
+       x1=Data.PropagateRenderFrom(formlet,x);
+       return Data.OfIFormlet(x1);
+      },
+      MapBody:function(f,formlet)
+      {
+       var objectArg,x,x1;
+       objectArg=Data.BaseFormlet();
+       x=objectArg.MapBody(f,formlet);
+       x1=Data.PropagateRenderFrom(formlet,x);
+       return Data.OfIFormlet(x1);
+      },
+      MapElement:function(f,formlet)
+      {
+       var objectArg,arg00,f2,formlet1;
+       objectArg=Data.BaseFormlet();
+       arg00=function(b)
+       {
+        return Runtime.New(Body,{
+         Element:f(b.Element),
+         Label:b.Label
+        });
+       };
+       f2=objectArg.MapBody(arg00,formlet);
+       formlet1=Data.PropagateRenderFrom(formlet,f2);
+       return Data.OfIFormlet(formlet1);
+      },
+      MapResult:function(f,formlet)
+      {
+       var objectArg,x,x1;
+       objectArg=Data.BaseFormlet();
+       x=objectArg.MapResult(f,formlet);
+       x1=Data.PropagateRenderFrom(formlet,x);
+       return Data.OfIFormlet(x1);
+      },
+      Never:function()
+      {
+       var formlet;
+       formlet=Data.BaseFormlet().Never();
+       return Data.OfIFormlet(formlet);
+      },
+      New:function(f)
+      {
+       var formlet;
+       formlet=Data.BaseFormlet().New(f);
+       return Data.OfIFormlet(formlet);
+      },
+      OfElement:function(genElem)
+      {
+       var f;
+       f=function()
+       {
+        var elem;
+        elem=genElem(null);
+        return[elem,function()
+        {
+        },Data.RX().Return(Runtime.New(Result,{
+         $:0,
+         $0:null
+        }))];
+       };
+       return Data.MkFormlet(f);
+      },
+      Render:function(formlet)
+      {
+       var f2;
+       f2=formlet.Run(function()
+       {
+       });
+       return Data.PropagateRenderFrom(formlet,f2);
+      },
+      Replace:function(formlet,f)
+      {
+       var objectArg,arg10,x1,x2;
+       objectArg=Data.BaseFormlet();
+       arg10=function(x)
+       {
+        return f(x);
+       };
+       x1=objectArg.Replace(formlet,arg10);
+       x2=Data.PropagateRenderFrom(formlet,x1);
+       return Data.OfIFormlet(x2);
+      },
+      ReplaceFirstWithFailure:function(formlet)
+      {
+       var f2,formlet1;
+       f2=Data.BaseFormlet().ReplaceFirstWithFailure(formlet);
+       formlet1=Data.PropagateRenderFrom(formlet,f2);
+       return Data.OfIFormlet(formlet1);
+      },
+      Return:function(x)
+      {
+       var formlet;
+       formlet=Data.BaseFormlet().Return(x);
+       return Data.OfIFormlet(formlet);
+      },
+      ReturnEmpty:function(x)
+      {
+       var formlet;
+       formlet=Data.BaseFormlet().ReturnEmpty(x);
+       return Data.OfIFormlet(formlet);
+      },
+      Run:function(f,formlet)
+      {
+       return formlet.Run(f);
+      },
+      SelectMany:function(formlet)
+      {
+       var f,x,objectArg,x1,x2;
+       f=function(f1)
+       {
+        return f1;
+       };
+       x=Formlet.Map(f,formlet);
+       objectArg=Data.BaseFormlet();
+       x1=objectArg.SelectMany(x);
+       x2=Data.PropagateRenderFrom(formlet,x1);
+       return Data.OfIFormlet(x2);
+      },
+      Sequence:function(fs)
+      {
+       var mapping,x1,objectArg,x2;
+       mapping=function(x)
+       {
+        return x;
+       };
+       x1=Seq.map(mapping,fs);
+       objectArg=Data.BaseFormlet();
+       x2=objectArg.Sequence(x1);
+       return Data.OfIFormlet(x2);
+      },
+      Switch:function(formlet)
+      {
+       var f,x,objectArg,x1,x2;
+       f=function(f1)
+       {
+        return f1;
+       };
+       x=Formlet.Map(f,formlet);
+       objectArg=Data.BaseFormlet();
+       x1=objectArg.Switch(x);
+       x2=Data.PropagateRenderFrom(formlet,x1);
+       return Data.OfIFormlet(x2);
+      },
+      Vertical:function(formlet)
+      {
+       var objectArg,arg00,x,x1;
+       objectArg=Data.BaseFormlet();
+       arg00=Data.Layout().get_Vertical();
+       x=objectArg.WithLayout(arg00,formlet);
+       x1=Data.PropagateRenderFrom(formlet,x);
+       return Data.OfIFormlet(x1);
+      },
+      WithCancelation:function(formlet,c)
+      {
+       var objectArg,x,x1;
+       objectArg=Data.BaseFormlet();
+       x=objectArg.WithCancelation(formlet,c);
+       x1=Data.PropagateRenderFrom(formlet,x);
+       return Data.OfIFormlet(x1);
+      },
+      WithLabel:function(label,formlet)
+      {
+       var objectArg,arg00,f2,formlet1;
+       objectArg=Data.BaseFormlet();
+       arg00=function(body)
+       {
+        return Runtime.New(Body,{
+         Element:body.Element,
+         Label:label
+        });
+       };
+       f2=objectArg.MapBody(arg00,formlet);
+       formlet1=Data.PropagateRenderFrom(formlet,f2);
+       return Data.OfIFormlet(formlet1);
+      },
+      WithLayout:function(l,formlet)
+      {
+       var objectArg,x,x1;
+       objectArg=Data.BaseFormlet();
+       x=objectArg.WithLayout(l,formlet);
+       x1=Data.PropagateRenderFrom(formlet,x);
+       return Data.OfIFormlet(x1);
+      },
+      WithLayoutOrDefault:function(formlet)
+      {
+       var f2,formlet1;
+       f2=Data.BaseFormlet().WithLayoutOrDefault(formlet);
+       formlet1=Data.PropagateRenderFrom(formlet,f2);
+       return Data.OfIFormlet(formlet1);
+      },
+      WithNotification:function(c,formlet)
+      {
+       var objectArg,x,x1;
+       objectArg=Data.BaseFormlet();
+       x=objectArg.WithNotification(c,formlet);
+       x1=Data.PropagateRenderFrom(formlet,x);
+       return Data.OfIFormlet(x1);
+      },
+      WithNotificationChannel:function(formlet)
+      {
+       var f2,formlet1;
+       f2=Data.BaseFormlet().WithNotificationChannel(formlet);
+       formlet1=Data.PropagateRenderFrom(formlet,f2);
+       return Data.OfIFormlet(formlet1);
+      }
+     },
+     FormletBuilder:Runtime.Class({
+      Bind:function(formlet,f)
+      {
+       var objectArg,arg10,x1,x2;
+       objectArg=Data.BaseFormlet();
+       arg10=function(x)
+       {
+        var y;
+        y=f(x);
+        return y;
+       };
+       x1=objectArg.Bind(formlet,arg10);
+       x2=Data.PropagateRenderFrom(formlet,x1);
+       return Data.OfIFormlet(x2);
+      },
+      Delay:function(f)
+      {
+       var formlet;
+       formlet=Data.BaseFormlet().Delay(function(x)
+       {
+        return f(x);
+       });
+       return Data.OfIFormlet(formlet);
+      },
+      Return:function(x)
+      {
+       var formlet;
+       formlet=Data.BaseFormlet().Return(x);
+       return Data.OfIFormlet(formlet);
+      },
+      ReturnFrom:function(f)
+      {
+       return Data.OfIFormlet(f);
+      }
+     },{
+      New:function()
+      {
+       return Runtime.New(this,{});
+      }
+     }),
+     Layout:{
+      FormRowConfiguration:Runtime.Class({},{
+       get_Default:function()
+       {
+        return Runtime.New(FormRowConfiguration,{
+         Padding:{
+          $:0
+         },
+         Color:{
+          $:0
+         },
+         Class:{
+          $:0
+         },
+         Style:{
+          $:0
+         },
+         LabelConfiguration:{
+          $:0
+         }
+        });
+       }
+      }),
+      LabelConfiguration:Runtime.Class({},{
+       get_Default:function()
+       {
+        return Runtime.New(LabelConfiguration,{
+         Align:{
+          $:0
+         },
+         VerticalAlign:{
+          $:1
+         },
+         Placement:{
+          $:0
+         }
+        });
+       }
+      }),
+      Padding:Runtime.Class({},{
+       get_Default:function()
+       {
+        return Runtime.New(Padding1,{
+         Left:{
+          $:0
+         },
+         Right:{
+          $:0
+         },
+         Top:{
+          $:0
+         },
+         Bottom:{
+          $:0
+         }
+        });
+       }
+      })
+     },
+     LayoutProvider:Runtime.Class({
+      ColumnLayout:function(rowConfig)
+      {
+       var objectArg,arg00,_this=this;
+       objectArg=this.LayoutUtils;
+       arg00=function()
+       {
+        var row,container,store,insert,remove;
+        row=Default.TR(Runtime.New(T,{
+         $:0
+        }));
+        container=Default.Table(List.ofArray([Default.TBody(List.ofArray([row]))]));
+        store=ElementStore.NewElementStore();
+        insert=function(rowIx)
+        {
+         return function(body)
+         {
+          var elemId,newCol,jqPanel,index,inserted;
+          elemId=body.Element.get_Id();
+          newCol=Default.TD(List.ofArray([Default.Table(List.ofArray([Default.TBody(List.ofArray([_this.MakeRow(rowConfig,rowIx,body)]))]))]));
+          jqPanel=jQuery(row.get_Body());
+          index={
+           contents:0
+          };
+          inserted={
+           contents:false
+          };
+          jqPanel.children().each(function()
+          {
+           var jqCol,_;
+           jqCol=jQuery(this);
+           if(rowIx===index.contents)
+            {
+             jQuery(newCol.get_Body()).insertBefore(jqCol);
+             newCol.Render();
+             _=void(inserted.contents=true);
+            }
+           else
+            {
+             _=null;
+            }
+           return Operators1.Increment(index);
+          });
+          !inserted.contents?row.AppendI(newCol):null;
+          return store.RegisterElement(elemId,function()
+          {
+           return newCol["HtmlProvider@33"].Remove(newCol.get_Body());
+          });
+         };
+        };
+        remove=function(elems)
+        {
+         var enumerator,b;
+         enumerator=Enumerator.Get(elems);
+         while(enumerator.MoveNext())
+          {
+           b=enumerator.get_Current();
+           store.Remove(b.Element.get_Id());
+          }
+         return;
+        };
+        return{
+         Body:Runtime.New(Body,{
+          Element:container,
+          Label:{
+           $:0
+          }
+         }),
+         SyncRoot:null,
+         Insert:insert,
+         Remove:remove
+        };
+       };
+       return objectArg.New(arg00);
+      },
+      HorizontalAlignElem:function(align,el)
+      {
+       var _float,_this,x;
+       _float=align.$==0?"left":"right";
+       _this=Default.Attr();
+       x="float:"+_float+";";
+       return Operators.add(Default.Div(List.ofArray([_this.NewAttr("style",x)])),List.ofArray([el]));
+      },
+      LabelLayout:function(lc)
+      {
+       var inputRecord,LabelConfiguration1;
+       inputRecord=FormRowConfiguration.get_Default();
+       LabelConfiguration1={
+        $:1,
+        $0:lc
+       };
+       return this.RowLayout(Runtime.New(FormRowConfiguration,{
+        Padding:inputRecord.Padding,
+        Color:inputRecord.Color,
+        Class:inputRecord.Class,
+        Style:inputRecord.Style,
+        LabelConfiguration:LabelConfiguration1
+       }));
+      },
+      MakeLayout:function(lm)
+      {
+       var objectArg,arg00;
+       objectArg=this.LayoutUtils;
+       arg00=function()
+       {
+        var lm1,store,insert,remove;
+        lm1=lm(null);
+        store=ElementStore.NewElementStore();
+        insert=function(ix)
+        {
+         return function(bd)
+         {
+          var elemId,newElems;
+          elemId=bd.Element.get_Id();
+          newElems=(lm1.Insert.call(null,ix))(bd);
+          return store.RegisterElement(elemId,function()
+          {
+           var enumerator,e;
+           enumerator=Enumerator.Get(newElems);
+           while(enumerator.MoveNext())
+            {
+             e=enumerator.get_Current();
+             e["HtmlProvider@33"].Remove(e.get_Body());
+            }
+           return;
+          });
+         };
+        };
+        remove=function(elems)
+        {
+         var enumerator,b;
+         enumerator=Enumerator.Get(elems);
+         while(enumerator.MoveNext())
+          {
+           b=enumerator.get_Current();
+           store.Remove(b.Element.get_Id());
+          }
+         return;
+        };
+        return{
+         Body:Runtime.New(Body,{
+          Element:lm1.Panel,
+          Label:{
+           $:0
+          }
+         }),
+         SyncRoot:null,
+         Insert:insert,
+         Remove:remove
+        };
+       };
+       return objectArg.New(arg00);
+      },
+      MakeRow:function(rowConfig,rowIndex,body)
+      {
+       var x,d,f,padding,f1,o,paddingLeft,f2,o1,paddingTop,f3,o2,paddingRight,f4,o3,paddingBottom,makeCell,elem1,matchValue,cells,_1,labelGen,x5,d1,f6,labelConf,arg00,arg10,label,matchValue1,_2,x6,x7,x8,d2,f7,rowClass,x9,d3,f8,rowColorStyleProp,xa,d4,f9,rowStyleProp,matchValue2,rowStyle,_3,arg002,_this2,b2,b3,xb;
+       x=rowConfig.Padding;
+       d=Padding1.get_Default();
+       f=function(x1)
+       {
+        return x1;
+       };
+       padding=Utils.Maybe(d,f,x);
+       f1=function(x1)
+       {
+        return x1;
+       };
+       o=padding.Left;
+       paddingLeft=Utils.Maybe(0,f1,o);
+       f2=function(x1)
+       {
+        return x1;
+       };
+       o1=padding.Top;
+       paddingTop=Utils.Maybe(0,f2,o1);
+       f3=function(x1)
+       {
+        return x1;
+       };
+       o2=padding.Right;
+       paddingRight=Utils.Maybe(0,f3,o2);
+       f4=function(x1)
+       {
+        return x1;
+       };
+       o3=padding.Bottom;
+       paddingBottom=Utils.Maybe(0,f4,o3);
+       makeCell=function(l)
+       {
+        return function(t)
+        {
+         return function(r)
+         {
+          return function(b)
+          {
+           return function(csp)
+           {
+            return function(valign)
+            {
+             return function(elem)
+             {
+              var x1,mapping,reduction,source,paddingStyle,f5,valignStyle,_this,x3,style,colSpan,_,_this1,a,b1,x4;
+              x1=List.ofArray([["padding-left: ",l],["padding-top: ",t],["padding-right: ",r],["padding-bottom: ",b]]);
+              mapping=Runtime.Tupled(function(tupledArg)
+              {
+               var k,v;
+               k=tupledArg[0];
+               v=tupledArg[1];
+               return k+Global.String(v)+"px;";
+              });
+              reduction=function(x2)
+              {
+               return function(y)
+               {
+                return x2+y;
+               };
+              };
+              source=List.map(mapping,x1);
+              paddingStyle=Seq.reduce(reduction,source);
+              f5=function(valign1)
+              {
+               var value;
+               value=valign1.$==1?"middle":valign1.$==2?"bottom":"top";
+               return"vertical-align: "+value+";";
+              };
+              valignStyle=Utils.Maybe("",f5,valign);
+              _this=Default.Attr();
+              x3=paddingStyle+";"+valignStyle;
+              style=_this.NewAttr("style",x3);
+              if(csp)
+               {
+                _this1=Default.Attr();
+                _=List.ofArray([_this1.NewAttr("colspan","2")]);
+               }
+              else
+               {
+                _=Runtime.New(T,{
+                 $:0
+                });
+               }
+              colSpan=_;
+              a=Runtime.New(T,{
+               $:1,
+               $0:style,
+               $1:colSpan
+              });
+              b1=List.ofArray([elem]);
+              x4=List.append(a,b1);
+              return Default.TD(x4);
+             };
+            };
+           };
+          };
+         };
+        };
+       };
+       elem1=body.Element;
+       matchValue=body.Label;
+       if(matchValue.$==1)
+        {
+         labelGen=matchValue.$0;
+         x5=rowConfig.LabelConfiguration;
+         d1=LabelConfiguration.get_Default();
+         f6=function(x1)
+         {
+          return x1;
+         };
+         labelConf=Utils.Maybe(d1,f6,x5);
+         arg00=labelConf.Align;
+         arg10=labelGen(null);
+         label=this.HorizontalAlignElem(arg00,arg10);
+         matchValue1=labelConf.Placement;
+         if(matchValue1.$==3)
+          {
+           x6=Utils.InTable(List.ofArray([List.ofArray([elem1]),List.ofArray([label])]));
+           _2=List.ofArray([((((((makeCell(paddingLeft))(paddingTop))(paddingRight))(paddingBottom))(true))({
+            $:0
+           }))(x6)]);
+          }
+         else
+          {
+           if(matchValue1.$==0)
+            {
+             _2=List.ofArray([((((((makeCell(paddingLeft))(paddingTop))(0))(paddingBottom))(false))({
+              $:1,
+              $0:labelConf.VerticalAlign
+             }))(label),((((((makeCell(0))(paddingTop))(paddingRight))(paddingBottom))(false))({
+              $:0
+             }))(elem1)]);
+            }
+           else
+            {
+             if(matchValue1.$==1)
+              {
+               _2=List.ofArray([((((((makeCell(paddingLeft))(paddingTop))(0))(paddingBottom))(false))({
+                $:1,
+                $0:labelConf.VerticalAlign
+               }))(elem1),((((((makeCell(0))(paddingTop))(paddingRight))(paddingBottom))(false))({
+                $:0
+               }))(label)]);
+              }
+             else
+              {
+               x7=Utils.InTable(List.ofArray([List.ofArray([label]),List.ofArray([elem1])]));
+               _2=List.ofArray([((((((makeCell(paddingLeft))(paddingTop))(paddingRight))(paddingBottom))(true))({
+                $:0
+               }))(x7)]);
+              }
+            }
+          }
+         _1=_2;
+        }
+       else
+        {
+         _1=List.ofArray([((((((makeCell(paddingLeft))(paddingTop))(paddingRight))(paddingBottom))(true))({
+          $:0
+         }))(elem1)]);
+        }
+       cells=_1;
+       x8=rowConfig.Class;
+       d2=Runtime.New(T,{
+        $:0
+       });
+       f7=function(classGen)
+       {
+        var arg001;
+        arg001=classGen(rowIndex);
+        return List.ofArray([Default.Attr().Class(arg001)]);
+       };
+       rowClass=Utils.Maybe(d2,f7,x8);
+       x9=rowConfig.Color;
+       d3=Runtime.New(T,{
+        $:0
+       });
+       f8=function(colGen)
+       {
+        var col;
+        col=colGen(rowIndex);
+        return List.ofArray(["background-color: "+col]);
+       };
+       rowColorStyleProp=Utils.Maybe(d3,f8,x9);
+       xa=rowConfig.Style;
+       d4=Runtime.New(T,{
+        $:0
+       });
+       f9=function(styleGen)
+       {
+        return List.ofArray([styleGen(rowIndex)]);
+       };
+       rowStyleProp=Utils.Maybe(d4,f9,xa);
+       matchValue2=List.append(rowColorStyleProp,rowStyleProp);
+       if(matchValue2.$==0)
+        {
+         _3=Runtime.New(T,{
+          $:0
+         });
+        }
+       else
+        {
+         arg002=Seq.reduce(function(x1)
+         {
+          return function(y)
+          {
+           return x1+";"+y;
+          };
+         },matchValue2);
+         _this2=Default.Attr();
+         _3=List.ofArray([_this2.NewAttr("style",arg002)]);
+        }
+       rowStyle=_3;
+       b2=List.append(rowStyle,cells);
+       b3=List.append(rowStyle,b2);
+       xb=List.append(rowClass,b3);
+       return Default.TR(xb);
+      },
+      RowLayout:function(rowConfig)
+      {
+       var objectArg,arg00,_this=this;
+       objectArg=this.LayoutUtils;
+       arg00=function()
+       {
+        var panel,container,store,insert,remove;
+        panel=Default.TBody(Runtime.New(T,{
+         $:0
+        }));
+        container=Default.Table(List.ofArray([panel]));
+        store=ElementStore.NewElementStore();
+        insert=function(rowIx)
+        {
+         return function(body)
+         {
+          var elemId,row,jqPanel,index,inserted;
+          elemId=body.Element.get_Id();
+          row=_this.MakeRow(rowConfig,rowIx,body);
+          jqPanel=jQuery(panel.get_Body());
+          index={
+           contents:0
+          };
+          inserted={
+           contents:false
+          };
+          jqPanel.children().each(function()
+          {
+           var jqRow,_;
+           jqRow=jQuery(this);
+           if(rowIx===index.contents)
+            {
+             jQuery(row.get_Body()).insertBefore(jqRow);
+             row.Render();
+             _=void(inserted.contents=true);
+            }
+           else
+            {
+             _=null;
+            }
+           return Operators1.Increment(index);
+          });
+          !inserted.contents?panel.AppendI(row):null;
+          return store.RegisterElement(elemId,function()
+          {
+           return row["HtmlProvider@33"].Remove(row.get_Body());
+          });
+         };
+        };
+        remove=function(elems)
+        {
+         var enumerator,b;
+         enumerator=Enumerator.Get(elems);
+         while(enumerator.MoveNext())
+          {
+           b=enumerator.get_Current();
+           store.Remove(b.Element.get_Id());
+          }
+         return;
+        };
+        return{
+         Body:Runtime.New(Body,{
+          Element:container,
+          Label:{
+           $:0
+          }
+         }),
+         SyncRoot:null,
+         Insert:insert,
+         Remove:remove
+        };
+       };
+       return objectArg.New(arg00);
+      },
+      VerticalAlignedTD:function(valign,elem)
+      {
+       var valign1,cell,objectArg,arg00;
+       valign1=valign.$==1?"middle":valign.$==2?"bottom":"top";
+       cell=Default.TD(List.ofArray([elem]));
+       objectArg=cell["HtmlProvider@33"];
+       arg00=cell.get_Body();
+       objectArg.SetCss(arg00,"vertical-align",valign1);
+       return cell;
+      },
+      get_Flowlet:function()
+      {
+       var lm;
+       lm=function()
+       {
+        var panel,insert;
+        panel=Default.Div(Runtime.New(T,{
+         $:0
+        }));
+        insert=function()
+        {
+         return function(bd)
+         {
+          var label,nextScreen;
+          label=bd.Label.$==1?bd.Label.$0.call(null,null):Default.Span(Runtime.New(T,{
+           $:0
+          }));
+          nextScreen=Utils.InTable(List.ofArray([List.ofArray([label,Default.Div(List.ofArray([bd.Element]))])]));
+          panel["HtmlProvider@33"].Clear(panel.get_Body());
+          panel.AppendI(nextScreen);
+          return List.ofArray([nextScreen]);
+         };
+        };
+        return{
+         Insert:insert,
+         Panel:panel
+        };
+       };
+       return this.MakeLayout(lm);
+      },
+      get_Horizontal:function()
+      {
+       return this.ColumnLayout(FormRowConfiguration.get_Default());
+      },
+      get_Vertical:function()
+      {
+       return this.RowLayout(FormRowConfiguration.get_Default());
+      }
+     },{
+      New:function(LayoutUtils1)
+      {
+       var r;
+       r=Runtime.New(this,{});
+       r.LayoutUtils=LayoutUtils1;
+       return r;
+      }
+     }),
+     Utils:{
+      InTable:function(rows)
+      {
+       var mapping,rs,tb;
+       mapping=function(cols)
+       {
+        var mapping1,xs;
+        mapping1=function(c)
+        {
+         return Default.TD(List.ofArray([c]));
+        };
+        xs=List.map(mapping1,cols);
+        return Default.TR(xs);
+       };
+       rs=List.map(mapping,rows);
+       tb=Default.TBody(rs);
+       return Default.Table(List.ofArray([tb]));
+      },
+      MapOption:function(f,value)
+      {
+       var _,v;
+       if(value.$==1)
+        {
+         v=value.$0;
+         _={
+          $:1,
+          $0:f(v)
+         };
+        }
+       else
+        {
+         _={
+          $:0
+         };
+        }
+       return _;
+      },
+      Maybe:function(d,f,o)
+      {
+       var _,x;
+       if(o.$==0)
+        {
+         _=d;
+        }
+       else
+        {
+         x=o.$0;
+         _=f(x);
+        }
+       return _;
+      }
+     }
+    }
+   }
+  }
+ });
+ Runtime.OnInit(function()
+ {
+  WebSharper=Runtime.Safe(Global.IntelliFactory.WebSharper);
+  Formlets=Runtime.Safe(WebSharper.Formlets);
+  Body=Runtime.Safe(Formlets.Body);
+  Html=Runtime.Safe(WebSharper.Html);
+  Client=Runtime.Safe(Html.Client);
+  Default=Runtime.Safe(Client.Default);
+  List=Runtime.Safe(WebSharper.List);
+  Controls=Runtime.Safe(Formlets.Controls);
+  Reactive=Runtime.Safe(Global.IntelliFactory.Reactive);
+  HotStream=Runtime.Safe(Reactive.HotStream);
+  Formlets1=Runtime.Safe(Global.IntelliFactory.Formlets);
+  Base=Runtime.Safe(Formlets1.Base);
+  Result=Runtime.Safe(Base.Result);
+  T=Runtime.Safe(List.T);
+  Operators=Runtime.Safe(Client.Operators);
+  jQuery=Runtime.Safe(Global.jQuery);
+  EventsPervasives=Runtime.Safe(Client.EventsPervasives);
+  Data=Runtime.Safe(Formlets.Data);
+  Formlet=Runtime.Safe(Formlets.Formlet);
+  Operators1=Runtime.Safe(WebSharper.Operators);
+  CssConstants=Runtime.Safe(Formlets.CssConstants);
+  Math=Runtime.Safe(Global.Math);
+  Seq=Runtime.Safe(WebSharper.Seq);
+  Utils=Runtime.Safe(Formlets.Utils);
+  Tree=Runtime.Safe(Base.Tree);
+  Edit=Runtime.Safe(Tree.Edit);
+  Form=Runtime.Safe(Base.Form);
+  Arrays=Runtime.Safe(WebSharper.Arrays);
+  IntrinsicFunctionProxy=Runtime.Safe(WebSharper.IntrinsicFunctionProxy);
+  FormletProvider=Runtime.Safe(Base.FormletProvider);
+  Formlet1=Runtime.Safe(Data.Formlet);
+  Pagelet=Runtime.Safe(Client.Pagelet);
+  Util=Runtime.Safe(WebSharper.Util);
+  LayoutProvider=Runtime.Safe(Formlets.LayoutProvider);
+  LayoutUtils=Runtime.Safe(Base.LayoutUtils);
+  Reactive1=Runtime.Safe(Reactive.Reactive);
+  Validator=Runtime.Safe(Base.Validator);
+  ValidatorProvidor=Runtime.Safe(Data.ValidatorProvidor);
+  RegExp=Runtime.Safe(Global.RegExp);
+  Collections=Runtime.Safe(WebSharper.Collections);
+  Dictionary=Runtime.Safe(Collections.Dictionary);
+  ElementStore=Runtime.Safe(Formlets.ElementStore);
+  Enhance=Runtime.Safe(Formlets.Enhance);
+  FormButtonConfiguration=Runtime.Safe(Enhance.FormButtonConfiguration);
+  FormContainerConfiguration=Runtime.Safe(Enhance.FormContainerConfiguration);
+  Padding=Runtime.Safe(Enhance.Padding);
+  ManyConfiguration=Runtime.Safe(Enhance.ManyConfiguration);
+  ValidationFrameConfiguration=Runtime.Safe(Enhance.ValidationFrameConfiguration);
+  ValidationIconConfiguration=Runtime.Safe(Enhance.ValidationIconConfiguration);
+  JSON=Runtime.Safe(Global.JSON);
+  FormletBuilder=Runtime.Safe(Formlets.FormletBuilder);
+  Layout=Runtime.Safe(Formlets.Layout);
+  FormRowConfiguration=Runtime.Safe(Layout.FormRowConfiguration);
+  LabelConfiguration=Runtime.Safe(Layout.LabelConfiguration);
+  Padding1=Runtime.Safe(Layout.Padding);
+  return Enumerator=Runtime.Safe(WebSharper.Enumerator);
+ });
+ Runtime.OnLoad(function()
+ {
+  Runtime.Inherit(Formlet1,Pagelet);
+  Formlet.Do();
+  Data.Validator();
+  Data.RX();
+  Data.Layout();
+  Data.DefaultLayout();
+  CssConstants.InputTextClass();
   return;
  });
 }());
